@@ -42,7 +42,7 @@ public class MemberController {
 
     @RequestMapping(value = "/myInfo")
     public String myInfo() {
-        return "myInfo/myInfo";
+        return "member/myInfo/myInfo";
     }
 
     // 이거 내비두셈
