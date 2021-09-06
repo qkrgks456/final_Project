@@ -28,7 +28,7 @@
 <%-- 상단 메뉴바 --%>
 <jsp:include page="../fix/menu.jsp"/>
 <%-- 내용 넣으세요 --%>
-<div class="container px-3">
+<div class="container px-3 my-3 border">
     캠핑장 전체 리스트
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
