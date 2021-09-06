@@ -24,12 +24,12 @@ public class MemberController {
 
     @RequestMapping(value = "/loginForm")
     public String loginForm(Model model) {
-        return "login/loginForm";
+        return "member/login/loginForm";
     }
 
     @RequestMapping(value = "/agreeForm")
     public String agreeForm(Model model) {
-        return "join/agreeForm";
+        return "member/join/agreeForm";
     }
 
     @RequestMapping(value = "/login")
