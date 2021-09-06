@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+    <!-- DB접속 정보(Context.xml 을 이제 사용 안함) -->
+    <bean name="datasource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="${commons.driverClassName}"/>
+        <property name="url" value="${commons.url}"/>
+        <property name="username" value="${commons.username}"/>
+        <property name="password" value="${commons.password}"/>
+    </bean>
+
+    <!-- mybatis 설정 -->
+    <!-- DB 접속해서 쿼리 사용 설정 -->
+    <!-- name : 정해져 있음 / id : 내 맘대로 정함 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!-- 사용할 DataBase 지정 -->
+        <property name="dataSource" ref="datasource"/>
+        <!-- 커넥션 풀 설정 -->
+        <property name="environment" value="classpath:/config/mybatis-config.xml"/>
+    </bean>
+
+    <!-- 마이바티스 간편 설정(마이바티스를 별다른 코드 없이 실행할수 있도록 빈 등록) -->
+    <mybatis-spring:scan base-package="com.go.board.dao"/>
+
+    <!-- 트랜잭션 대상 지정 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="datasource"/>
+    </bean>
+
+    <!-- 트랜잭션 어노테이션 설정 -->
+    <tx:annotation-driven proxy-target-class="false"/>
+</beans>
