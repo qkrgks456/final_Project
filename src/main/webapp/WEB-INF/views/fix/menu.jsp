@@ -10,32 +10,31 @@
         </div>
         <div>
             <div class="d-flex justify-content-center">
-                <a class="nav-link fs-5 mx-3 text-black mt-2" href="">전체</a>
+                <a class="nav-link fs-5 mx-3 text-black mt-2" href="${path}/campingAll/AllList">전체</a>
                 <div class="dropdown">
                     <a class="nav-link fs-5 mx-3 text-black mt-2" data-bs-toggle="dropdown"
                        aria-expanded="true" href="">검색</a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="#">태그검색</a></li>
-                        <li><a class="dropdown-item" href="#">지도로검색</a></li>
+                        <li><a class="dropdown-item" href="${path}/campingSearch/tagSearch">태그검색</a></li>
+                        <li><a class="dropdown-item" href="${path}/campingSearch/mapSearch">지도로검색</a></li>
                     </ul>
                 </div>
                 <div class="dropdown">
                     <a class="nav-link fs-5 mx-3 text-black mt-2" data-bs-toggle="dropdown"
                        aria-expanded="true" href="">캠핑정보</a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="#">캠핑레시피</a></li>
-                        <li><a class="dropdown-item" href="#">캠핑팁</a></li>
-                        <li><a class="dropdown-item" href="#">날씨</a></li>
-                        <li><a class="dropdown-item" href="#">주차정보</a></li>
+                        <li><a class="dropdown-item" href="${path}/campingInfo/campingRecipe">캠핑레시피</a></li>
+                        <li><a class="dropdown-item" href="${path}/campingInfo/campingTip">캠핑팁</a></li>
+                        <li><a class="dropdown-item" href="${path}/campingInfo/campingWeather">날씨</a></li>
+                        <li><a class="dropdown-item" href="${path}/campingInfo/campingParking">주차정보</a></li>
                     </ul>
                 </div>
                 <div class="dropdown">
                     <a class="nav-link fs-5 mx-3 text-black mt-2" href="" data-bs-toggle="dropdown"
                        aria-expanded="true">캠핑톡</a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="#">가입인사</a></li>
-                        <li><a class="dropdown-item" href="#">캠핑리뷰</a></li>
-                        <li><a class="dropdown-item" href="#">자유게시판</a></li>
+                        <li><a class="dropdown-item" href="${path}/campingTalk/reviewBoard">캠핑리뷰</a></li>
+                        <li><a class="dropdown-item" href="${path}/campingTalk/freeBoard">자유게시판</a></li>
                     </ul>
                 </div>
                 <div class="dropdown">

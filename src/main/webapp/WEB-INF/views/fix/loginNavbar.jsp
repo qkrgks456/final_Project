@@ -16,6 +16,9 @@
         <div class="">
             <a href="#" class="fs-6 btn-sm btn-outline-light text-dark" style="text-decoration:none">공지사항</a>
         </div>
+        <div class="">
+            <a href="#" class="fs-6 btn-sm btn-outline-light text-dark" style="text-decoration:none">관리자</a>
+        </div>
     </div>
 </div>
 
