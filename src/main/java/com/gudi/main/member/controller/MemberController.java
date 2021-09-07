@@ -40,11 +40,6 @@ public class MemberController {
         return "main";
     }
 
-    @RequestMapping(value = "/myInfo")
-    public String myInfo() {
-        return "member/myInfo/myInfo";
-    }
-
     // 이거 내비두셈
     @RequestMapping(value = "/logout")
     public String logout(HttpSession session) throws Exception {

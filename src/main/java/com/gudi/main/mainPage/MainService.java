@@ -19,7 +19,7 @@ public class MainService {
         
         
         // url 선언
-        String url = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/searchStay";
+        String url = "http://api.visitkorea.or.kr/openapi/service/rest/GoCamping/basedList";
         // params 선언
         String params = "ServiceKey=YRc1yhIuj%2BSEq19P4LqBXRmFAtACpby0jiZKx%2BpSOyMnQ%2B5EX18dxJ%2BheYZ%2B4Ls%2FhYTVS6%2BFqoIZDjj2XmsmRg%3D%3D" +
                 "&MobileOS=ETC&MobileApp=final_project&areaCode=1";
