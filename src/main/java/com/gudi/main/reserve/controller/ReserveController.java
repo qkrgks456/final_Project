@@ -10,5 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value = "/reserve")
 public class ReserveController {
     Logger logger = LoggerFactory.getLogger(this.getClass());
-
+    @RequestMapping(value = "/campingDetail")
+    public String myInfo() {
+        return "reserve/campingDetail";
+    }
 }

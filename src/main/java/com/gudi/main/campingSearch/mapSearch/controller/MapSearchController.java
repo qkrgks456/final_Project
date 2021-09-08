@@ -11,11 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MapSearchController {
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @RequestMapping(value = "/tagSearch")
-    public String tagSearch(Model model) {
-        return "campingSearch/tagSearch/tagSearchMain";
-    }
-
     @RequestMapping(value = "/mapSearch")
     public String mapSearch(Model model) {
         return "campingSearch/mapSearch/mapSearchMain";
