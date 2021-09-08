@@ -23,7 +23,23 @@
     </bean>
 
     <!-- 마이바티스 간편 설정(마이바티스를 별다른 코드 없이 실행할수 있도록 빈 등록) -->
-    <mybatis-spring:scan base-package="com.go.board.dao"/>
+    <mybatis-spring:scan base-package="com.gudi.main.admin.dao"/>
+    <mybatis-spring:scan base-package="com.gudi.main.campingAll.dao"/>
+    <mybatis-spring:scan base-package="com.gudi.main.campingInfo.campingRecipe.dao"/>
+    <mybatis-spring:scan base-package="com.gudi.main.campingInfo.campingTip.dao"/>
+    <mybatis-spring:scan base-package="com.gudi.main.campingInfo.weather.dao"/>
+    <mybatis-spring:scan base-package="com.gudi.main.campingInfo.parking.dao"/>
+    <mybatis-spring:scan base-package="com.gudi.main.campingSearch.mapSearch.dao"/>
+    <mybatis-spring:scan base-package="com.gudi.main.campingTalk.freeBoard.dao"/>
+    <mybatis-spring:scan base-package="com.gudi.main.campingTalk.reviewBoard.dao"/>
+    <mybatis-spring:scan base-package="com.gudi.main.campingServiceCenter.noticeBoard.dao"/>
+    <mybatis-spring:scan base-package="com.gudi.main.campingServiceCenter.questionBoard.dao"/>
+    <mybatis-spring:scan base-package="com.gudi.main.mainPage"/>
+    <mybatis-spring:scan base-package="com.gudi.main.member.dao"/>
+    <mybatis-spring:scan base-package="com.gudi.main.myInfo.dao"/>
+    <mybatis-spring:scan base-package="com.gudi.main.reserve.dao"/>
+
+
 
     <!-- 트랜잭션 대상 지정 -->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
