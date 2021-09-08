@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping(value = "/campingSearch")
-public class SearchController {
+public class MapSearchController {
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @RequestMapping(value = "/tagSearch")
