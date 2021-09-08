@@ -42,7 +42,7 @@
                        aria-expanded="true" href="">고객센터</a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                         <li><a class="dropdown-item" href="${path}/serviceCenter/questionBoard">문의하기</a></li>
-                        <li><a class="dropdown-item" href="${path}/serviceCenter/NoticeBoard">공지사항</a></li>
+                        <li><a class="dropdown-item" href="${path}/serviceCenter/noticeBoard">공지사항</a></li>
                     </ul>
                 </div>
             </div>

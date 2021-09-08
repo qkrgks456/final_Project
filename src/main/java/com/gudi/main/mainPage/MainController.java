@@ -28,10 +28,4 @@ public class MainController {
 		HashMap<String,Object> map = service.apiCall();
 		return "main";
 	}
-	@RequestMapping(value = "/test")
-	public String test(MultipartFile file) {
-		logger.info("안녕하세요 test입니다");
-		UploadUtil.fileUpload(file);
-		return "main";
-	}
 }

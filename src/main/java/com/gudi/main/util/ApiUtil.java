@@ -3,6 +3,9 @@ package com.gudi.main.util;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONObject;
 import org.json.XML;
+import org.json.simple.JSONArray;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -136,5 +139,23 @@ public class ApiUtil {
 			e.printStackTrace();
 		}
 		return jsonObject;
+	}
+
+	public static ArrayList<HashMap<String,Object>> jsonArray(Object result) {
+		org.json.simple.JSONArray jsonArr = null;
+		org.json.simple.JSONObject jsonObject = null;
+		HashMap<String,Object> map = null;
+		ArrayList<HashMap<String,Object>> arr = new ArrayList<HashMap<String,Object>>();
+			try {
+				jsonArr = (JSONArray) new JSONParser().parse(result.toString());
+				for (int i = 0; i < jsonArr.size(); i++) {
+					jsonObject = (org.json.simple.JSONObject) jsonArr.get( i );
+					map = new ObjectMapper().readValue(jsonObject.toString(), HashMap.class);
+					arr.add(map);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		return arr;
 	}
 }

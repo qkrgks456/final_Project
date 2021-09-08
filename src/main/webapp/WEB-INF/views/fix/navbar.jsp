@@ -11,7 +11,7 @@
             <a href="${path}/member/agreeForm" class="fs-6 btn-sm btn-outline-light text-dark" style="text-decoration:none">회원가입</a>
         </div>
         <div class="">
-            <a href="#" class="fs-6 btn-sm btn-outline-light text-dark" style="text-decoration:none">공지사항</a>
+            <a href="${path}/serviceCenter/noticeBoard" class="fs-6 btn-sm btn-outline-light text-dark" style="text-decoration:none">공지사항</a>
         </div>
     </div>
 </div>
