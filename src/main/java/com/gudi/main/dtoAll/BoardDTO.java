@@ -12,7 +12,7 @@ public class BoardDTO {
     private String id;
     private String content;
     private String title;
-    private String date;
+    private String dates;
     private String boardHit;
 
 

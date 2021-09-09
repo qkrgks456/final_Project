@@ -3,9 +3,10 @@
 			 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			 xmlns:beans="http://www.springframework.org/schema/beans"
 			 xmlns:context="http://www.springframework.org/schema/context"
+			 xmlns:task="http://www.springframework.org/schema/task"
 			 xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
@@ -31,4 +32,15 @@
 			<beans:ref bean="interceptor"/>
 		</interceptor>
 	</interceptors>
+	<!-- 두가지 방법은 안됩니다 -->
+	<!-- @Scheduled 어노테이션 검색해서 실행 -->
+	<task:annotation-driven/>
+
+	<!-- 빈으로 등록하는 방법 -->
+	<!-- fixed - * : 매초마다 실행시 유리 -->
+	<!-- cron : 매 분/시/일/요일/월/년 마다 실행시 유리 -->
+	<!-- <beans:bean id="scheduleJob" class="com.go.main.service.MainService"/>
+     <task:scheduled-tasks>
+         <task:scheduled ref="scheduleJob" method="loop5" cron="0/1 * * * * MON-FRI"/>
+     </task:scheduled-tasks>-->
 </beans:beans>

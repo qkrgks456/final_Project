@@ -28,14 +28,14 @@
 <%-- 상단 메뉴바 --%>
 <jsp:include page="../fix/menu.jsp"/>
 <%-- 내용 넣으세요 --%>
-<div class="w-100 img-fluid border-white"
-     style="height:300px;background-image: url('${path}/resources/img/bgHansol.jpg')">
+<div class="w-100 img-fluid border-white" style="height:300px;background-image: url('${path}/resources/img/bgHansol.jpg')">
     <div class="container pt-5 border-bottom border-white">
-    <h1 class="text-white display-4">캠핑장이름</h1>
+        <h1 class="text-white display-4">캠핑장이름 ${dto.title}</h1>
+
         <h4 class="text-white ">한줄요약 들어갈 예정이다</h4>
     </div>
     <div class="container pt-2">
-    <h3 class="text-white ">태그 #봄 #여름 #따뜻한 #친절한</h3>
+        <h3 class="text-white ">태그 #봄 #여름 #따뜻한 #친절한</h3>
     </div>
 </div>
 <div class="container px-3 my-3">
@@ -103,8 +103,8 @@
     <div class="py-4 my-2 rounded" style="height: 150px; background-color: #F6F5F4">
         <div class="container my-3 px-2 text-center d-flex justify-content-around">
             <div>
-            <i class="bi bi-water fs-4"></i>
-            <h5 class="align-middle">물놀이</h5>
+                <i class="bi bi-water fs-4"></i>
+                <h5 class="align-middle">물놀이</h5>
             </div>
             <div>
                 <i class="bi bi-life-preserver fs-4"></i>
@@ -123,10 +123,88 @@
     <div class="pt-4 border-bottom border-dark">
         <h4 class="fw-bold">기타 주요시설</h4>
     </div>
+
+    <div class="pt-4 border-bottom border-dark">
+        <h4 class="fw-bold">댓글</h4>
+    </div>
+    <%-- 댓글 입력 폼 --%>
+    <div class="d-flex align-items-center mt-2">
+        <div class="form-floating flex-grow-1 px-2">
+							<textarea class="form-control" placeholder="Leave a comment here"
+                                      name="commentContent" id="commentContent"
+                                      style="height: 100px; resize: none;"></textarea>
+            <div class="invalid-feedback">1자 이상 입력해주세요</div>
+            <label for="commentContent">아이디님, 이곳에 댓글을 작성하세요</label>
+        </div>
+        <a id="cafeCommentBtn" class="btn btn-warning btn-sm">등록</a>
+    </div>
+    <%-- 댓글리스트 --%>
+    <div id="commentLists" class="container px-5 py-4 my-4">
+        <%-- 댓글 내용 --%>
+        <div class="listForm">
+            <p class="fw-bold">qkrgks456</p>
+            <p class="lh-sm">
+                댓글내용
+            <div>
+                <a class="btn btn-warning btn-sm" href="">신고</a>
+                <a class='commentDelBtn btn btn-warning btn-sm'>삭제</a>
+                <a class='commentUpdateBtn btn btn-warning btn-sm'>수정</a>
+            </div>
+            </p>
+            <hr/>
+        </div>
+        <%-- 수정하기 수정 클릭시 요놈 생김 --%>
+        <div class="updateForm visually-hidden">
+            <p class="fw-bold">qkrgks456</p>
+            <div class="form-floating flex-grow-1 px-2">
+								<textarea class="commentUpdateContent form-control"
+                                          name="commentUpdateContent"
+                                          style="height: 100px; resize: none;">댓글내용</textarea>
+                <label>수정할 댓글을 작성하세요</label>
+                <div class="invalid-feedback">1자 이상 입력해주세요</div>
+            </div>
+            <div class="d-flex justify-content-end mt-2"
+                 id="commentUpdateOut">
+                <a class='commentUpdateContentBtn btn btn-warning btn-sm mx-2'>등록</a>
+                <a class='cmUpdateCancel btn btn-warning btn-sm'>취소</a>
+            </div>
+            <hr/>
+        </div>
+        <%-- 두번째 댓글 --%>
+        <div class="listForm" id="listForm">
+            <p class="fw-bold">qkrgks456</p>
+            <p class="lh-sm">
+                댓글내용
+            <div>
+                <a class="btn btn-warning btn-sm"
+                   href="">신고</a>
+                <a class='commentDelBtn btn btn-warning btn-sm'>삭제</a>
+                <a class='commentUpdateBtn btn btn-warning btn-sm'>수정</a>
+            </div>
+            </p>
+            <hr/>
+        </div>
+        <%-- 수정하기 --%>
+        <div class="updateForm visually-hidden" id="updateForm">
+            <p class="fw-bold">qkrgks456</p>
+            <div class="form-floating flex-grow-1 px-2">
+								<textarea class="commentUpdateContent form-control"
+                                          name="commentUpdateContent"
+                                          style="height: 100px; resize: none;">댓글내용</textarea>
+                <label>수정할 댓글을 작성하세요</label>
+                <div class="invalid-feedback">1자 이상 입력해주세요</div>
+            </div>
+            <div class="d-flex justify-content-end mt-2">
+                <a class='commentUpdateContentBtn btn btn-warning btn-sm mx-2'>등록</a>
+                <a class='cmUpdateCancel btn btn-warning btn-sm'>취소</a>
+            </div>
+            <hr/>
+        </div>
+    </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="${path}/resources/js/bootstrap.js"></script>
 <script src="${path}/resources/js/bootstrap.bundle.js"></script>
-<script src="${path}/resources/js/common.js"></script>
+<script src="${path}/resources/js/common.js?var=1"></script>
 </body>
 </html>
