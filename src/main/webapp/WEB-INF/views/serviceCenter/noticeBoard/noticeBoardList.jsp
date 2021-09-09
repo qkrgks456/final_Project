@@ -69,5 +69,6 @@
 	<script src="${path}/resources/js/bootstrap.js"></script>
 	<script src="${path}/resources/js/bootstrap.bundle.js"></script>
 	<script src="${path}/resources/js/common.js"></script>
+	
 </body>
 </html>
