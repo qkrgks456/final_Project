@@ -22,4 +22,10 @@ public class ReserveController {
         model.addAttribute("dto",dto);
         return "reserve/campingDetail";
     }
+
+    @RequestMapping(value = "/campingReserveList")
+    public String campingReserveList(Model model) {
+
+        return "reserve/campingReserveList";
+    }
 }

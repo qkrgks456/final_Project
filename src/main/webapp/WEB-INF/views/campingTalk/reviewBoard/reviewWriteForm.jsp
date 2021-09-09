@@ -20,20 +20,49 @@
 <body>
 <%-- 상단 로그인 추가 --%>
 <c:if test="${sessionScope.loginId eq null}">
-    <jsp:include page="../fix/navbar.jsp"/>
+    <jsp:include page="../../fix/navbar.jsp"/>
 </c:if>
 <c:if test="${sessionScope.loginId ne null}">
-    <jsp:include page="../fix/loginNavbar.jsp"/>
+    <jsp:include page="../../fix/loginNavbar.jsp"/>
 </c:if>
 <%-- 상단 메뉴바 --%>
-<jsp:include page="../fix/menu.jsp"/>
+<jsp:include page="../../fix/menu.jsp"/>
 <%-- 내용 넣으세요 --%>
-<div class="container px-3">
-    캠핑날씨
+<div class="container px-3 my-3">
+<div class="container mx-2">
+<h3>리뷰작성</h3>
+<form action="./reviewWrite" method="post" enctype="multipart/form-data">
+ 제목
+ <div class="input-group mb-3">
+  <input type="text" name="title" class="form-control" placeholder="제목을 입력해주세요" aria-label="Username" aria-describedby="basic-addon1">
+</div>
+
+ 내용
+ <div class="input-group">
+  <textarea style="resize:none" rows="10" class="form-control" name="content" placeholder="내용을 입력해주세요" aria-label="With textarea"></textarea>
+</div>
+
+ <label class="mt-3">파일</label>
+ <div>
+  <input type="file" name="file"/>
+</div>
+<hr/>
+<div class="d-flex flex-row-reverse">
+<button class="btn btn-primary mx-2" type="submit">등록</button>
+<input class="btn btn-primary" type="button" value="목록" onclick="location.href='./reviewBoard'">
+</div>
+</form>
+
+ 
+    </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="${path}/resources/js/bootstrap.js"></script>
 <script src="${path}/resources/js/bootstrap.bundle.js"></script>
 <script src="${path}/resources/js/common.js"></script>
+<script>
+
+
+</script>
 </body>
 </html>

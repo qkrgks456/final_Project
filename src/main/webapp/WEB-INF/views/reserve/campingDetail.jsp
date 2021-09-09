@@ -28,9 +28,10 @@
 <%-- 상단 메뉴바 --%>
 <jsp:include page="../fix/menu.jsp"/>
 <%-- 내용 넣으세요 --%>
-<div class="w-100 img-fluid border-white" style="height:300px;background-image: url('${path}/resources/img/bgHansol.jpg')">
+<div class="w-100 img-fluid border-white"
+     style="height:300px;background-image: url('${path}/resources/img/bgHansol.jpg')">
     <div class="container pt-5 border-bottom border-white">
-        <h1 class="text-white display-4">캠핑장이름 ${dto.title}</h1>
+        <h1 class="text-white display-4">캠핑장이름</h1>
 
         <h4 class="text-white ">한줄요약 들어갈 예정이다</h4>
     </div>
@@ -78,7 +79,7 @@
         </div>
     </div>
     <div class="text-center mt-3">
-        <a class="btn btn-warning mx-1">예약하기</a>
+        <a href="${path}/reserve/campingReserveList" class="btn btn-warning mx-1">예약하기</a>
         <a class="btn btn-warning">가고싶어요!</a>
     </div>
     <div class="pt-4 border-bottom border-dark">
@@ -123,7 +124,28 @@
     <div class="pt-4 border-bottom border-dark">
         <h4 class="fw-bold">기타 주요시설</h4>
     </div>
-
+    <table class="table table-hover align-middle">
+        <tr>
+            <td class="col-3 py-3">주요시설</td>
+            <td>예시예시예시예시예시예시예시예시예시예시예시</td>
+        </tr>
+        <tr>
+            <td class="py-3">기타 부대시설</td>
+            <td>예시예시예시예시예시예시예시예시예시예시예시</td>
+        </tr>
+        <tr>
+            <td class="py-3">바닥환경</td>
+            <td>예시예시예시예시예시예시예시예시예시예시예시</td>
+        </tr>
+        <tr>
+            <td class="py-3">반려동물 출입</td>
+            <td>예시예시예시예시예시예시예시예시예시예시예시</td>
+        </tr>
+        <tr>
+            <td class="py-3">화로대</td>
+            <td>예시예시예시예시예시예시예시예시예시예시예시</td>
+        </tr>
+    </table>
     <div class="pt-4 border-bottom border-dark">
         <h4 class="fw-bold">댓글</h4>
     </div>
@@ -139,7 +161,7 @@
         <a id="cafeCommentBtn" class="btn btn-warning btn-sm">등록</a>
     </div>
     <%-- 댓글리스트 --%>
-    <div id="commentLists" class="container px-5 py-4 my-4">
+    <div id="commentLists" class="container px-5 my-4">
         <%-- 댓글 내용 --%>
         <div class="listForm">
             <p class="fw-bold">qkrgks456</p>
