@@ -44,7 +44,7 @@
 
  <label class="mt-3">파일</label>
  <div>
-  <input multiple="multiple" type="file" name="file" onclick="fileAdd()"/>
+  <input type="file" name="file"/>
 </div>
 <hr/>
 <div class="d-flex flex-row-reverse">
@@ -63,7 +63,6 @@
 <script>
 
 
-	
 </script>
 </body>
 </html>
