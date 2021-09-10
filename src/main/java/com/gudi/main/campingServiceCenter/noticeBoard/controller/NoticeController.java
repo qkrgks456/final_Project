@@ -19,29 +19,30 @@ import com.gudi.main.campingServiceCenter.noticeBoard.service.NoticeService;
 @Controller
 @RequestMapping(value = "/serviceCenter")
 public class NoticeController {
-	Logger logger = LoggerFactory.getLogger(this.getClass());
-	@Autowired
-	NoticeService service;
+    Logger logger = LoggerFactory.getLogger(this.getClass());
+    @Autowired
+    NoticeService service;
 
-	/*
-	 * @RequestMapping(value = "/noticeBoard") public String NoticeBoard(Model
-	 * model) { logger.info("공지사항입장"); return
-	 * "serviceCenter/noticeBoard/noticeBoardList"; }
-	 */
+    @RequestMapping(value = "/noticeBoard")
+    public String NoticeBoard(Model model) {
+        logger.info("공지사항입장");
+        return "serviceCenter/noticeBoard/noticeBoardList";
+    }
 
-	/*
-	 * @RequestMapping(value =
-	 * "/noticeBoardList/{pagePerNum}/{page}",method=RequestMethod.GET)
-	 * public @ResponseBody HashMap<String, Object> list(@PathVariable int
-	 * pagePerNum, @PathVariable int page){ logger.info("공지사항 리스트"); //@PathVariable
-	 * 경로에 있는 녀석을 변수로 담는다.
-	 * logger.info("pagePerNum : {} / page : {}",pagePerNum,page); HashMap<String,
-	 * Object> map = service.list(page, pagePerNum); return map; }
-	 */
+    @ResponseBody
+    @RequestMapping(value = "/noticeBoardList/{pagePerNum}/{page}", method = RequestMethod.GET)
+    public HashMap<String, Object> list(@PathVariable int pagePerNum, @PathVariable int page) {
+        logger.info("공지사항 리스트");
+        //@PathVariable 경로에 있는 녀석을 변수로 담는다.
+        logger.info("pagePerNum : {} / page : {}", pagePerNum, page);
+        HashMap<String, Object> map = service.list(page, pagePerNum);
+        return map;
+    }
 
-	@RequestMapping(value = "/noticeDetail")
-	public ModelAndView noticeDetail(@RequestParam String boardnum) {
-		return service.detail(boardnum);
-	}
+
+    @RequestMapping(value = "/noticeDetail")
+    public ModelAndView noticeDetail(@RequestParam String boardnum) {
+        return service.detail(boardnum);
+    }
 
 }

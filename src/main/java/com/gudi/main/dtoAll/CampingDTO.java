@@ -8,12 +8,12 @@ import lombok.ToString;
 @Setter
 @Getter
 public class CampingDTO {
-    private String contentId;
+    private int contentId;
     private String lineIntro;
     private String facltNm;
     private String intro;
     private String allar;
-    private String featurenm;
+    private String featureNm;
     private String induty;
     private String lctCl;
     private String addr1;

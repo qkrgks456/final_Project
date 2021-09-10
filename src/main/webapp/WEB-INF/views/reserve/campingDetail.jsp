@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page session="true" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <html>
@@ -31,71 +32,81 @@
 <div class="w-100 img-fluid border-white"
      style="height:300px;background-image: url('${path}/resources/img/bgHansol.jpg')">
     <div class="container pt-5 border-bottom border-white">
-        <h1 class="text-white display-4">캠핑장이름</h1>
+        <h1 class="text-white display-4">${map.dto.facltNm}</h1>
 
-        <h4 class="text-white ">한줄요약 들어갈 예정이다</h4>
+        <h4 class="text-white ">${map.dto.lineIntro}</h4>
     </div>
     <div class="container pt-2">
-        <h3 class="text-white ">태그 #봄 #여름 #따뜻한 #친절한</h3>
+        <h3 class="text-white ">${map.dto.featureNm}</h3>
     </div>
 </div>
 <div class="container px-3 my-3">
     <div class="row">
         <div class="col-md-6 pt-2">
-            <img src="${path}/resources/img/noImage.png" class="rounded img-fluid mx-auto d-block"
-                 style="width: 500px; height: 360px;object-fit: cover;"/>
+            <c:if test="${map.dto.firstImageUrl eq null}">
+                <img src="${path}/resources/img/noImage.png" class="rounded img-fluid mx-auto d-block"
+                     style="width: 500px; height: 360px;object-fit: cover;"/>
+            </c:if>
+            <c:if test="${map.dto.firstImageUrl ne null}">
+                <img src="${map.dto.firstImageUrl}" class="rounded img-fluid mx-auto d-block"
+                     style="width: 500px; height: 360px;object-fit: cover;"/>
+            </c:if>
         </div>
         <div class="col-md-5">
             <table class="table table-hover align-middle">
                 <tr>
                     <td class="col-3 py-3">주소</td>
-                    <td>예시예시예시예시예시예시예시예시예시예시예시</td>
+                    <td>${map.dto.addr1}</td>
                 </tr>
                 <tr>
                     <td class="py-3">문의처</td>
-                    <td>예시예시예시예시예시예시예시예시예시예시예시</td>
+                    <td>${map.dto.tel}</td>
                 </tr>
                 <tr>
                     <td class="py-3">캠핑장 환경</td>
-                    <td>예시예시예시예시예시예시예시예시예시예시예시</td>
+                    <td>${map.dto.lctCl}</td>
                 </tr>
                 <tr>
                     <td class="py-3">캠핑장 유형</td>
-                    <td>예시예시예시예시예시예시예시예시예시예시예시</td>
+                    <td>${map.dto.induty}</td>
                 </tr>
                 <tr>
                     <td class="py-3">운영기간</td>
-                    <td>예시예시예시예시예시예시예시예시예시예시예시</td>
+                    <td>${map.dto.operPdCl}</td>
                 </tr>
                 <tr>
                     <td class="py-3">운영일</td>
-                    <td>예시예시예시예시예시예시예시예시예시예시예시</td>
+                    <td>${map.dto.operDeCl}</td>
                 </tr>
                 <tr>
                     <td class="py-3">홈페이지</td>
-                    <td>예시예시예시예시예시예시예시예시예시예시예시</td>
+                    <td><a href="${map.dto.homepage}">${map.dto.homepage}</a></td>
                 </tr>
             </table>
         </div>
     </div>
     <div class="text-center mt-3">
-        <a href="${path}/reserve/campingReserveList" class="btn btn-warning mx-1">예약하기</a>
+        <a href="${path}/reserve/campingReserve" class="btn btn-warning mx-1">예약하기</a>
         <a class="btn btn-warning">가고싶어요!</a>
     </div>
     <div class="pt-4 border-bottom border-dark">
         <h4 class="fw-bold">캠핑장 소개</h4>
     </div>
     <div class="py-4 d-flex justify-content-between border-bottom border-dark">
-        <img src="${path}/resources/img/noImage.png" style="width: 400px;">
-        <img src="${path}/resources/img/noImage.png" style="width: 400px;">
-        <img src="${path}/resources/img/noImage.png" style="width: 400px;">
+        <c:if test="${fn:length(map.imgArr) eq 3}">
+            <c:forEach items="${map.imgArr}" var="arr">
+                <img src="${arr}" style="width: 400px; height: 250px">
+            </c:forEach>
+        </c:if>
+        <c:if test="${fn:length(map.imgArr) ne 3}">
+            <img src="${path}/resources/img/noImage.png" style="width: 400px; height: 250px">
+            <img src="${path}/resources/img/noImage.png" style="width: 400px; height: 250px">
+            <img src="${path}/resources/img/noImage.png" style="width: 400px; height: 250px">
+        </c:if>
     </div>
     <div class="pt-4">
-        <p class="fs-6">상세설명이 들어갈 예정이다 상세설명이 들어갈 예정이다상세설명이 들어갈 예정이다상세설명이 들어갈 예정이다상세설명이 들어갈 예정이다상세설명이 들어갈 예정이다
-            상세설명이 들어갈 예정이다상세설명이 들어갈 예정이다상세설명이 들어갈 예정이다상세설명이 들어갈 예정이다상세설명이 들어갈 예정이다상세설명이 들어갈 예정이다
-            상세설명이 들어갈 예정이다상세설명이 들어갈 예정이다상세설명이 들어갈 예정이다상세설명이 들어갈 예정이다상세설명이 들어갈 예정이다상세설명이 들어갈 예정이다상세설명이 들어갈 예정이다
-            상세설명이 들어갈 예정이다상세설명이 들어갈 예정이다상세설명이 들어갈 예정이다상세설명이 들어갈 예정이다상세설명이 들어갈 예정이다상세설명이 들어갈 예정이다
-            상세설명이 들어갈 예정이다상세설명이 들어갈 예정이다상세설명이 들어갈 예정이다상세설명이 들어갈 예정이다상세설명이 들어갈 예정이다상세설명이 들어갈 예정이다상세설명이 들어갈 예정이다
+        <p class="fs-6">
+            ${map.dto.intro}
         </p>
     </div>
     <div class="pt-4 border-bottom border-dark">
@@ -103,22 +114,30 @@
     </div>
     <div class="py-4 my-2 rounded" style="height: 150px; background-color: #F6F5F4">
         <div class="container my-3 px-2 text-center d-flex justify-content-around">
-            <div>
-                <i class="bi bi-water fs-4"></i>
-                <h5 class="align-middle">물놀이</h5>
-            </div>
-            <div>
-                <i class="bi bi-life-preserver fs-4"></i>
-                <h5 class="align-middle">안전</h5>
-            </div>
-            <div>
-                <i class="bi bi-wifi fs-4"></i>
-                <h5 class="align-middle">와이파이</h5>
-            </div>
-            <div>
-                <i class="bi bi-lightning-fill fs-4"></i>
-                <h5 class="align-middle">전기</h5>
-            </div>
+            <c:forTokens var="val" items="${map.dto.sbrsCl}" delims=",">
+                <div>
+                    <c:if test="${val eq '무선인터넷'}">
+                        <i class="bi bi-wifi fs-3"></i>
+                    </c:if>
+                    <c:if test="${val eq '전기'}">
+                        <i class="bi bi-lightning-fill fs-3"></i>
+                    </c:if>
+                    <h5 class="align-middle">${val}</h5>
+                </div>
+            </c:forTokens>
+
+            <%--  <div>
+                  <i class="bi bi-life-preserver fs-4"></i>
+                  <h5 class="align-middle">안전</h5>
+              </div>
+              <div>
+                  <i class="bi bi-wifi fs-4"></i>
+                  <h5 class="align-middle">와이파이</h5>
+              </div>
+              <div>
+
+                  <h5 class="align-middle">전기</h5>
+              </div>--%>
         </div>
     </div>
     <div class="pt-4 border-bottom border-dark">
@@ -127,23 +146,39 @@
     <table class="table table-hover align-middle">
         <tr>
             <td class="col-3 py-3">주요시설</td>
-            <td>예시예시예시예시예시예시예시예시예시예시예시</td>
+            <td>${map.dto.posblFcltyCl}</td>
         </tr>
         <tr>
             <td class="py-3">기타 부대시설</td>
-            <td>예시예시예시예시예시예시예시예시예시예시예시</td>
+            <td>${map.dto.sbrsEtc}</td>
         </tr>
         <tr>
             <td class="py-3">바닥환경</td>
-            <td>예시예시예시예시예시예시예시예시예시예시예시</td>
+            <td>
+                <c:if test="${map.dto.sitebottomCl1 ne 0}">
+                    잔디
+                </c:if>
+                <c:if test="${map.dto.sitebottomCl2 ne 0}">
+                    파쇄석
+                </c:if>
+                <c:if test="${map.dto.sitebottomCl3 ne 0}">
+                    테크
+                </c:if>
+                <c:if test="${map.dto.sitebottomCl4 ne 0}">
+                    자갈
+                </c:if>
+                <c:if test="${map.dto.sitebottomCl5 ne 0}">
+                    맨흙
+                </c:if>
+            </td>
         </tr>
         <tr>
             <td class="py-3">반려동물 출입</td>
-            <td>예시예시예시예시예시예시예시예시예시예시예시</td>
+            <td>${map.dto.animalCmgCl}</td>
         </tr>
         <tr>
             <td class="py-3">화로대</td>
-            <td>예시예시예시예시예시예시예시예시예시예시예시</td>
+            <td>${map.dto.brazierCl}</td>
         </tr>
     </table>
     <div class="pt-4 border-bottom border-dark">
@@ -152,9 +187,9 @@
     <%-- 댓글 입력 폼 --%>
     <div class="d-flex align-items-center mt-2">
         <div class="form-floating flex-grow-1 px-2">
-							<textarea class="form-control" placeholder="Leave a comment here"
-                                      name="commentContent" id="commentContent"
-                                      style="height: 100px; resize: none;"></textarea>
+    <textarea class="form-control" placeholder="Leave a comment here"
+              name="commentContent" id="commentContent"
+              style="height: 100px; resize: none;"></textarea>
             <div class="invalid-feedback">1자 이상 입력해주세요</div>
             <label for="commentContent">아이디님, 이곳에 댓글을 작성하세요</label>
         </div>
@@ -179,9 +214,9 @@
         <div class="updateForm visually-hidden">
             <p class="fw-bold">qkrgks456</p>
             <div class="form-floating flex-grow-1 px-2">
-								<textarea class="commentUpdateContent form-control"
-                                          name="commentUpdateContent"
-                                          style="height: 100px; resize: none;">댓글내용</textarea>
+    <textarea class="commentUpdateContent form-control"
+              name="commentUpdateContent"
+              style="height: 100px; resize: none;">댓글내용</textarea>
                 <label>수정할 댓글을 작성하세요</label>
                 <div class="invalid-feedback">1자 이상 입력해주세요</div>
             </div>
@@ -210,9 +245,9 @@
         <div class="updateForm visually-hidden" id="updateForm">
             <p class="fw-bold">qkrgks456</p>
             <div class="form-floating flex-grow-1 px-2">
-								<textarea class="commentUpdateContent form-control"
-                                          name="commentUpdateContent"
-                                          style="height: 100px; resize: none;">댓글내용</textarea>
+    <textarea class="commentUpdateContent form-control"
+              name="commentUpdateContent"
+              style="height: 100px; resize: none;">댓글내용</textarea>
                 <label>수정할 댓글을 작성하세요</label>
                 <div class="invalid-feedback">1자 이상 입력해주세요</div>
             </div>

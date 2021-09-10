@@ -87,7 +87,7 @@
 		console.log(page + " page가져오기");
 		console.log(reqUrl);
 
-		/* $.ajax({
+		 $.ajax({
 			url : reqUrl,
 			type : 'get',
 			dataType : 'json',
@@ -109,7 +109,7 @@
 			error : function(error) {
 				console.log(error);
 			}
-		}); */
+		});
 	}
 	
 	function listPrint(list){
