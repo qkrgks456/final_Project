@@ -39,7 +39,7 @@
 
  내용
  <div class="input-group">
-  <textarea style="resize:none" rows="10" class="form-control" name="content" placeholder="내용을 입력해주세요" aria-label="With textarea"></textarea>
+  <textarea name="content" style="resize:none" rows="10" class="form-control"  placeholder="내용을 입력해주세요" aria-label="With textarea"></textarea>
 </div>
 
  <label class="mt-3">파일</label>

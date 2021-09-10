@@ -28,49 +28,42 @@
 <%-- 상단 메뉴바 --%>
 <jsp:include page="../../fix/menu.jsp"/>
 <%-- 내용 넣으세요 --%>
-<div class="container px-3">
-    <h3>리뷰</h3>
-    
-<table class="table table-hover">
-  <thead>
-    <tr>
-      <th scope="col">No</th>
-      <th scope="col">제목</th>
-      <th scope="col">작성자</th>
-      <th scope="col">조회수</th>
-      <th scope="col">작성일</th>
-      <th scope="col">좋아요</th>
-    </tr>
-  </thead>
-  
-  <tbody>
-  <c:forEach items="${dtoList}" var="dto">
-    <tr>
-      <td scope="row">${dto.boardNum}</td>
-      <td><a href="reviewDetail/${dto.boardNum}">${dto.title}</a></td>
-      <td>${dto.id}</td>
-      <td>조회수</td>
-      <td>${dto.dates}</td>
-      <td>좋아요</td>
-    </tr>
-  </c:forEach>
-  </tbody>
-</table>    
-    <input class="btn btn-primary" type="button" value="리뷰쓰기" onclick="location.href='./reviewWriteForm'">
+<div class="container px-3 my-3">
+<div class="container mx-2">
+<h3>리뷰수정</h3>
+<form action="../reviewUpdate" method="post" enctype="multipart/form-data">
+ 제목
+ <div class="input-group mb-3">
+  <input type="hidden" name="boardNum" value="${dto.boardNum}"/>
+  <input type="text" name="title" class="form-control" placeholder="${dto.title}" aria-label="Username" aria-describedby="basic-addon1">
+</div>
+
+ 내용
+ <div class="input-group">
+  <textarea name="content" style="resize:none" rows="10" class="form-control"  placeholder="${dto.content}" aria-label="With textarea"></textarea>
+</div>
+
+ <label class="mt-3">파일</label>
+ <div>
+  <input type="file" name="file"/>
+</div>
+<hr/>
+<div class="d-flex flex-row-reverse">
+<button class="btn btn-primary mx-2" type="submit">등록</button>
+<input class="btn btn-primary" type="button" value="목록" onclick="location.href='./reviewBoard'">
+</div>
+</form>
+
+ 
+    </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="${path}/resources/js/bootstrap.js"></script>
 <script src="${path}/resources/js/bootstrap.bundle.js"></script>
 <script src="${path}/resources/js/common.js"></script>
-
 <script>
 
-var delmsg = "${delmsg}"
-if(delmsg!=""){
-	alert(delmsg);
-}
 
 </script>
-
 </body>
 </html>

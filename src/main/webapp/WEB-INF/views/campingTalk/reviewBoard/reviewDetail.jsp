@@ -4,7 +4,6 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
-
     <title>Final</title>
     <%-- 부트 스트랩 메타태그 --%>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -28,49 +27,67 @@
 <%-- 상단 메뉴바 --%>
 <jsp:include page="../../fix/menu.jsp"/>
 <%-- 내용 넣으세요 --%>
-<div class="container px-3">
-    <h3>리뷰</h3>
-    
-<table class="table table-hover">
-  <thead>
-    <tr>
-      <th scope="col">No</th>
-      <th scope="col">제목</th>
-      <th scope="col">작성자</th>
-      <th scope="col">조회수</th>
-      <th scope="col">작성일</th>
-      <th scope="col">좋아요</th>
-    </tr>
-  </thead>
-  
-  <tbody>
-  <c:forEach items="${dtoList}" var="dto">
-    <tr>
-      <td scope="row">${dto.boardNum}</td>
-      <td><a href="reviewDetail/${dto.boardNum}">${dto.title}</a></td>
-      <td>${dto.id}</td>
-      <td>조회수</td>
-      <td>${dto.dates}</td>
-      <td>좋아요</td>
-    </tr>
-  </c:forEach>
-  </tbody>
-</table>    
-    <input class="btn btn-primary" type="button" value="리뷰쓰기" onclick="location.href='./reviewWriteForm'">
+<div class="container px-3 my-3">
+<div class="container mx-2">
+
+<!-- 상단 -->
+<div class="row">
+	<div class="col">
+		${dto.title}
+	</div>
+	
+	<div class="col d-flex flex-row-reverse">
+		<input type="button" value="수정" onclick="location.href='../reviewUpdateForm/${dto.boardNum}'"/>
+		<input type="button" value="삭제" onclick="location.href='../reviewDel/${dto.boardNum}'"/>
+	</div>	
+</div>
+
+<div class="row">
+	<div class="col">
+		${dto.id} l ${dto.dates}
+	</div>
+	
+	<div class="col d-flex flex-row-reverse">
+		조회수${dto.boardHit} l 추천수  l 댓글수 	
+	</div>	
+</div>
+
+<hr/>
+
+<!-- 중단 -->
+<div>
+	<div class="d-flex justify-content-center">
+		<!-- <img src="C:/upload/${phoDto.newFileName}"/>  -->
+		<img src="${path}/resources/img/test.jpg"/>
+	</div>
+	<br/>
+	<div>
+		${dto.content}
+	</div>
+</div>
+
+
+
+<!-- 댓글 -->
+
+
+
+
+
+
+
+
+
+ 
+    </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="${path}/resources/js/bootstrap.js"></script>
 <script src="${path}/resources/js/bootstrap.bundle.js"></script>
 <script src="${path}/resources/js/common.js"></script>
-
 <script>
 
-var delmsg = "${delmsg}"
-if(delmsg!=""){
-	alert(delmsg);
-}
 
 </script>
-
 </body>
 </html>
