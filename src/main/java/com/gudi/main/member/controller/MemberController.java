@@ -19,6 +19,7 @@ import java.util.HashMap;
 @Controller
 @RequestMapping(value = "/member")
 public class MemberController {
+	
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -30,6 +31,11 @@ public class MemberController {
     @RequestMapping(value = "/agreeForm")
     public String agreeForm(Model model) {
         return "member/join/agreeForm";
+    }
+    
+    @RequestMapping(value = "/joinForm")
+    public String joinForm(Model model) {
+        return "member/join/joinForm";
     }
 
     @RequestMapping(value = "/login")
