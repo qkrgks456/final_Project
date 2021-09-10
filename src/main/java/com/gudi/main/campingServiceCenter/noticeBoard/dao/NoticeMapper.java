@@ -4,8 +4,10 @@ import java.util.ArrayList;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.gudi.main.dtoAll.BoardDTO;
+import com.gudi.main.dtoAll.PhotoDTO;
 
 @Mapper
 public interface NoticeMapper {
@@ -15,5 +17,14 @@ public interface NoticeMapper {
 
 	@Select("select count(boardnum) from (SELECT  ROW_NUMBER() OVER ( ORDER BY boardnum desc)  rnum, boardnum, id, title, content,  boardhit, dates, delcheck  FROM  noticeboard where delcheck = 'N')")
 	int allCount();
+
+	@Update("update noticeboard set boardhit = boardhit + 1 where boardnum = #{boardnum}")
+	void up(String boardnum);
+
+	@Select("select * from noticeboard where boardnum = #{boardnum}")
+	BoardDTO detail(String boardnum);
+
+	@Select("SELECT photonum, newFileName, oriFileName, id, dates FROM photo WHERE division = 'noticeboard' and divisionnum = #{boardnum}")
+	ArrayList<PhotoDTO> file(String boardnum);
 
 }

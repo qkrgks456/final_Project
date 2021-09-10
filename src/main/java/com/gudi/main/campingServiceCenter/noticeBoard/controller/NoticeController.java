@@ -39,11 +39,18 @@ public class NoticeController {
         return map;
     }
 
-
     @RequestMapping(value = "/noticeDetail")
     public ModelAndView noticeDetail(@RequestParam String boardnum) {
     	logger.info("공지사항 디테일 실행");
         return service.detail(boardnum);
+        
     }
+    
+    @RequestMapping(value = "/noticeWriteForm")
+	public String noticeWriteForm() {
+		return "serviceCenter/noticeBoard/noticeWriteForm";
+	}
+    
+    
 
 }

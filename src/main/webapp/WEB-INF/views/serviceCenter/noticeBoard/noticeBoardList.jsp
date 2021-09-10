@@ -35,13 +35,13 @@
 	<%-- 내용 넣으세요 --%>
 	<div class="container px-3 mt-2">
 	<h3>공지사항</h3>
-		<table  class="table table-hover">
+		<table  class="table table-hover text-center">
 		<thead>
 		<tr>
-			<th scope="col">제목</th>
-			<th scope="col">작성자</th>
-			<th scope="col">날짜</th>
-			<th scope="col">조회수</th>
+			<th scope="col" class="col-md-8">제목</th>
+			<th scope="col" class="col-md-1 ">작성자</th>
+			<th scope="col" class="col-md-2 ">날짜</th>
+			<th scope="col" class="col-md-1 ">조회수</th>
 		</tr>
 		</thead>
 		<tbody id="list">
@@ -58,7 +58,7 @@
 			</td>
 		</tr>
 		</table>
-		<input class="btn btn-primary" type="button" value="공지사항쓰기" onclick="location.href='#'">
+		<input class="btn btn-primary" type="button" value="공지사항쓰기" onclick="location.href='noticeWriteForm'">
 	</div>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="${path}/resources/js/bootstrap.js"></script>

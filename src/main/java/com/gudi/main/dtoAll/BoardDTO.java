@@ -14,6 +14,6 @@ public class BoardDTO {
     private String title;
     private String dates;
     private String boardHit;
-
+    private String delCheck;
 
 }

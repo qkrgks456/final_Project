@@ -28,55 +28,41 @@
 <%-- 상단 메뉴바 --%>
 <jsp:include page="../../fix/menu.jsp"/>
 <%-- 내용 넣으세요 --%>
-<div class="container px-3">
-디테일
+<div class="container px-3 my-3">
+<div class="container mx-2">
+<h3>공지사항 작성</h3>
+<form action="noticeWrite" method="post" enctype="multipart/form-data">
+ 제목
+ <div class="input-group mb-3">
+  <input type="text" name="title" class="form-control" placeholder="제목을 입력해주세요" aria-label="Username" aria-describedby="basic-addon1">
+</div>
 
-<table>
-		<tr>
-			<th>제목</th>
-			<td>${dto	.title}</td>
-		</tr>
-		<tr>
-			<th>작성자</th>
-			<td>${dto.id}</td>
-		</tr>
-		<tr>
-			<th>작성일</th>
-			<td>${dto.dates}</td>
-		</tr>
-		<tr>
-			<th>조회수</th>
-			<td>${dto.boardHit}</td>
-		</tr>
-		<tr>
-			<th>내용</th>
-			<td>${dto.content}</td>
-		</tr>
-		<c:if test="${file.size()>0 }">
-		<tr>
-			<th>다운로드</th>
-			<td>
-				<ul>
-					<c:forEach items="${file }" var="file">
-					<!-- 뒤에 만약 /가 없으면 . 뒤에 확장자 내용을 지워버림 -->
-						<li><a href="download/${file.oriFileName }/${file.newFileName}/">${file.oriFileName}</a></li>
-					</c:forEach>
-				</ul>
-			</td>
-		</tr>
-		</c:if>
-		<tr>
-			<td colspan="2">
-				<button onclick="location.href='noticeBoard'">리스트</button>
-				<%-- <button onclick="location.href='./updateForm?idx=${bbs.idx}'">수정</button>
-				<button onclick="location.href='./del?idx=${bbs.idx}'">삭제</button>			 --%>
-			</td>
-		</tr>
-	</table>
+ 내용
+ <div class="input-group">
+  <textarea style="resize:none" rows="10" class="form-control" name="content" placeholder="내용을 입력해주세요" aria-label="With textarea"></textarea>
+</div>
+
+ <label class="mt-3">파일</label>
+ <div>
+  <input type="file" name="file"/>
+</div>
+<hr/>
+<div class="d-flex flex-row-reverse">
+<button class="btn btn-primary mx-2" type="submit">등록</button>
+<input class="btn btn-primary" type="button" value="목록" onclick="location.href='noticeBoard'">
+</div>
+</form>
+
+ 
+    </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="${path}/resources/js/bootstrap.js"></script>
 <script src="${path}/resources/js/bootstrap.bundle.js"></script>
 <script src="${path}/resources/js/common.js"></script>
+<script>
+
+
+</script>
 </body>
 </html>

@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.gudi.main.campingServiceCenter.noticeBoard.dao.NoticeMapper;
 import com.gudi.main.dtoAll.BoardDTO;
+import com.gudi.main.dtoAll.PhotoDTO;
 
 @Service
 public class NoticeService {
@@ -43,8 +44,13 @@ public class NoticeService {
 		ModelAndView mav = new ModelAndView();
 		dao.up(boardnum);
 		BoardDTO dto = dao.detail(boardnum);
+		mav.addObject("dto", dto);
 		
-		
+		ArrayList<PhotoDTO> file = dao.file(boardnum);
+		mav.addObject("file", file);
+		mav.setViewName("/serviceCenter/noticeBoard/noticeDetail");
 		return mav;
 	}
+	  
+	  
 }
