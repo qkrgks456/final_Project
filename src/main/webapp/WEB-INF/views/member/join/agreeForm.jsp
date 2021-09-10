@@ -527,9 +527,13 @@
             </div>
             <hr/>
         </form>
-        <div class="col text-center">
+       <!--  <div class="col text-center">
             <button id="member" type="button" class="btn btn-dark btn-lg mx-2">회원가입</button>
+        </div> -->
+        <div class="col text-center">
+            <a href="${path}/member/joinForm" id=member class="btn btn-dark btn-lg mx-2">회원가입</a>
         </div>
+        
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
