@@ -44,16 +44,6 @@
 			<th scope="col">조회수</th>
 		</tr>
 		</thead>
-		<%-- <tbody>
-		<c:forEach items="${list}" var="dto">
-			<tr onClick = "location.href='noticeDetail?boardnum=${dto.boardNum}'">
-				<td>${dto.title}</td>
-				<td>${dto.id}</td>
-				<td>${dto.dates}</td>
-				<td>${dto.boardHit}</td>
-			</tr>
-		</c:forEach>
-		</tbody> --%>
 		<tbody id="list">
 			<!-- 리스트가 출력될 내용 -->
 		</tbody>
@@ -117,15 +107,12 @@
 		
 		for(var i = 0; i<list.length; i++){
 			
-			content += "<tr>";
+			content += "<tr onClick = \" location.href='noticeDetail?boardnum="+list[i].boardNum+"'\">";
 			content +="<td>"+list[i].id+"</td>";
 			content +="<td>"+list[i].title+"</td>";
-			//miliscondes로 표현됨 그래서 Date()를 통해서 바꿔야 함
-			//content +="<td>"+list[i].reg_date+"</td>";
 			var date = new Date(list[i].dates);
-			//console.log(date.toLocaleDateString("ko-KR"));
 			content +="<td>"+date.toLocaleDateString("ko-KR")+"</td>";
-			//content +="<td>"+list[i].bHit+"</td>";
+			content +="<td>"+list[i].boardHit+"</td>";
 			content +="</tr>";
 			$("#list").empty();
 			$("#list").append(content);

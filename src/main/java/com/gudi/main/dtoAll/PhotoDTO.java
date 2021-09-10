@@ -14,4 +14,5 @@ public class PhotoDTO {
     private String newFileName;
     private String oriFileName;
     private String date;
+    private String divisionNum;
 }

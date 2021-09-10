@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gudi.main.campingServiceCenter.noticeBoard.dao.NoticeMapper;
@@ -37,8 +38,11 @@ public class NoticeService {
 			return map;
 		}
 
+	  @Transactional
 	public ModelAndView detail(String boardnum) {
 		ModelAndView mav = new ModelAndView();
+		dao.up(boardnum);
+		BoardDTO dto = dao.detail(boardnum);
 		
 		
 		return mav;

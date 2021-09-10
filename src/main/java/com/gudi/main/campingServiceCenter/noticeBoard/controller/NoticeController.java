@@ -42,6 +42,7 @@ public class NoticeController {
 
     @RequestMapping(value = "/noticeDetail")
     public ModelAndView noticeDetail(@RequestParam String boardnum) {
+    	logger.info("공지사항 디테일 실행");
         return service.detail(boardnum);
     }
 
