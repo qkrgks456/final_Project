@@ -14,4 +14,5 @@ public class CommentDTO {
     private String content;
     private String date;
     private String delCheck;
+    private int divisionNum;
 }

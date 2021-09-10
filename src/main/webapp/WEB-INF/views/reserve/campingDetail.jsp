@@ -5,7 +5,6 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
-
     <title>Final</title>
     <%-- 부트 스트랩 메타태그 --%>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -32,7 +31,8 @@
 <div class="w-100 img-fluid border-white"
      style="height:300px;background-image: url('${path}/resources/img/bgHansol.jpg')">
     <div class="container pt-5 border-bottom border-white">
-        <h1 class="text-white display-4">${map.dto.facltNm}</h1>
+        <h1 id="infoAttr" class="text-white display-4" contentId="${map.dto.contentId}"
+            path="${path}">${map.dto.facltNm}</h1>
         <div class="container pt-2">
             <h3 class="text-white ">
                 <c:forTokens var="val" items="${map.dto.themaEnvrnCl}" delims=",">
@@ -100,7 +100,8 @@
     <div class="py-4 d-flex justify-content-between border-bottom border-dark">
         <c:if test="${fn:length(map.imgArr) eq 3}">
             <c:forEach items="${map.imgArr}" var="arr">
-                <img src="${arr}" style="width: 400px; height: 250px">
+                <img src="${arr}" style="width: 400px; height: 250px"
+                     onerror="this.src='${path}/resources/img/noImage.png';">
             </c:forEach>
         </c:if>
         <c:if test="${fn:length(map.imgArr) ne 3}">
@@ -222,9 +223,16 @@
               name="commentContent" id="commentContent"
               style="height: 100px; resize: none;"></textarea>
             <div class="invalid-feedback">1자 이상 입력해주세요</div>
-            <label for="commentContent">아이디님, 이곳에 댓글을 작성하세요</label>
+            <c:if test="${sessionScope.loginId eq null}">
+                <label for="commentContent">댓글을 작성하려면, 로그인 해주세요</label>
+            </c:if>
+            <c:if test="${sessionScope.loginId ne null}">
+                <label for="commentContent">${sessionScope.loginId}님 이곳에 댓글을 작성하세요</label>
+            </c:if>
         </div>
-        <a id="cafeCommentBtn" class="btn btn-warning btn-sm">등록</a>
+        <c:if test="${sessionScope.loginId ne null}">
+            <a id="cafeCommentBtn" class="btn btn-warning btn-sm">등록</a>
+        </c:if>
     </div>
     <%-- 댓글리스트 --%>
     <div id="commentLists" class="container px-5 my-4">
@@ -296,21 +304,24 @@
 <script src="${path}/resources/js/common.js?var=1"></script>
 <script>
     /* 댓글 등록 ajax */
-    $('#cafeCommentBtn').on('click',function () {
-        console.log("안녕");
+    $('#cafeCommentBtn').on('click', function () {
+        let contentId = $('#infoAttr').attr('contentId');
+        let path = $('#infoAttr').attr('path');
         let commentContent = $('#commentContent').val();
         if (commentContent.trim() != "") {
             $('#commentContent').removeClass('is-invalid');
             let cafeKey = $('#cafeCommentBtn').attr("title");
             $.ajax({
                 type: "POST",//방식
-                url: "/Project/cafeCommentInput",//주소
+                url: path + "/reserve/reserveCmInsert",//주소
                 data: {
-                    commentContent: commentContent
+                    commentContent: commentContent,
+                    contentId: contentId
                 },
                 dataType: 'JSON',
                 success: function (data) { //성공시
-                    commentList(data);
+                    console.log(data);
+                    /*commentList(data);*/
                     $('#commentContent').val("");
                 },
                 error: function (e) { //실패시

@@ -19,6 +19,8 @@ import java.util.HashMap;
 public class ReserveService {
     @Autowired
     ReserveMapper mapper;
+    @Autowired
+    CommentService commentService;
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public HashMap<String, Object> campingDetail(String contentId) {
@@ -48,23 +50,9 @@ public class ReserveService {
             }
         }
         // 댓글값 가져오기(페이지네이션 포함)
-        HashMap<String, Object> map = comment(contentId, 1);
+        HashMap<String, Object> map = commentService.commentList(contentId, 1);
         map.put("imgArr", imgArr);
         map.put("dto", dto);
-        return map;
-    }
-
-    // 해당 캠핑장 댓글 가져오기
-    public HashMap<String, Object> comment(String contentId, int page) {
-        int start = 0;
-        if (page != 1) {
-            start = (page - 1) * 8;
-        }
-        ArrayList<CommentDTO> commentList = mapper.reserveCommentList(contentId, start);
-        int total = mapper.reserveTotal(contentId);
-        HashMap<String, Object> map = HansolUtil.pagination(page, 8, total);
-        map.put("commentList", commentList);
-        logger.info("map체크 : " + map);
         return map;
     }
 
