@@ -48,7 +48,7 @@
 	</div>
 	
 	<div class="col d-flex flex-row-reverse">
-		조회수${dto.boardHit} l 추천수  l 댓글수 	
+		조회수${dto.boardHit} l 좋아요0  l 댓글수0	
 	</div>	
 </div>
 
@@ -58,7 +58,10 @@
 <div>
 	<div class="d-flex justify-content-center">
 		<!-- <img src="C:/upload/${phoDto.newFileName}"/>  -->
-		<img src="${path}/resources/img/test.jpg"/>
+		<!-- <img src="${path}/resources/img/test.jpg"/>  -->
+		<c:forEach var="photo" items="${phoDtos}">
+			<img src="C:/upload/${photo.newFileName}"/><br/>
+		</c:forEach>
 	</div>
 	<br/>
 	<div>
@@ -66,6 +69,16 @@
 	</div>
 </div>
 
+<div class="d-flex justify-content-center"">
+	<input type="button" value="좋아요"/>
+	<input type="button" value="신고"/>
+</div>
+
+<hr/>
+
+<div class="d-flex flex-row-reverse">
+<input class="btn btn-primary" type="button" value="목록" onclick="location.href='../reviewBoard'">
+</div>
 
 
 <!-- 댓글 -->

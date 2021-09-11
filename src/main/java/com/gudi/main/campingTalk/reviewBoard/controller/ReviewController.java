@@ -3,6 +3,9 @@ package com.gudi.main.campingTalk.reviewBoard.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -34,7 +38,9 @@ public class ReviewController {
     	
     	ModelAndView mav = new ModelAndView();
     	
+    	//글 리스트
     	ArrayList<BoardDTO> dto = service.reviewList();
+    	    	
     	mav.addObject("dtoList", dto);
     	mav.setViewName("/campingTalk/reviewBoard/reviewBoardList");
     	
@@ -52,7 +58,7 @@ public class ReviewController {
     @Transactional(isolation = Isolation.READ_COMMITTED)
     @RequestMapping(value = "/reviewWrite")
     public ModelAndView reviewWrite(@RequestParam HashMap<String, String> params,
-    		MultipartFile file) {
+    		MultipartFile[] file) {
     	logger.info("리뷰 등록 요청...");
     	
     	ModelAndView mav = new ModelAndView();
@@ -70,7 +76,7 @@ public class ReviewController {
         return mav;
     }
     
-    //글쓰기 완료하고 -> 바로 리뷰 상세보기
+    //리뷰 상세보기
     @RequestMapping(value = "/reviewDetail/{boardNum}")
     public ModelAndView reviewDetail(@PathVariable int boardNum) {
     	logger.info("리뷰 상세보기 요청...");
@@ -78,14 +84,18 @@ public class ReviewController {
     	
     	ModelAndView mav = new ModelAndView();
     	
-    	//사진 불러옴
-    	PhotoDTO phoDto = service.callPhoto(boardNum);
+    	//사진 불러옴 (여러개임)
+    	ArrayList<PhotoDTO> phoDto = service.callPhoto(boardNum);
     	
     	//글 불러옴
     	BoardDTO dto = service.reviewDetail(boardNum);
+    	
+    	//조회수 올리기
+    	service.reviewHit(boardNum);
+    	
     	mav.setViewName("campingTalk/reviewBoard/reviewDetail");
     	mav.addObject("dto",dto);
-    	mav.addObject("phoDto",phoDto);
+    	mav.addObject("phoDtos",phoDto);
 
         return mav;
     }
@@ -115,13 +125,13 @@ public class ReviewController {
     	ModelAndView mav = new ModelAndView();
     	
     	//사진 불러옴
-    	PhotoDTO phoDto = service.callPhoto(boardNum);
+    	ArrayList<PhotoDTO> phoDto = service.callPhoto(boardNum);
     	
     	//글 불러옴
     	BoardDTO dto = service.reviewDetail(boardNum);
     	mav.setViewName("campingTalk/reviewBoard/reviewUpdateForm");
     	mav.addObject("dto",dto);
-    	mav.addObject("phoDto",phoDto);
+    	mav.addObject("phoDtos",phoDto);
 
         return mav;
     }
@@ -129,24 +139,30 @@ public class ReviewController {
     @Transactional(isolation = Isolation.READ_COMMITTED)
     @RequestMapping(value = "/reviewUpdate")
     public ModelAndView reviewUpdate(@RequestParam HashMap<String, String> params,
-    		MultipartFile file) {
+    		MultipartFile[] file) {
 		logger.info("리뷰 수정 등록 요청...");
     	
-		int boardNum = Integer.parseInt(params.get("boardNum"));
+		String boardNum = params.get("boardNum");
 		
 		ModelAndView mav = new ModelAndView();
     	
     	//리뷰글 수정
     	service.reviewUpdate(params);
     	
-    	//파일업로드
-    	service.reviewPhotoUpdate(file, boardNum);
+    	//사진 업뎃
+    	service.reviewPhoto(file, boardNum);
     	
     	mav.setViewName("redirect:./reviewDetail/"+boardNum);
      	
-        return mav;
-		
-    	
+        return mav;  	
+    }
+    
+    //newfilename 으로 파일 삭제
+    @RequestMapping(value = "/photoDel")
+    @ResponseBody
+    public void photoDel(@RequestParam HashMap<String, Object> map) {
+    	logger.info("리뷰 사진 삭제 요청...");
+    	service.photoDel(map);
     }
     
 }

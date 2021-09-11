@@ -3,6 +3,7 @@ package com.gudi.main.campingTalk.reviewBoard.dao;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -26,8 +27,8 @@ public interface ReviewMapper {
 	@Select("SELECT * FROM reviewboard WHERE boardNum = #{param1}")
 	BoardDTO reviewDetail(int boardNum);
 
-	@Select("SELECT * FROM photo WHERE divisionnum = #{divi}")
-	PhotoDTO callPhoto(String divi);
+	@Select("SELECT newfilename, orifilename FROM photo WHERE divisionnum = #{divi}")
+	ArrayList<PhotoDTO> callPhoto(String divi);
 
 	@Update("UPDATE reviewboard SET delcheck = 'y' WHERE boardnum = #{boardNum}")
 	int reviewDel(int boardNum);
@@ -40,6 +41,12 @@ public interface ReviewMapper {
 	
 	@Update("UPDATE photo SET newfilename = #{param1}, orifilename = #{param2} WHERE divisionnum = 'review_'||#{param3}")
 	void reviewPhotoUpdate(String neww, String ori, int boardNum);
+
+	@Delete("DELETE photo WHERE newfilename= #{param1} AND divisionnum = 'review_'||#{param2}")
+	void photoDel(String newFileName, int boardNum);
+
+	@Update("UPDATE reviewboard SET boardhit = boardhit+1 WHERE boardNum = #{param1}")
+	void reviewHit(int boardNum);
 
 
 	

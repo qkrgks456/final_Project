@@ -39,7 +39,6 @@
       <th scope="col">작성자</th>
       <th scope="col">조회수</th>
       <th scope="col">작성일</th>
-      <th scope="col">좋아요</th>
     </tr>
   </thead>
   
@@ -49,14 +48,15 @@
       <td scope="row">${dto.boardNum}</td>
       <td><a href="reviewDetail/${dto.boardNum}">${dto.title}</a></td>
       <td>${dto.id}</td>
-      <td>조회수</td>
+      <td>${dto.boardHit}</td>
       <td>${dto.dates}</td>
-      <td>좋아요</td>
     </tr>
   </c:forEach>
   </tbody>
 </table>    
-    <input class="btn btn-primary" type="button" value="리뷰쓰기" onclick="location.href='./reviewWriteForm'">
+	<div class="d-flex flex-row-reverse">
+    <input class="btn btn-primary d-flex" type="button" value="리뷰쓰기" onclick="location.href='./reviewWriteForm'">
+    </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="${path}/resources/js/bootstrap.js"></script>

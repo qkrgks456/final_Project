@@ -31,21 +31,39 @@
 <div class="container px-3 my-3">
 <div class="container mx-2">
 <h3>리뷰작성</h3>
+
 <form action="./reviewWrite" method="post" enctype="multipart/form-data">
  제목
  <div class="input-group mb-3">
-  <input type="text" name="title" class="form-control" placeholder="제목을 입력해주세요" aria-label="Username" aria-describedby="basic-addon1">
+  <input type="text" name="title" class="form-control" placeholder="제목을 입력해주세요" required="required" aria-label="Username" aria-describedby="basic-addon1">
 </div>
 
  내용
  <div class="input-group">
-  <textarea name="content" style="resize:none" rows="10" class="form-control"  placeholder="내용을 입력해주세요" aria-label="With textarea"></textarea>
+  <textarea name="content" style="resize:none" rows="10" class="form-control"  placeholder="내용을 입력해주세요" required="required" aria-label="With textarea"></textarea>
 </div>
 
+<!--
  <label class="mt-3">파일</label>
  <div>
   <input type="file" name="file"/>
 </div>
+  -->
+  
+  <div class="form-group mt-3" id="file-list">
+        <a href="#this" onclick="addFile()">파일추가(+)</a>
+        <div class="file-group">
+        <!-- 
+            <input type="file" name="file"><a href='#this' name='file-delete'>삭제</a>
+         -->
+        </div>
+    </div>
+
+
+
+  
+  
+  
 <hr/>
 <div class="d-flex flex-row-reverse">
 <button class="btn btn-primary mx-2" type="submit">등록</button>
@@ -61,6 +79,28 @@
 <script src="${path}/resources/js/bootstrap.bundle.js"></script>
 <script src="${path}/resources/js/common.js"></script>
 <script>
+
+
+	$(document).ready(function() {
+	    $("a[name='file-delete']").on("click", function(e) {
+	        e.preventDefault();
+	        deleteFile($(this));
+	    });
+	})
+
+
+   function addFile() {
+        var str = "<div class='file-group'><input type='file' name='file'><a href='#this' name='file-delete'>삭제</a></div>";
+        $("#file-list").append(str);
+        $("a[name='file-delete']").on("click", function(e) {
+            e.preventDefault();
+            deleteFile($(this));
+        });
+    }
+
+	function deleteFile(obj) {
+	       obj.parent().remove();
+	}
 
 
 </script>

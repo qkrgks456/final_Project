@@ -20,15 +20,30 @@ public class ReviewService {
 	@Autowired ReviewMapper dao;
 
 	
-	public void reviewPhoto(MultipartFile file, String boardNum) {
+	public void reviewPhoto(MultipartFile[] file, String boardNum) {
 		
+		HashMap<String, String> map;
+		String neww = "";
+		String ori = "";
+		
+		for (int i = 0; i < file.length; i++) {
+			map = UploadUtil.fileUpload(file[i]);
+			neww = map.get("newFileName");
+			ori = map.get("oriFileName");
+			
+			dao.reviewPhoto(neww,ori, boardNum);
+		};
+		
+		/*
 		HashMap<String, String> map = UploadUtil.fileUpload(file);
 		
 		String neww = map.get("newFileName");
 		String ori = map.get("oriFileName");
 		logger.info(neww + " / " + ori);
 		
+		
 		dao.reviewPhoto(neww,ori, boardNum);
+		*/
 	}
 
 	public int reviewWrite(HashMap<String, String> params) {
@@ -40,7 +55,7 @@ public class ReviewService {
 		return dao.reviewDetail(boardNum);	
 	}
 	
-	public PhotoDTO callPhoto(int boardNum) {
+	public ArrayList<PhotoDTO> callPhoto(int boardNum) {
 		
 		String divi = "review_"+Integer.toString(boardNum);
 		return dao.callPhoto(divi);
@@ -64,8 +79,21 @@ public class ReviewService {
 		return dao.reviewUpdate(title,content,boardNum);
 	}
 
-	public void reviewPhotoUpdate(MultipartFile file, int boardNum) {
+	public void reviewPhotoUpdate(MultipartFile[] file, int boardNum) {
 		
+		HashMap<String, String> map;
+		String neww = "";
+		String ori = "";
+		
+		for (int i = 0; i < file.length; i++) {
+			map = UploadUtil.fileUpload(file[i]);
+			neww = map.get("newFileName");
+			ori = map.get("oriFileName");
+			
+			dao.reviewPhotoUpdate(neww,ori, boardNum);
+		};
+		
+		/*
 		HashMap<String, String> map = UploadUtil.fileUpload(file);
 		
 		String neww = map.get("newFileName");
@@ -73,6 +101,19 @@ public class ReviewService {
 		logger.info(neww + " / " + ori);
 		
 		dao.reviewPhotoUpdate(neww, ori, boardNum);
+		*/
+	}
+
+	public void photoDel(HashMap<String, Object> map) {
+		int boardNum = Integer.parseInt((String)map.get("boardNum"));
+		String newFileName = (String) map.get("newFileName");
+		
+		dao.photoDel(newFileName, boardNum);
+	}
+
+	public void reviewHit(int boardNum) {
+		logger.info("조회수 올리셈::");
+		dao.reviewHit(boardNum);
 	}
 	
 
