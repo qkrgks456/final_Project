@@ -8,14 +8,18 @@ import java.util.ArrayList;
 @Mapper
 public interface CommentMapper {
 
-    @Select("SELECT * FROM cm WHERE division = 'camping' AND divisionNum = #{param1} ORDER BY cmNum DESC" +
-            " OFFSET #{param2} ROWS FETCH FIRST 8 ROWS ONLY")
-    ArrayList<CommentDTO> reserveCmList(String contentId, int page);
+    @Select(ReserveSQL.CM_LIST)
+    ArrayList<CommentDTO> cmList(String contentId, String division, int page);
 
     @Select("SELECT COUNT(cmNum) FROM cm WHERE division = 'camping' AND divisionNum = #{param1}")
     int reserveTotal(String contentId);
 
     @Insert(ReserveSQL.CM_INSERT)
-    @SelectKey(statement = "SELECT cm_seq.CURRVAL FROM DUAL", keyProperty = "cmNum", before = false, resultType = int.class)
-    int reserveCmInsert(CommentDTO dto);
+    int reserveCmInsert(String loginId, String commentContent, String contentId);
+
+    @Select(ReserveSQL.CM_PAGECHECK)
+    String cmPageCheck(String contentId, String division, int cmNum, int start);
+
+    @Update("UPDATE cm SET content = #{param2} WHERE cmNum = #{param1}")
+    void reserveCmUpdate(String cmNum, String cmUpdateContent);
 }

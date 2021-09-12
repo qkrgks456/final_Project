@@ -31,8 +31,8 @@
 <div class="w-100 img-fluid border-white"
      style="height:300px;background-image: url('${path}/resources/img/bgHansol.jpg')">
     <div class="container pt-5 border-bottom border-white">
-        <h1 id="infoAttr" class="text-white display-4" contentId="${map.dto.contentId}"
-            path="${path}">${map.dto.facltNm}</h1>
+        <h1 id="infoAttr" class="text-white display-4" path="${path}"
+            contentId="${map.dto.contentId}">${map.dto.facltNm}</h1>
         <div class="container pt-2">
             <h3 class="text-white ">
                 <c:forTokens var="val" items="${map.dto.themaEnvrnCl}" delims=",">
@@ -239,69 +239,74 @@
         <c:forEach items="${map.commentList}" var="dto">
             <%-- 댓글 내용 --%>
             <div class="listForm">
-                <p class="fw-bold">${dto.id}</p>
-                <p class="lh-sm">
-                        ${dto.content}
-                <div>
-                    <a class="btn btn-warning btn-sm" href="">신고</a>
-                    <a class='commentDelBtn btn btn-warning btn-sm'>삭제</a>
-                    <a class='commentUpdateBtn btn btn-warning btn-sm'>수정</a>
+                <div class="fw-bold fs-4">${dto.id}</div>
+                <div class="lh-sm">${dto.content}</div>
+                <div class="d-flex justify-content-end">
+                    <div>
+                        <c:if test="${sessionScope.loginId ne dto.id}">
+                            <a class="btn btn-warning btn-sm" href="">신고</a>
+                        </c:if>
+                        <c:if test="${sessionScope.loginId eq dto.id}">
+                            <a class='cmUpdateBtnForm btn btn-warning btn-sm'>수정</a>
+                            <a cmNum="${dto.cmNum}" class='cmDelBtn btn btn-warning btn-sm'>삭제</a>
+                        </c:if>
+                    </div>
                 </div>
-                </p>
+                <div class="d-flex justify-content-end">
+                    작성일 : ${dto.dates}
+                </div>
                 <hr/>
             </div>
             <%-- 수정하기 수정 클릭시 요놈 생김 --%>
             <div class="updateForm visually-hidden">
-                <p class="fw-bold">${dto.id}</p>
                 <div class="form-floating flex-grow-1 px-2">
-    <textarea class="commentUpdateContent form-control"
-              name="commentUpdateContent"
-              style="height: 100px; resize: none;">${dto.content}</textarea>
+                    <textarea class="cmUpdateContent form-control"
+                              style="height: 100px; resize: none;">${dto.content}</textarea>
                     <label>수정할 댓글을 작성하세요</label>
                     <div class="invalid-feedback">1자 이상 입력해주세요</div>
                 </div>
-                <div class="d-flex justify-content-end mt-2"
-                     id="commentUpdateOut">
-                    <a class='commentUpdateContentBtn btn btn-warning btn-sm mx-2'>등록</a>
-                    <a class='cmUpdateCancel btn btn-warning btn-sm'>취소</a>
+                <div class="d-flex justify-content-end mt-2">
+                    <a cmNum="${dto.cmNum}" class='cmUpdateBtn btn btn-warning btn-sm'>등록</a>
+                    <a class='cmUpdateCancel btn btn-warning btn-sm ms-1'>취소</a>
                 </div>
                 <hr/>
             </div>
         </c:forEach>
     </div>
     <%-- 페이지 네이션 --%>
-    <ul class="pagination justify-content-center mb-3">
-        <c:if test="${map.startPage ne 1}">
-            <li class="page-item">
-                <a class="page-link" href="?page=${map.startPage-1}" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-        </c:if>
-        <c:forEach var="i" begin="${map.startPage}" end="${map.endPage}">
-            <c:if test="${i ne map.currPage}">
-                <li class="page-item"><a class="page-link" href="?page=${i}">${i}</a></li>
+    <div id="paginationBox">
+        <ul class="pagination justify-content-center mb-3">
+            <c:if test="${map.startPage ne 1}">
+                <li class="page-item">
+                    <a class="page-link page-info" aria-label="Previous" style="cursor:pointer;"
+                       page=${map.startPage+1}>
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
             </c:if>
-            <c:if test="${i eq map.currPage}">
-                <li class="page-item active"><a class="page-link">${i}</a></li>
+            <c:forEach var="i" begin="${map.startPage}" end="${map.endPage}">
+                <c:if test="${i ne map.currPage}">
+                    <li class="page-item"><a class="page-link page-info" style="cursor:pointer;" page=${i}>${i}</a></li>
+                </c:if>
+                <c:if test="${i eq map.currPage}">
+                    <li class="page-item active"><a class="page-link">${i}</a></li>
+                </c:if>
+            </c:forEach>
+            <c:if test="${map.totalPage ne map.endPage}">
+                <li class="page-item">
+                    <a class="page-link page-info" aria-label="Next" page=${map.endPage+1} style="cursor:pointer;">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
             </c:if>
-        </c:forEach>
-        <c:if test="${map.totalPage ne map.endPage}">
-            <li class="page-item">
-                <a class="page-link" href="?page=${map.endPage+1}" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </c:if>
-    </ul>
-    <div class="visually-hidden">
-        밑창띄우기
+        </ul>
     </div>
+    <br/>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="${path}/resources/js/bootstrap.js"></script>
 <script src="${path}/resources/js/bootstrap.bundle.js"></script>
-<script src="${path}/resources/js/common.js?var=1"></script>
+<script src="${path}/resources/js/common.js?var=56"></script>
 <script>
     /* 댓글 등록 ajax */
     $('#cafeCommentBtn').on('click', function () {
@@ -319,9 +324,8 @@
                     contentId: contentId
                 },
                 dataType: 'JSON',
-                success: function (data) { //성공시
-                    console.log(data);
-                    /*commentList(data);*/
+                success: function (map) { //성공시
+                    commentList(map);
                     $('#commentContent').val("");
                 },
                 error: function (e) { //실패시
@@ -332,40 +336,35 @@
             $('#commentContent').addClass('is-invalid');
         }
     })
+    /* 댓글 삭제 ajax */
+    $(document).on('click', '.cmDelBtn', function () {
+        let contentId = $('#infoAttr').attr('contentId');
+        let path = $('#infoAttr').attr('path');
+        let cmNum = $(this).attr('cmNum');
+        console.log(contentId, cmNum);
+        /* $.ajax({
+             type: "POST",//방식
+             url: "/Project/cafeCommentDel",//주소
+             data: {
 
-    /*/!* 댓글 삭제 ajax *!/
-    $('#commentLists').on('click', '.commentDelBtn', function () {
-        var commentNo = $(this).attr('title');
-        var cafeKey = $('#cafeCommentBtn').attr("title");
-        $.ajax({
-            type: "POST",//방식
-            url: "/Project/cafeCommentDel",//주소
-            data: {
-                commentNo: commentNo,
-                cafeKey: cafeKey,
-            },
-            dataType: 'JSON',
-            success: function (data) { //성공시
-                commentList(data);
-            },
-            error: function (e) { //실패시
-                console.log(e);
-            }
-        });
+             },
+             dataType: 'JSON',
+             success: function (data) { //성공시
+                 commentList(data);
+             },
+             error: function (e) { //실패시
+                 console.log(e);
+             }
+         });*/
     })
-    /!* 댓글 페이지 네이션 클릭시 ajax *!/
-    $('#paginations').on('click', '.pageNum', function () {
-        var pageAndCafeKey = $(this).attr('title');
-        var pageArr = pageAndCafeKey.split(' ');
-        var page = pageArr[0];
-        var cafeKey = pageArr[1];
+    /* 댓글 페이지네이션 클릭시 ajax */
+    $(document).on('click', '.page-info', function () {
+        let contentId = $('#infoAttr').attr('contentId');
+        let path = $('#infoAttr').attr('path');
+        let page = $(this).attr('page');
         $.ajax({
-            type: "POST",//방식
-            url: "/Project/cafeCommentList",//주소
-            data: {
-                page: page,
-                cafeKey: cafeKey,
-            },
+            type: "GET",
+            url: path + "/reserve/reserveCmList" + "/" + page + "/" + contentId,
             dataType: 'JSON',
             success: function (data) { //성공시
                 commentList(data);
@@ -376,20 +375,21 @@
         });
     })
 
-    /!* 댓글 업데이트 ajax *!/
-    $(document).on('click', '.commentUpdateContentBtn', function () {
-        var commentNo = $(this).attr('title');
-        var cafeKey = $('#cafeCommentBtn').attr("title");
-        var commentUpdateContent = $(this).parent().prev().children('.commentUpdateContent').val();
-        console.log(commentUpdateContent);
-        if (commentUpdateContent.trim() != "") {
+    /* 댓글 업데이트 ajax */
+    $(document).on('click', '.cmUpdateBtn', function () {
+        let contentId = $('#infoAttr').attr('contentId');
+        let path = $('#infoAttr').attr('path');
+        let cmNum = $(this).attr('cmNum');
+        let cmUpdateContent = $(this).parent().prev().children('.cmUpdateContent').val();
+        console.log(cmUpdateContent);
+        if (cmUpdateContent.trim() != "") {
             $.ajax({
                 type: "POST",//방식
-                url: "/Project/cafeCommentUpdate",//주소
+                url: path + "/reserve/reserveCmUpdate/",//주소
                 data: {
-                    commentUpdateContent: commentUpdateContent,
-                    commentNo: commentNo,
-                    cafeKey: cafeKey,
+                    contentId: contentId,
+                    cmNum: cmNum,
+                    cmUpdateContent: cmUpdateContent
                 },
                 dataType: 'JSON',
                 success: function (data) { //성공시
@@ -400,84 +400,77 @@
                 }
             });
         } else {
-            $(this).parent().prev().children('.commentUpdateContent').addClass('is-invalid');
+            $(this).parent().prev().children('.cmUpdateContent').addClass('is-invalid');
         }
-    })*/
+    })
 
     /* 댓글 리스트 메서드 */
-    function commentList(data) {
-        console.log(data);
-        let content = "";
-        let sessionId = data.sessionId;
-        $.each(data.list, function (i, item) {
-            let check = sessionId == item.memberKey;
-            let check2 = sessionId == null;
-            console.log(check2);
-            content += "<div class='updateCheck'>"
-            content += "<p class='fw-bold'>" + item.memberKey + "</p>";
-            content += "<p class='lh-sm'>";
-            content += item.cm_content;
-            if (!check && !check2) {
-                content += "<a href='/Project/report/report.jsp?commentNo=" + item.commentNo + "&memberKey=" + item.memberKey + "&commentContent=" + item.cm_content + "&cafeKey=" + data.cafeKey + "'"
-                content += " class='float-end btn btn-secondary btn-sm'>신고</a>";
-            } else if (check) {
-                content += "<a class='commentDelBtn mx-2 float-end btn btn-secondary btn-sm' title='" + item.commentNo + "'>삭제</a>";
-                content += "<a class='commentUpdateBtn float-end btn btn-secondary btn-sm'>수정</a>";
+    function commentList(map) {
+        let content = '';
+        let sessionId = map.loginId;
+        <%-- 댓글 리스트 불러오기 --%>
+        $.each(map.commentList, function (i, dto) {
+            content += '<div class="listForm">'
+            content += '<div class="fw-bold fs-4">' + dto.id + '</div>'
+            content += '<div class="lh-sm">' + dto.content + '</div>'
+            content += '<div class="d-flex justify-content-end">'
+            content += '<div>'
+            if (sessionId != dto.id) {
+                content += '<a class="btn btn-warning btn-sm" href="">신고</a>'
+            } else {
+                content += '<a class="cmUpdateBtnForm btn btn-warning btn-sm">수정</a>'
+                content += '<a cmNum="' + dto.cmNum + '" class="cmDelBtn btn btn-warning btn-sm ms-1">삭제</a>'
             }
-            content += "</p>";
-            content += "<hr/>";
-            content += "</div>";
-            content += "<div class='updateForm visually-hidden'>"
-            content += "<p class='fw-bold'>" + item.memberKey + "</p>"
-            content += "<div class='form-floating flex-grow-1 px-2'>"
-            content += "<textarea class='commentUpdateContent form-control' placeholder='Leave a comment here'"
-            content += "name='commentUpdateContent' id='commentUpdateContent' style='height: 100px'>" + item.cm_content + "</textarea>"
-            content += "<div class='invalid-feedback'>1자 이상 입력해주세요</div>"
-            content += "<label for='commentUpdateContent'>수정할 댓글을 작성하세요</label>"
-            content += "</div>"
-            content += "<div class='d-flex justify-content-end mt-2' id='commentUpdateOut'>"
-            content += "<a id='commentUpdateContentBtn' class='commentUpdateContentBtn btn btn-secondary btn-sm mx-2' title='" + item.commentNo + "'>등록</a>"
-            content += "<a class='cmUpdateCancel btn btn-secondary btn-sm'>취소</a>"
-            content += "</div>"
-            content += "<hr />"
-            content += "</div>"
-        });
+            content += '</div>'
+            content += '</div>'
+            content += '<div class="d-flex justify-content-end">'
+            content += '작성일 :' + dto.dates
+            content += '</div>'
+            content += '<hr/>'
+            content += '</div>'
+            content += '<div class="updateForm visually-hidden">'
+            content += '<div class="form-floating flex-grow-1 px-2">'
+            content += '<textarea class="cmUpdateContent form-control" style="height: 100px; resize: none;">' + dto.content + '</textarea>'
+            content += '<label>수정할 댓글을 작성하세요</label>'
+            content += '<div class="invalid-feedback">1자 이상 입력해주세요</div>'
+            content += '</div>'
+            content += '<div class="d-flex justify-content-end mt-2">'
+            content += '<a cmNum="' + dto.cmNum + '" class="cmUpdateBtn btn btn-warning btn-sm">등록</a>'
+            content += '<a class="cmUpdateCancel btn btn-warning btn-sm ms-1">취소</a>'
+            content += '</div>'
+            content += '<hr/>'
+            content += '</div>'
+        })
         $('#commentLists').empty();
         $('#commentLists').append(content);
 
-        content = "";
-        content += "<i id='commenticons' class='bi bi-chat-square-text-fill mt-1' style='font-size: 2.0rem;'></i>"
-        content += "<p  class='ms-2 mt-3 fw-bold'>댓글(" + data.commentCount + ")</p>"
-        $('#commenticon').empty();
-        $('#commenticon').append(content);
         /* 페이지네이션 불러오기 욕나오네 */
-        content = ''
+        content = '';
         content += '<ul class="pagination justify-content-center">'
-        if (data.startPage != 1) {
+        if (map.startPage != 1) {
             content += '<li class="page-item">'
-            content += '<a class="page-link" href="?page=' + (data.startPage) - 1 + '" aria-label="Previous">'
+            content += '<a class="page-link page-info" page="' + (map.startPage - 1) + '" aria-label="Previous" style="cursor:pointer;">'
             content += '<span aria-hidden="true">&laquo;</span>'
             content += '</a>'
             content += '</li>'
         }
-        for (let i = data.startPage; i <= data.endPage; i++) {
-            console.log(data.currPage)
-            if (data.currPage != i) {
-                content += '<li class="page-item"><a className="page-link" href="?page=' + i + '">i</a></li>'
+        for (let i = map.startPage; i <= map.endPage; i++) {
+            if (map.currPage != i) {
+                content += '<li class="page-item"><a style="cursor:pointer;" class="page-link page-info" page="' + i + '" >' + i + '</a></li>'
             } else {
-                content += '<li class="page-item active"><a class="page-link">i</a></li>'
+                content += '<li class="page-item active"><a class="page-link">' + i + '</a></li>'
             }
         }
-        if (data.totalPage != data.endPage) {
+        if (map.totalPage != map.endPage) {
             content += '<li class="page-item">'
-            content += '<a class="page-link" href="?page=' + (data.endPage) + 1 + '" aria-label="Next">'
+            content += '<a class="page-link page-info" page="' + (map.endPage + 1) + '" aria-label="Next" style="cursor:pointer;">'
             content += '<span aria-hidden="true">&raquo;</span>'
             content += '</a>'
             content += '</li>'
         }
         content += '</ul>'
-        $('#paginations').empty();
-        $('#paginations').prepend(content);
+        $('#paginationBox').empty();
+        $('#paginationBox').append(content);
     }
 </script>
 </body>

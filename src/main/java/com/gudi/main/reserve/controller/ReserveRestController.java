@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,16 +17,27 @@ import java.util.HashMap;
 @RequestMapping(value = "/reserve")
 public class ReserveRestController {
     @Autowired
-    ReserveService reserveService;
-    @Autowired
     CommentService commentService;
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @RequestMapping(value = "/reserveCmInsert")
     public HashMap<String, Object> reserveCmInsert(HttpSession session, String commentContent, String contentId) {
         String loginId = (String) session.getAttribute("loginId");
-        commentService.reserveCmInsert(contentId, commentContent,loginId);
-        return null;
+        return commentService.reserveCmInsert(contentId, commentContent, loginId);
+    }
+
+    @RequestMapping(value = "/reserveCmUpdate")
+    public HashMap<String, Object> reserveCmUpdate(HttpSession session, String cmNum, String contentId,String cmUpdateContent) {
+        String loginId = (String) session.getAttribute("loginId");
+        return commentService.reserveCmUpdate(cmNum,contentId,cmUpdateContent,loginId);
+    }
+
+    @RequestMapping(value = "/reserveCmList/{page}/{contentId}")
+    public HashMap<String, Object> reserveCmList(HttpSession session, @PathVariable int page, @PathVariable String contentId) {
+        String loginId = (String) session.getAttribute("loginId");
+        HashMap<String, Object> map = commentService.commentList(contentId, "camping", page);
+        map.put("loginId",loginId);
+        return map;
     }
 
 }

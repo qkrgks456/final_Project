@@ -19,13 +19,7 @@ public class MainController {
 	@RequestMapping(value = "/")
 	public String main(HttpSession session) {
 		session.setAttribute("access_token",null);
-		return "redirect:/apiCall";
-	}
-
-
-	@RequestMapping(value = "/apiCall")
-	public String apiCall(Model model) {
-		HashMap<String,Object> map = service.apiCall();
 		return "main";
 	}
+
 }

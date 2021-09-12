@@ -50,7 +50,7 @@ public class ReserveService {
             }
         }
         // 댓글값 가져오기(페이지네이션 포함)
-        HashMap<String, Object> map = commentService.commentList(contentId, 1);
+        HashMap<String, Object> map = commentService.commentList(contentId,"camping", 1);
         map.put("imgArr", imgArr);
         map.put("dto", dto);
         return map;
