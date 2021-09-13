@@ -342,7 +342,7 @@
         let path = $('#infoAttr').attr('path');
         let cmNum = $(this).attr('cmNum');
         console.log(contentId, cmNum);
-        /* $.ajax({
+      /*  $.ajax({
              type: "POST",//방식
              url: "/Project/cafeCommentDel",//주소
              data: {

@@ -22,4 +22,7 @@ public interface CommentMapper {
 
     @Update("UPDATE cm SET content = #{param2} WHERE cmNum = #{param1}")
     void reserveCmUpdate(String cmNum, String cmUpdateContent);
+
+    @Update("UPDATE cm SET delCheck = 'Y' WHERE cmNum = #{cmNum}")
+    void cmDelete(String cmNum);
 }

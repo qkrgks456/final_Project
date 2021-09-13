@@ -33,15 +33,15 @@
     <div class="container w-50 my-3">
         <form id="login" action="${path}/member/login" method="post">
             <div class="form-group">
-                <label for="InputId" class="">아이디</label> <input
-                    type="text" class="form-control" name="InputId" id="InputId"
+                <label for="inputId" class="">아이디</label> <input
+                    type="text" class="form-control" name="inputId" id="inputId"
                     placeholder="아이디를 입력해주세요">
                 <div class="invalid-feedback">아이디를 입력해주세요</div>
             </div>
             <div class="form-group my-2">
-                <label for="InputPass" class="">비밀번호</label> <input
-                    type="password" class="form-control" name="InputPass"
-                    id="InputPass" placeholder="비밀번호를 입력해주세요">
+                <label for="inputPass" class="">비밀번호</label> <input
+                    type="password" class="form-control" name="inputPass"
+                    id="inputPass" placeholder="비밀번호를 입력해주세요">
                 <div class="invalid-feedback">비밀번호를 입력해주세요</div>
             </div>
         </form>
@@ -56,15 +56,17 @@
                 <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
             </symbol>
         </svg>
-        <div id="redalert"
-             class="visually-hidden alert alert-danger d-flex align-items-center"
-             role="alert">
-            <svg class="bi flex-shrink-0 me-2" width="24" height="24"
-                 role="img" aria-label="Danger:">
-                <use xlink:href="#exclamation-triangle-fill"/>
-            </svg>
-            <div>없는 아이디거나 비밀번호가 틀립니다</div>
-        </div>
+        <c:if test="${suc eq false}">
+            <div id="redalert"
+                 class="alert alert-danger d-flex align-items-center"
+                 role="alert">
+                <svg class="bi flex-shrink-0 me-2" width="24" height="24"
+                     role="img" aria-label="Danger:">
+                    <use xlink:href="#exclamation-triangle-fill"/>
+                </svg>
+                <div>없는 아이디거나 비밀번호가 틀립니다</div>
+            </div>
+        </c:if>
         <a href="${path}/kakao/loginForm"><img src="${path}/resources/img/kakao_login.png"></a>
         <hr/>
         <div>

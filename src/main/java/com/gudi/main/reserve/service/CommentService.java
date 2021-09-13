@@ -73,4 +73,12 @@ public class CommentService {
         }
         return page;
     }
+    @Transactional
+    public HashMap<String, Object> reserveCmDelete(String cmNum, String contentId, String loginId) {
+        int page = cmPageCheck(contentId,"camping",Integer.parseInt(cmNum));
+        commentMapper.cmDelete(cmNum);
+        HashMap<String,Object> map = commentList(contentId,"camping",page);
+
+        return map;
+    }
 }

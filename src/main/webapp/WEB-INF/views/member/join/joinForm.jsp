@@ -30,62 +30,199 @@
         <h2 class="fw-bold">회원가입</h2>
     </div>
     <div class="d-flex justify-content-center my-2">
-        <form action="" class="w-50" method="post">
+        <form action="${path}/member/join" class="w-50" method="post">
             <div class="mb-3">
                 <label for="id" class="form-label">아이디</label>
-                <input name="id" type="text" class="form-control" id="id" placeholder="필수정보 입니다">
-                <div class="invalid-feedback">Please enter a message in the textarea.</div>
+                <input name="id" type="text" class="form-control nullCheck" id="id" placeholder="필수정보 입니다">
+                <div class="invalid-feedback">중복된 아이디입니다</div>
+                <div class="valid-feedback">사용 가능합니다</div>
                 <a id="idCheck" class="btn btn-warning btn-sm mt-2">중복확인</a>
             </div>
             <div class="mb-3">
                 <label for="pw" class="form-label">비밀번호</label>
-                <input name="pw" type="password" class="form-control" id="pw" placeholder="필수정보 입니다">
-                <div class="invalid-feedback">Please enter a message in the textarea.</div>
+                <input name="pw" type="password" class="form-control nullCheck goCheck" id="pw" placeholder="필수정보 입니다">
+                <div class="invalid-feedback"></div>
             </div>
             <div class="mb-3">
                 <label for="nicName" class="form-label">닉네임</label>
-                <input name="nicName" type="text" class="form-control" id="nicName" placeholder="필수정보 입니다">
+                <input name="nicName" type="text" class="form-control nullCheck goCheck" id="nicName"
+                       placeholder="필수정보 입니다">
+                <div class="invalid-feedback"></div>
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">이메일</label>
-                <input name="email" type="text" class="form-control" id="email" placeholder="필수정보 입니다">
-                <a class="btn btn-warning btn-sm mt-2">이메일인증</a>
-            </div>
-            <div class="mb-3">
-                <label for="code" class="form-label">이메일인증코드</label>
-                <input name="code" type="text" class="form-control" id="code" placeholder="받으신 코드를 입력해주세요!">
+                <input name="email" type="text" class="form-control nullCheck" id="email" placeholder="필수정보 입니다"
+                       readonly>
+                <div class="valid-feedback">인증 성공!</div>
+                <button type="button" class="btn btn-warning btn-sm mt-2" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">
+                    이메일인증
+                </button>
             </div>
             <div class="mb-3 text-center">
-                <a class="btn btn-warning">회원가입</a>
+                <input id="joinBtn" type="submit" class="btn btn-warning" value="회원가입">
             </div>
         </form>
+        <!-- 팝업창 -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">이메일 인증</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <label for="code" class="form-label">이메일</label>
+                            <input class="form-control" type="text" id="emailSender" name="emailSender"
+                                   placeholder="이메일을 입력해주세여">
+                            <div class="valid-feedback">전송되었습니다</div>
+                            <button id="emailCheck" type="button" class="btn btn-warning btn-sm mt-2">이메일 전송
+                            </button>
+                        </div>
+                        <div>
+                            <label for="code" class="form-label">인증코드</label>
+                            <input class="form-control" type="text" id="code" name="code" placeholder="코드를 입력해주세요">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="close" type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기
+                        </button>
+                        <button id="right" type="button" class="btn btn-warning">확인</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+<c:if test="${suc eq 0}">
+    <script>
+        alert('다시 시도해주세요');
+    </script>
+</c:if>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="${path}/resources/js/bootstrap.js"></script>
 <script src="${path}/resources/js/bootstrap.bundle.js"></script>
 <script src="${path}/resources/js/common.js"></script>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script type="text/javascript">
+<script>
+    $('#idCheck').on('click', function () {
+        let id = $('#id').val();
+        console.log(id);
+        $.ajax({
+            url: 'idCheck',
+            data: {
+                id: id
+            },
+            type: 'post',
+            dataType: "json",
+            success: function (data) {
+                if (data) {
+                    $('#id').removeClass('is-invalid');
+                    $('#id').addClass('is-valid');
+                    $('#id').prop("readonly", true);
+                } else {
+                    $('#id').addClass('is-invalid');
+                    $('#id').removeClass('is-valid');
+                }
+            },
+            error: function (e) {
+                console.log(e);
+            }
+        })
+    });
 
-/* $('#idCheck').click({
-	console.log(안녕);
-	ajax({
-		url:member/join,
-		type:'post',
-		data:{
-			id:id
-		},
-		dataType:'json',
-		success:function(data){
-					console.log(data);
-		},
-		error:function(error){
-			console.log(error);
-		}			
-	})
-}) */
+    $('#emailCheck').on('click', function () {
+        let email = $('#emailSender').val();
+        $('#emailSender').prop('readonly', true);
+        $('#emailSender').addClass('is-valid');
+        $.ajax({
+            url: 'emailCheck',
+            data: {
+                email: email
+            },
+            type: 'post',
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+            },
+            error: function (e) {
+                console.log(e);
+            }
+        })
+    })
+
+    $('#right').on('click', function () {
+        let code = $('#code').val();
+        let email = $('#emailSender').val();
+        console.log(code);
+        $.ajax({
+            url: 'codeCheck',
+            data: {
+                code: code
+            },
+            type: 'post',
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                if (data) {
+                    $('#email').val(email);
+                    $('#email').addClass("is-valid");
+                    $('#close').click();
+                } else {
+                    alert('이메일 코드가 다릅니다 다시 입력해주세요');
+                }
+            },
+            error: function (e) {
+                console.log(e);
+            }
+        })
+    })
+    // 유효성 검사
+    $('#joinBtn').on('click', function () {
+        let check = true;
+        $('.nullCheck').each(function (index, el) {
+            if ($(this).hasClass('is-valid')) {
+                return true;
+            } else {
+                check = false;
+                return false;
+            }
+        })
+        if (check) {
+            $(this).submit();
+        } else {
+            alert('정보를 다시 입력해주세요');
+        }
+
+    })
+    $("#pw").on("propertychange change keyup paste input", function () {
+        if ($(this).val().length >= 1) {
+            $(this).attr('class', 'form-control is-valid');
+        } else {
+            $(this).attr('class', 'form-control is-invalid');
+            $(this).nextAll('div.invalid-feedback').text('8자 이상 입력해주세요');
+        }
+        if ($(this).val().length >= 100) {
+            $(this).attr('class', 'form-control is-invalid');
+            $(this).nextAll('div.invalid-feedback').text('100자 미만으로 입력해주세요');
+        }
+    });
+    $("#nicName").on("propertychange change keyup paste input", function () {
+        if ($(this).val().length >= 1) {
+            $(this).attr('class', 'form-control is-valid');
+        } else {
+            $(this).attr('class', 'form-control is-invalid');
+            $(this).nextAll('div.invalid-feedback').text('1자 이상 입력해주세요');
+        }
+        if ($(this).val().length >= 100) {
+            $(this).attr('class', 'form-control is-invalid');
+            $(this).nextAll('div.invalid-feedback').text('100자 미만으로 입력해주세요');
+        }
+    });
+
+
 </script>
-
 </body>
 </html>

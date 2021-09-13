@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class TestClass {
-/*   public static void main(String args[]) {
+   public static void main(String args[]) {
         // TODO Auto-generated method stub
         // url 선언
         String url = "http://api.visitkorea.or.kr/openapi/service/rest/GoCamping/basedList";
@@ -130,5 +130,5 @@ public class TestClass {
             }
         }
 
-    }*/
+    }
 }

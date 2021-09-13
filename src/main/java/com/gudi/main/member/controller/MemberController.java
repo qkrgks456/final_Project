@@ -7,6 +7,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
@@ -22,35 +23,62 @@ import java.util.HashMap;
 @Controller
 @RequestMapping(value = "/member")
 public class MemberController {
-	
-	@Autowired MemberService service;
+
+    @Autowired
+    MemberService service;
     Logger logger = LoggerFactory.getLogger(this.getClass());
+
     // 로그인 폼으로
     @RequestMapping(value = "/loginForm")
     public String loginForm(Model model) {
         return "member/login/loginForm";
     }
+
     // 동의 폼으로
     @RequestMapping(value = "/agreeForm")
     public String agreeForm(Model model) {
         return "member/join/agreeForm";
     }
+
     // 회원가입 폼으로
     @RequestMapping(value = "/joinForm")
     public String joinForm(Model model) {
         return "member/join/joinForm";
     }
     // 회원가입 /member/join
-    @RequestMapping(value = "/join")
-    public String join(Model model,String id) {
-    	logger.info(id);
-        return null;
-    }
+
 
     @RequestMapping(value = "/login")
-    public String login(HttpSession session, @RequestParam String InputId,@RequestParam String InputPass) {
-    
-        return "main";
+    public String login(Model model, HttpSession session, @RequestParam String inputId, @RequestParam String inputPass) {
+        boolean result = false;
+        String pw = service.login(inputId);
+        if(pw != null){
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            result = encoder.matches(inputPass, pw);
+            logger.info("결과 체크 "+result);
+            if (result) {
+                session.setAttribute("loginId",inputId);
+                return "main";
+            } else {
+                model.addAttribute("suc", false);
+                return "member/login/loginForm";
+            }
+        }else{
+            model.addAttribute("suc", false);
+            return "member/login/loginForm";
+        }
+
+    }
+
+    @RequestMapping(value = "/join")
+    public String join(Model model, HttpSession session, @RequestParam HashMap<String, String> map) {
+        int suc = service.join(map);
+        if (suc > 0) {
+            return "member/join/joinResult";
+        } else {
+            model.addAttribute("suc", suc);
+            return "member/join/joinForm";
+        }
     }
 
     // 이거 내비두셈
@@ -59,14 +87,14 @@ public class MemberController {
         session.removeAttribute("loginId");
         String access_token = (String) session.getAttribute("access_token");
         System.out.println(access_token);
-        if(access_token != null){
+        if (access_token != null) {
             // 요 라이브러리 추천 받음
             RestTemplate restTemplate = new RestTemplate();
             // 헤더 생성
             HttpHeaders headers = new HttpHeaders();
             // 헤더에 속성값 넣어주기
             headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-            headers.add("Authorization","Bearer "+access_token);
+            headers.add("Authorization", "Bearer " + access_token);
             // 헤더랑 파라미터 담은녀석
             HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest = new HttpEntity<>(headers);
             // response 받기
@@ -76,7 +104,7 @@ public class MemberController {
                     kakaoTokenRequest,
                     String.class
             );
-            System.out.println("카카오 로그아웃 성공 여부"+response.getBody().toString());
+            System.out.println("카카오 로그아웃 성공 여부" + response.getBody().toString());
             session.removeAttribute("access_token");
         }
         return "main";

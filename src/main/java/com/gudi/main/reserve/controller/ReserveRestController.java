@@ -40,4 +40,10 @@ public class ReserveRestController {
         return map;
     }
 
+    @RequestMapping(value = "/reserveCmDelete")
+    public HashMap<String, Object> reserveCmDelete(HttpSession session, String cmNum, String contentId) {
+        String loginId = (String) session.getAttribute("loginId");
+        return commentService.reserveCmDelete(cmNum,contentId,loginId);
+    }
+
 }
