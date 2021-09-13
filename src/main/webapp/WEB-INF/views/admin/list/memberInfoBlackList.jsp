@@ -32,21 +32,8 @@
     <jsp:include page="../adminSidebar.jsp"/>
     <div class="col w-100 p-0">
         <div class="container px-3 my-2">
-            <h3>예약자 조회</h3>
-				<table class="table table-hover text-center">
-					<thead>
-						<tr>
-							<th scope="col" class="col-md-2">아이디</th>
-							<th scope="col" class="col-md-2">예약자</th>
-							<th scope="col" class="col-md-2">이메일</th>
-							<th scope="col" class="col-md-2">인원</th>
-							<th scope="col" class="col-md-2">캠핑장</th>
-							<th scope="col" class="col-md-2">예약날짜</th>
-					</thead>
-					<tbody id="list">
-						<!-- 가져올 리스트 -->
-					</tbody>
-				</table>
+            
+            
         </div>
     </div>
 </div>
@@ -57,38 +44,7 @@
 <script src="${path}/resources/js/common.js"></script>
 </body>
 <script>
-memberReserve();
-function memberReserve(){
-	console.log("jsp에서 관리자 ajax조회");
-	$.ajax({
-		url: 'memberReserveAjax',
-		type: 'get',
-		dataType: 'json',
-		success:function(data){
-			console.log(data);
-			adminList(data.list);
-		},
-		error:function(error){
-			console.log(error);
-		}
-	
-	});
-}
-function memberReserveList(list){
-	var content="";
-	for(var i =0; i<list.length;  i++){
-		content +="<tr>";
-		content +="<td>"+ list[i].id+"</td>";
-		content +="<td>"+ "예약자 이름" +"</td>";
-		content +="<td>"+ list[i].email +"</td>";
-		content +="<td>"+ list[i].manCount +"</td>";
-		content +="<td>"+ "캠핑장" +"</td>";
-		content +="<td>"+ list[i].reserveDate +"</td>";
-		content +="</tr>";
-	}
-	$("#list").empty();
-	$("#list").append(content);
-}
+
 </script>
 
 </html>

@@ -7,7 +7,7 @@
             <p class="ms-4 align-items-center menuClick fw-bold fs-2" style="cursor: default">관리자권한</p>
             <div class="">
                 <ul class="ms-4 list-unstyled fw-normal pb-1 listHide">
-                    <li><a href="${path}/admin/adminSearch" class="link-dark rounded fs-4">관리자조회</a></li>
+                    <li><a href="${path}/admin/authority" class="link-dark rounded fs-4">관리자조회</a></li>
                     <li><a href="${path}/admin/adminInsert" class="link-dark rounded fs-4">관리자임명</a></li>
                 </ul>
             </div>

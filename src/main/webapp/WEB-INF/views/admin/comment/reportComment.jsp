@@ -32,14 +32,63 @@
     <jsp:include page="../adminSidebar.jsp"/>
     <div class="col w-100 p-0">
         <div class="container px-3 my-2">
-            신고댓글
-        </div>
-    </div>
-</div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="${path}/resources/js/bootstrap.js"></script>
-<script src="${path}/resources/js/bootstrap.bundle.js"></script>
-<%-- 공통 js --%>
-<script src="${path}/resources/js/common.js"></script>
+            <h3>신고 댓글</h3>
+			
+
+				<table class="table table-hover text-center">
+					<thead>
+						<tr>
+							<th scope="col" class="col-md-2">신고자 아이디</th>
+							<th scope="col" class="col-md-2">신고된 아이디</th>
+							<th scope="col" class="col-md-2">신고처리 유무</th>
+							<th scope="col" class="col-md-2">신고댓글</th>
+							<th scope="col" class="col-md-2">상세보기</th>
+					
+					</thead>
+					<tbody id="list">
+						<!-- 가져올 리스트 -->
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="${path}/resources/js/bootstrap.js"></script>
+	<script src="${path}/resources/js/bootstrap.bundle.js"></script>
+	<%-- 공통 js --%>
+	<script src="${path}/resources/js/common.js"></script>
 </body>
+<script>
+	comment();
+	function comment() {
+		console.log("jsp에서 관리자 ajax조회");
+		$.ajax({
+			url : 'memberinfoAjax',
+			type : 'get',
+			dataType : 'json',
+			success : function(data) {
+				console.log(data);
+				commentList(data.list);
+			},
+			error : function(error) {
+				console.log(error);
+			}
+
+		});
+	}
+	function commentList(list) {
+		var content = "";
+		for (var i = 0; i < list.length; i++) {
+			content += "<tr>";
+			content += "<td>" + list[i].reporter + "</td>";
+			content += "<td>" + list[i].id + "</td>";
+			content += "<td>" + list[i].status + "</td>";
+			content += "<td>" + cmNum+"신고댓글 내용.." + "</td>";
+			content += "<td>" + "상세보기 버튼" + "</td>";
+			content += "</tr>";
+		}
+		$("#list").empty();
+		$("#list").append(content);
+	}
+	</script>
 </html>
