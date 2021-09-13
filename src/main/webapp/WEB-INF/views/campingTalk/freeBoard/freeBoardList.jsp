@@ -29,7 +29,34 @@
 <jsp:include page="../../fix/menu.jsp"/>
 <%-- 내용 넣으세요 --%>
 <div class="container px-3">
-    자유게시판
+	<h3>자유게시판</h3>
+    
+    <table class="table table-hover">
+	  	<thead>
+		    <tr>
+		    	<th scope="col">게시글 번호</th>
+		    	<th scope="col">제목</th>
+		    	<th scope="col">작성자</th>
+		    	<th scope="col">조회수</th>
+		    	<th scope="col">작성일</th>
+		    </tr>
+		</thead>
+	  
+		<tbody>
+			<c:forEach items="${dtoList}" var="dto">
+				<tr>
+				    <td scope="row">${dto.boardNum}</td>
+				    <td><a href="reviewDetail/${dto.boardNum}">${dto.title}</a></td>
+				    <td>${dto.id}</td>
+				    <td>${dto.boardHit}</td>
+				    <td>${dto.dates}</td>
+				</tr>
+			</c:forEach>
+		</tbody>
+	</table>    
+	<div class="d-flex flex-row-reverse">
+    	<input class="btn btn-primary d-flex" type="button" value="글쓰기" onclick="location.href='./freeWriteForm'">
+    </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="${path}/resources/js/bootstrap.js"></script>
