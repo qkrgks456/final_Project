@@ -1,7 +1,5 @@
 package com.gudi.main.member.dao;
 
-import org.apache.ibatis.annotations.Mapper;
+public interface MemberMapper {
 
-@Mapper
-public class MemberMapper {
 }

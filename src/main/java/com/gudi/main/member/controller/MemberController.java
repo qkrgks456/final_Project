@@ -2,6 +2,7 @@ package com.gudi.main.member.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
+import com.gudi.main.member.service.MemberService;
+
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 
@@ -20,29 +23,33 @@ import java.util.HashMap;
 @RequestMapping(value = "/member")
 public class MemberController {
 	
-
+	@Autowired MemberService service;
     Logger logger = LoggerFactory.getLogger(this.getClass());
-
+    // 로그인 폼으로
     @RequestMapping(value = "/loginForm")
     public String loginForm(Model model) {
         return "member/login/loginForm";
     }
-
+    // 동의 폼으로
     @RequestMapping(value = "/agreeForm")
     public String agreeForm(Model model) {
         return "member/join/agreeForm";
     }
-    
+    // 회원가입 폼으로
     @RequestMapping(value = "/joinForm")
     public String joinForm(Model model) {
         return "member/join/joinForm";
     }
+    // 회원가입 /member/join
+    @RequestMapping(value = "/join")
+    public String join(Model model,String id) {
+    	logger.info(id);
+        return null;
+    }
 
     @RequestMapping(value = "/login")
     public String login(HttpSession session, @RequestParam String InputId,@RequestParam String InputPass) {
-        if(InputId.equals("asd")){
-            session.setAttribute("loginId",InputId);
-        }
+    
         return "main";
     }
 
