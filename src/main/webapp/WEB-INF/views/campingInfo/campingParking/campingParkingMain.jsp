@@ -35,5 +35,24 @@
 <script src="${path}/resources/js/bootstrap.js"></script>
 <script src="${path}/resources/js/bootstrap.bundle.js"></script>
 <script src="${path}/resources/js/common.js"></script>
+
+<script>
+
+$.ajax({
+    url:'apiCall',
+    type:'POST',
+    data:{},
+    dataType:'JSON',
+    success:function(data){
+        console.log(data);
+        console.log(typeof data);
+
+    },
+    error:function(data){
+        console.log(data);
+    }
+});
+</script>
+
 </body>
 </html>
