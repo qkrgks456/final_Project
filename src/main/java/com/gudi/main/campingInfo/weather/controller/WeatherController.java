@@ -21,11 +21,7 @@ public class WeatherController {
         return "campingInfo/campingWeather/campingWeatherMain";
     }
     
-    @RequestMapping(value = "/test")
-    public String test(Model model) {
-    	service.test();
-        return null;
-    }
+ 
     
     
     
