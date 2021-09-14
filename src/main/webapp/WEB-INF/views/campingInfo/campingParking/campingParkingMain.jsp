@@ -74,7 +74,7 @@
 		var markers = new Array();
 		
 		// 지도 중심 좌표 변화 이벤트를 등록한다
-		kakao.maps.event.addListener(map, 'mouseup', function (){
+		kakao.maps.event.addListener(map, 'dragend', function (){
 			
 			// 지도위에 표시된 마커들 제거
 			// 지도위에 생성된 마커들을 담는 배열임 => 하나하자 지움!
