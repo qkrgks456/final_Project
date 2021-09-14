@@ -27,6 +27,11 @@ public class ParkingService {
 		return dao.getZapyo(wido,kyongdo);
 	}
 
+
+	public ParkingDTO freeParkDetail(String prkplcenm) {
+		return dao.freeParkDetail(prkplcenm);
+	}
+
 	
 	
 	

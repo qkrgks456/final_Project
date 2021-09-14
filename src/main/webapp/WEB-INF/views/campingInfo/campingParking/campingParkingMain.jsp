@@ -29,14 +29,17 @@
 <jsp:include page="../../fix/menu.jsp"/>
 <%-- 내용 넣으세요 --%>
 <div class="container px-3">
-    실시간 주차 현황
+   차박지도
 
-<div class="d-flex justify-content-center">    
-	<div id="map" style="width:100%;height:500px;"></div>    
+<div class="d-flex justify-content-center">
+
+<div class="list col-2" style="border:1px solid;">
+</div>  
+
+<div id="map" style="width:100%;height:600px;"></div>    
 </div>
     
-    
-    
+
     
     
     
@@ -81,6 +84,8 @@
 			for (var e = 0; e < markers.length; e++) {
 				markers[e].setMap(null);
 			}
+			$(".list").empty();
+			
 			
 			console.log('지도의 중심 좌표는 ' + map.getCenter().toString() +' 입니다.');
 			var aaa = map.getCenter().toString()
@@ -104,16 +109,24 @@
 				},
 				success:function(data){ //dto 배열 받아옴
 					console.log("예??",data);
+				
+					
 					
 					// 지도에 마커를 생성하고 표시한다	
 					for (var i = 0; i < data.length; i++) {
 						var marker = new kakao.maps.Marker({
 						    position: new kakao.maps.LatLng(data[i].latitude, data[i].longitude), // 마커의 좌표
-						    map: map, // 마커를 표시할 지도 객체    
+						    map: map, // 마커를 표시할 지도 객체
 						});
-						
 						// 생성된 마커들을 배열에 담음(지도 이동할때마다, 이전에 표시된 마커 지우려고 담는거임)
 						markers.push(marker);
+						
+						listPrint(data[i]); //리스트 그리기
+						
+						
+						
+						
+						
 					}
 					
 					
@@ -123,12 +136,22 @@
 					console.log(data);
 				}
 			});
-		
-			
-	
 					
 		});
-		//})
+
+		
+		function listPrint(data){
+			var content = "";
+			
+			content +=  '<div class="card mb-1" style="max-width: 600px;">'
+            content +=   '<div class="ms-2 col-md">'
+            content +=    '<h6 class="card-title"><a href="./freeParkDetail/'+data.prkplcenm+'">'+data.prkplcenm+'</a></h6>';
+            content +=    '<p class="card-text"><small>'+"주차구획 수: "+data.prkcmprt+'</small></p>';
+            content +=    '<p class="card-text"><small class="text-muted">'+"전화번호: "+data.phonenumber+'</small></p></div></div>';
+			//$(".list").empty();
+			$(".list").append(content);
+			
+		}
 
 	</script>
 

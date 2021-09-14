@@ -77,6 +77,7 @@ public class ReviewController {
     }
     
     //리뷰 상세보기
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     @RequestMapping(value = "/reviewDetail/{boardNum}")
     public ModelAndView reviewDetail(@PathVariable int boardNum) {
     	logger.info("리뷰 상세보기 요청...");

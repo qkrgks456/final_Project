@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.gudi.main.campingInfo.parking.service.ParkingService;
 import com.gudi.main.dtoAll.ParkingDTO;
@@ -46,6 +48,20 @@ public class ParkingController {
     	System.out.println(dto.get(0).getLONGITUDE());
     	
         return dto;
+    }
+    
+    @RequestMapping(value = "/freeParkDetail/{prkplcenm}")
+    public ModelAndView freeParkDetail (@PathVariable String prkplcenm) {
+    	logger.info("차박지도 상세보기:: "+ prkplcenm);
+    	
+    	ModelAndView mav = new ModelAndView();
+    	
+    	ParkingDTO dto = service.freeParkDetail(prkplcenm);
+    	
+    	mav.addObject("dto",dto);
+    	mav.setViewName("/campingInfo/campingParking/freeParkDetail");
+        
+    	return mav;
     }
     
     
