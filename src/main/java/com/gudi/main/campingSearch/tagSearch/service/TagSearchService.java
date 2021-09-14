@@ -31,14 +31,28 @@ public class TagSearchService {
 		}
 		ArrayList<CampingDTO> list = dao.lists(page);
 		map.put("list", list);
+		map.put("url","tagSearch");
 		mav.addObject("map", map);
 		mav.setViewName("campingSearch/tagSearch/tagSearchMain");
 		return mav;
 	}
 
 
-	public ModelAndView search(String word) {
-		// TODO Auto-generated method stub
-		return null;
+	public ModelAndView search(int page,String word) {
+		ModelAndView mav = new ModelAndView();
+		int total = dao.total();
+		HashMap<String,Object> map = HansolUtil.pagination(page, 10, total);
+		if(page == 1) {
+			page = 0;
+		}else {
+			page = (page-1)*10;
+		}
+		ArrayList<CampingDTO> list = dao.search(page,word);
+		map.put("list", list);
+		map.put("url", "search");
+		map.put("word", word);
+		mav.addObject("map", map);
+		mav.setViewName("campingSearch/tagSearch/tagSearch");
+		return mav;
 	}
 }

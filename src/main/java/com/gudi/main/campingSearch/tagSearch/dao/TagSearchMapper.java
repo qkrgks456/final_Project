@@ -16,5 +16,8 @@ public interface TagSearchMapper {
 	
 	@Select("SELECT COUNT(contentId) FROM campingApi")
 	int total();
+
+	@Select("SELECT * FROM campingApi where themaEnvrnCl like '%' || #{param2} || '%' ORDER BY contentId DESC OFFSET #{param1} ROWS FETCH FIRST 10 ROWS ONLY")
+	ArrayList<CampingDTO> search(int page,String word);
 	
 }

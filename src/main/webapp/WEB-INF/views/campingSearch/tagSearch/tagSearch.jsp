@@ -38,7 +38,6 @@
 			<div id="menu_wrap" class="bg_white">
 				<div class="option">
 					<div>
-					
 					<c:forEach var="i" begin="${map.startPage}" end="${map.endPage}">
 						<form action="${path}/campingSearch/search/${i}" class="text-center" method="post">
 						</c:forEach>
@@ -135,14 +134,14 @@
 				<ul class="pagination justify-content-center">
 					<c:if test="${map.startPage ne 1}">
 						<li class="page-item"><a class="page-link"
-							href="${path}/campingSearch/${map.url}/${map.startPage-1}"
+							href="${path}/campingSearch/${map.url}/${map.startPage-1}/${map.word}"
 							aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
 						</a></li>
 					</c:if>
 					<c:forEach var="i" begin="${map.startPage}" end="${map.endPage}">
 						<c:if test="${i ne map.currPage}">
 							<li class="page-item"><a class="page-link"
-								href="${path}/campingSearch/${map.url}/${i}">${i}</a></li>
+								href="${path}/campingSearch/${map.url}/${i}/${map.word}">${i}</a></li>
 						</c:if>
 						<c:if test="${i eq map.currPage}">
 							<li class="page-item active"><a class="page-link">${i}</a></li>
@@ -150,7 +149,7 @@
 					</c:forEach>
 					<c:if test="${map.totalPage ne map.endPage}">
 						<li class="page-item"><a class="page-link"
-							href="${path}/campingSearch/${map.url}/${map.endPage+1}"
+							href="${path}/campingSearch/${map.url}/${map.endPage+1}/${map.word}"
 							aria-label="Next"> <span aria-hidden="true">&raquo;</span>
 						</a></li>
 					</c:if>

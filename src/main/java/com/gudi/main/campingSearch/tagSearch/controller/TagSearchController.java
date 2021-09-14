@@ -1,16 +1,14 @@
 package com.gudi.main.campingSearch.tagSearch.controller;
 
-import java.util.HashMap;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gudi.main.campingSearch.tagSearch.service.TagSearchService;
@@ -27,10 +25,15 @@ public class TagSearchController {
         	return service.lists(page);
     }
     
+    @RequestMapping(value = "/search/{page}")
+    public ModelAndView Search(@PathVariable int page,@RequestParam String word) {
+    	logger.info("검색입력 :"+word+page+"페이지");
+        	return service.search(page,word);
+    }
     
-    @RequestMapping(value = "/search/{word}")
-    public ModelAndView Search(@PathVariable String word) {
-    	logger.info("검색입력"+word);
-        	return service.search(word);
+    @RequestMapping(value = "/search/{page}/{word}")
+    public ModelAndView SearchP(@PathVariable int page,@PathVariable String word) {
+    	logger.info("검색입력 :"+word+page+"페이지");
+        	return service.search(page,word);
     }
 }
