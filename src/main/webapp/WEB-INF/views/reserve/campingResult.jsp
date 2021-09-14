@@ -29,7 +29,17 @@
 <jsp:include page="../fix/menu.jsp"/>
 <%-- 내용 넣으세요 --%>
 <div class="container px-3">
-    캠핑날씨
+    <div class="container mx-4 mt-5">
+        <div class="d-flex justify-content-center">
+            <i class="bi bi-check-lg fs-1"></i>
+            <h2 class="align-middle mt-1 ms-2 fw-bold">예약완료</h2>
+        </div>
+        <div class="text-center">
+            <p class="fs-5">예약이 완료 되었습니다. 행복한 캠핑을 즐기세요!</p>
+            <a href="${path}" class="btn btn-outline-secondary">메인으로</a>
+            <a href="${path}/myInfo/reserveCheck" class="btn btn-outline-secondary mx-2">예약현황</a>
+        </div>
+    </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="${path}/resources/js/bootstrap.js"></script>

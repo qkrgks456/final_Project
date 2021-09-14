@@ -8,18 +8,17 @@ import lombok.ToString;
 @Setter
 @Getter
 public class ParkingDTO {
-
-	private String PRKPLCESE ;
-	private String LNMADR ;
-	private String PRKCMPRT ;
-	private String PARKINGCHRGEINFO ;
-	private String OPERDAY ;
-	private String INSTITUTIONNM ;
-	private String PHONENUMBER ;
-	private String LATITUDE ;
-	private String LONGITUDE ;
-	private String PRKPLCENM ;
-	private String RDNMADR ;
+	private String prkPlcese;
+	private String lnMadr;
+	private String prkCmprt ;
+	private String parkingChrgeinfo;
+	private String operDay;
+	private String instItutIonnm;
+	private String phoneNumber;
+	private String latitude;
+	private String longitude;
+	private String prkplcenm;
+	private String rdnmadr;
 }
 
 

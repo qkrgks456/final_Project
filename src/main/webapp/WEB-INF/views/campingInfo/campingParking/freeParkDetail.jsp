@@ -4,7 +4,7 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
-	<meta charset="utf-8">
+    <meta charset="utf-8">
     <title>Final</title>
     <%-- 부트 스트랩 메타태그 --%>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -31,55 +31,51 @@
 <div class="container px-3">
     차박지도
 
-<div class="d-flex justify-content-center">
-	<div>
-		<table class="table">
-  <tbody>
-    <tr>
-      <th scope="row">주차장명</th>
-      <td>${dto.PRKPLCENM}</td>
+    <div class="d-flex justify-content-center">
+        <div>
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th scope="row">주차장명</th>
+                    <td>${dto.prkPlcese}</td>
 
-    </tr>
-    <tr>
+                </tr>
+                <tr>
 
-	<c:choose>
-	<c:when test="${dto.RDNMADR eq null}">
-		<th scope="row">주소</th>
-	    <td>${dto.LNMADR}</td>
-	</c:when>
-	<c:otherwise>
-		<th scope="row">주소</th>
-		<td>${dto.RDNMADR}</td>
-	</c:otherwise>
-	</c:choose>
-	
-    </tr>
-    <tr>
-      <th scope="row">주차구획 수</th>
- 	  <td>${dto.PRKCMPRT}</td>
-    </tr>
-    <tr>
-      <th scope="row">주차장 구분</th>
- 	  <td>${dto.PRKPLCESE}</td>
-    </tr>
-    <tr>
-      <th scope="row">요금정보</th>
- 	  <td>${dto.PARKINGCHRGEINFO}</td>
-    </tr>
-    <tr>
-      <th scope="row">전화번호</th>
- 	  <td>${dto.PHONENUMBER}</td>
-    </tr>
-  </tbody>
-</table>
-	</div>
+                    <c:choose>
+                        <c:when test="${dto.lnMadr eq null}">
+                            <th scope="row">주소</th>
+                            <td>${dto.lnMadr}</td>
+                        </c:when>
+                        <c:otherwise>
+                            <th scope="row">주소</th>
+                            <td>${dto.lnMadr}</td>
+                        </c:otherwise>
+                    </c:choose>
+
+                </tr>
+                <tr>
+                    <th scope="row">주차구획 수</th>
+                    <td>${dto.prkCmprt}</td>
+                </tr>
+                <tr>
+                    <th scope="row">주차장 구분</th>
+                    <td>${dto.prkCmprt}</td>
+                </tr>
+                <tr>
+                    <th scope="row">요금정보</th>
+                    <td>${dto.parkingChrgeinfo}</td>
+                </tr>
+                <tr>
+                    <th scope="row">전화번호</th>
+                    <td>${dto.phoneNumber}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
 
 
-    
-    
-    
-    
-</div>
+    </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -88,26 +84,6 @@
 <script src="${path}/resources/js/common.js"></script>
 
 <script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 </script>

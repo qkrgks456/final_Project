@@ -92,7 +92,7 @@
     </div>
     <div class="text-center mt-3">
         <div>
-            <a href="${path}/reserve/campingReserve" class="btn btn-warning mx-1">예약하기</a>
+            <a href="${path}/reserve/campingReserveForm/${map.dto.contentId}" class="btn btn-warning mx-1">예약하기</a>
             <div id="good" class="btn btn-outline-warning mx-1" goodCheck="${map.goodCheck}">
                 가고싶어요 ${map.goodCount}개
             </div>

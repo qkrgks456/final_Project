@@ -3,6 +3,7 @@ package com.gudi.main.reserve.service;
 import com.gudi.main.dtoAll.BoardDTO;
 import com.gudi.main.dtoAll.CampingDTO;
 import com.gudi.main.dtoAll.CommentDTO;
+import com.gudi.main.dtoAll.ReserveDTO;
 import com.gudi.main.reserve.dao.ReserveMapper;
 import com.gudi.main.util.ApiUtil;
 import com.gudi.main.util.HansolUtil;
@@ -55,18 +56,18 @@ public class ReserveService {
         String loginId = (String) session.getAttribute("loginId");
         // 좋아요 체크
         String goodNum = null;
-        if(loginId != null){
+        if (loginId != null) {
             goodNum = mapper.goodCheck(loginId, "camping", contentId);
         }
-        if(goodNum == null){
-            map.put("goodCheck",false);
-        }else{
-            map.put("goodCheck",true);
+        if (goodNum == null) {
+            map.put("goodCheck", false);
+        } else {
+            map.put("goodCheck", true);
         }
         // 좋아요 갯수
-        int goodCount = mapper.campingGoodCount("camping",contentId);
+        int goodCount = mapper.campingGoodCount("camping", contentId);
         map.put("imgArr", imgArr);
-        map.put("goodCount",goodCount);
+        map.put("goodCount", goodCount);
         map.put("dto", dto);
         return map;
     }
@@ -82,5 +83,16 @@ public class ReserveService {
         // 배열화
         ArrayList<HashMap<String, Object>> hashMapArrayList = ApiUtil.jsonArray(jsonObject4.get("item"));
         return hashMapArrayList;
+    }
+
+    public void campingReserveList(String contentId) {
+        mapper.campingReserveList(contentId);
+    }
+
+    public void campingReserveInsert(ReserveDTO dto, ArrayList<String> reserveDate) {
+        for (String date : reserveDate) {
+            dto.setReserveDate(date);
+            mapper.campingReserveInsert(dto);
+        }
     }
 }

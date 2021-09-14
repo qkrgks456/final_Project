@@ -305,14 +305,18 @@
             <div class="my-2" id='calendar' style="width: auto;"></div>
         </div>
         <div class="col d-flex align-items-center">
-            <form class="mt-3 w-100">
+            <form action="${path}/reserve/campingReserve/${contentId}" class="mt-3 w-100" id="reserveForm"
+                  method="post">
                 <div class="mb-3">
                     <label for="reserveName" class="form-label">예약자명</label>
-                    <input type="text" name="reserveName" class="form-control" id="reserveName" placeholder="필수 정보 입니다">
+                    <input type="text" name="reserveName" class="form-control nullCheck" id="reserveName"
+                           placeholder="필수 정보 입니다">
+                    <div class="invalid-feedback">필수 정보 입니다</div>
                 </div>
                 <div class="mb-3">
                     <label for="phone" class="form-label">휴대폰</label>
-                    <input type="text" class="form-control" id="phone" name="phone" placeholder="필수 정보 입니다">
+                    <input type="text" class="form-control nullCheck" id="phone" name="phone" placeholder="필수 정보 입니다">
+                    <div class="invalid-feedback">필수 정보 입니다</div>
                 </div>
                 <div class="mb-3">
                     <label for="manCount" class="form-label">인원수</label>
@@ -322,13 +326,20 @@
                     <label for="carNum" class="form-label">차량번호</label>
                     <input type="text" class="form-control" id="carNum" name="carNum">
                 </div>
+                <div class="mb-3">
+                    <label for="carNum" class="form-label">예약날짜</label>
+                    <input type="text" class="form-control nullCheck" id="reserveDate" disabled="disabled">
+                    <div class="invalid-feedback">필수 정보 입니다</div>
+                    <div id="reserveDates"></div>
+                </div>
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="1" name="check" id="check1">
                     <label class="form-check-label fw-bold" for="check1"> 동의 </label>
                     <div class="invalid-feedback">약관에 동의해주세요</div>
                 </div>
                 <div class="my-2 text-center">
-                    <a href="${path}/reserve/campingReserveForm" class="btn btn-warning">예약하기</a>
+                    <input id="reserveBtn" class="btn btn-warning" type="button"
+                           value="예약하기">
                 </div>
             </form>
         </div>
@@ -361,7 +372,6 @@
         }
     ];
     eventArr.push(test);
-    console.log(eventArr);
     document.addEventListener('DOMContentLoaded', function () {
         let calendarEl = document.getElementById('calendar');
         let calendar = new FullCalendar.Calendar(calendarEl, {
@@ -383,7 +393,14 @@
                 } else {
                     let dateArr = getDatesStartToLast(info.startStr, info.endStr);
                     dateArr.pop();
-                    console.log(dateArr)
+                    $('#reserveDate').val(dateArr[0] + " ~ " + dateArr[dateArr.length - 1]);
+                    $('#reserveDate').attr("class", "form-control nullCheck is-valid");
+                    let content = '';
+                    $.each(dateArr, function (index, el) {
+                        content += '<input type="hidden" name="reserveDate" value="' + el + '">';
+                    })
+                    $('#reserveDates').empty();
+                    $('#reserveDates').append(content);
                 }
             },
         });
@@ -402,6 +419,42 @@
         }
         return result;
     }
+
+    $('#reserveBtn').on('click', function () {
+        $('.nullCheck').each(function (index, el) {
+            if ($(this).val() == "") {
+                $(this).addClass("is-invalid");
+                return false;
+            } else {
+                $('#reserveForm').submit();
+            }
+        })
+    })
+
+    $("#reserveName").on("propertychange change keyup paste input", function () {
+        if ($(this).val().length >= 1) {
+            $(this).attr('class', 'form-control is-valid');
+        } else {
+            $(this).attr('class', 'form-control is-invalid');
+            $(this).nextAll('div.invalid-feedback').text('필수 정보 입니다');
+        }
+        if ($(this).val().length >= 100) {
+            $(this).attr('class', 'form-control is-invalid');
+            $(this).nextAll('div.invalid-feedback').text('100자 미만으로 입력해주세요');
+        }
+    });
+    $("#phone").on("propertychange change keyup paste input", function () {
+        if ($(this).val().length >= 1) {
+            $(this).attr('class', 'form-control is-valid');
+        } else {
+            $(this).attr('class', 'form-control is-invalid');
+            $(this).nextAll('div.invalid-feedback').text('필수 정보 입니다');
+        }
+        if ($(this).val().length >= 100) {
+            $(this).attr('class', 'form-control is-invalid');
+            $(this).nextAll('div.invalid-feedback').text('100자 미만으로 입력해주세요');
+        }
+    });
 </script>
 </body>
 </html>

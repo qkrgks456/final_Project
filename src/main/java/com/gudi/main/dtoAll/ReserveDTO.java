@@ -17,5 +17,4 @@ public class ReserveDTO {
     private String reserveDate;
     private String delCheck;
     private String reserveName;
-    
 }

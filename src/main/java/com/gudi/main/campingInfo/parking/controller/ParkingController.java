@@ -45,8 +45,8 @@ public class ParkingController {
     	//ArrayList<ParkingDTO> dto = [class(key=value),class(key=value)]
     	System.out.println("dto 사이즈는??:: "+dto.size());
     	
-    	System.out.println(dto.get(0).getLATITUDE());
-    	System.out.println(dto.get(0).getLONGITUDE());
+    	System.out.println(dto.get(0).getLatitude());
+    	System.out.println(dto.get(0).getLongitude());
     	
         return dto;
     }

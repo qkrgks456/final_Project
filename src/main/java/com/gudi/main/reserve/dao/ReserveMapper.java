@@ -2,6 +2,9 @@ package com.gudi.main.reserve.dao;
 
 import com.gudi.main.dtoAll.CampingDTO;
 import com.gudi.main.dtoAll.CommentDTO;
+import com.gudi.main.dtoAll.ReserveDTO;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -18,4 +21,10 @@ public interface ReserveMapper {
 
     @Select("SELECT COUNT(goodNum) FROM good WHERE division=#{param1} AND divisionNum=#{param2}")
     int campingGoodCount(String camping, String contentId);
+
+    @Select("SELECT reserveDate FROM reserve WHERE contentId=#{contentId}")
+    ArrayList<ReserveDTO> campingReserveList(String contentId);
+
+    @InsertProvider(type = ReserveSQL.class, method = "reserveNull")
+    int campingReserveInsert(ReserveDTO dto);
 }

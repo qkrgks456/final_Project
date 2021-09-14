@@ -15,7 +15,7 @@ public interface ParkingMapper {
 	int test();
 	
 	@Select("SELECT * FROM ( " +
-			"SELECT ( 6371 * acos( cos( radians( #{param1} ) ) * cos( radians( latitude) ) * cos( radians( longitude ) - radians(#{param2}) ) + sin( radians(#{param1}) ) * sin( radians(latitude) ) ) ) AS distance, PRKPLCESE, LNMADR, PRKCMPRT, PARKINGCHRGEINFO, OPERDAY, INSTITUTIONNM, PHONENUMBER, PRKPLCENM, RDNMADR, LATITUDE, LONGITUDE " +
+			"SELECT ( 6371 * acos( cos( radians( #{param1} ) ) * cos( radians( latitude) ) * cos( radians( longitude ) - radians(#{param2}) ) + sin( radians(#{param1}) ) * sin( radians(latitude) ) ) ) AS distance, prkPlcese, lnMadr, prkCmprt, parkingChrgeinfo, operDay, instItutIonnm, phoneNumber, prkplcenm, rdnmadr, latitude, longitude " +
 			"FROM parkingapi " +
 			") DATA " +
 			"WHERE DATA.distance < 8")
