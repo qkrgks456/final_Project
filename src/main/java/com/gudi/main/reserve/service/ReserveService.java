@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -23,7 +24,7 @@ public class ReserveService {
     CommentService commentService;
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public HashMap<String, Object> campingDetail(String contentId) {
+    public HashMap<String, Object> campingDetail(String contentId, HttpSession session) {
         // 디테일 정보 가져오기
         CampingDTO dto = mapper.campingDetail(contentId);
         // url 선언
@@ -50,8 +51,22 @@ public class ReserveService {
             }
         }
         // 댓글값 가져오기(페이지네이션 포함)
-        HashMap<String, Object> map = commentService.commentList(contentId,"camping", 1);
+        HashMap<String, Object> map = commentService.commentList(contentId, "camping", 1);
+        String loginId = (String) session.getAttribute("loginId");
+        // 좋아요 체크
+        String goodNum = null;
+        if(loginId != null){
+            goodNum = mapper.goodCheck(loginId, "camping", contentId);
+        }
+        if(goodNum == null){
+            map.put("goodCheck",false);
+        }else{
+            map.put("goodCheck",true);
+        }
+        // 좋아요 갯수
+        int goodCount = mapper.campingGoodCount("camping",contentId);
         map.put("imgArr", imgArr);
+        map.put("goodCount",goodCount);
         map.put("dto", dto);
         return map;
     }

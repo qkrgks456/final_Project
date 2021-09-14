@@ -31,7 +31,7 @@
 <div class="w-100 img-fluid border-white"
      style="height:300px;background-image: url('${path}/resources/img/bgHansol.jpg')">
     <div class="container pt-5 border-bottom border-white">
-        <h1 id="infoAttr" class="text-white display-4" path="${path}"
+        <h1 id="infoAttr" class="text-white display-4" path="${path}" loginId="${sessionScope.loginId}"
             contentId="${map.dto.contentId}">${map.dto.facltNm}</h1>
         <div class="container pt-2">
             <h3 class="text-white ">
@@ -91,8 +91,12 @@
         </div>
     </div>
     <div class="text-center mt-3">
-        <a href="${path}/reserve/campingReserve" class="btn btn-warning mx-1">예약하기</a>
-        <a class="btn btn-warning">가고싶어요!</a>
+        <div>
+            <a href="${path}/reserve/campingReserve" class="btn btn-warning mx-1">예약하기</a>
+            <div id="good" class="btn btn-outline-warning mx-1" goodCheck="${map.goodCheck}">
+                가고싶어요 ${map.goodCount}개
+            </div>
+        </div>
     </div>
     <div class="pt-4 border-bottom border-dark">
         <h4 class="fw-bold">캠핑장 소개</h4>
@@ -243,7 +247,7 @@
                 <div class="lh-sm">${dto.content}</div>
                 <div class="d-flex justify-content-end">
                     <div>
-                        <c:if test="${sessionScope.loginId ne dto.id}">
+                        <c:if test="${sessionScope.loginId ne dto.id && sessionScope.loginId != null}">
                             <a class="btn btn-warning btn-sm" href="">신고</a>
                         </c:if>
                         <c:if test="${sessionScope.loginId eq dto.id}">
@@ -307,171 +311,46 @@
 <script src="${path}/resources/js/bootstrap.js"></script>
 <script src="${path}/resources/js/bootstrap.bundle.js"></script>
 <script src="${path}/resources/js/common.js?var=56"></script>
+<script src="${path}/resources/js/campingDetailCm.js"></script>
 <script>
-    /* 댓글 등록 ajax */
-    $('#cafeCommentBtn').on('click', function () {
+    if ($('#good').attr('goodCheck') == "true") {
+        $('#good').attr("class", "btn btn-warning mx-1");
+    }
+    $(document).on('click', '#good', function () {
+        let loginId = $('#infoAttr').attr('loginId');
         let contentId = $('#infoAttr').attr('contentId');
         let path = $('#infoAttr').attr('path');
-        let commentContent = $('#commentContent').val();
-        if (commentContent.trim() != "") {
-            $('#commentContent').removeClass('is-invalid');
-            let cafeKey = $('#cafeCommentBtn').attr("title");
-            $.ajax({
+        if(loginId != ""){
+          $.ajax({
                 type: "POST",//방식
-                url: path + "/reserve/reserveCmInsert",//주소
+                url: path + "/reserve/campingGood",//주소
                 data: {
-                    commentContent: commentContent,
                     contentId: contentId
                 },
                 dataType: 'JSON',
-                success: function (map) { //성공시
-                    commentList(map);
-                    $('#commentContent').val("");
-                },
-                error: function (e) { //실패시
-                    console.log(e);
-                }
-            });
-        } else {
-            $('#commentContent').addClass('is-invalid');
-        }
-    })
-    /* 댓글 삭제 ajax */
-    $(document).on('click', '.cmDelBtn', function () {
-        let contentId = $('#infoAttr').attr('contentId');
-        let path = $('#infoAttr').attr('path');
-        let cmNum = $(this).attr('cmNum');
-        console.log(contentId, cmNum);
-      /*  $.ajax({
-             type: "POST",//방식
-             url: "/Project/cafeCommentDel",//주소
-             data: {
-
-             },
-             dataType: 'JSON',
-             success: function (data) { //성공시
-                 commentList(data);
-             },
-             error: function (e) { //실패시
-                 console.log(e);
-             }
-         });*/
-    })
-    /* 댓글 페이지네이션 클릭시 ajax */
-    $(document).on('click', '.page-info', function () {
-        let contentId = $('#infoAttr').attr('contentId');
-        let path = $('#infoAttr').attr('path');
-        let page = $(this).attr('page');
-        $.ajax({
-            type: "GET",
-            url: path + "/reserve/reserveCmList" + "/" + page + "/" + contentId,
-            dataType: 'JSON',
-            success: function (data) { //성공시
-                commentList(data);
-            },
-            error: function (e) { //실패시
-                console.log(e);
-            }
-        });
-    })
-
-    /* 댓글 업데이트 ajax */
-    $(document).on('click', '.cmUpdateBtn', function () {
-        let contentId = $('#infoAttr').attr('contentId');
-        let path = $('#infoAttr').attr('path');
-        let cmNum = $(this).attr('cmNum');
-        let cmUpdateContent = $(this).parent().prev().children('.cmUpdateContent').val();
-        console.log(cmUpdateContent);
-        if (cmUpdateContent.trim() != "") {
-            $.ajax({
-                type: "POST",//방식
-                url: path + "/reserve/reserveCmUpdate/",//주소
-                data: {
-                    contentId: contentId,
-                    cmNum: cmNum,
-                    cmUpdateContent: cmUpdateContent
-                },
-                dataType: 'JSON',
                 success: function (data) { //성공시
-                    commentList(data);
+                    let content = "";
+                    if (data.goodCheck == false) {
+                        // 좋아요 안눌린상태
+                        $("#good").attr("goodCheck", "false");
+                        $("#good").attr("class", "btn btn-outline-warning mx-1");
+                    } else {
+                        // 좋아요 눌린상태
+                        $("#good").attr("goodCheck", "true");
+                        $("#good").attr("class", "btn btn-warning mx-1");
+                    }
+                    content += '가고싶어요 ' + data.goodCount + '개';
+                    $("#good").empty();
+                    $("#good").append(content);
                 },
                 error: function (e) { //실패시
                     console.log(e);
                 }
-            });
-        } else {
-            $(this).parent().prev().children('.cmUpdateContent').addClass('is-invalid');
+            })
+        }else{
+            alert("로그인 부탁드려요 ^^")
         }
     })
-
-    /* 댓글 리스트 메서드 */
-    function commentList(map) {
-        let content = '';
-        let sessionId = map.loginId;
-        <%-- 댓글 리스트 불러오기 --%>
-        $.each(map.commentList, function (i, dto) {
-            content += '<div class="listForm">'
-            content += '<div class="fw-bold fs-4">' + dto.id + '</div>'
-            content += '<div class="lh-sm">' + dto.content + '</div>'
-            content += '<div class="d-flex justify-content-end">'
-            content += '<div>'
-            if (sessionId != dto.id) {
-                content += '<a class="btn btn-warning btn-sm" href="">신고</a>'
-            } else {
-                content += '<a class="cmUpdateBtnForm btn btn-warning btn-sm">수정</a>'
-                content += '<a cmNum="' + dto.cmNum + '" class="cmDelBtn btn btn-warning btn-sm ms-1">삭제</a>'
-            }
-            content += '</div>'
-            content += '</div>'
-            content += '<div class="d-flex justify-content-end">'
-            content += '작성일 :' + dto.dates
-            content += '</div>'
-            content += '<hr/>'
-            content += '</div>'
-            content += '<div class="updateForm visually-hidden">'
-            content += '<div class="form-floating flex-grow-1 px-2">'
-            content += '<textarea class="cmUpdateContent form-control" style="height: 100px; resize: none;">' + dto.content + '</textarea>'
-            content += '<label>수정할 댓글을 작성하세요</label>'
-            content += '<div class="invalid-feedback">1자 이상 입력해주세요</div>'
-            content += '</div>'
-            content += '<div class="d-flex justify-content-end mt-2">'
-            content += '<a cmNum="' + dto.cmNum + '" class="cmUpdateBtn btn btn-warning btn-sm">등록</a>'
-            content += '<a class="cmUpdateCancel btn btn-warning btn-sm ms-1">취소</a>'
-            content += '</div>'
-            content += '<hr/>'
-            content += '</div>'
-        })
-        $('#commentLists').empty();
-        $('#commentLists').append(content);
-
-        /* 페이지네이션 불러오기 욕나오네 */
-        content = '';
-        content += '<ul class="pagination justify-content-center">'
-        if (map.startPage != 1) {
-            content += '<li class="page-item">'
-            content += '<a class="page-link page-info" page="' + (map.startPage - 1) + '" aria-label="Previous" style="cursor:pointer;">'
-            content += '<span aria-hidden="true">&laquo;</span>'
-            content += '</a>'
-            content += '</li>'
-        }
-        for (let i = map.startPage; i <= map.endPage; i++) {
-            if (map.currPage != i) {
-                content += '<li class="page-item"><a style="cursor:pointer;" class="page-link page-info" page="' + i + '" >' + i + '</a></li>'
-            } else {
-                content += '<li class="page-item active"><a class="page-link">' + i + '</a></li>'
-            }
-        }
-        if (map.totalPage != map.endPage) {
-            content += '<li class="page-item">'
-            content += '<a class="page-link page-info" page="' + (map.endPage + 1) + '" aria-label="Next" style="cursor:pointer;">'
-            content += '<span aria-hidden="true">&raquo;</span>'
-            content += '</a>'
-            content += '</li>'
-        }
-        content += '</ul>'
-        $('#paginationBox').empty();
-        $('#paginationBox').append(content);
-    }
 </script>
 </body>
 </html>

@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 
 @Controller
@@ -21,8 +22,8 @@ public class ReserveController {
     @Autowired
     ReserveService service;
     @RequestMapping(value = "/campingDetail/{contentId}")
-    public String myInfo(Model model,@PathVariable String contentId) {
-        HashMap<String,Object> map = service.campingDetail(contentId);
+    public String myInfo(Model model, @PathVariable String contentId, HttpSession session) {
+        HashMap<String,Object> map = service.campingDetail(contentId,session);
         model.addAttribute("map",map);
         return "reserve/campingDetail";
     }

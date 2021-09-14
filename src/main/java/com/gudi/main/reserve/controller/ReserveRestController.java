@@ -1,6 +1,7 @@
 package com.gudi.main.reserve.controller;
 
 import com.gudi.main.reserve.service.CommentService;
+import com.gudi.main.reserve.service.GoodService;
 import com.gudi.main.reserve.service.ReserveService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,8 @@ import java.util.HashMap;
 public class ReserveRestController {
     @Autowired
     CommentService commentService;
+    @Autowired
+    GoodService goodService;
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @RequestMapping(value = "/reserveCmInsert")
@@ -44,6 +47,11 @@ public class ReserveRestController {
     public HashMap<String, Object> reserveCmDelete(HttpSession session, String cmNum, String contentId) {
         String loginId = (String) session.getAttribute("loginId");
         return commentService.reserveCmDelete(cmNum,contentId,loginId);
+    }
+    @RequestMapping(value = "/campingGood")
+    public HashMap<String, Object> campingGood(HttpSession session,String contentId) {
+        String loginId = (String) session.getAttribute("loginId");
+        return goodService.campingGood(contentId,loginId);
     }
 
 }

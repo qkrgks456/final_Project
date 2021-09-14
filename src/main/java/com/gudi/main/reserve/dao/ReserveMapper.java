@@ -13,4 +13,9 @@ public interface ReserveMapper {
     @Select("SELECT * FROM campingApi WHERE contentId = #{param1}")
     CampingDTO campingDetail(String contentId);
 
+    @Select("SELECT goodNum FROM good WHERE id=#{param1} AND division=#{param2} AND divisionNum=#{param3}")
+    String goodCheck(String loginId, String camping, String contentId);
+
+    @Select("SELECT COUNT(goodNum) FROM good WHERE division=#{param1} AND divisionNum=#{param2}")
+    int campingGoodCount(String camping, String contentId);
 }

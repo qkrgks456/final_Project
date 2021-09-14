@@ -50,10 +50,10 @@ public class CommentService {
         // 댓글 업데이트
         commentMapper.reserveCmUpdate(cmNum, cmUpdateContent);
         int page = cmPageCheck(contentId, "camping", Integer.parseInt(cmNum));
-        System.out.println("page 는 뭐냐 : "+page);
-        HashMap<String,Object> map = commentList(contentId,"camping",page);
+        System.out.println("page 는 뭐냐 : " + page);
+        HashMap<String, Object> map = commentList(contentId, "camping", page);
 
-        map.put("loginId",loginId);
+        map.put("loginId", loginId);
         return map;
     }
 
@@ -73,12 +73,16 @@ public class CommentService {
         }
         return page;
     }
+
     @Transactional
     public HashMap<String, Object> reserveCmDelete(String cmNum, String contentId, String loginId) {
-        int page = cmPageCheck(contentId,"camping",Integer.parseInt(cmNum));
+        int page = cmPageCheck(contentId, "camping", Integer.parseInt(cmNum));
         commentMapper.cmDelete(cmNum);
-        HashMap<String,Object> map = commentList(contentId,"camping",page);
-
+        HashMap<String, Object> map = commentList(contentId, "camping", page);
+        if (map.size() < 1 && page != 1) {
+            map = commentList(contentId, "camping", page - 1);
+        }
+        map.put("loginId",loginId);
         return map;
     }
 }
