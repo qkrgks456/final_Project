@@ -107,9 +107,9 @@
 		
 		for(var i = 0; i<list.length; i++){
 			
-			content += "<tr onClick = \" location.href='noticeDetail?boardnum="+list[i].boardNum+"'\">";
-			content +="<td>"+list[i].id+"</td>";
+			content += "<tr onClick = \" location.href='noticeDetail/"+list[i].boardNum+"'\">";
 			content +="<td>"+list[i].title+"</td>";
+			content +="<td>"+list[i].id+"</td>";
 			var date = new Date(list[i].dates);
 			content +="<td>"+date.toLocaleDateString("ko-KR")+"</td>";
 			content +="<td>"+list[i].boardHit+"</td>";

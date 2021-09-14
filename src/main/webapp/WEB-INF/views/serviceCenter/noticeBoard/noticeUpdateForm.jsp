@@ -30,32 +30,39 @@
 <%-- 내용 넣으세요 --%>
 <div class="container px-3 my-3">
 <div class="container mx-2">
-<h3>공지사항 작성</h3>
-<form action="noticeWrite" method="post" enctype="multipart/form-data">
+<form action="../noticeUpdate" method="post" enctype="multipart/form-data">
  제목
  <div class="input-group mb-3">
-  <input type="text" name="title" class="form-control" placeholder="제목을 입력해주세요" aria-label="Username" aria-describedby="basic-addon1" required="required">
+  <input type="hidden" name="boardNum" value="${dto.boardNum}" class="boardnum"/>
+  <input type="text" name="title" class="form-control" value="${dto.title}" required="required" aria-label="Username" aria-describedby="basic-addon1">
 </div>
 
  내용
- <div class="input-group">
-  <textarea style="resize:none" rows="10" class="form-control" name="content" placeholder="내용을 입력해주세요" aria-label="With textarea" required="required"></textarea>
+ <div class="input-group mb-3">
+  <textarea name="content" style="resize:none" rows="10" class="form-control"  value="${dto.content}" required="required" aria-label="With textarea"></textarea>
 </div>
 
- <label class="mt-3">파일</label>
+ 업로드한 사진
+<div class="row">
+<c:forEach var="photo" items="${phoDtos}">
+<div class="row ms-1">
+	<a href='#this' class="oriphoto" value="${photo.newFileName}">${photo.oriFileName}    [삭제]</a>
+</div>
+</c:forEach>
+</div>
+
+
+
 <div class="form-group mt-3" id="file-list">
-        <a href="#this" onclick="addFile()">파일추가(+)</a>
-        <div class="file-group">
-        <!-- 
-            <input type="file" name="file"><a href='#this' name='file-delete'>삭제</a>
-         -->
+   <a href="#this" onclick="addFile()">파일추가(+)</a>
+        <div class="file-group">			
         </div>
-    </div>
+</div>
 
 <hr/>
 <div class="d-flex flex-row-reverse">
 <button class="btn btn-primary mx-2" type="submit">등록</button>
-<input class="btn btn-primary" type="button" value="목록" onclick="location.href='noticeBoard'">
+<input class="btn btn-primary" type="button" value="목록" onclick="location.href='../noticeBoard'">
 </div>
 </form>
 
@@ -75,7 +82,6 @@ $(document).ready(function() {
     });
 })
 
-
 function addFile() {
     var str = "<div class='file-group'><input type='file' name='file'><a href='#this' name='file-delete'>삭제</a></div>";
     $("#file-list").append(str);
@@ -88,6 +94,36 @@ function addFile() {
 function deleteFile(obj) {
        obj.parent().remove();
 }
+
+var newfilename="";
+var boardnum=$(".boardnum").val();
+
+$(document).on("click",".oriphoto",function(){
+	newfilename=$(this).attr('value');
+	alert(newfilename+" / "+boardnum);
+	$.ajax({
+		type:"POST",
+		url:"../photoDel",
+		data:{
+			"newFileName":newfilename,
+			"boardNum":boardnum
+		},
+		success:function(data){
+			console.log(data);
+		},
+		error: function(data){
+			console.log(data);
+		}
+	});
+	
+	deleteFile($(this));
+});
+
+
+	
+	
+
+
 
 
 </script>

@@ -33,45 +33,36 @@
    <%-- 상단 메뉴바 --%>
    <jsp:include page="../../fix/menu.jsp" />
    <%-- 내용 넣으세요 --%>
-   <div class="container px-3 mt-2">
       <div class="row">
-         <div class="col-3 border-end border-danger">
+         <div class="col-4 border-end border-danger">
             <div id="menu_wrap" class="bg_white">
                <div class="option">
                   <div>
                      <form onsubmit="searchPlaces(); return false;" class="text-center">
-                        <input type="text" value="" id="keyword" size="12">
-                        <button type="submit">검색하기</button>
+                     <div class="d-flex justify-content-center mt-2">
+                        <input class="form-control w-50 me-2" type="text" id="keyword">
+                        <button class="btn btn-warning btn-sm" type="submit">검색하기</button>
+                        </div>
                      </form>
                   </div>
                </div>
                <hr>
                <ul id="placesList" class="list-group list-group">
-               
-               <!-- <li class="list-group-item d-flex justify-content-between align-items-start">
-    <div class="ms-2 me-auto row">
-        <div class="col-3"><img src="..."  style="max-width: 100%; height: auto;"></div>
-         <div class="col-9"><h5>캠핑장이름</h5>
-        <p >주소</p>
-        <P>연락처</P>
-      </div></div> </li> -->
-      
       
                </ul>
                <div id="pagination"></div>
             </div>
          </div>
-         <div class="col-9">
+         <div class="col-8">
             <div id="map"style="width: 100%; height: 800px; position: relative; overflow: hidden;"></div>
          </div>
       </div>
-   </div>
    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
    <script
       src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=de13013a67053c1d19922fa8b31042a9"></script>
    <script>
    // 마커를 담을 배열입니다
-   var positions = [];
+   var markers = [];
 
    var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
        mapOption = {
@@ -82,6 +73,8 @@
 
    // 지도를 생성합니다    
    var map = new kakao.maps.Map(mapContainer, mapOption); 
+// 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
+   //var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 
 	var currPage = 1;
 	var per = 10;
@@ -96,7 +89,7 @@
 			type : 'get',
 			dataType : 'json',
 			success : function(data) { //데이터가 성공적으로 들어왔다면
-				console.log(data);
+				//console.log(data);
 				listPrint(data.list); //리스트 그리기
 				currPage = data.currPage;
 				//페이징 처리
@@ -112,19 +105,29 @@
 
 				for (var i = 0; i < data.list.length; i ++) {
 					
-					positions.push({content : data.list[i].facltNm, latlng: new kakao.maps.LatLng(data.list[i].mapY,data.list[i].mapX)});
+					markers.push({content : data.list[i].facltNm, latlng: new kakao.maps.LatLng(data.list[i].mapY,data.list[i].mapX)});
 				    // 마커를 생성합니다
 				    var marker = new kakao.maps.Marker({
 				        map: map, // 마커를 표시할 지도
-				        position: positions[i].latlng // 마커의 위치
+				        position: markers[i].latlng // 마커의 위치
 				    });
 
+				    marker.setMap(map);
+				    
+				  // console.log(infowindow.open(map, marker));
 				    // 마커에 표시할 인포윈도우를 생성합니다 
 				    var infowindow = new kakao.maps.InfoWindow({
-				        content: positions[i].content // 인포윈도우에 표시할 내용
+				        content: markers[i].content // 인포윈도우에 표시할 내용
+				        , removable : true
+				        
 				    });
-				   
+				kakao.maps.event.addListener(marker, 'click', function() {
+			
+				    infowindow.open(map, marker);
+				    alert('marker click!');
+				});
 				}
+					
 			},
 			error : function(error) {
 				console.log(error);
@@ -135,19 +138,27 @@
 	function listPrint(list){
 		var content = "";
 		
+		
+		
+		
 		for(var i = 0; i<list.length; i++){
 			
-			content += "<li class='list-group-item d-flex justify-content-between align-items-start'><div class='ms-2 me-auto row'><div class='col-3'>"
-			content += "<img src='"+list[i].firstImageUrl+"'  style='max-width: 100%; height: auto;'></div>"
+			/* content += "<li class='list-group-item d-flex justify-content-between align-items-start'><div class='ms-2 me-auto row'><div class='col-3'>"
+			content += "<img src='"+list[i].firstImageUrl+"'  style='width: 300px; height: 200px;'></div>"
 			content += "<div class='col-9'><h5>"+list[i].facltNm+"</h5>"
 			content += "<p >"+list[i].addr1+"</p>"
-			content += "<p >"+list[i].tel+"</p></div></div> </li>"
+			content += "<p >"+list[i].tel+"</p></div></div> </li>" */
+			content +=  '<div class="card mb-1" style="max-width: 500px;"><div class="row g-0"><div class="col-md-4">'
+                content +=     '<img src="'+list[i].firstImageUrl+'" class="img-fluid w-100 h-100 rounded-start me-1" alt="'+list[i].facltNm+'">'
+                content +=   '</div><div class="ms-2 col-md-7">'
+                    content +=    '<h5 class="card-title">'+list[i].facltNm+'</h5>'
+                    content +=    '<p class="card-text">'+list[i].addr1+'</p>'
+                    content +=    '<p class="card-text"><small class="text-muted">'+list[i].tel+'</small></p></div></div></div>'
 			$("#placesList").empty();
 			$("#placesList").append(content);
 		}
 	}
 	
-
    </script>
    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
    <script src="${path}/resources/js/bootstrap.js"></script>

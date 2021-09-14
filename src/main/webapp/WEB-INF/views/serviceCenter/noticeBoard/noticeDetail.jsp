@@ -28,51 +28,72 @@
 <%-- 상단 메뉴바 --%>
 <jsp:include page="../../fix/menu.jsp"/>
 <%-- 내용 넣으세요 --%>
-<div class="container px-3">
-디테일
+<div class="container px-3 mt-2">
+<div class="container mx-2">
 
-<table>
-		<tr>
-			<th>제목</th>
-			<td>${dto	.title}</td>
-		</tr>
-		<tr>
-			<th>작성자</th>
-			<td>${dto.id}</td>
-		</tr>
-		<tr>
-			<th>작성일</th>
-			<td>${dto.dates}</td>
-		</tr>
-		<tr>
-			<th>조회수</th>
-			<td>${dto.boardHit}</td>
-		</tr>
-		<tr>
-			<th>내용</th>
-			<td>${dto.content}</td>
-		</tr>
-		<c:if test="${file.size()>0 }">
-		<tr>
-			<th>다운로드</th>
-			<td>
-				<ul>
-					<c:forEach items="${file }" var="file">
-					<!-- 뒤에 만약 /가 없으면 . 뒤에 확장자 내용을 지워버림 -->
-						<li><a href="download/${file.oriFileName }/${file.newFileName}/">${file.oriFileName}</a></li>
-					</c:forEach>
-				</ul>
-			</td>
-		</tr>
-		</c:if>
-		<tr>
-			<td colspan="2">
-				<button onclick="location.href='noticeBoard'">리스트</button>
-				<%-- <button onclick="location.href='./updateForm?idx=${bbs.idx}'">수정</button>
-				<button onclick="location.href='./del?idx=${bbs.idx}'">삭제</button>			 --%>
-			</td>
-		</tr>
-	</table>
+<!-- 상단 -->
+<div class="row">
+	<div class="col">
+		${dto.title}
+	</div>
+	
+	<div class="col d-flex flex-row-reverse">
+		<input type="button" value="수정" onclick="location.href='../noticeUpdateForm/${dto.boardNum}'"/>
+		<input type="button" value="삭제" onclick="location.href='../noticeDel/${dto.boardNum}'"/>
+	</div>	
+</div>
+
+<div class="row">
+	<div class="col">
+		${dto.id}  l  ${dto.dates}
+	</div>
+	
+	<div class="col d-flex flex-row-reverse">
+		조회수${dto.boardHit} l 좋아요0  l 댓글수0	
+	</div>	
+</div>
+
+<hr/>
+
+<!-- 중단 -->
+<div>
+	<div class="d-flex justify-content-center row">
+		<c:forEach var="photo" items="${phoDtos}">
+			<div class="d-flex justify-content-center row mb-3">
+			<img src="/photo/${photo.newFileName}" style="max-width: 400px; height: auto;" onerror="this.src='${path}/resources/img/noImage.png';"/>
+			</div>
+		</c:forEach>
+	</div>
+	<br/>
+	<div>
+		${dto.content}
+	</div>
+</div>
+
+<div class="d-flex justify-content-center"">
+	<input type="button" value="좋아요"/>
+	<input type="button" value="신고"/>
+</div>
+
+<hr/>
+
+<div class="d-flex flex-row-reverse">
+<input class="btn btn-primary" type="button" value="목록" onclick="location.href='../noticeBoard'">
+</div>
+
+
+<!-- 댓글 -->
+
+
+
+
+
+
+
+
+
+ 
+    </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="${path}/resources/js/bootstrap.js"></script>
