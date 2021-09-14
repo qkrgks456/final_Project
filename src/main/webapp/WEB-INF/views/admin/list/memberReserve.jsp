@@ -66,7 +66,7 @@ function memberReserve(){
 		dataType: 'json',
 		success:function(data){
 			console.log(data);
-			adminList(data.list);
+			memberReserveList(data.list);
 		},
 		error:function(error){
 			console.log(error);
@@ -79,10 +79,10 @@ function memberReserveList(list){
 	for(var i =0; i<list.length;  i++){
 		content +="<tr>";
 		content +="<td>"+ list[i].id+"</td>";
-		content +="<td>"+ "예약자 이름" +"</td>";
+		content +="<td>"+ list[i].reserveName +"</td>";
 		content +="<td>"+ list[i].email +"</td>";
 		content +="<td>"+ list[i].manCount +"</td>";
-		content +="<td>"+ "캠핑장" +"</td>";
+		content +="<td>"+ list[i].contentId +"</td>";
 		content +="<td>"+ list[i].reserveDate +"</td>";
 		content +="</tr>";
 	}

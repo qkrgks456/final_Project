@@ -83,7 +83,10 @@
 			content +="<td>"+ list[i].nickName +"</td>";
 			content +="<td>"+ list[i].email +"</td>";
 			content +="<td>"+ list[i].admin +"</td>";
-			content +="<td>"+ "권한 삭제버튼 예정"+"</td>";
+			content +="<td>";
+			content +="<a class='btn btn-sm btn-dark' href='adminDeleteAuthority?id=" + list[i].id
+			+ "'>권한 해제</a>";
+			content +="</td>";
 			content +="</tr>";
 		}
 		$("#list").empty();

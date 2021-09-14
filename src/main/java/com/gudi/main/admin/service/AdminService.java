@@ -28,12 +28,12 @@ public class AdminService {
 		return map;
 	}
 
-	public HashMap<String, Object> adminInsert() {
-		logger.info("관리자 임명 서비스");
+	public HashMap<String, Object> adminInsertList() {
+		logger.info("관리자 임명 리스트 서비스");
 		list = new ArrayList<MemberDTO>();
 		map = new HashMap<String , Object>();
 		
-		list = dao.adminInsert();
+		list = dao.adminInsertList();
 		map.put("list",list);
 		
 		return map;
@@ -44,7 +44,9 @@ public class AdminService {
 		list = new ArrayList<MemberDTO>();
 		map = new HashMap<String , Object>();
 		list = dao.memberReserve();
-		return null;
+		map.put("list",list);
+		logger.info("예약자 수: " + list.size());
+		return map;
 	}
 
 	public HashMap<String, Object> memberInfo() {
@@ -52,6 +54,45 @@ public class AdminService {
 		list = new ArrayList<MemberDTO>();
 		map = new HashMap<String , Object>();
 		list = dao.memberInfo();
+		map.put("list",list);
 		return map;
 	}
+
+	public String adminInsert(String id) {
+		logger.info("관리자 임명 서비스");
+		dao.adminInsert(id);
+		return null;
+	}
+
+	public HashMap<String, Object> insertSearch(String selectType, String insertSearch) {
+		logger.info("관리자 임명 검색 서비스");
+		list = new ArrayList<MemberDTO>();
+		map = new HashMap<String , Object>();
+		switch(selectType){
+		case "nickName":
+			list= dao.insertSearchByNickname(insertSearch);
+			break;
+		case "email":
+			list= dao.insertSearchByEmail(insertSearch);
+			break;
+		case "id":
+			list= dao.insertSearchById(insertSearch);
+			break;
+		}
+		// 이름 list= dao.insertSearchByNickname(insertSearch);
+		//아이디
+		//이메일
+		map.put("list",list);
+		logger.info("돌아온값: " + list.size());
+		return map;
+	}
+
+	public int adminDelete(String id) {
+		int success = dao.adminDelete(id);
+		return success;
+	}
+
+	
+	
+	
 }

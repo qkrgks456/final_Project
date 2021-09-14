@@ -38,85 +38,117 @@ a {
 				<h3>관리자 임명</h3>
 				<!-- 전체 출력에서 검색내용을  넣었을 때 해당 내용 출력-->
 				<div class="row mb-1">
-					<!-- 셀렉트 -->
-					<div class="form-group col-2 m-0 p-0">
-						<select class="form-select" name="adminInsertSelect">
-							<option value="nickName" selected>이름</option>
-							<option value="id">아이디</option>
-							<option value="email">이메일</option>
-						</select>
-					</div>
-					<!-- 검색/버튼 -->
-					<div class="col-10 m-0 p-0">
-						<!-- 왼쪽으로 당기기 -->
-						<div class="row">
-							<!-- 검색 공간 -->
-							<div class="form-group col-10 mp-0 me-0">
-								<input type="text" class="form-control" id="adminInsert"
-									name="adminInsert" />
-							</div>
-							<!-- 검색 버튼 공간 -->
-							<div class="form-group col-2 p-0 m-0">
-								<button class="btn btn-dark" type="submit">검색</button>
+					<div class="input-group">
+						<!-- 셀렉트 -->
+						<div class="form-group col-2 mp-0 me-0">
+							<select id=selectType class="form-select" name="selectType">
+								<option id="nickName" value="nickName" selected>이름</option>
+								<option id="id" value="id">아이디</option>
+								<option id="email" value="email">이메일</option>
+							</select>
+						</div>
+						<!-- 검색/버튼 -->
+						<div class="col-10 m-0 p-0">
+							<!-- 왼쪽으로 당기기 -->
+							<div class="row">
+								<!-- 검색 공간 -->
+								<div class="form-group col-10 mp-0 me-0">
+									<input type="text" class="form-control" id="insertSearch"
+										name="insertSearch" />
+								</div>
+								<!-- 검색 버튼 공간 -->
+								<div class="form-group col-2 p-0 m-0">
+									<button id="searchBtn" class="btn btn-dark">검색</button>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
 
-				<table class="table table-hover text-center">
-					<thead>
-						<tr>
-							<th scope="col" class="col-md-3">아아디</th>
-							<th scope="col" class="col-md-2">이름</th>
-							<th scope="col" class="col-md-3">이메일</th>
-							<th scope="col" class="col-md-2">임명</th>
-					</thead>
-					<tbody id="list">
-						<!-- 가져올 리스트 -->
-					</tbody>
-				</table>
+					<table class="table table-hover text-center">
+						<thead>
+							<tr>
+								<th scope="col" class="col-md-3">아아디</th>
+								<th scope="col" class="col-md-2">이름</th>
+								<th scope="col" class="col-md-3">이메일</th>
+								<th scope="col" class="col-md-2">임명</th>
+							</tr>
+						</thead>
+						<tbody id="list">
+							<!-- 가져올 리스트 -->
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
-	</div>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script src="${path}/resources/js/bootstrap.js"></script>
-	<script src="${path}/resources/js/bootstrap.bundle.js"></script>
-	<%-- 공통 js --%>
-	<script src="${path}/resources/js/common.js"></script>
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<script src="${path}/resources/js/bootstrap.js"></script>
+		<script src="${path}/resources/js/bootstrap.bundle.js"></script>
+		<%-- 공통 js --%>
+		<script src="${path}/resources/js/common.js"></script>
 </body>
 <script>
-adminInsert();
-function adminInsert(){
-	console.log("jsp에서 관리자 ajax조회");
-	$.ajax({
-		url: 'adminInsertAjax',
-		type: 'get',
-		dataType: 'json',
-		success:function(data){
-			console.log(data);
-			adminList(data.list);
-		},
-		error:function(error){
-			console.log(error);
+	adminInsert();
+	$('#insertSearch').on('keypress', function(e) {
+		if (e.keyCode == '13') {
+			$('#searchBtn').click();
 		}
-	
 	});
-}
-/* onclick='location.href=/final_Project/adminInsertAuthority' */
-function adminList(list){
-	var content="";
-	for(var i =0; i<list.length;  i++){
-		content +="<tr>";
-		content +="<td>"+ list[i].id+"</td>";
-		content +="<td>"+ list[i].nickName +"</td>";
-		content +="<td>"+ list[i].email +"</td>";
-		content +="<td>";
-		content += "<button type='button'>임명</button>";
-		content +="</td>";
-		content +="</tr>";
+	$('#searchBtn').on('click', function() {
+		//var selectType = $("#selectType").val();
+		//var insertSearch=$("#insertSearch").val();
+		//console.log("타입: "+ selectType+ "내용: "+insertSearch);
+		$.ajax({
+			url : 'insertSearch',
+			type : 'get',
+			data : {
+				insertSearch : $("#insertSearch").val(),
+				selectType : $("#selectType").val()
+			},
+			dataType : 'JSON',
+			success : function(data) {
+				console.log(data);
+				adminList(data.list);
+			},
+			error : function(error) {
+				console.log(error);
+			}
+		});
+	});
+
+	function adminInsert() {
+		console.log("jsp에서 관리자 ajax조회");
+
+		$.ajax({
+			url : 'adminInsertAjax',
+			type : 'get',
+			dataType : 'json',
+			success : function(data) {
+				console.log(data);
+				adminList(data.list);
+			},
+			error : function(error) {
+				console.log(error);
+			}
+
+		});
 	}
-	$("#list").empty();
-	$("#list").append(content);
-}
+	/* onclick='location.href=/final_Project/adminInsertAuthority' */
+	/* 관리자 임명 리스트 출력 */
+	function adminList(list) {
+		var content = "";
+		for (var i = 0; i < list.length; i++) {
+			content += "<tr>";
+			content += "<td>" + list[i].id + "</td>";
+			content += "<td>" + list[i].nickName + "</td>";
+			content += "<td>" + list[i].email + "</td>";
+			content += "<td>";
+			content += "<a class='btn btn-sm btn-dark' href='adminInsertAuthority?id=" + list[i].id
+					+ "'>임명</a>";
+			content += "</td>";
+			content += "</tr>";
+		}
+		$("#list").empty();
+		$("#list").append(content);
+	}
 </script>
 </html>

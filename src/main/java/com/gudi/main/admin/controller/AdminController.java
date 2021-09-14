@@ -8,8 +8,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gudi.main.admin.service.AdminService;
@@ -46,15 +48,34 @@ public class AdminController {
     @RequestMapping(value = "/adminInsertAjax",method = RequestMethod.GET)
     public HashMap<String, Object> adminInsertAjax(){
     	logger.info("관리자 임명");
-        return adminService.adminInsert();
+        return adminService.adminInsertList();
     }
-    @ResponseBody
-    @RequestMapping(value = "/adminInsertAuthority")
-    public String adminInsertAuthority(){
+
+    @RequestMapping(value = "/adminInsertAuthority",method = RequestMethod.GET)
+    public String adminInsertAuthority(@RequestParam("id") String id){
     	logger.info("관리자 임명 버튼 클릭");
+    	logger.info("임명할 id: " +id);
+    	adminService.adminInsert(id);
         return "admin/authority/adminInsert";
     }
     
+    @ResponseBody
+    @RequestMapping(value = "/insertSearch",method = RequestMethod.GET)
+    public HashMap<String, Object> insertSearch(@RequestParam("insertSearch") String insertSearch, @RequestParam("selectType") String selectType){
+    	logger.info("관리자 임명 검색");
+    	logger.info("셀렉터: "+selectType+", 검색내용: "+insertSearch);
+        return adminService.insertSearch(selectType,insertSearch);
+    }
+    
+    @RequestMapping(value = "/adminDeleteAuthority",method = RequestMethod.GET)
+    public String adminDeleteAuthority(@RequestParam("id") String id){
+    	logger.info("관리자 임명 버튼 클릭");
+    	logger.info("임명할 id: " +id);
+    	int success = adminService.adminDelete(id);
+    	logger.info("성공여부: "+success);
+        return "admin/authority/adminSearch";
+    }
+    //adminDeleteAuthority 권한해제
     
     @RequestMapping(value = "/memberInfo")
     public String memberInfo() {
