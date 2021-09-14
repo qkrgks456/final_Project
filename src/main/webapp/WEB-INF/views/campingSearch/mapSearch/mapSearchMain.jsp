@@ -89,6 +89,7 @@
 			type : 'get',
 			dataType : 'json',
 			success : function(data) { //데이터가 성공적으로 들어왔다면
+				var check = true;
 				//console.log(data);
 				listPrint(data.list); //리스트 그리기
 				currPage = data.currPage;
@@ -110,10 +111,7 @@
 				    var marker = new kakao.maps.Marker({
 				        map: map, // 마커를 표시할 지도
 				        position: markers[i].latlng // 마커의 위치
-				    });
-
-				    marker.setMap(map);
-				    
+				    });		    
 				  // console.log(infowindow.open(map, marker));
 				    // 마커에 표시할 인포윈도우를 생성합니다 
 				    var infowindow = new kakao.maps.InfoWindow({
@@ -121,13 +119,13 @@
 				        , removable : true
 				        
 				    });
-				kakao.maps.event.addListener(marker, 'click', function() {
-			
-				    infowindow.open(map, marker);
-				    alert('marker click!');
-				});
+				kakao.maps.event.addListener(marker,'click',addClickListener(map,marker,infowindow))
 				}
-					
+					function addClickListener(map,marker,infowindow){
+						  return function() {
+						        infowindow.open(map, marker);
+						    };
+					}
 			},
 			error : function(error) {
 				console.log(error);

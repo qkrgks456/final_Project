@@ -15,7 +15,7 @@
                     <a class="nav-link fs-5 mx-3 text-black mt-2" data-bs-toggle="dropdown"
                        aria-expanded="true" href="">검색</a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="${path}/campingSearch/tagSearch">태그검색</a></li>
+                        <li><a class="dropdown-item" href="${path}/campingSearch/tagSearch/1">태그검색</a></li>
                         <li><a class="dropdown-item" href="${path}/campingSearch/mapSearch">지도로검색</a></li>
                     </ul>
                 </div>
