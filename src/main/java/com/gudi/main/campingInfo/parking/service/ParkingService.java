@@ -1,38 +1,50 @@
 package com.gudi.main.campingInfo.parking.service;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gudi.main.campingInfo.parking.dao.ParkingMapper;
-import com.gudi.main.util.ApiUtil;
+import com.gudi.main.dtoAll.ParkingDTO;
 
 @Service
 public class ParkingService {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired ParkingMapper dao;
 	
-	public void test() {
+
+	public ArrayList<ParkingDTO> getZapyo(HashMap<String, Object> map) {
 		
-		int test = dao.test();
-		logger.info("dao연결 테스트입니다:: "+test);
+		String wido = (String) map.get("wido");
+		String kyongdo = (String) map.get("kyongdo");
+		
+		System.out.println(wido + " / " + kyongdo);
+		
+		return dao.getZapyo(wido,kyongdo);
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/*
 	public void apiCall(HashMap<String, String> params) {
 		
 		System.out.println("일하라고오오오오ㅗㅗ");
@@ -129,4 +141,7 @@ public class ParkingService {
             }
         }
 	}
+	*/
+	
+	
 }
