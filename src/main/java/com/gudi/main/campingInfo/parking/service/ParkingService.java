@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gudi.main.campingInfo.parking.dao.ParkingMapper;
+import com.gudi.main.dtoAll.CampingDTO;
 import com.gudi.main.dtoAll.ParkingDTO;
 
 @Service
@@ -30,6 +31,18 @@ public class ParkingService {
 
 	public ParkingDTO freeParkDetail(String prkplcenm) {
 		return dao.freeParkDetail(prkplcenm);
+	}
+
+
+	public ArrayList<CampingDTO> payZapyo(HashMap<String, Object> map) {
+
+		String wido = (String) map.get("wido");
+		String kyongdo = (String) map.get("kyongdo");
+		
+		System.out.println(wido + " / " + kyongdo);
+		
+		return dao.payZapyo(wido,kyongdo);
+		
 	}
 
 	

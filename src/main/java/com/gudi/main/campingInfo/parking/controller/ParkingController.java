@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gudi.main.campingInfo.parking.service.ParkingService;
+import com.gudi.main.dtoAll.CampingDTO;
 import com.gudi.main.dtoAll.ParkingDTO;
 
 @Controller
@@ -51,6 +52,7 @@ public class ParkingController {
     }
     
     @RequestMapping(value = "/freeParkDetail/{prkplcenm}")
+    @ResponseBody
     public ModelAndView freeParkDetail (@PathVariable String prkplcenm) {
     	logger.info("차박지도 상세보기:: "+ prkplcenm);
     	
@@ -65,6 +67,29 @@ public class ParkingController {
     }
     
     
+    @RequestMapping(value = "/payPark")
+    public String payPark(Model model) {
+    	logger.info("차박 유료지도 메인 불러오셈::");
+        return "campingInfo/campingParking/payParkingMain";
+    }
+    
+    @RequestMapping(value = "/payZapyo")
+    @ResponseBody
+    public ArrayList<CampingDTO> payZapyo(@RequestParam HashMap<String, Object> map) {
+    	logger.info("차박 유료지도 메인 불러오셈::");
+    	System.out.println("넘어온 좌표는??::"+map); //{wido=36.499425535542095, kyongdo=127.66112788120117}
+    	
+    	ArrayList<CampingDTO> dto = service.payZapyo(map);
+    	//mapX 가 위도 mapY 가 경도
+    	
+    	System.out.println("dto는??:: "+dto);
+    	System.out.println("dto 사이즈는??:: "+dto.size());
+    	
+    	System.out.println(dto.get(0).getMapX()); //위도
+    	System.out.println(dto.get(0).getMapY()); //경도
+    	
+        return dto;
+    }
     
     
     

@@ -33,7 +33,7 @@
 <div class="row">
 
 <div>
- 차박지도 (전국의 무료·공영 주차장을 확인하세요!)
+ 차박지도 (유료 자동차 야영장을 보여줍니다!)
 </div>
 
 <div>
@@ -62,7 +62,7 @@
 </div>
 
 
-
+<!-- 
 <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=379ea69d5a147ed25817ca69e93842c3&​&libraries=services"></script>
 	<script>
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
@@ -117,7 +117,7 @@
 			
 			$.ajax({
 				type:"POST",
-				url:"./getZapyo",
+				url:"./payZapyo",
 				data:{
 					"wido":wido,
 					"kyongdo":kyongdo
@@ -130,7 +130,7 @@
 						
 						//마커생성 여러번!
 						var marker = new kakao.maps.Marker({
-						    position: new kakao.maps.LatLng(data[i].latitude, data[i].longitude), // 마커의 좌표
+						    position: new kakao.maps.LatLng(data[i].mapX, data[i].mapY), // 마커의 좌표
 						    map: map, // 마커를 표시할 지도 객체
 						});
 						
@@ -142,13 +142,13 @@
 						
 						// 인포윈도우를 생성합니다
 						var infowindow = new kakao.maps.InfoWindow({
-						    content : data[i].prkplcenm
+						    content : data[i].facltnm
 						});
 						
 						//마우스 이벤트 등록
 						kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
 					    kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
-					    kakao.maps.event.addListener(marker, 'click', makeClickListener(data[i].prkplcenm));
+					    kakao.maps.event.addListener(marker, 'click', makeClickListener(data[i].facltnm));
 						
 					}	
 				},
@@ -184,9 +184,9 @@
 			
 			content +=  '<div class="card mb-1" style="max-width: 600px;">'
             content +=   '<div class="ms-2 col-md">'
-            content +=    '<h6 class="card-title"><a href="./freeParkDetail/'+data.prkplcenm+'">'+data.prkplcenm+'</a></h6>';
-            content +=    '<p class="card-text"><small>'+"주차구획 수: "+data.prkcmprt+'</small></p>';
-            content +=    '<p class="card-text"><small class="text-muted">'+"전화번호: "+data.phonenumber+'</small></p></div></div>';
+            content +=    '<h6 class="card-title"><a href="./freeParkDetail/'+data.facltnm+'">'+data.facltnm+'</a></h6>';
+            content +=    '<p class="card-text"><small>'+"주소: "+data.addr1+'</small></p>';
+            content +=    '<p class="card-text"><small class="text-muted">'+"전화번호: "+data.tel+'</small></p></div></div>';
 			$(".list").append(content);
 			
 		}
@@ -195,7 +195,8 @@
 
 
 
-
+ -->
+ 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="${path}/resources/js/bootstrap.js"></script>
 <script src="${path}/resources/js/bootstrap.bundle.js"></script>
@@ -245,3 +246,4 @@ $.ajax({
 
 </body>
 </html>
+
