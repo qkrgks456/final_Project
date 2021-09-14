@@ -46,7 +46,7 @@
 			<c:forEach items="${dtoList}" var="dto">
 				<tr>
 				    <td scope="row">${dto.boardNum}</td>
-				    <td><a href="reviewDetail/${dto.boardNum}">${dto.title}</a></td>
+				    <td><a href="freeDetail/${dto.boardNum}">${dto.title}</a></td>
 				    <td>${dto.id}</td>
 				    <td>${dto.boardHit}</td>
 				    <td>${dto.dates}</td>
@@ -62,5 +62,14 @@
 <script src="${path}/resources/js/bootstrap.js"></script>
 <script src="${path}/resources/js/bootstrap.bundle.js"></script>
 <script src="${path}/resources/js/common.js"></script>
+
+<script>
+
+var delmsg = "${delmsg}"
+if(delmsg!=""){
+	alert(delmsg);
+}
+
+</script>
 </body>
 </html>

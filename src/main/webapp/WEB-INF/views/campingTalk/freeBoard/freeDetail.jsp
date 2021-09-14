@@ -30,69 +30,64 @@
 <%-- 내용 넣으세요 --%>
 <div class="container px-3 my-3">
 	<div class="container mx-2">
-		<h3>글쓰기</h3>
-    	
-		<form action="./freeWrite" method="post" enctype="multipart/form-data">
-		제목
-		<div class="input-group mb-3">
-			<input type="text" name="title" class="form-control" placeholder="제목을 입력해주세요" required="required" aria-label="Username" aria-describedby="basic-addon1">
+		
+		<!-- 상단 -->
+		<div class="row">
+			<div class="col">
+				${dto.title}
+			</div>
+			<div class="col d-flex flex-row-reverse">
+				<input type="button" value="수정" onclick="location.href='../freeUpdateForm/${dto.boardNum}'"/>
+				<input type="button" value="삭제" onclick="location.href='../freeDel/${dto.boardNum}'"/>
+			</div>	
+		</div>
+		<div class="row">
+			<div class="col">
+				${dto.id} l ${dto.dates}
+			</div>
+			<div class="col d-flex flex-row-reverse">
+				조회수${dto.boardHit} l 좋아요0  l 댓글수0	
+			</div>	
 		</div>
 		
-		 내용
-		<div class="input-group">
-			<textarea name="content" style="resize:none" rows="10" class="form-control"  placeholder="내용을 입력해주세요" required="required" aria-label="With textarea"></textarea>
-		</div>
-
-		<!--
-		<label class="mt-3">파일</label>
-		<div>
-			<input type="file" name="file"/>
-		</div>
-		-->
-  
-		<div class="form-group mt-3" id="file-list">
-	        <a href="#this" onclick="addFile()">파일추가(+)</a>
-	        <div class="file-group">
-	        <!-- 
-	            <input type="file" name="file"><a href='#this' name='file-delete'>삭제</a>
-	         -->
-	        </div>
-		</div>
-
 		<hr/>
 		
+		<!-- 중단 -->
+		<div>
+			<div class="d-flex justify-content-center row">
+				<!-- <img src="C:/upload/${phoDto.newFileName}"/>  -->
+				<!-- <img src="${path}/resources/img/test.jpg"/>  -->
+				<c:forEach var="photo" items="${phoDtos}">
+					<div class="d-flex justify-content-center row mb-3">
+					<img src="/photo/${photo.newFileName}" style="max-width: 400px; height: auto;" onerror="this.src='${path}/resources/img/noImage.png';"/>
+					</div>
+				</c:forEach>
+			</div>
+			<br/>
+			<div>
+				${dto.content}
+			</div>
+		</div>
+		
+		<div class="d-flex justify-content-center"">
+			<input type="button" value="좋아요"/>
+			<input type="button" value="신고"/>
+		</div>
+		
+		<hr/>
 		<div class="d-flex flex-row-reverse">
-	    	<button class="btn btn-primary mx-2" type="submit">등록</button>
-			<input class="btn btn-primary" type="button" value="목록" onclick="location.href='./freeBoard'">
+	    	<input class="btn btn-primary" type="button" value="목록" onclick="location.href='../freeBoard'">
 	    </div>
-	</div>
+	    
+	    <!--  -->
+	    
+	    
+    </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="${path}/resources/js/bootstrap.js"></script>
 <script src="${path}/resources/js/bootstrap.bundle.js"></script>
 <script src="${path}/resources/js/common.js"></script>
 
-<script>
-
-	$(document).ready(function() {
-		$("a[name='file-delete']").on("click", function(e) {
-			e.preventDefault();
-			deleteFile($(this));
-		});
-	})
-
-	function addFile() {
-		var str = "<div class='file-group'><input type='file' name='file'><a href='#this' name='file-delete'>삭제</a></div>";
-		$("#file-list").append(str);
-		$("a[name='file-delete']").on("click", function(e) {
-			e.preventDefault();
-			deleteFile($(this));
-		});
-	}
-
-	function deleteFile(obj) {
-		obj.parent().remove();
-	}
-</script>
 </body>
 </html>

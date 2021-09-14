@@ -111,7 +111,7 @@ a {
 			content += "<td>" + list[i].nickName + "</td>";
 			content += "<td>" + list[i].delCheck + "</td>";
 			content += "<td>";
-			content += '<button class="btn btn-dark" type="button" onclick="location.href='memberInfoBlackList?id='"'+list[i].id+">상세보기</button>";
+			content += "<a class='btn btn-sm btn-dark' >상세보기</a>";
 			content += "</td>";
 			content += "</tr>";
 		}
