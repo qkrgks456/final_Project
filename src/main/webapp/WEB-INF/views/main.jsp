@@ -4,7 +4,6 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
-
     <title>Final</title>
     <%-- 부트 스트랩 메타태그 --%>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -106,7 +105,6 @@
     </div>
 </section>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="${path}/resources/js/bootstrap.js"></script>
 <script src="${path}/resources/js/bootstrap.bundle.js"></script>
 <script src="${path}/resources/js/common.js"></script>
 </body>

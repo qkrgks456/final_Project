@@ -28,7 +28,8 @@
 	<beans:bean id="interceptor" class="com.gudi.main.util.Interceptor"> </beans:bean>
 	<interceptors>
 		<interceptor>
-			<mapping path="/"/>
+			<mapping path="/**"/>
+			<exclude-mapping path="/resources/**"/>
 			<beans:ref bean="interceptor"/>
 		</interceptor>
 	</interceptors>

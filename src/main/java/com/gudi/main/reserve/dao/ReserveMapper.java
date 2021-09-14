@@ -23,7 +23,7 @@ public interface ReserveMapper {
     int campingGoodCount(String camping, String contentId);
 
     @Select("SELECT reserveDate FROM reserve WHERE contentId=#{contentId}")
-    ArrayList<ReserveDTO> campingReserveList(String contentId);
+    ArrayList<String> campingReserveList(String contentId);
 
     @InsertProvider(type = ReserveSQL.class, method = "reserveNull")
     int campingReserveInsert(ReserveDTO dto);

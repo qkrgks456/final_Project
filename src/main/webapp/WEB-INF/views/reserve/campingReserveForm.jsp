@@ -14,8 +14,6 @@
     <%-- 공통 css --%>
     <link href="${path}/resources/css/common.css?var=2" rel="stylesheet">
     <link href="${path}/resources/css/calendar.css" rel="stylesheet">
-    <%--   $('a.fc-daygrid-day-number').css({"color":"black","text-decoration":"none"});
-       $('a.fc-col-header-cell-cushion').css('color','black');--%>
     <style>
         a.fc-daygrid-day-number {
             color: black;
@@ -306,7 +304,7 @@
         </div>
         <div class="col d-flex align-items-center">
             <form action="${path}/reserve/campingReserve/${contentId}" class="mt-3 w-100" id="reserveForm"
-                  method="post">
+                  method="post" contentId="${contentId}" path="${path}">
                 <div class="mb-3">
                     <label for="reserveName" class="form-label">예약자명</label>
                     <input type="text" name="reserveName" class="form-control nullCheck" id="reserveName"
@@ -332,11 +330,6 @@
                     <div class="invalid-feedback">필수 정보 입니다</div>
                     <div id="reserveDates"></div>
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="1" name="check" id="check1">
-                    <label class="form-check-label fw-bold" for="check1"> 동의 </label>
-                    <div class="invalid-feedback">약관에 동의해주세요</div>
-                </div>
                 <div class="my-2 text-center">
                     <input id="reserveBtn" class="btn btn-warning" type="button"
                            value="예약하기">
@@ -347,31 +340,12 @@
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="${path}/resources/js/bootstrap.js"></script>
 <script src="${path}/resources/js/bootstrap.bundle.js"></script>
 <script src="${path}/resources/js/common.js"></script>
 <script src="${path}/resources/js/calendar.js"></script>
 <script>
-    let test = new Object();
-    test.title = '예약수 :' + 1;
-    test.start = '2021-09-02';
-    let eventArr = [
-        {
-            title: '예약수 :' + 2,
-            start: '2021-09-05',
-        },
-        {
-            title: 'event2',
-            start: '2010-01-05',
-            end: '2010-01-07'
-        },
-        {
-            title: 'event3',
-            start: '2010-01-09T12:30:00',
-            allDay: false // will make the time show
-        }
-    ];
-    eventArr.push(test);
+    let contentId = $('#reserveForm').attr('contentId');
+    let path = $('#reserveForm').attr('path');
     document.addEventListener('DOMContentLoaded', function () {
         let calendarEl = document.getElementById('calendar');
         let calendar = new FullCalendar.Calendar(calendarEl, {
@@ -384,7 +358,6 @@
             initialView: 'dayGridMonth',
             selectable: true,
             locale: "ko",
-            events: eventArr,
             droppable: false,
             select: function (info) {
                 let today = new Date();
@@ -403,6 +376,37 @@
                     $('#reserveDates').append(content);
                 }
             },
+            eventSources: [{
+                events: function (info, successCallback, failureCallback) {
+                    $.ajax({
+                        type: "POST",//방식
+                        url: path + "/reserve/campingReserveList",//주소
+                        data: {
+                            contentId: contentId,
+                        },
+                        dataType: 'JSON',
+                        success: function (data) {
+                            let eventArr = [];
+                            // 예약날짜가 있다면 해당 로직
+                            if (data.length > 0) {
+                                let result = {};
+                                data.forEach((x) => {
+                                    result[x] = (result[x] || 0) + 1;
+                                });
+                                let keys = Object.keys(result);
+                                for (let i = 0; i < keys.length; i++) {
+                                    let jsonObj = new Object();
+                                    jsonObj.start = keys[i];
+                                    jsonObj.title = "예약수 : " + result[keys[i]];
+                                    eventArr.push(jsonObj);
+                                }
+                                console.log(eventArr);
+                                successCallback(eventArr);
+                            }
+                        }
+                    })
+                }
+            }]
         });
         calendar.render();
     });

@@ -92,7 +92,7 @@
     </div>
     <div class="text-center mt-3">
         <div>
-            <a href="${path}/reserve/campingReserveForm/${map.dto.contentId}" class="btn btn-warning mx-1">예약하기</a>
+            <a id="reserveBtn" href="${path}/reserve/campingReserveForm/${map.dto.contentId}" class="btn btn-warning mx-1">예약하기</a>
             <div id="good" class="btn btn-outline-warning mx-1" goodCheck="${map.goodCheck}">
                 가고싶어요 ${map.goodCount}개
             </div>
@@ -308,7 +308,6 @@
     <br/>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="${path}/resources/js/bootstrap.js"></script>
 <script src="${path}/resources/js/bootstrap.bundle.js"></script>
 <script src="${path}/resources/js/common.js?var=56"></script>
 <script src="${path}/resources/js/campingDetailCm.js"></script>

@@ -34,8 +34,7 @@ public class ReserveController {
     }
 
     @RequestMapping(value = "/campingReserveForm/{contentId}")
-    public String campingReserveList(@PathVariable String contentId, Model model) {
-        service.campingReserveList(contentId);
+    public String campingReserveForm(@PathVariable String contentId, Model model) {
         model.addAttribute("contentId", contentId);
         return "reserve/campingReserveForm";
     }
@@ -51,7 +50,7 @@ public class ReserveController {
         dto.setReserveName(reserveName);
         dto.setContentId(contentId);
         dto.setId(loginId);
-        /*service.campingReserveInsert(dto, reserveDate);*/
+        service.campingReserveInsert(dto, reserveDate);
         return "reserve/campingResult";
     }
 

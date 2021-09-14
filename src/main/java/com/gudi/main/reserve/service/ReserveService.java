@@ -85,8 +85,8 @@ public class ReserveService {
         return hashMapArrayList;
     }
 
-    public void campingReserveList(String contentId) {
-        mapper.campingReserveList(contentId);
+    public ArrayList<String> campingReserveList(String contentId) {
+        return mapper.campingReserveList(contentId);
     }
 
     public void campingReserveInsert(ReserveDTO dto, ArrayList<String> reserveDate) {

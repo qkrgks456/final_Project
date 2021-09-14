@@ -22,7 +22,7 @@
                 <div class="dropdown">
                     <a class="nav-link fs-5 mx-3 text-black mt-2" data-bs-toggle="dropdown"
                        aria-expanded="true" href="">캠핑정보</a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
                         <li><a class="dropdown-item" href="${path}/campingInfo/campingRecipe">캠핑레시피</a></li>
                         <li><a class="dropdown-item" href="${path}/campingInfo/campingTip">캠핑팁</a></li>
                         <li><a class="dropdown-item" href="${path}/campingInfo/campingWeather">날씨</a></li>
@@ -32,7 +32,7 @@
                 <div class="dropdown">
                     <a class="nav-link fs-5 mx-3 text-black mt-2" href="" data-bs-toggle="dropdown"
                        aria-expanded="true">캠핑톡</a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
                         <li><a class="dropdown-item" href="${path}/campingTalk/reviewBoard">캠핑리뷰</a></li>
                         <li><a class="dropdown-item" href="${path}/campingTalk/freeBoard">자유게시판</a></li>
                     </ul>
@@ -40,7 +40,7 @@
                 <div class="dropdown">
                     <a class="nav-link fs-5 mx-3 text-black mt-2" data-bs-toggle="dropdown"
                        aria-expanded="true" href="">고객센터</a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton4">
                         <li><a class="dropdown-item" href="${path}/serviceCenter/questionBoard">문의하기</a></li>
                         <li><a class="dropdown-item" href="${path}/serviceCenter/noticeBoard">공지사항</a></li>
                     </ul>

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 @RestController
@@ -19,6 +20,8 @@ import java.util.HashMap;
 public class ReserveRestController {
     @Autowired
     CommentService commentService;
+    @Autowired
+    ReserveService reserveService;
     @Autowired
     GoodService goodService;
     Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -30,28 +33,34 @@ public class ReserveRestController {
     }
 
     @RequestMapping(value = "/reserveCmUpdate")
-    public HashMap<String, Object> reserveCmUpdate(HttpSession session, String cmNum, String contentId,String cmUpdateContent) {
+    public HashMap<String, Object> reserveCmUpdate(HttpSession session, String cmNum, String contentId, String cmUpdateContent) {
         String loginId = (String) session.getAttribute("loginId");
-        return commentService.reserveCmUpdate(cmNum,contentId,cmUpdateContent,loginId);
+        return commentService.reserveCmUpdate(cmNum, contentId, cmUpdateContent, loginId);
     }
 
     @RequestMapping(value = "/reserveCmList/{page}/{contentId}")
     public HashMap<String, Object> reserveCmList(HttpSession session, @PathVariable int page, @PathVariable String contentId) {
         String loginId = (String) session.getAttribute("loginId");
         HashMap<String, Object> map = commentService.commentList(contentId, "camping", page);
-        map.put("loginId",loginId);
+        map.put("loginId", loginId);
         return map;
     }
 
     @RequestMapping(value = "/reserveCmDelete")
     public HashMap<String, Object> reserveCmDelete(HttpSession session, String cmNum, String contentId) {
         String loginId = (String) session.getAttribute("loginId");
-        return commentService.reserveCmDelete(cmNum,contentId,loginId);
+        return commentService.reserveCmDelete(cmNum, contentId, loginId);
     }
+
     @RequestMapping(value = "/campingGood")
-    public HashMap<String, Object> campingGood(HttpSession session,String contentId) {
+    public HashMap<String, Object> campingGood(HttpSession session, String contentId) {
         String loginId = (String) session.getAttribute("loginId");
-        return goodService.campingGood(contentId,loginId);
+        return goodService.campingGood(contentId, loginId);
+    }
+
+    @RequestMapping(value = "/campingReserveList")
+    public ArrayList<String> campingReserveList(HttpSession session, String contentId) {
+        return reserveService.campingReserveList(contentId);
     }
 
 }
