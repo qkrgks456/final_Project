@@ -313,14 +313,13 @@
 <script src="${path}/resources/js/common.js?var=56"></script>
 <script src="${path}/resources/js/campingDetailCm.js"></script>
 <script>
+    let path = $('#infoAttr').attr('path');
     if ($('#good').attr('goodCheck') == "true") {
         $('#good').attr("class", "btn btn-warning mx-1");
     }
     $(document).on('click', '#good', function () {
         let loginId = $('#infoAttr').attr('loginId');
         let contentId = $('#infoAttr').attr('contentId');
-        let path = $('#infoAttr').attr('path');
-
         $.ajax({
             type: "POST",//방식
             url: path + "/reserve/campingGood",//주소
@@ -344,7 +343,8 @@
                     $("#good").empty();
                     $("#good").append(content);
                 } else {
-                    alert("로그인 해주세용 ^^")
+                    alert("로그인 해주세용 ^^");
+                    location.href = path + "/member/loginForm";
                 }
             },
             error: function (e) { //실패시

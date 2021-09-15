@@ -21,6 +21,8 @@ public class MainController {
     Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     MainService service;
+    @Autowired
+    MainApiData mainApiData;
 
     @RequestMapping(value = "/")
     public String main(HttpSession session, Model model) {

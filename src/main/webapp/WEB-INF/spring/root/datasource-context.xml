@@ -18,6 +18,8 @@
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <!-- 사용할 DataBase 지정 -->
         <property name="dataSource" ref="datasource"/>
+        <!-- long 타입 받기 -->
+        <property name="configLocation" value="classpath:/config/mybatis-config.xml"/>
         <!-- 커넥션 풀 설정 -->
         <property name="environment" value="classpath:/config/mybatis-config.xml"/>
     </bean>

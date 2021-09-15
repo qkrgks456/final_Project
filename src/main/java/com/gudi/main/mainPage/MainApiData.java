@@ -1,6 +1,10 @@
-package com.gudi.main.util;
+package com.gudi.main.mainPage;
 
+import com.gudi.main.util.ApiUtil;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,9 +13,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class TestClass {
-    /*public static void main(String args[]) {
-        // TODO Auto-generated method stub
+@Service
+public class MainApiData {
+    @Autowired
+    MainMapper mapper;
+
+    // 매달 1일 오전3시 api 최신화된 데이터 인서트 시켜준다 빈약한 데이터 필터까지
+    @Scheduled(cron = "0 0 3 1 * ?")
+    public void apiInsert() {
         // url 선언
         String url = "http://api.visitkorea.or.kr/openapi/service/rest/GoCamping/basedList";
         // params 선언
@@ -56,6 +65,7 @@ public class TestClass {
         ArrayList<HashMap<String, Object>> hashMapArrayList = ApiUtil.jsonArray(jsonObject4.get("item"));
         System.out.println(hashMapArrayList.size());
         if (hashMapArrayList.size() == totalCount) {
+            mapper.apiDelete();
             Connection con = null;
             PreparedStatement pstmt = null;
 
@@ -72,7 +82,7 @@ public class TestClass {
                 con.setAutoCommit(false);
                 pstmt = con.prepareStatement(sql);
                 for (int i = 0; i < hashMapArrayList.size(); i++) {
-                    pstmt.setInt(1, (Integer)hashMapArrayList.get(i).get("contentId"));
+                    pstmt.setInt(1, (Integer) hashMapArrayList.get(i).get("contentId"));
                     pstmt.setString(2, (String) hashMapArrayList.get(i).get("lineIntro"));
                     pstmt.setString(3, (String) hashMapArrayList.get(i).get("facltNm"));
                     pstmt.setString(4, (String) hashMapArrayList.get(i).get("intro"));
@@ -135,6 +145,7 @@ public class TestClass {
                 } catch (SQLException ex) {
                 }
             }
+            mapper.apiFilter();
         }
-    }*/
+    }
 }

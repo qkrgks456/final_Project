@@ -12,15 +12,10 @@ public class CampingDTO {
     private String lineIntro;
     private String facltNm;
     private String intro;
-    private String allar;
     private String featureNm;
     private String induty;
     private String lctCl;
     private String addr1;
-    private String addr2;
-    private String insrncAt;
-    private String hvofBgnde;
-    private String hvofEnddle;
     private String mapX;
     private String mapY;
     private String tel;
@@ -36,8 +31,6 @@ public class CampingDTO {
     private String sitebottomCl3;
     private String sitebottomCl4;
     private String sitebottomCl5;
-    private String trlerAcmpnyAt;
-    private String carAvacmpnyAt;
     private String animalCmgCl;
     private String eqpmnlEndCl;
     private String themaEnvrnCl;
