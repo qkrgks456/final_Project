@@ -4,6 +4,7 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<meta charset="utf-8">
     <title>Final</title>
     <%-- 부트 스트랩 메타태그 --%>
@@ -30,15 +31,15 @@
 <%-- 내용 넣으세요 --%>
 <div class="container px-3">
 
-<div class="row">
+<div class="row mb-2">
 
-<div>
- 차박지도 (전국의 무료·공영 주차장을 확인하세요!)
+<div class="col mt-3">
+  <h5>차박지도 (전국의 무료·공영 주차장을 확인하세요!)</h5>
 </div>
 
-<div>
- <button onclick="location.href='./campingParking'" class="btn btn-warning btn-sm">무료</button>
+<div class="col d-flex flex-row-reverse mt-2">
  <button onclick="location.href='./payPark'" class="btn btn-warning btn-sm">유료</button>
+ <button onclick="location.href='./campingParking'" class="btn btn-warning btn-sm me-1">무료</button>
 </div>
 
 </div>
@@ -47,6 +48,13 @@
 <div class="d-flex justify-content-center">
 
 <div class="list col-2" style="border:1px solid;">
+
+<c:if test=""></c:if>
+<div style="text-align:center; margin-top:50px">
+<p style="color:#b4b4b4;">지도를 드래그 하세요<p>
+</div>
+
+
 </div>  
 
 
@@ -154,6 +162,8 @@
 				},
 				error: function(data){
 					console.log(data);
+					
+					dragPrint();
 				}
 			});			
 		});
@@ -185,18 +195,29 @@
 			content +=  '<div class="card mb-1" style="max-width: 600px;">'
             content +=   '<div class="ms-2 col-md">'
             content +=    '<h6 class="card-title"><a href="./freeParkDetail/'+data.prkplcenm+'">'+data.prkplcenm+'</a></h6>';
-            content +=    '<p class="card-text"><small>'+"주차구획 수: "+data.prkCmprt+'</small></p>';
-            content +=    '<p class="card-text"><small class="text-muted">'+"전화번호: "+data.phoneNumber+'</small></p></div></div>';
+            content +=    '<p class="card-text"><small>'+"주차구획 수: "+data.prkcmprt+'</small></p>';
+            content +=    '<p class="card-text"><small class="text-muted">'+"전화번호: "+data.phonenumber+'</small></p></div></div>';
 			$(".list").append(content);
 			
 		}
-
+		
+		function dragPrint(){
+			var content = "";
+			
+			content += '<div style="text-align:center; margin-top:50px">'
+			content += '<p style="color:#b4b4b4;">지도를 드래그 하세요<p>'	
+			content += '</div>'
+			
+			$(".list").append(content);
+		}
+		
+		
 </script>
 
 
 
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script src="${path}/resources/js/bootstrap.js"></script>
 <script src="${path}/resources/js/bootstrap.bundle.js"></script>
 <script src="${path}/resources/js/common.js"></script>

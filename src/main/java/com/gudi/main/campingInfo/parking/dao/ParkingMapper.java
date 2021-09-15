@@ -15,20 +15,20 @@ public interface ParkingMapper {
 	int test();
 	
 	@Select("SELECT * FROM ( " +
-			"SELECT ( 6371 * acos( cos( radians( #{param1} ) ) * cos( radians( latitude) ) * cos( radians( longitude ) - radians(#{param2}) ) + sin( radians(#{param1}) ) * sin( radians(latitude) ) ) ) AS distance, prkPlcese, lnMadr, prkCmprt, parkingChrgeinfo, operDay, instItutIonnm, phoneNumber, prkplcenm, rdnmadr, latitude, longitude " +
+			"SELECT ( 6371 * acos( cos( radians( #{param1} ) ) * cos( radians( latitude) ) * cos( radians( longitude ) - radians(#{param2}) ) + sin( radians(#{param1}) ) * sin( radians(latitude) ) ) ) AS distance, prkplcese, lnmadr, prkcmprt, parkingchrgeinfo, operday, institutionnm, phonenumber, prkplcenm, rdnmadr, latitude, longitude " +
 			"FROM parkingapi " +
 			") DATA " +
-			"WHERE DATA.distance < 8")
+			"WHERE DATA.distance < 7")
 	ArrayList<ParkingDTO> getZapyo(String wido, String kyongdo);
 
 	@Select("SELECT * FROM parkingapi WHERE prkplcenm = #{param1}")
 	ParkingDTO freeParkDetail(String prkplcenm);
 
 	@Select("SELECT * FROM ( " +
-			"SELECT ( 6371 * acos( cos( radians( #{param1} ) ) * cos( radians( latitude) ) * cos( radians( longitude ) - radians(#{param2}) ) + sin( radians(#{param1}) ) * sin( radians(latitude) ) ) ) AS distance, contentid, facltNm, addr1, mapX, mapY, tel, lctcl, hompage " +
+			"SELECT ( 6371 * acos( cos( radians( #{param1} ) ) * cos( radians( mapy ) ) * cos( radians( mapx ) - radians(#{param2}) ) + sin( radians(#{param1}) ) * sin( radians(mapy) ) ) ) AS distance, contentid, facltnm, addr1, mapx, mapy, tel, lctcl, homepage, induty " +
 			"FROM campingapi " +
 			") DATA " +
-			"WHERE DATA.distance < 8")
+			"WHERE DATA.distance < 10 AND induty like '%자동차%'")
 	ArrayList<CampingDTO> payZapyo(String wido, String kyongdo);
 
 

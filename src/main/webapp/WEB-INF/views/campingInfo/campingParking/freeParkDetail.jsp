@@ -37,38 +37,38 @@
                 <tbody>
                 <tr>
                     <th scope="row">주차장명</th>
-                    <td>${dto.prkPlcese}</td>
+                    <td>${dto.prkplcenm}</td>
 
                 </tr>
                 <tr>
 
                     <c:choose>
-                        <c:when test="${dto.lnMadr eq null}">
+                        <c:when test="${dto.rdnmadr eq null}">
                             <th scope="row">주소</th>
-                            <td>${dto.lnMadr}</td>
+                            <td>${dto.lnmadr}</td>
                         </c:when>
                         <c:otherwise>
                             <th scope="row">주소</th>
-                            <td>${dto.lnMadr}</td>
+                            <td>${dto.rdnmadr}</td>
                         </c:otherwise>
                     </c:choose>
 
                 </tr>
                 <tr>
                     <th scope="row">주차구획 수</th>
-                    <td>${dto.prkCmprt}</td>
+                    <td>${dto.prkcmprt}</td>
                 </tr>
                 <tr>
                     <th scope="row">주차장 구분</th>
-                    <td>${dto.prkCmprt}</td>
+                    <td>${dto.prkplcese}</td>
                 </tr>
                 <tr>
                     <th scope="row">요금정보</th>
-                    <td>${dto.parkingChrgeinfo}</td>
+                    <td>${dto.parkingchrgeinfo}</td>
                 </tr>
                 <tr>
                     <th scope="row">전화번호</th>
-                    <td>${dto.phoneNumber}</td>
+                    <td>${dto.phonenumber}</td>
                 </tr>
                 </tbody>
             </table>
