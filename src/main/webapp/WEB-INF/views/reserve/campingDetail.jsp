@@ -92,7 +92,8 @@
     </div>
     <div class="text-center mt-3">
         <div>
-            <a id="reserveBtn" href="${path}/reserve/campingReserveForm/${map.dto.contentId}" class="btn btn-warning mx-1">예약하기</a>
+            <a id="reserveBtn" href="${path}/reserve/campingReserveForm/${map.dto.contentId}"
+               class="btn btn-warning mx-1">예약하기</a>
             <div id="good" class="btn btn-outline-warning mx-1" goodCheck="${map.goodCheck}">
                 가고싶어요 ${map.goodCount}개
             </div>
@@ -319,16 +320,17 @@
         let loginId = $('#infoAttr').attr('loginId');
         let contentId = $('#infoAttr').attr('contentId');
         let path = $('#infoAttr').attr('path');
-        if(loginId != ""){
-          $.ajax({
-                type: "POST",//방식
-                url: path + "/reserve/campingGood",//주소
-                data: {
-                    contentId: contentId
-                },
-                dataType: 'JSON',
-                success: function (data) { //성공시
-                    let content = "";
+
+        $.ajax({
+            type: "POST",//방식
+            url: path + "/reserve/campingGood",//주소
+            data: {
+                contentId: contentId
+            },
+            dataType: 'JSON',
+            success: function (data) { //성공시
+                let content = "";
+                if (Object.keys(data).length > 0) {
                     if (data.goodCheck == false) {
                         // 좋아요 안눌린상태
                         $("#good").attr("goodCheck", "false");
@@ -341,14 +343,14 @@
                     content += '가고싶어요 ' + data.goodCount + '개';
                     $("#good").empty();
                     $("#good").append(content);
-                },
-                error: function (e) { //실패시
-                    console.log(e);
+                } else {
+                    alert("로그인 해주세용 ^^")
                 }
-            })
-        }else{
-            alert("로그인 부탁드려요 ^^")
-        }
+            },
+            error: function (e) { //실패시
+                console.log(e);
+            }
+        })
     })
 </script>
 </body>

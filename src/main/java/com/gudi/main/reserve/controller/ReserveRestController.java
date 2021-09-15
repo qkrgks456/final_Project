@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -53,9 +56,14 @@ public class ReserveRestController {
     }
 
     @RequestMapping(value = "/campingGood")
-    public HashMap<String, Object> campingGood(HttpSession session, String contentId) {
+    public HashMap<String, Object> campingGood(HttpSession session, String contentId) throws Exception {
         String loginId = (String) session.getAttribute("loginId");
-        return goodService.campingGood(contentId, loginId);
+        if (session.getAttribute("loginId") == null) {
+            return new HashMap<String, Object>();
+        } else {
+            return goodService.campingGood(contentId, loginId);
+        }
+
     }
 
     @RequestMapping(value = "/campingReserveList")
