@@ -31,20 +31,6 @@ public interface ParkingMapper {
 			"WHERE DATA.distance < 10 AND induty like '%자동차%'")
 	ArrayList<CampingDTO> payZapyo(String wido, String kyongdo);
 
-	@Select("SELECT COUNT(prkplcenm) FROM ( " +
-			"SELECT ( 6371 * acos( cos( radians( #{param1} ) ) * cos( radians( latitude) ) * cos( radians( longitude ) - radians(#{param2}) ) + sin( radians(#{param1}) ) * sin( radians(latitude) ) ) ) AS distance, prkplcese, lnmadr, prkcmprt, parkingchrgeinfo, operday, institutionnm, phonenumber, prkplcenm, rdnmadr, latitude, longitude " +
-			"FROM parkingapi " +
-			") DATA " +
-			"WHERE DATA.distance < 7")
-	int total();
-
-	@Select("SELECT * FROM ( " +
-			"SELECT ( 6371 * acos( cos( radians( #{param1} ) ) * cos( radians( latitude) ) * cos( radians( longitude ) - radians(#{param2}) ) + sin( radians(#{param1}) ) * sin( radians(latitude) ) ) ) AS distance, prkplcese, lnmadr, prkcmprt, parkingchrgeinfo, operday, institutionnm, phonenumber, prkplcenm, rdnmadr, latitude, longitude " +
-			"FROM parkingapi " +
-			") DATA " +
-			"WHERE DATA.distance < 7" +
-			"ORDER BY OFFSET prkplcenm #{param1} ROWS FETCH FIRST 10 ROWS ONLY" )
-	ArrayList<ParkingDTO> lists(int page);
 
 
 

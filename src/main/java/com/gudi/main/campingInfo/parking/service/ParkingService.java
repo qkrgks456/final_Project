@@ -47,40 +47,6 @@ public class ParkingService {
 		
 	}
 
-
-	public ModelAndView lists(int page) {
-		ModelAndView mav = new ModelAndView();
-		int total = dao.total();
-		HashMap<String,Object> map = HansolUtil.pagination(page, 10, total);
-		if(page == 1) {
-			page = 0;
-		}else {
-			page = (page-1)*10;
-		}
-		ArrayList<ParkingDTO> list = dao.lists(page);
-		map.put("list", list);
-		map.put("url","tagSearch");
-		mav.addObject("map", map);
-		mav.setViewName("campingInfo/campingParking/campingParkingMain");
-		return mav;
-	}
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	/*
 	public void apiCall(HashMap<String, String> params) {
