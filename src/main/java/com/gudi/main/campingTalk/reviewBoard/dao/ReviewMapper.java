@@ -30,10 +30,10 @@ public interface ReviewMapper {
 	@Select("SELECT newfilename, orifilename FROM photo WHERE divisionnum = #{divi}")
 	ArrayList<PhotoDTO> callPhoto(String divi);
 
-	@Update("UPDATE reviewboard SET delcheck = 'y' WHERE boardnum = #{boardNum}")
+	@Update("UPDATE reviewboard SET delcheck = 'Y' WHERE boardnum = #{boardNum}")
 	int reviewDel(int boardNum);
 
-	@Select("SELECT * FROM reviewboard WHERE delcheck = 'n'")
+	@Select("SELECT * FROM reviewboard WHERE delcheck = 'N'")
 	ArrayList<BoardDTO> reviewList();
 
 	@Update("UPDATE reviewboard SET title = #{param1}, content = #{param2} WHERE boardnum = #{param3}")

@@ -7,10 +7,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.gudi.main.campingInfo.parking.dao.ParkingMapper;
 import com.gudi.main.dtoAll.CampingDTO;
 import com.gudi.main.dtoAll.ParkingDTO;
+import com.gudi.main.util.HansolUtil;
 
 @Service
 public class ParkingService {
@@ -43,6 +45,24 @@ public class ParkingService {
 		
 		return dao.payZapyo(wido,kyongdo);
 		
+	}
+
+
+	public ModelAndView lists(int page) {
+		ModelAndView mav = new ModelAndView();
+		int total = dao.total();
+		HashMap<String,Object> map = HansolUtil.pagination(page, 10, total);
+		if(page == 1) {
+			page = 0;
+		}else {
+			page = (page-1)*10;
+		}
+		ArrayList<ParkingDTO> list = dao.lists(page);
+		map.put("list", list);
+		map.put("url","tagSearch");
+		mav.addObject("map", map);
+		mav.setViewName("campingInfo/campingParking/campingParkingMain");
+		return mav;
 	}
 
 	

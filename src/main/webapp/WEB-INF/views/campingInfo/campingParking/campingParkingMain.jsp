@@ -44,28 +44,19 @@
 
 </div>
 
-
+<!-- 장소정보, 지도 담고있는 div -->
 <div class="d-flex justify-content-center">
-
+<!-- 장소 정보 표출하는 곳 -->
 <div class="list col-2" style="border:1px solid;">
-
 <c:if test=""></c:if>
 <div style="text-align:center; margin-top:50px">
 <p style="color:#b4b4b4;">지도를 드래그 하세요<p>
 </div>
-
-
 </div>  
-
-
+<!-- 지도 -->
 <div id="map" style="width:100%;height:600px;"></div>    
-
 </div>
-    
-
-    
-    
-    
+ <ul id="placesList"></ul>
     
 </div>
 
@@ -101,14 +92,13 @@
 		
 		// 지도 중심 좌표 변화 이벤트를 등록한다
 		kakao.maps.event.addListener(map, 'dragend', function (){
-			
+				
 			// 지도위에 표시된 마커들 제거
 			// 지도위에 생성된 마커들을 담는 배열임 => 하나하자 지움!
 			for (var e = 0; e < markers.length; e++) {
 				markers[e].setMap(null);
 			}
 			$(".list").empty();
-			
 			
 			console.log('지도의 중심 좌표는 ' + map.getCenter().toString() +' 입니다.');
 			var aaa = map.getCenter().toString()
@@ -123,6 +113,7 @@
 			var wido = ccc[0];
 			var kyongdo = ccc[1];
 			
+			
 			$.ajax({
 				type:"POST",
 				url:"./getZapyo",
@@ -131,7 +122,13 @@
 					"kyongdo":kyongdo
 				},
 				success:function(data){ //dto 배열 받아옴
-					console.log("예??",data);
+					console.log("받아온 DTO::",data);
+				
+					if(data.length > 10){
+						alert("페이징이 필요합니다");
+						paging(data);				
+					}
+				
 				
 					// 지도에 마커를 생성하고 표시한다	
 					for (var i = 0; i < data.length; i++) {
@@ -158,6 +155,7 @@
 					    kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
 					    kakao.maps.event.addListener(marker, 'click', makeClickListener(data[i].prkplcenm));
 						
+					    
 					}	
 				},
 				error: function(data){
@@ -198,7 +196,7 @@
             content +=    '<p class="card-text"><small>'+"주차구획 수: "+data.prkcmprt+'</small></p>';
             content +=    '<p class="card-text"><small class="text-muted">'+"전화번호: "+data.phonenumber+'</small></p></div></div>';
 			$(".list").append(content);
-			
+						
 		}
 		
 		function dragPrint(){
@@ -210,7 +208,6 @@
 			
 			$(".list").append(content);
 		}
-		
 		
 </script>
 

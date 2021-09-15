@@ -92,6 +92,11 @@ public class ParkingController {
     }
     
     
+    @RequestMapping(value = "/paging/{page}")
+    public ModelAndView tagSearch(@PathVariable int page) {
+        	return service.lists(page);
+    }
+    
     
     
     
