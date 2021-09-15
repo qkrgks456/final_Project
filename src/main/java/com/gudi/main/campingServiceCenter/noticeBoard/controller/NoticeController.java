@@ -30,20 +30,27 @@ public class NoticeController {
     NoticeService service;
 
     @RequestMapping(value = "/noticeBoard")
-    public String NoticeBoard(Model model) {
+    public ModelAndView NoticeBoard() {
+    	int page = 1;
         logger.info("공지사항입장");
-        return "serviceCenter/noticeBoard/noticeBoardList";
+        return service.list(page);
+    }
+    
+    @RequestMapping(value = "/noticeBoard/{page}")
+    public ModelAndView NoticeBoard(@PathVariable int page) {
+        	return service.list(page);
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/noticeBoardList/{pagePerNum}/{page}", method = RequestMethod.GET)
-    public HashMap<String, Object> list(@PathVariable int pagePerNum, @PathVariable int page) {
-        logger.info("공지사항 리스트");
-        //@PathVariable 경로에 있는 녀석을 변수로 담는다.
-        logger.info("pagePerNum : {} / page : {}", pagePerNum, page);
-        HashMap<String, Object> map = service.list(page, pagePerNum);
-        return map;
-    }
+	/*
+	 * @ResponseBody
+	 * 
+	 * @RequestMapping(value = "/noticeBoardList/{pagePerNum}/{page}", method =
+	 * RequestMethod.GET) public HashMap<String, Object> list(@PathVariable int
+	 * pagePerNum, @PathVariable int page) { logger.info("공지사항 리스트");
+	 * //@PathVariable 경로에 있는 녀석을 변수로 담는다.
+	 * logger.info("pagePerNum : {} / page : {}", pagePerNum, page); HashMap<String,
+	 * Object> map = service.list(page, pagePerNum); return map; }
+	 */
 
     @RequestMapping(value = "/noticeDetail/{boardNum}")
     public ModelAndView noticeDetail(@PathVariable int boardNum) {

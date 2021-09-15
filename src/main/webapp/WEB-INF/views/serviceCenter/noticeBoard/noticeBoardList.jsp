@@ -45,19 +45,40 @@
 		</tr>
 		</thead>
 		<tbody id="list">
-			<!-- 리스트가 출력될 내용 -->
+		<c:forEach items="${map.list}" var="i">
+			 <tr onClick = "location.href='noticeDetail/${i.boardNum}'">
+			<td>${i.title}</td>
+			<td>${i.id}</td>
+			<td>${i.dates}</td>
+			<td>${i.boardHit}</td>
+			</tr>
+			</c:forEach>
 		</tbody>
-		<tr>
-			<td colspan="6">
-				<!--  페이징이 표시될 부분 -->
-				<div class="contanier">
-					<nav aria-label="Page navigation" style="text-algin:center">
-						<ul class="pagination" id="pagination"></ul>
-					</nav>
-				</div>
-			</td>
-		</tr>
 		</table>
+		<ul class="pagination justify-content-center">
+            <c:if test="${map.startPage ne 1}">
+                <li class="page-item">
+                <a class="page-link" href="${path}/noticeBoard/${map.startPage-1}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                </a>
+                </li>
+            </c:if>
+            <c:forEach var="i" begin="${map.startPage}" end="${map.endPage}">
+                <c:if test="${i ne map.currPage}">
+                    <li class="page-item"><a class="page-link" href="${path}/noticeBoard/${i}">${i}</a></li>
+                </c:if>
+                <c:if test="${i eq map.currPage}">
+                    <li class="page-item active"><a class="page-link">${i}</a></li>
+                </c:if>
+            </c:forEach>
+            <c:if test="${map.totalPage ne map.endPage}">
+                <li class="page-item">
+                <a class="page-link" href="${path}/noticeBoard/${map.endPage+1}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+                </a>
+                </li>
+            </c:if>
+    </ul>
 		<input class="btn btn-primary" type="button" value="공지사항쓰기" onclick="location.href='noticeWriteForm'">
 	</div>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -67,7 +88,7 @@
 	<script>
 	var currPage = 1;
 	var per = 10;
-	listCall(currPage);
+	//listCall(currPage);
 
 
 	function listCall(page) {

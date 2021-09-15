@@ -13,7 +13,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.gudi.main.campingServiceCenter.noticeBoard.dao.NoticeMapper;
 import com.gudi.main.dtoAll.BoardDTO;
+import com.gudi.main.dtoAll.CampingDTO;
 import com.gudi.main.dtoAll.PhotoDTO;
+import com.gudi.main.util.HansolUtil;
 import com.gudi.main.util.UploadUtil;
 
 @Service
@@ -22,27 +24,20 @@ public class NoticeService {
 	@Autowired
 	NoticeMapper dao;
 
-	public HashMap<String, Object> list(int page, int pagePerNum) {
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		int end = page * pagePerNum;
-		int start = end - pagePerNum + 1;
-		// 1.list
-		ArrayList<BoardDTO> list = dao.list(start, end);
-
-		// 2.데이터 총 갯수 -> 만들수 있는 페이지
-		int totalCnt = dao.allCount();
-		logger.info(list.size() + "/" + totalCnt);
-		map.put("list", list);
-		map.put("cnt", totalCnt);
-		// 총 갯수 21개 pagePerNum 5일 경우 몇 페이지로 만들어야 하나? ->6개
-		int pages = (int) (totalCnt % pagePerNum > 0 ? Math.floor(totalCnt / pagePerNum) + 1
-				: Math.floor(totalCnt / pagePerNum));
-		page = page > pages ? pages : page; // 보여줄 갯수를 바꿧을때 조건문
-		map.put("currPage", page);
-		map.put("pages", pages);
-		return map;
-	}
-
+	/*
+	 * public HashMap<String, Object> list(int page, int pagePerNum) {
+	 * HashMap<String, Object> map = new HashMap<String, Object>(); int end = page *
+	 * pagePerNum; int start = end - pagePerNum + 1; // 1.list ArrayList<BoardDTO>
+	 * list = dao.list(start, end);
+	 * 
+	 * // 2.데이터 총 갯수 -> 만들수 있는 페이지 int totalCnt = dao.allCount();
+	 * logger.info(list.size() + "/" + totalCnt); map.put("list", list);
+	 * map.put("cnt", totalCnt); // 총 갯수 21개 pagePerNum 5일 경우 몇 페이지로 만들어야 하나? ->6개
+	 * int pages = (int) (totalCnt % pagePerNum > 0 ? Math.floor(totalCnt /
+	 * pagePerNum) + 1 : Math.floor(totalCnt / pagePerNum)); page = page > pages ?
+	 * pages : page; // 보여줄 갯수를 바꿧을때 조건문 map.put("currPage", page); map.put("pages",
+	 * pages); return map; }
+	 */
 	@Transactional
 	public ModelAndView detail(int boardNum) {
 		ModelAndView mav = new ModelAndView();
@@ -115,5 +110,21 @@ logger.info(params.get("title")+" / "+params.get("content"));
 		String newFileName = (String) map.get("newFileName");
 		
 		dao.photoDel(newFileName, boardNum);		
+	}
+
+	public ModelAndView list(int page) {
+		ModelAndView mav = new ModelAndView();
+		int total = dao.total();
+		HashMap<String, Object> map = HansolUtil.pagination(page, 10, total);
+		if (page == 1) {
+			page = 0;
+		} else {
+			page = (page - 1) * 10;
+		}
+		ArrayList<BoardDTO> list = dao.lists(page);
+		map.put("list", list);
+		mav.addObject("map", map);
+		mav.setViewName("/serviceCenter/noticeBoard/noticeBoardList");
+		return mav;
 	}
 }

@@ -33,28 +33,31 @@
    <%-- 상단 메뉴바 --%>
    <jsp:include page="../../fix/menu.jsp" />
    <%-- 내용 넣으세요 --%>
-      <div class="row">
-         <div class="col-4 border-end border-danger">
+      <div class="row mt-1">
+         <div class="col-4 border-end border-danger" >
             <div id="menu_wrap" class="bg_white">
                <div class="option">
-                  <div>
+                 
                      <form onsubmit="searchPlaces(); return false;" class="text-center">
                      <div class="d-flex justify-content-center mt-2">
                         <input class="form-control w-50 me-2" type="text" id="keyword">
                         <button class="btn btn-warning btn-sm" type="submit">검색하기</button>
                         </div>
                      </form>
-                  </div>
                </div>
                <hr>
+                  <div class="list" style="overflow-y:scroll;  height: 700px; ">
+<div>
                <ul id="placesList" class="list-group list-group">
-      
+      			<!-- 리스트 -->
                </ul>
                <div id="pagination"></div>
             </div>
          </div>
-         <div class="col-8">
-            <div id="map"style="width: 100%; height: 800px; position: relative; overflow: hidden;"></div>
+</div>
+</div>
+         <div class="col-8 ms-0">
+            <div id="map"style="width: 100%; height: 780px; position: relative; overflow: hidden;"></div>
          </div>
       </div>
    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>

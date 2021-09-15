@@ -1,5 +1,7 @@
 package com.gudi.main.campingSearch.tagSearch.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +28,9 @@ public class TagSearchController {
     }
     
     @RequestMapping(value = "/search/{page}")
-    public ModelAndView Search(@PathVariable int page,@RequestParam String word) {
-    	logger.info("검색입력 :"+word+page+"페이지");
-        	return service.search(page,word);
+    public ModelAndView Search(@PathVariable int page, @RequestParam String word) { 
+       // System.out.println(word+"검색창");
+        return service.search(page, word);	
     }
     
     @RequestMapping(value = "/search/{page}/{word}")

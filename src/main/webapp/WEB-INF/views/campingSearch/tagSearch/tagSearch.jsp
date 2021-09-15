@@ -38,16 +38,49 @@
 			<div id="menu_wrap" class="bg_white">
 				<div class="option">
 					<div>
+					<div class="layout mt-2" id="layout_3" >
+					<c:if test="${!empty map.list}">
+							<div class="tag_title">
+								<span class="tag_stt">검색 내용은
+								</span>
+							<div class="tagBtn_group">
+								<ul style="list-style:none;">
+									<c:forEach var="i" items="${map.word}">
+										<li style="float:left; margin-right:10px; padding:5px;" >
+										<a class="tagBtn "  value="${i}" style=" text-align:center; padding-top:10px; text-decoration:none; color:#000000;">${i}</a>
+										</li>
+									</c:forEach>
+									<li style="float:left; margin-right:10px; padding:5px;" >
+										<a class="tagBtn " style=" text-align:center; padding-top:10px; text-decoration:none; color:#000000;">입니다.</a>
+										</li>
+										<li style="float:left; margin-right:10px; background-color:#97DD93; padding:5px;" >
+										<a href="${path}/campingSearch/tagSearch/1" style=" text-align:center; padding-top:10px; text-decoration:none; color:#000000;">태그검색</a>
+										</li>
+								</ul>
+							</div>
+							</div>
+						</div>
+                    </div>
+					</div>
+					<br/><br/>
+						</c:if>
 					<c:forEach var="i" begin="${map.startPage}" end="${map.endPage}">
 						<form action="${path}/campingSearch/search/${i}" class="text-center" method="post">
 						</c:forEach>
-							<div class="d-flex justify-content-center mt-2">
-								<input class="form-control w-50 me-2" type="text" id="keyword" name="word">
-								<button class="btn btn-warning btn-sm" type="submit">검색하기</button>
+							<div class="d-flex justify-content-center mt-3">
+								<input class="form-control w-50 me-2" type="text" id="keyword" name="word" >
+								<button class="btn btn-warning btn-sm" type="submit">검색</button>
 							</div>
 						</form>
 					</div>
 				</div>
+						<c:if test="${empty map.list}">
+					<div class="row mt-3 mb-3 text-center">
+					<div>
+				검색결과가 없습니다. 다시 입력해주세요.
+					</div>
+					</div>
+				</c:if>
 				<c:forEach var="map" items="${map.list}">
 					<div class="card border-white" style="background-color: #f8fcfe">
 						<div class="row g-0">
@@ -131,6 +164,7 @@
 						</div>
 					</div>
 				</c:forEach>
+					<c:if test="${!empty map.list}">
 				<ul class="pagination justify-content-center">
 					<c:if test="${map.startPage ne 1}">
 						<li class="page-item"><a class="page-link"
@@ -154,6 +188,7 @@
 						</a></li>
 					</c:if>
 				</ul>
+					</c:if>
 			</div>
 		</div>
 	</div>
@@ -161,7 +196,6 @@
 	<script
 		src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=de13013a67053c1d19922fa8b31042a9"></script>
 	<script>
-		
 	</script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="${path}/resources/js/bootstrap.js"></script>
