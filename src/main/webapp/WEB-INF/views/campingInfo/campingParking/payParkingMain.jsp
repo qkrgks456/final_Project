@@ -54,12 +54,11 @@
 
 <div class="d-flex justify-content-center">
 
-<div class="list col-2" style="border:1px solid;">
+<div class="list col-2" style="overflow-y:scroll; width:200; height:600px; padding:4px; border:1 solid #000000;">
 <div style="text-align:center; margin-top:50px">
 <p style="color:#b4b4b4;">지도를 드래그 하세요<p>
 </div>
 </div>  
-
 
 <div id="map" style="width:100%;height:600px;"></div>    
 

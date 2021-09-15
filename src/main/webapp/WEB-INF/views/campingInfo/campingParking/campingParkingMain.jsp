@@ -47,8 +47,7 @@
 <!-- 장소정보, 지도 담고있는 div -->
 <div class="d-flex justify-content-center">
 <!-- 장소 정보 표출하는 곳 -->
-<div class="list col-2" style="border:1px solid;">
-<c:if test=""></c:if>
+<div class="list col-2" style="overflow-y:scroll; width:200; height:600px; padding:4px; border:1 solid #000000;">
 <div style="text-align:center; margin-top:50px">
 <p style="color:#b4b4b4;">지도를 드래그 하세요<p>
 </div>
@@ -56,6 +55,8 @@
 <!-- 지도 -->
 <div id="map" style="width:100%;height:600px;"></div>    
 </div>
+ 
+<!-- 페이지 네이션 --> 
  <ul id="placesList"></ul>
     
 </div>
@@ -123,13 +124,7 @@
 				},
 				success:function(data){ //dto 배열 받아옴
 					console.log("받아온 DTO::",data);
-				
-					if(data.length > 10){
-						alert("페이징이 필요합니다");
-						paging(data);				
-					}
-				
-				
+					
 					// 지도에 마커를 생성하고 표시한다	
 					for (var i = 0; i < data.length; i++) {
 						
@@ -156,7 +151,9 @@
 					    kakao.maps.event.addListener(marker, 'click', makeClickListener(data[i].prkplcenm));
 						
 					    
-					}	
+					}
+					
+					
 				},
 				error: function(data){
 					console.log(data);
@@ -208,6 +205,7 @@
 			
 			$(".list").append(content);
 		}
+		
 		
 </script>
 
