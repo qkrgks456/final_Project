@@ -41,6 +41,7 @@
     <mybatis-spring:scan base-package="com.gudi.main.myInfo.dao"/>
     <mybatis-spring:scan base-package="com.gudi.main.reserve.dao"/>
     <mybatis-spring:scan base-package="com.gudi.main.campingSearch.tagSearch.dao"/>
+    <mybatis-spring:scan base-package="com.gudi.main.cm"/>
 
 
 

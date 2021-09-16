@@ -58,7 +58,7 @@ public class MemberController {
             logger.info("결과 체크 "+result);
             if (result) {
                 session.setAttribute("loginId",inputId);
-                return "main";
+                return "redirect:/";
             } else {
                 model.addAttribute("suc", false);
                 return "member/login/loginForm";
@@ -107,7 +107,7 @@ public class MemberController {
             System.out.println("카카오 로그아웃 성공 여부" + response.getBody().toString());
             session.removeAttribute("access_token");
         }
-        return "main";
+        return "redirect:/";
     }
 
 

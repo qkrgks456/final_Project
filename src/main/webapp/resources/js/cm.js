@@ -1,17 +1,15 @@
 /* 댓글 등록 ajax */
 $('#cmInsertBtn').on('click', function () {
-    let contentId = $('#infoAttr').attr('contentId');
-    let path = $('#infoAttr').attr('path');
-    let commentContent = $('#commentContent').val();
+    // 여기에 받을 변수 써주세용
     if (commentContent.trim() != "") {
         $('#commentContent').removeClass('is-invalid');
-        let cafeKey = $('#cafeCommentBtn').attr("title");
         $.ajax({
             type: "POST",//방식
             url: path + "/reserve/reserveCmInsert",//주소
             data: {
                 commentContent: commentContent,
-                contentId: contentId
+                contentId: contentId,
+                division: division,
             },
             dataType: 'JSON',
             success: function (map) { //성공시
@@ -28,8 +26,7 @@ $('#cmInsertBtn').on('click', function () {
 })
 /* 댓글 삭제 ajax */
 $(document).on('click', '.cmDelBtn', function () {
-    let contentId = $('#infoAttr').attr('contentId');
-    let path = $('#infoAttr').attr('path');
+    // 여기에 받을 변수 써주세용
     let cmNum = $(this).attr('cmNum');
     console.log(contentId, cmNum);
     $.ajax({
@@ -37,7 +34,8 @@ $(document).on('click', '.cmDelBtn', function () {
         url: path + "/reserve/reserveCmDelete",//주소
         data: {
             cmNum: cmNum,
-            contentId: contentId
+            contentId: contentId,
+            division: division
         },
         dataType: 'JSON',
         success: function (data) { //성공시
@@ -50,12 +48,11 @@ $(document).on('click', '.cmDelBtn', function () {
 })
 /* 댓글 페이지네이션 클릭시 ajax */
 $(document).on('click', '.page-info', function () {
-    let contentId = $('#infoAttr').attr('contentId');
-    let path = $('#infoAttr').attr('path');
+    // 여기에 받을 변수 써주세용
     let page = $(this).attr('page');
     $.ajax({
         type: "GET",
-        url: path + "/reserve/reserveCmList" + "/" + page + "/" + contentId,
+        url: path + "/reserve/reserveCmList" + "/" + page + "/" + contentId + "/" + division,
         dataType: 'JSON',
         success: function (data) { //성공시
             commentList(data);
@@ -68,11 +65,9 @@ $(document).on('click', '.page-info', function () {
 
 /* 댓글 업데이트 ajax */
 $(document).on('click', '.cmUpdateBtn', function () {
-    let contentId = $('#infoAttr').attr('contentId');
-    let path = $('#infoAttr').attr('path');
+    // 여기에 받을 변수 써주세용
     let cmNum = $(this).attr('cmNum');
     let cmUpdateContent = $(this).parent().prev().children('.cmUpdateContent').val();
-    console.log(cmUpdateContent);
     if (cmUpdateContent.trim() != "") {
         $.ajax({
             type: "POST",//방식
@@ -80,7 +75,8 @@ $(document).on('click', '.cmUpdateBtn', function () {
             data: {
                 contentId: contentId,
                 cmNum: cmNum,
-                cmUpdateContent: cmUpdateContent
+                cmUpdateContent: cmUpdateContent,
+                division: division
             },
             dataType: 'JSON',
             success: function (data) { //성공시
@@ -100,7 +96,7 @@ function commentList(map) {
     let content = '';
     let sessionId = map.loginId;
     /*댓글리스트 불러오기*/
-    $.each(map.commentList, function (i, dto) {
+    $.each(map.cmList, function (i, dto) {
         content += '<div class="listForm">'
         content += '<div class="fw-bold fs-4">' + dto.id + '</div>'
         content += '<div class="lh-sm">' + dto.content + '</div>'

@@ -242,7 +242,7 @@
             </c:if>
         </div>
         <c:if test="${sessionScope.loginId ne null}">
-            <a id="cafeCommentBtn" class="btn btn-warning btn-sm">등록</a>
+            <a id="cmInsertBtn" class="btn btn-warning btn-sm">등록</a>
         </c:if>
     </div>
     <%-- 댓글리스트 --%>
@@ -317,7 +317,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="${path}/resources/js/bootstrap.bundle.js"></script>
 <script src="${path}/resources/js/common.js?var=56"></script>
-<script src="${path}/resources/js/campingDetailCm.js"></script>
+<script src="${path}/resources/js/campingDetailCm.js?var=2"></script>
 <script>
     let path = $('#infoAttr').attr('path');
     if ($('#good').attr('goodCheck') == "true") {
