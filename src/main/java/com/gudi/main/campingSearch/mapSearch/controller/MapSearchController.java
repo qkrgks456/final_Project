@@ -32,8 +32,9 @@ public class MapSearchController {
     @RequestMapping(value="/mapSearchList/{page}")
 	public HashMap<String, Object> mapSearchList( @PathVariable int page,@RequestParam HashMap<String, Object> param){
     	String word = (String) param.get("word");
-    	System.out.println(page+"페이지 / 검색어는 ? "+word);
-		HashMap<String, Object> map =  service.list(page, word);
+    	String type = (String) param.get("type");
+    	System.out.println(page+"페이지 / 검색어는 ? "+word+" 타입은?"+type);
+		HashMap<String, Object> map =  service.list(page, word, type);
 		return map;
 	}
     

@@ -20,8 +20,9 @@ public class MapSearchService {
 	    @Autowired MapSearchMapper dao;
 	
 
-	public HashMap<String, Object> list(int page, String word) {
-		int total = dao.allCount();
+	public HashMap<String, Object> list(int page, String word, String type) {
+		//int total = dao.allCount();
+		int total = dao.total(word,type);
 		HashMap<String, Object> map = new HansolUtil().pagination(page,10, total);
 		//1.list
 		if (page == 1) {
@@ -29,7 +30,12 @@ public class MapSearchService {
 		} else {
 			page = (page - 1) * 10;
 		}
-		ArrayList<CampingDTO> list = dao.list(page, word,10);
+		if(type.equals("addr")) {
+			type="addr1";
+		}else {
+			type="themaEnvrnCl";
+		}
+		ArrayList<CampingDTO> list = dao.list(page, word,10,type);
 		map.put("list", list);
 		
 		return map;
