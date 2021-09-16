@@ -32,12 +32,12 @@
     <jsp:include page="../adminSidebar.jsp"/>
     <div class="col w-100 p-0">
         <div class="container px-3 my-2">
-            <h3>회원정보</h3>
+            <h3>게시글</h3>
 				<!-- 전체 출력에서 검색내용을  넣었을 때 해당 내용 출력-->
 				<div class="row mb-1">
 					<!-- 셀렉트 -->
 					<div class="form-group col-2 m-0 p-0">
-						<select class="form-select" name="boardListSelect">
+						<select id="selectType" class="form-select" name="boardListSelect">
 							<option value="title" selected>게시글 제목</option>
 							<option value="id">아이디</option>
 							<option value="email">이메일</option>
@@ -49,12 +49,12 @@
 						<div class="row">
 							<!-- 검색 공간 -->
 							<div class="form-group col-10 mp-0 me-0">
-								<input type="text" class="form-control" id="boardList"
-									name="boardList" />
+								<input type="text" class="form-control" id="boardListSearch"
+									name="boardListSearch" />
 							</div>
 							<!-- 검색 버튼 공간 -->
 							<div class="form-group col-2 p-0 m-0">
-								<button class="btn btn-dark" type="submit">검색</button>
+								<button id="searchBtn" class="btn btn-dark">검색</button>
 							</div>
 						</div>
 					</div>
@@ -85,10 +85,38 @@
 </body>
 <script>
 	boardList();
+	
+	$('#boardListSearch').on('keypress', function(e) {
+		if (e.keyCode == '13') {
+			$('#searchBtn').click();
+		}
+	});
+	$('#searchBtn').on('click', function() {
+		//var selectType = $("#selectType").val();
+		//var insertSearch=$("#insertSearch").val();
+		//console.log("타입: "+ selectType+ "내용: "+insertSearch);
+		$.ajax({
+			url : 'boardListSearch',
+			type : 'get',
+			data : {
+				boardListSearch : $("#boardListSearch").val(),
+				selectType : $("#selectType").val()
+			},
+			dataType : 'JSON',
+			success : function(data) {
+				console.log(data);
+				boardListAjax(data.list);
+			},
+			error : function(error) {
+				console.log(error);
+			}
+		});
+	});
+	
 	function boardList() {
 		console.log("jsp에서 관리자 ajax조회");
 		$.ajax({
-			url : 'memberinfoAjax',
+			url : 'boardListAjax',
 			type : 'get',
 			dataType : 'json',
 			success : function(data) {
@@ -110,7 +138,7 @@
 			content += "<td>" + list[i].eamil + "</td>";
 			content += "<td>" + "게시글 제목" + "</td>";
 			content += "<td>" + "블라인드 여부" + "</td>";
-			content += "<td>" + "상세보기" + "</td>";
+			content += "<td>"+"<a class='btn btn-sm btn-dark' >상세보기</a>"+ "</td>";
 			content += "</tr>";
 		}
 		$("#list").empty();

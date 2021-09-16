@@ -59,16 +59,16 @@
 	<script src="${path}/resources/js/common.js"></script>
 </body>
 <script>
-	comment();
-	function comment() {
+	reportComment();
+	function reportComment() {
 		console.log("jsp에서 관리자 ajax조회");
 		$.ajax({
-			url : 'memberinfoAjax',
+			url : 'reportCommentAjax',
 			type : 'get',
 			dataType : 'json',
 			success : function(data) {
 				console.log(data);
-				commentList(data.list);
+				reportCommentAjax(data.list);
 			},
 			error : function(error) {
 				console.log(error);
@@ -76,15 +76,15 @@
 
 		});
 	}
-	function commentList(list) {
+	function reportCommentAjax(list) {
 		var content = "";
 		for (var i = 0; i < list.length; i++) {
 			content += "<tr>";
 			content += "<td>" + list[i].reporter + "</td>";
 			content += "<td>" + list[i].id + "</td>";
 			content += "<td>" + list[i].status + "</td>";
-			content += "<td>" + cmNum+"신고댓글 내용.." + "</td>";
-			content += "<td>" + "상세보기 버튼" + "</td>";
+			content += "<td>" +"신고댓글 내용.." + "</td>";
+			content += "<td>"+"<a class='btn btn-sm btn-dark' >상세보기</a>"+ "</td>";
 			content += "</tr>";
 		}
 		$("#list").empty();

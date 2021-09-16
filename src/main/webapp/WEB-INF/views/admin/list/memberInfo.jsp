@@ -39,7 +39,7 @@ a {
 				<div class="row mb-1">
 					<!-- 셀렉트 -->
 					<div class="form-group col-2 m-0 p-0">
-						<select class="form-select" name="memberInfotSelect">
+						<select id ="selectType" class="form-select" name="selectType">
 							<option value="nickName" selected>이름</option>
 							<option value="id">아이디</option>
 							<option value="email">이메일</option>
@@ -51,12 +51,12 @@ a {
 						<div class="row">
 							<!-- 검색 공간 -->
 							<div class="form-group col-10 mp-0 me-0">
-								<input type="text" class="form-control" id="memberInfo"
-									name="memberInfo" />
+								<input type="text" class="form-control" id="memberInfoSearch"
+									name="memberInfoSearch" />
 							</div>
 							<!-- 검색 버튼 공간 -->
 							<div class="form-group col-2 p-0 m-0">
-								<button class="btn btn-dark" type="submit">검색</button>
+								<button id="searchBtn" class="btn btn-dark">검색</button>
 							</div>
 						</div>
 					</div>
@@ -86,7 +86,35 @@ a {
 	<script src="${path}/resources/js/common.js"></script>
 </body>
 <script>
-	memberInfo();
+memberInfo();
+$('#memberInfoSearch').on('keypress', function(e) {
+	if (e.keyCode == '13') {
+		$('#searchBtn').click();
+	}
+});
+$('#searchBtn').on('click', function() {
+	//var selectType = $("#selectType").val();
+	//var insertSearch=$("#insertSearch").val();
+	//console.log("타입: "+ selectType+ "내용: "+insertSearch);
+	$.ajax({
+		url : 'memberInfoSearch',
+		type : 'get',
+		data : {
+			memberInfoSearch : $("#memberInfoSearch").val(),
+			selectType : $("#selectType").val()
+		},
+		dataType : 'JSON',
+		success : function(data) {
+			console.log(data);
+			memberInfoList(data.list);
+		},
+		error : function(error) {
+			console.log(error);
+		}
+	});
+});
+
+	
 	function memberInfo() {
 		console.log("jsp에서 관리자 ajax조회");
 		$.ajax({
@@ -95,7 +123,7 @@ a {
 			dataType : 'json',
 			success : function(data) {
 				console.log(data);
-				memberInfoeList(data.list);
+				memberInfoList(data.list);
 			},
 			error : function(error) {
 				console.log(error);
@@ -103,7 +131,7 @@ a {
 
 		});
 	}
-	function memberInfoeList(list) {
+	function memberInfoList(list) {
 		var content = "";
 		for (var i = 0; i < list.length; i++) {
 			content += "<tr>";
@@ -111,7 +139,7 @@ a {
 			content += "<td>" + list[i].nickName + "</td>";
 			content += "<td>" + list[i].delCheck + "</td>";
 			content += "<td>";
-			content += "<a class='btn btn-sm btn-dark' >상세보기</a>";
+			content += "<a class='btn btn-sm btn-dark' >블랙리스트 추가</a>";
 			content += "</td>";
 			content += "</tr>";
 		}

@@ -83,6 +83,15 @@ public class AdminController {
         return "admin/list/memberInfo";
     }
     
+    @ResponseBody
+    @RequestMapping(value = "/memberInfoSearch",method = RequestMethod.GET)
+    public HashMap<String, Object> memberInfoSearch(@RequestParam("memberInfoSearch") String memberInfoSearch, @RequestParam("selectType") String selectType){
+    	logger.info("회원정보 검색");
+    	logger.info("셀렉터: "+selectType+", 검색내용: "+memberInfoSearch);
+        return adminService.memberInfoSearch(selectType,memberInfoSearch);
+    }
+    
+    @ResponseBody
     @RequestMapping(value = "/memberInfoAjax",method = RequestMethod.GET)
     public HashMap<String, Object> memberInfoAjax() {
     	logger.info("회원정보 조회Ajax");
@@ -110,14 +119,53 @@ public class AdminController {
     public String boardList(Model model) {
         return "admin/list/boardList";
     }
+    @ResponseBody
+    @RequestMapping(value = "/boardListAjax",method = RequestMethod.GET)
+    public HashMap<String, Object> boardList() {
+    	logger.info("게시글 조회 Ajax");
+        return adminService.boardList();
+    }
+    
+    @ResponseBody
+    @RequestMapping(value = "/boardListSearch",method = RequestMethod.GET)
+    public HashMap<String, Object> boardListSearch(@RequestParam("boardListSearch") String boardListSearch, @RequestParam("selectType") String selectType){
+    	logger.info("게시글 검색");
+    	logger.info("셀렉터: "+selectType+", 검색내용: "+boardListSearch);
+        return adminService.boardListSearch(selectType,boardListSearch);
+    }
+    
     @RequestMapping(value = "/comment")
     public String comment(Model model) {
         return "admin/comment/comment";
     }
+    
+    @ResponseBody
+    @RequestMapping(value = "/commentListAjax")
+    public HashMap<String, Object> commentList() {
+    	logger.info("댓글 조회 Ajax");
+        return adminService.commentList();
+    }
+    
+    @ResponseBody
+    @RequestMapping(value = "/commentListSearch",method = RequestMethod.GET)
+    public HashMap<String, Object> commentListSearch(@RequestParam("commentListSearch") String commentListSearch, @RequestParam("selectType") String selectType){
+    	logger.info("일반댓글 검색");
+    	logger.info("셀렉터: "+selectType+", 검색내용: "+commentListSearch);
+        return adminService.commentListSearch(selectType,commentListSearch);
+    }
+    
     @RequestMapping(value = "/reportComment")
     public String reportComment(Model model) {
         return "admin/comment/reportComment";
     }
+    
+    @ResponseBody
+    @RequestMapping(value = "/reportCommentAjax",method = RequestMethod.GET)
+    public HashMap<String, Object> reportCommentList() {
+        return adminService.reportCommentList();
+    }
+    
+    
 
 
 }

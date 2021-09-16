@@ -37,7 +37,7 @@
 				<div class="row mb-1">
 					<!-- 셀렉트 -->
 					<div class="form-group col-2 m-0 p-0">
-						<select class="form-select" name="boardListSelect">
+						<select id = "selectType" class="form-select" name="selectType">
 							<option value="id" selected>아이디</option>
 							<option value="email">이메일</option>
 							<option value="content" selected>댓글 내용</option>
@@ -49,12 +49,12 @@
 						<div class="row">
 							<!-- 검색 공간 -->
 							<div class="form-group col-10 mp-0 me-0">
-								<input type="text" class="form-control" id="boardList"
-									name="boardList" />
+								<input type="text" class="form-control" id="commentListSearch"
+									name="commentListSearch" />
 							</div>
 							<!-- 검색 버튼 공간 -->
 							<div class="form-group col-2 p-0 m-0">
-								<button class="btn btn-dark" type="submit">검색</button>
+								<button id="searchBtn" class="btn btn-dark">검색</button>
 							</div>
 						</div>
 					</div>
@@ -66,7 +66,7 @@
 							<th scope="col" class="col-md-2">아아디</th>
 							<th scope="col" class="col-md-2">이름</th>
 							<th scope="col" class="col-md-2">이메일</th>
-							<th scope="col" class="col-md-2">게시글</th>
+							<th scope="col" class="col-md-2">댓글내용</th>
 							<th scope="col" class="col-md-2">블라인드</th>
 							<th scope="col" class="col-md-2">상세보기</th>
 					</thead>
@@ -84,16 +84,46 @@
 	<script src="${path}/resources/js/common.js"></script>
 </body>
 <script>
-	comment();
-	function comment() {
+
+
+	commentList();
+
+	$('#commentListSearch').on('keypress', function(e) {
+		if (e.keyCode == '13') {
+			$('#searchBtn').click();
+		}
+	});
+	$('#searchBtn').on('click', function() {
+		//var selectType = $("#selectType").val();
+		//var insertSearch=$("#insertSearch").val();
+		//console.log("타입: "+ selectType+ "내용: "+insertSearch);
+		$.ajax({
+			url : 'commentListSearch',
+			type : 'get',
+			data : {
+				commentListSearch : $("#commentListSearch").val(),
+				selectType : $("#selectType").val()
+			},
+			dataType : 'JSON',
+			success : function(data) {
+				console.log(data);
+				commentListAjax(data.list);
+			},
+			error : function(error) {
+				console.log(error);
+			}
+		});
+	});
+	
+	function commentList() {
 		console.log("jsp에서 관리자 ajax조회");
 		$.ajax({
-			url : 'memberinfoAjax',
+			url : 'commentListAjax',
 			type : 'get',
 			dataType : 'json',
 			success : function(data) {
 				console.log(data);
-				commentList(data.list);
+				commentListAjax(data.list);
 			},
 			error : function(error) {
 				console.log(error);
@@ -101,16 +131,17 @@
 
 		});
 	}
-	function commentList(list) {
+	function commentListAjax(list) {
+		console.log("댓글 리스트 출력");
 		var content = "";
 		for (var i = 0; i < list.length; i++) {
 			content += "<tr>";
 			content += "<td>" + list[i].id + "</td>";
 			content += "<td>" + list[i].nickName + "</td>";
-			content += "<td>" + list[i].eamil + "</td>";
-			content += "<td>" + "게시글 제목" + "</td>";
+			content += "<td>" + list[i].email + "</td>";
+			content += "<td>" + "댓글내용" + "</td>";
 			content += "<td>" + "블라인드 여부" + "</td>";
-			content += "<td>" + "상세보기" + "</td>";
+			content += "<td>"+"<a class='btn btn-sm btn-dark' >상세보기</a>"+ "</td>";
 			content += "</tr>";
 		}
 		$("#list").empty();

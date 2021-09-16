@@ -70,13 +70,13 @@ public class AdminService {
 		map = new HashMap<String , Object>();
 		switch(selectType){
 		case "nickName":
-			list= dao.insertSearchByNickname(insertSearch);
+			list= dao.insertSearchByNicknameWithAdmin(insertSearch);
 			break;
 		case "email":
-			list= dao.insertSearchByEmail(insertSearch);
+			list= dao.insertSearchByEmailWithAdmin(insertSearch);
 			break;
 		case "id":
-			list= dao.insertSearchById(insertSearch);
+			list= dao.insertSearchByIdWithAdmin(insertSearch);
 			break;
 		}
 		// 이름 list= dao.insertSearchByNickname(insertSearch);
@@ -90,6 +90,94 @@ public class AdminService {
 	public int adminDelete(String id) {
 		int success = dao.adminDelete(id);
 		return success;
+	}
+
+	public HashMap<String, Object> boardList() {
+		logger.info("게시글 조회 서비스");
+		list = new ArrayList<MemberDTO>();
+		map = new HashMap<String , Object>();
+		list = dao.boardList();
+		map.put("list",list);
+		return map;
+	}
+
+	public HashMap<String, Object> commentList() {
+		logger.info("댓글 조회 서비스");
+		list = new ArrayList<MemberDTO>();
+		map = new HashMap<String , Object>();
+		list = dao.commentList();
+		logger.info("댓글 갯수: "+list.size());
+		map.put("list",list);
+		return map;
+	}
+
+	public HashMap<String, Object> reportCommentList() {
+		logger.info("신고댓글 조회 서비스");
+		list = new ArrayList<MemberDTO>();
+		map = new HashMap<String , Object>();
+		list = dao.reportCommentList();
+		map.put("list",list);
+		return map;
+	}
+
+	public HashMap<String, Object> memberInfoSearch(String selectType, String memberInfoSearch) {
+		logger.info("회원정보 검색 서비스");
+		list = new ArrayList<MemberDTO>();
+		map = new HashMap<String , Object>();
+		switch(selectType){
+		case "nickName":
+			list= dao.memberInfoSearchByNickName(memberInfoSearch);
+			break;
+		case "email":
+			list= dao.memberInfoSearchByEmail(memberInfoSearch);
+			break;
+		case "id":
+			list= dao.memberInfoSearchById(memberInfoSearch);
+			break;
+		}
+		map.put("list",list);
+		logger.info("돌아온값: " + list.size());
+		return map;
+	}
+
+	public HashMap<String, Object> boardListSearch(String selectType, String boardListSearch) {
+		logger.info("게시글 리스트 검색 서비스");
+		list = new ArrayList<MemberDTO>();
+		map = new HashMap<String , Object>();
+		switch(selectType){
+		case "title":
+			list= dao.boardListSearchBytitle(boardListSearch);
+			break;
+		case "email":
+			list= dao.boardListSearchByEmail(boardListSearch);
+			break;
+		case "id":
+			list= dao.boardListSearchById(boardListSearch);
+			break;
+		}
+		map.put("list",list);
+		logger.info("돌아온값: " + list.size());
+		return map;
+	}
+
+	public HashMap<String, Object> commentListSearch(String selectType, String commentListSearch) {
+		logger.info("게시글 리스트 검색 서비스");
+		list = new ArrayList<MemberDTO>();
+		map = new HashMap<String , Object>();
+		switch(selectType){
+		case "content":
+			list= dao.commentListSearchByContent(commentListSearch);
+			break;
+		case "email":
+			list= dao.commentListSearchByEmail(commentListSearch);
+			break;
+		case "id":
+			list= dao.commentListSearchById(commentListSearch);
+			break;
+		}
+		map.put("list",list);
+		logger.info("돌아온값: " + list.size());
+		return map;
 	}
 
 	
