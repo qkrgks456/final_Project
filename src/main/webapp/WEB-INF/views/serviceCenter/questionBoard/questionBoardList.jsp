@@ -29,11 +29,92 @@
 <jsp:include page="../../fix/menu.jsp"/>
 <%-- 내용 넣으세요 --%>
 <div class="container px-3">
-   문의하기
+   	<div class="container px-3 mt-2">
+	<h3>문의하기</h3>
+		<table  class="table table-hover text-center">
+		<thead>
+		<tr>
+			<th scope="col" class="col-md-8">제목</th>
+			<th scope="col" class="col-md-1 ">작성자</th>
+			<th scope="col" class="col-md-2 ">날짜</th>
+			<th scope="col" class="col-md-1 ">조회수</th>
+		</tr>
+		</thead>
+		<tbody id="list">
+			<!-- 리스트가 출력될 내용 -->
+		</tbody>
+		<tr>
+			<td colspan="6">
+				<!--  페이징이 표시될 부분 -->
+				<div class="contanier">
+					<nav aria-label="Page navigation" style="text-algin:center">
+						<ul class="pagination" id="pagination"></ul>
+					</nav>
+				</div>
+			</td>
+		</tr>
+		</table>
+		<input class="btn btn-primary" type="button" value="문의사항 쓰기" onclick="location.href='questionWriteForm'">
+	</div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="${path}/resources/js/bootstrap.js"></script>
 <script src="${path}/resources/js/bootstrap.bundle.js"></script>
 <script src="${path}/resources/js/common.js"></script>
+<script>
+	var currPage = 1;
+	var per = 10;
+	listCall(currPage);
+
+
+	function listCall(page) {
+		//{pagePerNum}/{page}
+		var reqUrl = 'questionBoardList/' + per + "/" + page;
+		//console.log('request page' + reqUrl);
+		console.log(page + " page가져오기");
+		console.log(reqUrl);
+
+		 $.ajax({
+			url : reqUrl,
+			type : 'get',
+			dataType : 'json',
+			success : function(data) { //데이터가 성공적으로 들어왔다면
+				console.log(data);
+				listPrint(data.list); //리스트 그리기
+				currPage = data.currPage;
+				//페이징 처리
+				$("#pagination").twbsPagination({
+					startPage:data.currPage,//시작페이지 -> service에서 sql실행하여 map으로 보낸 데이타 값
+					totalPages:data.pages,//총 페이지 갯수 -> service에서 sql실행하여 map으로 보낸 데이타 값
+					visiblePages:5,//보여줄 페이지 갯수
+					onPageClick: function(e,page){
+						console.log(e,page);
+						listCall(page);
+					}
+				});
+			},
+			error : function(error) {
+				console.log(error);
+			}
+		});
+	}
+	
+	function listPrint(list){
+		var content = "";
+		
+		for(var i = 0; i<list.length; i++){
+			
+			content += "<tr onClick = \" location.href='questionDetail/"+list[i].boardNum+"'\">";
+			content +="<td>"+list[i].title+"</td>";
+			content +="<td>"+list[i].id+"</td>";
+			var date = new Date(list[i].dates);
+			content +="<td>"+date.toLocaleDateString("ko-KR")+"</td>";
+			content +="<td>"+list[i].boardHit+"</td>";
+			content +="</tr>";
+			$("#list").empty();
+			$("#list").append(content);
+		}
+	}
+	</script>
 </body>
 </html>
