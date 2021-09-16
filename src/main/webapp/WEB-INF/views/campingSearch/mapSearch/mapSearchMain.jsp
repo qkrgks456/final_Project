@@ -5,7 +5,6 @@
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <html>
 <head>
-
 <title>Final</title>
 <%-- 부트 스트랩 메타태그 --%>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -38,7 +37,7 @@
             <div id="menu_wrap" class="bg_white">
                <div class="option">
                  
-                     <form onsubmit="searchPlaces(); return false;" class="text-center">
+                     <form onsubmit="searchPlaces(); return false;" class="text-center" id="searchList">
                      <div class="d-flex justify-content-center mt-2">
                         <input class="form-control w-50 me-2" type="text" id="keyword">
                         <button class="btn btn-warning btn-sm" type="submit">검색하기</button>
@@ -66,11 +65,11 @@
    <script>
    // 마커를 담을 배열입니다
    var markers = [];
-
+   
    var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
        mapOption = {
            center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
-           level: 13, // 지도의 확대 레벨
+           level: 10, // 지도의 확대 레벨
            mapTypeId : kakao.maps.MapTypeId.HYBRID
        };  
 
@@ -78,38 +77,36 @@
    var map = new kakao.maps.Map(mapContainer, mapOption); 
 // 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
    //var infowindow = new kakao.maps.InfoWindow({zIndex:1});
-
 	var currPage = 1;
-	var per = 10;
-	listCall(currPage);
-
-	function listCall(page) {
+	  var word ="";
+	function searchPlaces() {
+	     word = document.getElementById('keyword').value;
+	    if (!word.replace(/^\s+|\s+$/g)) {
+	        alert('키워드를 입력해주세요!');
+	        return false;
+	    }
+	listCall(currPage,word);
+	}
+	
+	listCall(currPage,word);
+	function listCall(page,word) {
 		//{pagePerNum}/{page}
-		var reqUrl = 'mapSearchList/' + per + "/" + page;
+		var reqUrl = 'mapSearchList/' + page;
 		//console.log('request page' + reqUrl);
 		 $.ajax({
 			url : reqUrl,
-			type : 'get',
+			type : 'post',
+			data:{"word":word},
 			dataType : 'json',
 			success : function(data) { //데이터가 성공적으로 들어왔다면
 				var check = true;
-				//console.log(data);
+				console.log(data);
 				listPrint(data.list); //리스트 그리기
-				currPage = data.currPage;
-				//페이징 처리
-			/* 	$("#pagination").twbsPagination({
-					startPage:data.currPage,//시작페이지 -> service에서 sql실행하여 map으로 보낸 데이타 값
-					totalPages:data.pages,//총 페이지 갯수 -> service에서 sql실행하여 map으로 보낸 데이타 값
-					visiblePages:5,//보여줄 페이지 갯수
-					onPageClick: function(e,page){
-						console.log(e,page);
-						listCall(page);
-					}
-					}); */
+				PagePrint(data);
 
-				for (var i = 0; i < data.list.length; i ++) {
-					
+				/* for (var i = 0; i < data.list.length; i ++) {
 					markers.push({content : data.list[i].facltNm, latlng: new kakao.maps.LatLng(data.list[i].mapY,data.list[i].mapX)});
+					
 				    // 마커를 생성합니다
 				    var marker = new kakao.maps.Marker({
 				        map: map, // 마커를 표시할 지도
@@ -128,7 +125,7 @@
 						  return function() {
 						        infowindow.open(map, marker);
 						    };
-					}
+					} */
 			},
 			error : function(error) {
 				console.log(error);
@@ -138,17 +135,7 @@
 	
 	function listPrint(list){
 		var content = "";
-		
-		
-		
-		
 		for(var i = 0; i<list.length; i++){
-			
-			/* content += "<li class='list-group-item d-flex justify-content-between align-items-start'><div class='ms-2 me-auto row'><div class='col-3'>"
-			content += "<img src='"+list[i].firstImageUrl+"'  style='width: 300px; height: 200px;'></div>"
-			content += "<div class='col-9'><h5>"+list[i].facltNm+"</h5>"
-			content += "<p >"+list[i].addr1+"</p>"
-			content += "<p >"+list[i].tel+"</p></div></div> </li>" */
 			content +=  '<div class="card mb-1" style="max-width: 500px;"><div class="row g-0"><div class="col-md-4">'
                 content +=     '<img src="'+list[i].firstImageUrl+'" class="img-fluid w-100 h-100 rounded-start me-1" alt="'+list[i].facltNm+'">'
                 content +=   '</div><div class="ms-2 col-md-7">'
@@ -160,6 +147,122 @@
 		}
 	}
 	
+	function PagePrint(map){
+		console.log(map);
+	   content = '';
+	    content += '<ul class="pagination justify-content-center">'
+	    if (map.startPage != 1) {
+	        content += '<li class="page-item">'
+	        content += '<a class="page-link page-info" page="' + (map.startPage - 1) + '" aria-label="Previous" style="cursor:pointer;">'
+	        content += '<span aria-hidden="true">&laquo;</span>'
+	        content += '</a>'
+	        content += '</li>'
+	    }
+	     for (let i = map.startPage; i <= map.endPage; i++) {
+	        if (map.currPage != i) {
+	            content += '<li class="page-item"><a style="cursor:pointer;" class="page-link page-info" page="' + i + '" >' + i + '</a></li>'
+	        } else {
+	            content += '<li class="page-item active"><a class="page-link">' + i + '</a></li>'
+	        }
+	    }
+	    if (map.totalPage != map.endPage) {
+	        content += '<li class="page-item">'
+	        content += '<a class="page-link page-info" page="' + (map.endPage + 1) + '" aria-label="Next" style="cursor:pointer;">'
+	        content += '<span aria-hidden="true">&raquo;</span>'
+	        content += '</a>'
+	        content += '</li>'
+	    }
+	    content += '</ul>'
+	    $('#pagination').empty();
+	    $('#pagination').append(content);
+	} 
+	
+	function removeMarker() {
+	    for ( var i = 0; i < markers.length; i++ ) {
+	    	console.log(markers);
+	        markers[i].setMap(null);
+	    }   
+	    markers = [];
+	}
+	
+	$(document).on('click', '.page-info', function () {
+	    page = $(this).attr('page');
+	    $.ajax({
+	        type: "post",
+	        url: 'mapSearchList/' + page,
+	        data:{"word":word},
+	        dataType: 'JSON',
+	        success: function (data) { //성공시
+	        	console.log(data);
+				listPrint(data.list); //리스트 그리기
+				PagePrint(data);
+	        },
+	        error: function (e) { //실패시
+	            console.log(e);
+	        }
+	    });
+	})
+	 
+/* 	kakao.maps.event.addListener(map, 'dragend', function (){
+		
+		// 지도위에 표시된 마커들 제거
+		// 지도위에 생성된 마커들을 담는 배열임 => 하나하자 지움!
+		  removeMarker();
+		
+		console.log('지도의 중심 좌표는 ' + map.getCenter().toString() +' 입니다.');
+		var aaa = map.getCenter().toString()
+		var bbb = aaa.replace(/\(|\)| /g,'');
+		console.log(bbb);
+		var ccc = bbb.split(",");
+		console.log(ccc[0]);//위도 
+		console.log(ccc[1]);//경도
+		var wido = ccc[0];
+		var kyongdo = ccc[1];
+		$.ajax({
+			type:"POST",
+			url:"./zapyo",
+			data:{
+				"wido":wido,
+				"kyongdo":kyongdo
+			},
+			success:function(data){ //dto 배열 받아옴
+				console.log(data);
+				
+				// 지도에 마커를 생성하고 표시한다	
+				for (var i = 0; i < data.length; i++) {
+					//마커생성 여러번!
+					var marker = new kakao.maps.Marker({
+					    position: new kakao.maps.LatLng(data[i].mapY,data[i].mapX), // 마커의 좌표
+					    map: map, // 마커를 표시할 지도 객체
+					});
+					
+					marker.setMap(map);
+					
+					// 생성된 마커들을 배열에 담음(지도 이동할때마다, 이전에 표시된 마커 지우려고 담는거임)
+					markers.push(marker);
+					listPrint(data); 
+					//리스트 그리기
+					
+					// 인포윈도우를 생성합니다
+					var infowindow = new kakao.maps.InfoWindow({
+					    content : data[i].facltNm
+					});
+					
+					 //마우스 이벤트 등록
+					/* kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+				    kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+				    kakao.maps.event.addListener(marker, 'click', makeClickListener(data[i].prkplcenm)); */
+				    
+			/* 	}
+				
+			},
+			error: function(data){
+				console.log(data);
+				//dragPrint();
+			}
+		});			
+	});
+	 */ 
    </script>
    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
    <script src="${path}/resources/js/bootstrap.js"></script>
