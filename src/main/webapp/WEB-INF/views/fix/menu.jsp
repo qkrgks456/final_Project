@@ -26,7 +26,7 @@
                         <li><a class="dropdown-item" href="${path}/campingInfo/campingRecipe">캠핑레시피</a></li>
                         <li><a class="dropdown-item" href="${path}/campingInfo/campingTip">캠핑팁</a></li>
                         <li><a class="dropdown-item" href="${path}/campingInfo/campingWeather">날씨</a></li>
-                        <li><a class="dropdown-item" href="${path}/campingInfo/campingParking">주차정보</a></li>
+                        <li><a class="dropdown-item" href="${path}/campingInfo/campingParking">차박지도</a></li>
                     </ul>
                 </div>
                 <div class="dropdown">

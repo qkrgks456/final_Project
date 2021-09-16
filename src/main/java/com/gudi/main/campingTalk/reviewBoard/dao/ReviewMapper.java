@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.SelectKey;
 import org.apache.ibatis.annotations.Update;
 
 import com.gudi.main.dtoAll.BoardDTO;
+import com.gudi.main.dtoAll.CommentDTO;
 import com.gudi.main.dtoAll.PhotoDTO;
 
 @Mapper
@@ -47,6 +48,8 @@ public interface ReviewMapper {
 
 	@Update("UPDATE reviewboard SET boardhit = boardhit+1 WHERE boardNum = #{param1}")
 	void reviewHit(int boardNum);
+
+	
 
 
 	

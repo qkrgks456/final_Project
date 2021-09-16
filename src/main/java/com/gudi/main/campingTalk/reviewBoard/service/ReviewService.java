@@ -7,11 +7,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.gudi.main.campingTalk.reviewBoard.dao.ReviewMapper;
 import com.gudi.main.dtoAll.BoardDTO;
+import com.gudi.main.dtoAll.CommentDTO;
 import com.gudi.main.dtoAll.PhotoDTO;
+import com.gudi.main.util.HansolUtil;
 import com.gudi.main.util.UploadUtil;
 
 @Service
@@ -115,6 +118,10 @@ public class ReviewService {
 		logger.info("조회수 올리셈::");
 		dao.reviewHit(boardNum);
 	}
+
+	
+	
+
 	
 
 }

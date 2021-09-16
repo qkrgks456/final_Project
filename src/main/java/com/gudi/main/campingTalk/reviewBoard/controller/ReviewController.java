@@ -3,8 +3,7 @@ package com.gudi.main.campingTalk.reviewBoard.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gudi.main.campingTalk.reviewBoard.service.ReviewService;
+import com.gudi.main.cm.CmService;
 import com.gudi.main.dtoAll.BoardDTO;
 import com.gudi.main.dtoAll.PhotoDTO;
 
@@ -30,7 +30,7 @@ public class ReviewController {
     
 	Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired ReviewService service;
-
+    @Autowired CmService cmService;
     
     @RequestMapping(value = "/reviewBoard")
     public ModelAndView reviewBoard() {
@@ -79,7 +79,7 @@ public class ReviewController {
     //리뷰 상세보기
     @Transactional(isolation = Isolation.READ_COMMITTED)
     @RequestMapping(value = "/reviewDetail/{boardNum}")
-    public ModelAndView reviewDetail(@PathVariable int boardNum) {
+    public ModelAndView reviewDetail(@PathVariable int boardNum, HttpSession session) {
     	logger.info("리뷰 상세보기 요청...");
     	logger.info("상세보기할 글의 넘버:: "+boardNum);
     	
@@ -97,7 +97,10 @@ public class ReviewController {
     	mav.setViewName("campingTalk/reviewBoard/reviewDetail");
     	mav.addObject("dto",dto);
     	mav.addObject("phoDtos",phoDto);
-
+    	
+    	//댓글 불러옴
+    	mav.addObject("map", cmService.cmList(Integer.toString(boardNum), "review", 1));
+    	
         return mav;
     }
     
@@ -165,5 +168,13 @@ public class ReviewController {
     	logger.info("리뷰 사진 삭제 요청...");
     	service.photoDel(map);
     }
+    
+
+    
+    
+    
+    
+    
+    
     
 }

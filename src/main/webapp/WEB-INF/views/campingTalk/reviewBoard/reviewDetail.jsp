@@ -4,6 +4,7 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Final</title>
     <%-- 부트 스트랩 메타태그 --%>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -82,27 +83,105 @@
 <input class="btn btn-primary" type="button" value="목록" onclick="location.href='../reviewBoard'">
 </div>
 
-
-<!-- 댓글 -->
-
-
-
-
-
-
-
-
-
- 
+<div class="pt-4 border-bottom border-dark">
+    <h4 class="fw-bold">댓글</h4>
+</div>
+<%-- 댓글 입력 폼 --%>
+<div class="d-flex align-items-center mt-2">
+    <div class="form-floating flex-grow-1 px-2">
+    <textarea class="form-control" placeholder="Leave a comment here"
+name="commentContent" id="commentContent"
+style="height: 100px; resize: none;"></textarea>
+<div class="invalid-feedback">1자 이상 입력해주세요</div>
+<c:if test="${sessionScope.loginId eq null}">
+    <label for="commentContent">댓글을 작성하려면, 로그인 해주세요</label>
+</c:if>
+<c:if test="${sessionScope.loginId ne null}">
+    <label for="commentContent">${sessionScope.loginId}님 이곳에 댓글을 작성하세요</label>
+</c:if>
+</div>
+<c:if test="${sessionScope.loginId ne null}">
+    <a id="cmInsertBtn" class="btn btn-warning btn-sm">등록</a>
+</c:if>
+</div>
+<%-- 댓글리스트 --%>
+<div id="commentLists" class="container px-5 my-4">
+    <c:forEach items="${map.cmList}" var="dto">
+<%-- 댓글 내용 --%>
+<div class="listForm">
+    <div class="fw-bold fs-4">${dto.id}</div>
+<div class="lh-sm">${dto.content}</div>
+<div class="d-flex justify-content-end">
+    <div>
+        <c:if test="${sessionScope.loginId ne dto.id && sessionScope.loginId != null}">
+            <a class="btn btn-warning btn-sm" href="">신고</a>
+        </c:if>
+        <c:if test="${sessionScope.loginId eq dto.id}">
+            <a class='cmUpdateBtnForm btn btn-warning btn-sm'>수정</a>
+            <a cmNum="${dto.cmNum}" class='cmDelBtn btn btn-warning btn-sm'>삭제</a>
+        </c:if>
     </div>
 </div>
+<div class="d-flex justify-content-end">
+    작성일 : ${dto.dates}
+</div>
+<hr/>
+</div>
+<%-- 수정하기 수정 클릭시 요놈 생김 --%>
+<div class="updateForm visually-hidden">
+    <div class="form-floating flex-grow-1 px-2">
+    <textarea class="cmUpdateContent form-control"
+style="height: 100px; resize: none;">${dto.content}</textarea>
+<label>수정할 댓글을 작성하세요</label>
+<div class="invalid-feedback">1자 이상 입력해주세요</div>
+</div>
+<div class="d-flex justify-content-end mt-2">
+    <a cmNum="${dto.cmNum}" class='cmUpdateBtn btn btn-warning btn-sm'>등록</a>
+    <a class='cmUpdateCancel btn btn-warning btn-sm ms-1'>취소</a>
+</div>
+<hr/>
+</div>
+</c:forEach>
+</div>
+<%-- 페이지 네이션 --%>
+<div id="paginationBox">
+    <ul class="pagination justify-content-center mb-3">
+    <c:if test="${map.startPage ne 1}">
+    <li class="page-item">
+    <a class="page-link page-info" aria-label="Previous" style="cursor:pointer;"
+page=${map.startPage+1}>
+<span aria-hidden="true">&laquo;</span>
+</a>
+</li>
+</c:if>
+<c:forEach var="i" begin="${map.startPage}" end="${map.endPage}">
+    <c:if test="${i ne map.currPage}">
+        <li class="page-item"><a class="page-link page-info" style="cursor:pointer;" page=${i}>${i}</a></li>
+    </c:if>
+    <c:if test="${i eq map.currPage}">
+        <li class="page-item active"><a class="page-link">${i}</a></li>
+    </c:if>
+</c:forEach>
+<c:if test="${map.totalPage ne map.endPage}">
+    <li class="page-item">
+        <a class="page-link page-info" aria-label="Next" page=${map.endPage+1} style="cursor:pointer;">
+            <span aria-hidden="true">&raquo;</span>
+        </a>
+    </li>
+</c:if>
+</ul>
+</div>
+
+<input id="infoList" type = "hidden" contentId="${dto.boardNum}" division="review" path="${path}"/>
+
+</div>
+</div>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="${path}/resources/js/bootstrap.js"></script>
 <script src="${path}/resources/js/bootstrap.bundle.js"></script>
 <script src="${path}/resources/js/common.js"></script>
-<script>
+<script src="${path}/resources/js/cm.js"></script>
 
-
-</script>
 </body>
 </html>

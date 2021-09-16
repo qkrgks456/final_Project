@@ -140,9 +140,12 @@
 						markers.push(marker);
 						listPrint(data[i]); //리스트 그리기
 						
+						//var iwContent = '<div style="margin-right: 50px;">'+data[i].prkplcenm+'</div>'
+						var iwContent = '<div style="padding:3px; background:#fff;">'+data[i].prkplcenm+'</div>'
+						
 						// 인포윈도우를 생성합니다
 						var infowindow = new kakao.maps.InfoWindow({
-						    content : data[i].prkplcenm
+						    content : iwContent
 						});
 						
 						//마우스 이벤트 등록
