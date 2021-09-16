@@ -314,7 +314,6 @@
     </div>
     <br/>
 </div>
-<input id="infoList" type = "hidden" contentId="${contentId}" division="camping" path="${path}"/>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="${path}/resources/js/bootstrap.bundle.js"></script>
 <script src="${path}/resources/js/common.js?var=56"></script>
@@ -360,6 +359,5 @@
         })
     })
 </script>
-<script src="${path}/resources/js/cm.js"></script>
 </body>
 </html>
