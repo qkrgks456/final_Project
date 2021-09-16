@@ -44,8 +44,8 @@
                 <div class="invalid-feedback"></div>
             </div>
             <div class="mb-3">
-                <label for="nicName" class="form-label">닉네임</label>
-                <input name="nicName" type="text" class="form-control nullCheck goCheck" id="nicName"
+                <label for="nickName" class="form-label">닉네임</label>
+                <input name="nickName" type="text" class="form-control nullCheck goCheck" id="nickName"
                        placeholder="필수정보 입니다">
                 <div class="invalid-feedback"></div>
             </div>

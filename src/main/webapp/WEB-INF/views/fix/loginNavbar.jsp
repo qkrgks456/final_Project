@@ -11,7 +11,7 @@
             <a href="${path}/myInfo/memberUpdate" class="fs-6 btn-sm btn-outline-light text-dark" style="text-decoration:none">내정보</a>
         </div>
         <div class="border-end border-dark">
-            <a href="${path}/myInfo/reserveCheck" class="fs-6 btn-sm btn-outline-light text-dark" style="text-decoration:none">예약현황</a>
+            <a href="${path}/myInfo/reserveCheck/1" class="fs-6 btn-sm btn-outline-light text-dark" style="text-decoration:none">예약현황</a>
         </div>
         <div class="border-end border-dark">
             <a href="${path}/serviceCenter/noticeBoard" class="fs-6 btn-sm btn-outline-light text-dark" style="text-decoration:none">공지사항</a>

@@ -32,48 +32,59 @@
     <jsp:include page="../myInfoSidebar.jsp"/>
     <div class="col w-100 p-0">
         <div class="container px-3 my-2">
-            	<div class="container px-3 mt-2">
-	<h3>예약확인</h3>
-		<table  class="table table-hover text-center">
-		<thead>
-		<tr>
-			<th scope="col" class="col-md-5">캠핑장</th>
-			<th scope="col" class="col-md-5">예약날짜</th>
-		</tr>
-		</thead>
-		<tbody id="list">
-			<!-- 리스트가 출력될 내용 -->
-			<th scope="col" class="col-md-5">더하루 캠핑파크</th><br>
-			<th scope="col" class="col-md-5">9월15일~9월16일</th>
-		</tbody>
-			<tbody id="list">
-			<!-- 리스트가 출력될 내용 -->
-			<th scope="col" class="col-md-5">화천드림캠핑장</th><br>
-			<th scope="col" class="col-md-5">9월18일~9월19일</th>
-		</tbody>
-		<tbody id="list">
-			<!-- 리스트가 출력될 내용 -->
-			<th scope="col" class="col-md-5">세움내움</th><br>
-			<th scope="col" class="col-md-5">9월20일~9월22일</th>
-		</tbody>
-		<tbody id="list">
-			<!-- 리스트가 출력될 내용 -->
-			<th scope="col" class="col-md-5">강화버팔로캠팜</th><br>
-			<th scope="col" class="col-md-5">9월21일~9월23일</th>
-		</tbody>
-		<tr>
-			<td colspan="6">
-				<!--  페이징이 표시될 부분 -->
-				<div class="contanier">
-					<nav aria-label="Page navigation" style="text-algin:center">
-						<ul class="pagination" id="pagination"></ul>
-					</nav>
-				</div>
-			</td>
-		</tr>
-		</table>
-		<!-- <input class="btn btn-primary" type="button" value="문의사항 쓰기" onclick="location.href='questionWriteForm'"> -->
-	</div>
+            <div class="pt-4 border-bottom border-dark">
+                <h2 class="fw-bold">예약현황</h2>
+            </div>
+            <div class="container">
+                <table class="table table-hover mt-3">
+                    <thead>
+                    <tr>
+                        <th class="fs-5" scope="col">예약번호</th>
+                        <th class="fs-5" scope="col">캠핑장이름</th>
+                        <th class="fs-5" scope="col">차번호</th>
+                        <th class="fs-5" scope="col">방문수</th>
+                        <th class="fs-5" scope="col">예약날짜</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${map.list}" var="lists">
+                        <tr>
+                            <td class="py-3">${lists.reserveNum}</td>
+                            <td class="py-3">${lists.facltNm}</td>
+                            <td class="py-3">${lists.carNum}</td>
+                            <td class="py-3">${lists.manCount}</td>
+                            <td class="py-3">${lists.reserveDate}</td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+                <ul class="pagination justify-content-center">
+                    <c:if test="${map.startPage ne 1}">
+                        <li class="page-item">
+                            <a class="page-link" href="${path}/myInfo/reserveCheck/${map.startPage-1}"
+                               aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    </c:if>
+                    <c:forEach var="i" begin="${map.startPage}" end="${map.endPage}">
+                        <c:if test="${i ne map.currPage}">
+                            <li class="page-item"><a class="page-link" href="${path}/myInfo/reserveCheck/${i}">${i}</a>
+                            </li>
+                        </c:if>
+                        <c:if test="${i eq map.currPage}">
+                            <li class="page-item active"><a class="page-link">${i}</a></li>
+                        </c:if>
+                    </c:forEach>
+                    <c:if test="${map.totalPage ne map.endPage}">
+                        <li class="page-item">
+                            <a class="page-link" href="${path}/myInfo/reserveCheck/${map.endPage+1}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </c:if>
+                </ul>
+            </div>
         </div>
     </div>
 </div>

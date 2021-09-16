@@ -52,22 +52,21 @@ public class MemberController {
     public String login(Model model, HttpSession session, @RequestParam String inputId, @RequestParam String inputPass) {
         boolean result = false;
         String pw = service.login(inputId);
-        if(pw != null){
+        if (pw != null) {
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
             result = encoder.matches(inputPass, pw);
-            logger.info("결과 체크 "+result);
+            logger.info("결과 체크 " + result);
             if (result) {
-                session.setAttribute("loginId",inputId);
+                session.setAttribute("loginId", inputId);
                 return "redirect:/";
             } else {
                 model.addAttribute("suc", false);
                 return "member/login/loginForm";
             }
-        }else{
+        } else {
             model.addAttribute("suc", false);
             return "member/login/loginForm";
         }
-
     }
 
     @RequestMapping(value = "/join")

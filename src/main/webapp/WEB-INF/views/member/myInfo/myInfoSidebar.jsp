@@ -8,6 +8,7 @@
             <div class="">
                 <ul class="ms-4 list-unstyled fw-normal pb-1 listHide">
                     <li><a href="${path}/myInfo/memberUpdate" class="link-dark rounded fs-4">정보수정</a></li>
+                    <li><a href="${path}/myInfo/memberPassChangeForm" class="link-dark rounded fs-4">비밀번호변경</a></li>
                     <li><a href="${path}/myInfo/memberDrop" class="link-dark rounded fs-4">회원탈퇴</a></li>
                 </ul>
             </div>
@@ -18,7 +19,7 @@
             <p class="ms-4 align-items-center menuClick fw-bold fs-2" style="cursor: default">예약현황</p>
             <div class="">
                 <ul class="ms-4 list-unstyled fw-normal pb-1 listHide">
-                    <li><a href="${path}/myInfo/reserveCheck" class="link-dark rounded fs-4">예약확인</a></li>
+                    <li><a href="${path}/myInfo/reserveCheck/1" class="link-dark rounded fs-4">예약확인</a></li>
                     <li><a href="${path}/myInfo/reserveCancel" class="link-dark rounded fs-4">예약취소</a></li>
                 </ul>
             </div>
