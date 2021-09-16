@@ -21,6 +21,6 @@ public interface MapSearchMapper {
 			+ ") DATA " + " WHERE DATA.distance <15 AND tel IS NOT NULL")
 	ArrayList<CampingDTO> zapyo(String wido, String kyongdo);
 
-	@Select("SELECT count(contentId) FROM ${param4} where addr1 like '%' || #{param2}|| '%' and TEL IS NOT NULL")
+	@Select("SELECT count(contentId) FROM campingApi ${param2} where addr1 like '%' || #{param1}|| '%' and TEL IS NOT NULL")
 	int total(String word, String type);
 }
