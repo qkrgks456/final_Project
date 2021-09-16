@@ -32,7 +32,57 @@
     <jsp:include page="../myInfoSidebar.jsp"/>
     <div class="col w-100 p-0">
         <div class="container px-3 my-2">
-            예약취소
+              	<div class="container px-3 mt-2">
+	<h3>예약취소</h3>
+		<table  class="table table-hover text-center">
+		<thead>
+		<tr>
+			<th scope="col" class="col-md-5"><h3>정복한 캠핑장</h3></th>
+		</tr>
+		</thead>
+		<tbody id="list">
+			<!-- 리스트가 출력될 내용 -->
+				<th scope="col" class="col-md-5">비치캠핑장</th><br>
+		</tbody>
+			<tbody id="list">
+			<!-- 리스트가 출력될 내용 -->
+					<th scope="col" class="col-md-5">대부도 나라펜션캠핑장</th><br>
+		</tbody>
+		<tbody id="list">
+			<!-- 리스트가 출력될 내용 -->
+					<th scope="col" class="col-md-5">대부도 해솔캠핑장</th><br>
+		</tbody>
+		<tbody id="list">
+			<!-- 리스트가 출력될 내용 -->
+					<th scope="col" class="col-md-5">마인드 글램퍼스 </th><br>
+		</tbody>
+		<tbody id="list">
+			<!-- 리스트가 출력될 내용 -->
+					<th scope="col" class="col-md-5">울산힐링캠프 </th><br>
+		</tbody>
+		<tbody id="list">
+			<!-- 리스트가 출력될 내용 -->
+					<th scope="col" class="col-md-5">푸른길 캠핑장 </th><br>
+		</tbody>
+		<tbody id="list">
+			<!-- 리스트가 출력될 내용 -->
+					<th scope="col" class="col-md-5">탄도항 노을캠핑장 </th><br>
+		</tbody>
+		<tr>
+			<td colspan="6">
+				<!--  페이징이 표시될 부분 -->
+				<div class="contanier">
+					<nav aria-label="Page navigation" style="text-algin:center">
+						<ul class="pagination" id="pagination"></ul>
+					</nav>
+				</div>
+			</td>
+		</tr>
+		</table>
+		 <input class="btn btn-primary" type="button" value="예약취소" onclick="location.href='questionWriteForm'">
+	</div>
+        </div>
+    </div>
         </div>
     </div>
 </div>

@@ -32,7 +32,48 @@
     <jsp:include page="../myInfoSidebar.jsp"/>
     <div class="col w-100 p-0">
         <div class="container px-3 my-2">
-            예약확인
+            	<div class="container px-3 mt-2">
+	<h3>예약확인</h3>
+		<table  class="table table-hover text-center">
+		<thead>
+		<tr>
+			<th scope="col" class="col-md-5">캠핑장</th>
+			<th scope="col" class="col-md-5">예약날짜</th>
+		</tr>
+		</thead>
+		<tbody id="list">
+			<!-- 리스트가 출력될 내용 -->
+			<th scope="col" class="col-md-5">더하루 캠핑파크</th><br>
+			<th scope="col" class="col-md-5">9월15일~9월16일</th>
+		</tbody>
+			<tbody id="list">
+			<!-- 리스트가 출력될 내용 -->
+			<th scope="col" class="col-md-5">화천드림캠핑장</th><br>
+			<th scope="col" class="col-md-5">9월18일~9월19일</th>
+		</tbody>
+		<tbody id="list">
+			<!-- 리스트가 출력될 내용 -->
+			<th scope="col" class="col-md-5">세움내움</th><br>
+			<th scope="col" class="col-md-5">9월20일~9월22일</th>
+		</tbody>
+		<tbody id="list">
+			<!-- 리스트가 출력될 내용 -->
+			<th scope="col" class="col-md-5">강화버팔로캠팜</th><br>
+			<th scope="col" class="col-md-5">9월21일~9월23일</th>
+		</tbody>
+		<tr>
+			<td colspan="6">
+				<!--  페이징이 표시될 부분 -->
+				<div class="contanier">
+					<nav aria-label="Page navigation" style="text-algin:center">
+						<ul class="pagination" id="pagination"></ul>
+					</nav>
+				</div>
+			</td>
+		</tr>
+		</table>
+		<!-- <input class="btn btn-primary" type="button" value="문의사항 쓰기" onclick="location.href='questionWriteForm'"> -->
+	</div>
         </div>
     </div>
 </div>
