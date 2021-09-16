@@ -14,7 +14,7 @@ public interface CmMapper {
     @Select(CmSQL.CM_LIST)
     ArrayList<CommentDTO> cmList(String contentId, String division, int page);
 
-    @Select("SELECT COUNT(cmNum) FROM cm WHERE division = #{param2} AND divisionNum = #{param1}")
+    @Select("SELECT COUNT(cmNum) FROM cm WHERE division = #{param2} AND divisionNum = #{param1} AND delCheck='N'")
     int cmTotal(String contentId,String division);
 
     @Insert(CmSQL.CM_INSERT)

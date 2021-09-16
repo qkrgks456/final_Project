@@ -6,7 +6,7 @@ public class CmSQL {
     public static final String CM_LIST = "SELECT * FROM cm WHERE division = #{param2} AND divisionNum = #{param1} AND delCheck='N' ORDER BY cmNum DESC" +
             " OFFSET #{param3} ROWS FETCH FIRST 8 ROWS ONLY";
     public static final String CM_PAGECHECK = "SELECT cmNum FROM" +
-            "(SELECT cmNum FROM cm WHERE division = #{param2} AND divisionNum = #{param1} " +
+            "(SELECT cmNum FROM cm WHERE division = #{param2} AND divisionNum = #{param1} AND delCheck='N'" +
             "ORDER BY cmNum DESC OFFSET #{param4} ROWS FETCH FIRST 8 ROWS ONLY)" +
             "WHERE cmNum=#{param3}";
 }

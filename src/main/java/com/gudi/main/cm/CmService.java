@@ -23,7 +23,7 @@ public class CmService {
             start = (page - 1) * 8;
         }
         ArrayList<CommentDTO> cmList = cmMapper.cmList(contentId, division, start);
-        int total = cmMapper.cmTotal(contentId,division);
+        int total = cmMapper.cmTotal(contentId, division);
         HashMap<String, Object> map = HansolUtil.pagination(page, 8, total);
         map.put("cmList", cmList);
         return map;
@@ -31,9 +31,9 @@ public class CmService {
 
     // 댓글 작성하기
     @Transactional
-    public HashMap<String, Object> cmInsert(String contentId, String commentContent, String loginId,String division) {
+    public HashMap<String, Object> cmInsert(String contentId, String commentContent, String loginId, String division) {
         // 댓글 인서트
-        int suc = cmMapper.cmInsert(loginId, commentContent, contentId,division);
+        int suc = cmMapper.cmInsert(loginId, commentContent, contentId, division);
         // 리스트 뿌려주기
         HashMap<String, Object> map = cmList(contentId, division, 1);
         map.put("loginId", loginId);
@@ -73,7 +73,8 @@ public class CmService {
         int page = cmPageCheck(contentId, division, Integer.parseInt(cmNum));
         cmMapper.cmDelete(cmNum);
         HashMap<String, Object> map = cmList(contentId, division, page);
-        if (map.size() < 1 && page != 1) {
+        ArrayList<CommentDTO> cmList = (ArrayList<CommentDTO>) map.get("cmList");
+        if (cmList.size() < 1 && page != 1) {
             map = cmList(contentId, division, page - 1);
         }
         map.put("loginId", loginId);

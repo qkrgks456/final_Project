@@ -99,6 +99,7 @@ $(document).on('click', '.cmUpdateBtn', function () {
 function commentList(map) {
     let content = '';
     let sessionId = map.loginId;
+    console.log(sessionId);
     /*댓글리스트 불러오기*/
     $.each(map.commentList, function (i, dto) {
         content += '<div class="listForm">'
@@ -106,11 +107,13 @@ function commentList(map) {
         content += '<div class="lh-sm">' + dto.content + '</div>'
         content += '<div class="d-flex justify-content-end">'
         content += '<div>'
-        if (sessionId != dto.id) {
-            content += '<a class="btn btn-warning btn-sm" href="">신고</a>'
-        } else {
-            content += '<a class="cmUpdateBtnForm btn btn-warning btn-sm">수정</a>'
-            content += '<a cmNum="' + dto.cmNum + '" class="cmDelBtn btn btn-warning btn-sm ms-1">삭제</a>'
+        if(sessionId !=null){
+            if (sessionId != dto.id) {
+                content += '<a class="btn btn-warning btn-sm" href="">신고</a>'
+            } else {
+                content += '<a class="cmUpdateBtnForm btn btn-warning btn-sm">수정</a>'
+                content += '<a cmNum="' + dto.cmNum + '" class="cmDelBtn btn btn-warning btn-sm ms-1">삭제</a>'
+            }
         }
         content += '</div>'
         content += '</div>'

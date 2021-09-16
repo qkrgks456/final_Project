@@ -77,12 +77,16 @@ public class CommentService {
     @Transactional
     public HashMap<String, Object> reserveCmDelete(String cmNum, String contentId, String loginId) {
         int page = cmPageCheck(contentId, "camping", Integer.parseInt(cmNum));
+        System.out.println("이거 뭐야 " + page);
         commentMapper.cmDelete(cmNum);
         HashMap<String, Object> map = commentList(contentId, "camping", page);
-        if (map.size() < 1 && page != 1) {
+        System.out.println("이거 뭐야 " + map);
+        ArrayList<CommentDTO> cmList = (ArrayList<CommentDTO>) map.get("commentList");
+        if (cmList.size() < 1 && page != 1) {
             map = commentList(contentId, "camping", page - 1);
         }
-        map.put("loginId",loginId);
+        map.put("loginId", loginId);
+        System.out.println("여기 뭐 들어 있냐" + map);
         return map;
     }
 }

@@ -317,7 +317,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="${path}/resources/js/bootstrap.bundle.js"></script>
 <script src="${path}/resources/js/common.js?var=56"></script>
-<script src="${path}/resources/js/campingDetailCm.js?var=2"></script>
+<script src="${path}/resources/js/campingDetailCm.js?var=4"></script>
 <script>
     let path = $('#infoAttr').attr('path');
     if ($('#good').attr('goodCheck') == "true") {

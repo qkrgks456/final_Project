@@ -11,7 +11,7 @@ public interface CommentMapper {
     @Select(ReserveSQL.CM_LIST)
     ArrayList<CommentDTO> cmList(String contentId, String division, int page);
 
-    @Select("SELECT COUNT(cmNum) FROM cm WHERE division = 'camping' AND divisionNum = #{param1}")
+    @Select("SELECT COUNT(cmNum) FROM cm WHERE division = 'camping' AND divisionNum = #{param1} AND delCheck='N'")
     int reserveTotal(String contentId);
 
     @Insert(ReserveSQL.CM_INSERT)
