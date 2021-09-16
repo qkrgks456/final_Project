@@ -157,8 +157,8 @@
             <h2 class="">지역별로 찾아보세요!</h2>
         </div>
         <div class="row">
-            <div class="col-md-4 mt-3">
-                <div class="d-grid gap-2 pe-4 border-end">
+            <div class="col-md-4 mt-3 border-end">
+                <div class="d-grid gap-2 pe-1">
                     <div class="btn btn-outline-secondary locationBtn">경기</div>
                     <div class="btn btn-outline-secondary locationBtn">경북</div>
                     <div class="btn btn-outline-secondary locationBtn">경남</div>
@@ -170,7 +170,7 @@
                 </div>
             </div>
             <div class="col-md-8 mt-2">
-                <div class="row g-4" id="locationBox">
+                <div class="row g-4 ps-1" id="locationBox">
                     <c:forEach items="${map.list}" var="lists">
                         <div class="col-md-4">
                             <div class="card h-100">
@@ -323,9 +323,10 @@
         <p class="fs-6 mb-0">Copyright &copy; Your Website</p>
     </div>
 </footer>
+<jsp:include page="fix/alarm.jsp"/>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="${path}/resources/js/bootstrap.bundle.js"></script>
-<script src="${path}/resources/js/common.js"></script>
+<script src="${path}/resources/js/common.js?var=1"></script>
 <script src="${path}/resources/js/mainWeather.js?var=2"></script>
 <script src="${path}/resources/js/mainLocation.js?var=3"></script>
 </body>

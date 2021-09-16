@@ -84,8 +84,14 @@
                     <td>${map.dto.operDeCl}</td>
                 </tr>
                 <tr>
-                    <td class="py-3">홈페이지</td>
-                    <td><a href="${map.dto.homepage}">${map.dto.homepage}</a></td>
+                    <c:if test="${not fn:contains(map.dto.homepage, 'http')}">
+                        <td class="py-3">홈페이지</td>
+                        <td><a href="https://${map.dto.homepage}">홈페이지로</a></td>
+                    </c:if>
+                    <c:if test="${fn:contains(map.dto.homepage, 'http')}">
+                        <td class="py-3">홈페이지</td>
+                        <td><a href="${map.dto.homepage}">홈페이지로</a></td>
+                    </c:if>
                 </tr>
             </table>
         </div>
