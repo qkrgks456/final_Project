@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gudi.main.campingInfo.parking.service.ParkingService;
+import com.gudi.main.cm.CmService;
 import com.gudi.main.dtoAll.CampingDTO;
 import com.gudi.main.dtoAll.ParkingDTO;
 
@@ -25,6 +26,7 @@ public class ParkingController {
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired ParkingService service;
+    @Autowired CmService cmService;
     
     @RequestMapping(value = "/campingParking")
     public String campingParking(Model model) {
@@ -59,8 +61,11 @@ public class ParkingController {
     	ModelAndView mav = new ModelAndView();
     	
     	ParkingDTO dto = service.freeParkDetail(prkplcenm);
-    	
     	mav.addObject("dto",dto);
+    	
+    	//댓글 불러옴
+	    mav.addObject("map",cmService.cmList("000000", prkplcenm, 1));
+	    
     	mav.setViewName("/campingInfo/campingParking/freeParkDetail");
         
     	return mav;
