@@ -196,7 +196,7 @@
 			
 			content +=  '<div class="card mb-1" style="max-width: 600px;">'
             content +=   '<div class="ms-2 col-md">'
-            content +=    '<h6 class="card-title"><a href="../reserve/campingDetail/'+data.contentId+'">'+data.facltNm+'</a></h6>';
+            content +=    '<h6 class="card-title"><a href="../reserve/campingDetail/'+data.contentId+'" style="text-decoration:none;">'+data.facltNm+'</a></h6>';
             content +=    '<p class="card-text"><small>'+"주소: "+data.addr1+'</small></p>';
             content +=    '<p class="card-text"><small class="text-muted">'+"전화번호: "+data.tel+'</small></p></div></div>';
 			$(".list").append(content);

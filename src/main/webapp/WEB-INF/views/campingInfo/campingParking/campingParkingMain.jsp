@@ -192,7 +192,7 @@
 			
 			content +=  '<div class="card mb-1" style="max-width: 600px;">'
             content +=   '<div class="ms-2 col-md">'
-            content +=    '<h6 class="card-title"><a href="./freeParkDetail/'+data.prkplcenm+'">'+data.prkplcenm+'</a></h6>';
+            content +=    '<h6 class="card-title"><a href="./freeParkDetail/'+data.prkplcenm+'" style="text-decoration:none;">'+data.prkplcenm+'</a></h6>';
             content +=    '<p class="card-text"><small>'+"주차구획 수: "+data.prkcmprt+'</small></p>';
             content +=    '<p class="card-text"><small class="text-muted">'+"전화번호: "+data.phonenumber+'</small></p></div></div>';
 			$(".list").append(content);
