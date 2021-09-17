@@ -109,19 +109,19 @@ public class KakaoController {
         // 회원정보 획득 기모띠
         System.out.println(jsonObject.get("kakao_account"));
         // 이 사이에 DB에 있는지 확인해서 없으면 넣어주고 있으면 통과
-        String id = service.idCheck(Long.toString((Long) jsonObject.get("id")));
+        String id = service.idCheck("kakao_" + Long.toString((Long) jsonObject.get("id")));
         Random random = new Random();
         String randomPass = Integer.toString(random.nextInt(888888) + 111111);
         if (id == null) {
             HashMap<String, String> map = new HashMap<String, String>();
-            map.put("id", Long.toString((Long) jsonObject.get("id")));
+            map.put("id", "kakao_" + Long.toString((Long) jsonObject.get("id")));
             map.put("pw", randomPass);
             map.put("nickName", "없음");
             map.put("email", "없음");
             service.join(map);
         }
         // 회원 아이디 숫자로 되어있음
-        String loginId = Long.toString((Long) jsonObject.get("id"));
+        String loginId = "kakao_" + Long.toString((Long) jsonObject.get("id"));
         session.setAttribute("loginId", loginId);
         System.out.println(jsonObject.get("id"));
         session.setAttribute("access_token", access_token);
