@@ -3,6 +3,8 @@ package com.gudi.main.campingServiceCenter.noticeBoard.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,9 +55,10 @@ public class NoticeController {
 	 */
 
     @RequestMapping(value = "/noticeDetail/{boardNum}")
-    public ModelAndView noticeDetail(@PathVariable int boardNum) {
+    public ModelAndView noticeDetail(@PathVariable int boardNum,HttpSession session) {
+    	String loginId = (String)session.getAttribute("loginId");
     	logger.info("공지사항 디테일 실행");
-        return service.detail(boardNum);
+        return service.detail(boardNum,loginId);
         
     }
     

@@ -12,9 +12,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gudi.main.campingServiceCenter.noticeBoard.dao.NoticeMapper;
+import com.gudi.main.cm.CmService;
 import com.gudi.main.dtoAll.BoardDTO;
-import com.gudi.main.dtoAll.CampingDTO;
 import com.gudi.main.dtoAll.PhotoDTO;
+import com.gudi.main.good.GoodMapperCommon;
 import com.gudi.main.util.HansolUtil;
 import com.gudi.main.util.UploadUtil;
 
@@ -23,6 +24,11 @@ public class NoticeService {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	NoticeMapper dao;
+	
+	@Autowired
+	CmService service;
+	
+	@Autowired GoodMapperCommon goodMapper;
 
 	/*
 	 * public HashMap<String, Object> list(int page, int pagePerNum) {
@@ -39,7 +45,8 @@ public class NoticeService {
 	 * pages); return map; }
 	 */
 	@Transactional
-	public ModelAndView detail(int boardNum) {
+	public ModelAndView detail(int boardNum,String loginId) {
+		HashMap<String,Object> map = service.cmList(Integer.toString(boardNum), "notice", 1);
 		ModelAndView mav = new ModelAndView();
 		dao.up(boardNum);
 		ArrayList<PhotoDTO> phoDto = dao.callPhoto(boardNum);
@@ -48,8 +55,19 @@ public class NoticeService {
 		mav.addObject("dto", dto);
 
 		ArrayList<PhotoDTO> file = dao.file(boardNum);
+		map.put("goodCount",goodMapper.goodCount(Integer.toString(boardNum), "notice"));
+    	String check = null;
+    	if(loginId != null) {
+    		check = goodMapper.goodCheck(Integer.toString(boardNum), "notice", loginId);
+    	}
+    	if (check == null) {
+            map.put("goodCheck", false);
+        } else {
+            map.put("goodCheck", true);
+        }
 		mav.addObject("phoDtos", phoDto);
 		mav.addObject("file", file);
+		mav.addObject("map", map);
 		mav.setViewName("/serviceCenter/noticeBoard/noticeDetail");
 		return mav;
 	}
