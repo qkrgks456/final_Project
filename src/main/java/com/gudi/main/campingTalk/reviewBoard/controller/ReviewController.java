@@ -99,10 +99,10 @@ public class ReviewController {
     	//조회수 올리기
     	service.reviewHit(boardNum);
     	
-    	mav.setViewName("campingTalk/reviewBoard/reviewDetail");
-    	mav.addObject("dto",dto);
-    	mav.addObject("phoDtos",phoDto);
+    	//댓글 불러옴
     	HashMap<String,Object> map = cmService.cmList(Integer.toString(boardNum), "review", 1);
+    	
+    	//좋아요 불러옴
     	map.put("goodCount",goodMapper.goodCount(Integer.toString(boardNum), "review"));
     	String check = null;
     	if(loginId != null) {
@@ -113,9 +113,12 @@ public class ReviewController {
         } else {
             map.put("goodCheck", true);
         }
-    	//댓글 불러옴
+    	
+    	mav.setViewName("campingTalk/reviewBoard/reviewDetail");
+    	mav.addObject("dto",dto);
+    	mav.addObject("phoDtos",phoDto);
     	mav.addObject("map", map);
-
+    	
         return mav;
     }
     

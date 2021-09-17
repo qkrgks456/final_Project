@@ -37,51 +37,54 @@
             <table class="table">
                 <tbody>
                 <tr>
-                    <th scope="row">주차장명</th>
-                    <td>${dto.prkplcenm}</td>
+                    <th scope="row" class="py-3">주차장명</th>
+                    <td class="py-3">${dto.prkplcenm}</td>
 
                 </tr>
                 <tr>
 
                     <c:choose>
                         <c:when test="${dto.rdnmadr eq null}">
-                            <th scope="row">주소</th>
-                            <td>${dto.lnmadr}</td>
+                            <th scope="row" class="py-3">주소</th>
+                            <td class="py-3">${dto.lnmadr}</td>
                         </c:when>
                         <c:otherwise>
-                            <th scope="row">주소</th>
-                            <td>${dto.rdnmadr}</td>
+                            <th scope="row" class="py-3">주소</th>
+                            <td class="py-3">${dto.rdnmadr}</td>
                         </c:otherwise>
                     </c:choose>
 
                 </tr>
                 <tr>
-                    <th scope="row">주차구획 수</th>
-                    <td>${dto.prkcmprt}</td>
+                    <th scope="row" class="py-3">주차구획 수</th>
+                    <td class="py-3">${dto.prkcmprt}</td>
                 </tr>
                 <tr>
-                    <th scope="row">주차장 구분</th>
-                    <td>${dto.prkplcese}</td>
+                    <th scope="row" class="py-3">주차장 구분</th>
+                    <td class="py-3">${dto.prkplcese}</td>
                 </tr>
                 <tr>
-                    <th scope="row">요금정보</th>
-                    <td>${dto.parkingchrgeinfo}</td>
+                    <th scope="row" class="py-3">요금정보</th>
+                    <td class="py-3">${dto.parkingchrgeinfo}</td>
                 </tr>
                 <tr>
-                    <th scope="row">전화번호</th>
-                    <td>${dto.phonenumber}</td>
+                    <th scope="row" class="py-3">전화번호</th>
+                    <td class="py-3">${dto.phonenumber}</td>
                 </tr>
                 </tbody>
             </table>
         </div>
-
-
+			<div class="text-center">
+			<div id="good" class="btn btn-outline-warning mx-1" goodCheck="${map.goodCheck}">
+  			 추천 ${map.goodCount}개
+			</div>
+			</div>
     </div>
 
 <div class="col">
 
 	<div class="pt-4 border-bottom border-dark">
-    <h4 class="fw-bold">차박 경험을 공유해보세요!</h4>
+    <h5 class="fw-bold">차박 경험을 공유해보세요!</h5>
 </div>
 <%-- 댓글 입력 폼 --%>
 <div class="d-flex align-items-center mt-2">
@@ -179,6 +182,7 @@ page=${map.startPage+1}>
 <script src="${path}/resources/js/bootstrap.bundle.js"></script>
 <script src="${path}/resources/js/common.js"></script>
 <script src="${path}/resources/js/cm.js"></script>
+<script src="${path}/resources/js/recomend.js"></script>
 
 <script>
 
@@ -291,7 +295,7 @@ function commentList(map) {
         content += '<div class="d-flex justify-content-end">'
         content += '<div>'
         if (sessionId != dto.id) {
-            content += '<a class="btn btn-warning btn-sm" href="">신고</a>'
+            content += '<a class="btn btn-secondary btn-sm" href="">신고</a>'
         } else {
             content += '<a class="cmUpdateBtnForm btn btn-warning btn-sm">수정</a>'
             content += '<a cmNum="' + dto.cmNum + '" class="cmDelBtn btn btn-warning btn-sm ms-1">삭제</a>'

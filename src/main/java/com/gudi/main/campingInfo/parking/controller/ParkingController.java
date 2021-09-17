@@ -3,6 +3,8 @@ package com.gudi.main.campingInfo.parking.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,8 @@ import com.gudi.main.campingInfo.parking.service.ParkingService;
 import com.gudi.main.cm.CmService;
 import com.gudi.main.dtoAll.CampingDTO;
 import com.gudi.main.dtoAll.ParkingDTO;
+import com.gudi.main.reserve.dao.GoodMapper;
+import com.gudi.main.reserve.service.GoodService;
 
 @Controller
 @RequestMapping(value = "/campingInfo")
@@ -27,6 +31,7 @@ public class ParkingController {
 
     @Autowired ParkingService service;
     @Autowired CmService cmService;
+    @Autowired GoodMapper goodMapper;
     
     @RequestMapping(value = "/campingParking")
     public String campingParking(Model model) {
@@ -55,17 +60,35 @@ public class ParkingController {
     
     @RequestMapping(value = "/freeParkDetail/{prkplcenm}")
     @ResponseBody
-    public ModelAndView freeParkDetail (@PathVariable String prkplcenm) {
+    public ModelAndView freeParkDetail (@PathVariable String prkplcenm, HttpSession session) {
+    	String loginId = (String) session.getAttribute("loginId");
     	logger.info("차박지도 상세보기:: "+ prkplcenm);
     	
     	ModelAndView mav = new ModelAndView();
     	
+    	//주차장 상세정보
     	ParkingDTO dto = service.freeParkDetail(prkplcenm);
-    	mav.addObject("dto",dto);
+    	
     	
     	//댓글 불러옴
-	    mav.addObject("map",cmService.cmList("000000", prkplcenm, 1));
+	    HashMap<String, Object> map = cmService.cmList("000000", prkplcenm, 1);
 	    
+	    //총 추천수 불러옴
+    	map.put("goodCount",goodMapper.goodCount("000000",prkplcenm));
+    	
+    	//내가 추천했는지 체크
+    	String check = null;
+    	if(loginId != null) {
+    		check = goodMapper.goodCheck("000000", "review", loginId);
+    	}
+    	if (check == null) { 
+            map.put("goodCheck", true);
+        } else { 
+            map.put("goodCheck", false);
+        }
+	    
+    	mav.addObject("map",map);
+    	mav.addObject("dto",dto);
     	mav.setViewName("/campingInfo/campingParking/freeParkDetail");
         
     	return mav;
