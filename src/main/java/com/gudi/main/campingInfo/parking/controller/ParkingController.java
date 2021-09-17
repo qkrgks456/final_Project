@@ -48,10 +48,11 @@ public class ParkingController {
     	
     	ArrayList<ParkingDTO> dto = service.getZapyo(map);
     	
+    	
+    	
     	System.out.println("dto는??:: "+dto);
     	//ArrayList<ParkingDTO> dto = [class(key=value),class(key=value)]
     	System.out.println("dto 사이즈는??:: "+dto.size());
-    	
     	System.out.println(dto.get(0).getLatitude());
     	System.out.println(dto.get(0).getLongitude());
     	

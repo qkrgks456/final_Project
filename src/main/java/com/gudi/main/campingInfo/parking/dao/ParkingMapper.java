@@ -14,11 +14,17 @@ public interface ParkingMapper {
 	@Select("SELECT count(contentid) FROM campingapi")
 	int test();
 	
-	@Select("SELECT * FROM ( " +
-			"SELECT ( 6371 * acos( cos( radians( #{param1} ) ) * cos( radians( latitude) ) * cos( radians( longitude ) - radians(#{param2}) ) + sin( radians(#{param1}) ) * sin( radians(latitude) ) ) ) AS distance, prkplcese, lnmadr, prkcmprt, parkingchrgeinfo, operday, institutionnm, phonenumber, prkplcenm, rdnmadr, latitude, longitude " +
-			"FROM parkingapi " +
-			") DATA " +
-			"WHERE DATA.distance < 7")
+//	@Select("SELECT * FROM ( " +
+//			"SELECT ( 6371 * acos( cos( radians( #{param1} ) ) * cos( radians( latitude) ) * cos( radians( longitude ) - radians(#{param2}) ) + sin( radians(#{param1}) ) * sin( radians(latitude) ) ) ) AS distance, prkplcese, lnmadr, prkcmprt, parkingchrgeinfo, operday, institutionnm, phonenumber, prkplcenm, rdnmadr, latitude, longitude " +
+//			"FROM parkingapi " +
+//			") DATA " +
+//			"WHERE DATA.distance < 7")
+	@Select("SELECT distance, prkplcese, lnmadr, prkcmprt, parkingchrgeinfo,operday, institutionnm, phonenumber, prkplcenm, rdnmadr, latitude, longitude, (SELECT COUNT(goodNum)FROM good WHERE s.prkplcenm=division)count\r\n" + 
+			"FROM (SELECT * FROM ( SELECT ( 6371 * acos( cos( radians( #{param1} ) ) * cos( radians( \r\n" + 
+			"latitude) ) * cos( radians( longitude ) - radians(#{param2}) ) + sin( radians(#{param1}) \r\n" + 
+			") * sin( radians(latitude) ) ) ) AS distance, prkplcese, lnmadr, prkcmprt, parkingchrgeinfo, \r\n" + 
+			"operday, institutionnm, phonenumber, prkplcenm, rdnmadr, latitude, longitude FROM parkingapi \r\n" + 
+			") DATA WHERE DATA.distance < 7) s")
 	ArrayList<ParkingDTO> getZapyo(String wido, String kyongdo);
 
 	@Select("SELECT * FROM parkingapi WHERE prkplcenm = #{param1}")

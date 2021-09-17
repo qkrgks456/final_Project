@@ -47,7 +47,7 @@
 <!-- 장소정보, 지도 담고있는 div -->
 <div class="d-flex justify-content-center">
 <!-- 장소 정보 표출하는 곳 -->
-<div class="list col-2" style="overflow-y:scroll; width:200; height:600px; padding:4px; border:1 solid #000000;">
+<div class="list col-3" style="overflow-y:scroll; height:600px; border:1 solid #000000;">
 <div style="text-align:center; margin-top:50px">
 <p style="color:#b4b4b4;">지도를 드래그 하세요<p>
 </div>
@@ -56,12 +56,6 @@
 <div id="map" style="width:100%;height:600px;"></div>    
 </div>
  
-<!-- 페이지 네이션 --> 
- <ul id="placesList"></ul>
-    
-</div>
-
-
 
 <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=379ea69d5a147ed25817ca69e93842c3&​&libraries=services"></script>
 	<script>
@@ -69,7 +63,7 @@
 		    mapOption = {
 		        center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
 		        level: 6, // 지도의 확대 레벨
-		        mapTypeId : kakao.maps.MapTypeId.HYBRID // 지도종류
+		        mapTypeId : kakao.maps.MapTypeId.RoadMap // 지도종류
 		    }; 
 
 		// 지도를 생성한다 
@@ -124,7 +118,9 @@
 				},
 				success:function(data){ //dto 배열 받아옴
 					console.log("받아온 DTO::",data);
-					
+					 var imageSrc = "${path}/resources/img/chaback.png",
+					 	 imageSize = new kakao.maps.Size(40, 42),
+					 	 markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize)
 					// 지도에 마커를 생성하고 표시한다	
 					for (var i = 0; i < data.length; i++) {
 						
@@ -132,6 +128,7 @@
 						var marker = new kakao.maps.Marker({
 						    position: new kakao.maps.LatLng(data[i].latitude, data[i].longitude), // 마커의 좌표
 						    map: map, // 마커를 표시할 지도 객체
+						    image: markerImage
 						});
 						
 						marker.setMap(map);
@@ -189,12 +186,12 @@
 		
 		function listPrint(data){
 			var content = "";
-			
-			content +=  '<div class="card mb-1" style="max-width: 600px;">'
-            content +=   '<div class="ms-2 col-md">'
-            content +=    '<h6 class="card-title"><a href="./freeParkDetail/'+data.prkplcenm+'" style="text-decoration:none;">'+data.prkplcenm+'</a></h6>';
-            content +=    '<p class="card-text"><small>'+"주차구획 수: "+data.prkcmprt+'</small></p>';
-            content +=    '<p class="card-text"><small class="text-muted">'+"전화번호: "+data.phonenumber+'</small></p></div></div>';
+			content +=  '<div class="card mb-1">'
+            content +=   '<div class="ms-2 mt-2 col-md">'
+            content +=    '<h5 class="card-title"><a href="./freeParkDetail/'+data.prkplcenm+'" style="text-decoration:none;">'+data.prkplcenm+'</a></h5>';
+            content +=    '<div class="card-text"><small>'+"주차구획 수: "+data.prkcmprt+'</small></div>';
+            content +=    '<div class="card-text"><small>'+"추천수: "+data.count+'</small></div>';
+            content +=    '<div class="card-text mb-1"><small class="text-muted">'+"전화번호: "+data.phonenumber+'</small></div></div></div>';
 			$(".list").append(content);
 						
 		}

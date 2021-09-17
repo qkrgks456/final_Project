@@ -54,14 +54,13 @@
 
 <div class="d-flex justify-content-center">
 
-<div class="list col-2" style="overflow-y:scroll; width:200; height:600px; padding:4px; border:1 solid #000000;">
+<div class="list col-3" style="overflow-y:scroll; height:600px; border:1 solid #000000;">
 <div style="text-align:center; margin-top:50px">
 <p style="color:#b4b4b4;">지도를 드래그 하세요<p>
 </div>
 </div>  
-
+<!-- 지도 -->
 <div id="map" style="width:100%;height:600px;"></div>    
-
 </div>
     
 
@@ -79,7 +78,7 @@
 		    mapOption = {
 		        center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
 		        level: 6, // 지도의 확대 레벨
-		        mapTypeId : kakao.maps.MapTypeId.HYBRID // 지도종류
+		        mapTypeId : kakao.maps.MapTypeId.RoadMap // 지도종류
 		    }; 
 
 		// 지도를 생성한다 
@@ -137,11 +136,14 @@
 				
 					// 지도에 마커를 생성하고 표시한다	
 					for (var i = 0; i < data.length; i++) {
-						
+						var imageSrc = "${path}/resources/img/chaback.png",
+					 	 imageSize = new kakao.maps.Size(40, 42),
+					 	 markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize)
 						//마커생성 여러번!
 						var marker = new kakao.maps.Marker({
 						    position: new kakao.maps.LatLng(data[i].mapY, data[i].mapX), // 마커의 좌표
 						    map: map, // 마커를 표시할 지도 객체
+						    image: markerImage
 						});
 						
 						marker.setMap(map);
@@ -193,12 +195,11 @@
 		
 		function listPrint(data){
 			var content = "";
-			
-			content +=  '<div class="card mb-1" style="max-width: 600px;">'
-            content +=   '<div class="ms-2 col-md">'
-            content +=    '<h6 class="card-title"><a href="../reserve/campingDetail/'+data.contentId+'" style="text-decoration:none;">'+data.facltNm+'</a></h6>';
-            content +=    '<p class="card-text"><small>'+"주소: "+data.addr1+'</small></p>';
-            content +=    '<p class="card-text"><small class="text-muted">'+"전화번호: "+data.tel+'</small></p></div></div>';
+			content +=  '<div class="card mb-1">'
+            content +=   '<div class="ms-2 mt-2 col-md">'
+            content +=    '<h5 class="card-title"><a href="../reserve/campingDetail/'+data.contentId+'" style="text-decoration:none;">'+data.facltNm+'</a></h5>';
+            content +=    '<div class="card-text"><small>'+"주소: "+data.addr1+'</small></div>';
+            content +=    '<div class="card-text mb-1"><small class="text-muted">'+"전화번호: "+data.tel+'</small></div></div></div>';
 			$(".list").append(content);
 			
 		}
