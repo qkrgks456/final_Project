@@ -20,7 +20,6 @@ public interface ReviewMapper {
 	@Insert("INSERT INTO photo(photonum, id, division, newfilename, orifilename, divisionnum) VALUES (photo_seq.NEXTVAL, 'test', 'review', #{param1}, #{param2}, 'review_'||#{param3})")
 	void reviewPhoto(String neww, String ori, String boardNum);
 	
-	//나중에 세션에서 아이디 받아와서 넣어야함
 	@Insert("INSERT INTO reviewboard(boardnum, id, title, content) VALUES (reviewboard_seq.NEXTVAL, #{loginId}, #{title}, #{content})")
 	@SelectKey(statement = {"SELECT reviewboard_seq.CURRVAL FROM DUAL"}, keyProperty = "boardnum",resultType = int.class, before = false)
 	int reviewWrite(HashMap<String, String> params);
@@ -34,7 +33,7 @@ public interface ReviewMapper {
 	@Update("UPDATE reviewboard SET delcheck = 'Y' WHERE boardnum = #{boardNum}")
 	int reviewDel(int boardNum);
 
-	@Select("SELECT * FROM reviewboard WHERE delcheck = 'N'")
+	@Select("SELECT * FROM reviewboard WHERE delcheck = 'N' ORDER BY boardnum DESC")
 	ArrayList<BoardDTO> reviewList();
 
 	@Update("UPDATE reviewboard SET title = #{param1}, content = #{param2} WHERE boardnum = #{param3}")
@@ -48,6 +47,9 @@ public interface ReviewMapper {
 
 	@Update("UPDATE reviewboard SET boardhit = boardhit+1 WHERE boardNum = #{param1}")
 	void reviewHit(int boardNum);
+
+	@Insert("INSERT INTO reviewreport(reviewReportNum, boardNum, reporter, reason) VALUES(reviewReport_seq.NEXTVAL, #{boardNum}, #{loginId}, #{reason})")
+	void reviewReport(HashMap<String, String> map);
 
 	
 

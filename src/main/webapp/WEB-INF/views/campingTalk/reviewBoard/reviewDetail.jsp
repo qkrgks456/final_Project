@@ -75,12 +75,37 @@
 </div>
 
 
+<!-- 좋아요, 신고 -->
 <div class="d-flex justify-content-center">
 <div id="good" class="btn btn-outline-warning mx-1" goodCheck="${map.goodCheck}">
    좋아요 ${map.goodCount}개
 </div>
-<c:if test="${sessionScope.loginId ne null}">
-	<input class="btn btn-secondary btn-sm me-1" type="button" value="신고"/>
+<c:if test="${sessionScope.loginId ne dto.id && sessionScope.loginId ne null}">
+	
+	<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  	신고
+	</button>
+	
+	<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">리뷰신고</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <textarea id="reason" rows="10" cols="35"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+        <button id="report" type="button" class="btn btn-warning" data-bs-dismiss="modal">신고</button>
+      </div>
+    </div>
+  </div>
+</div>
+	
+	
 </c:if>
 </div>
 
@@ -191,6 +216,48 @@ page=${map.startPage+1}>
 <script src="${path}/resources/js/common.js"></script>
 <script src="${path}/resources/js/cm.js"></script>
 <script src="${path}/resources/js/good.js?var=2"></script>
+
+<script>
+
+let boardNum = ${dto.boardNum};
+
+$("#report").on('click',function(){
+	
+	
+	$.ajax({
+		url:"../reviewReport",
+		type:"POST",
+		data:{
+			boardNum: boardNum,
+			reason: $("#reason").val()
+		},
+		success: function(data){
+			console.log(data);
+			alert("신고가 접수되었습니다.");
+			$("#reason").val("");
+		},
+		error: function(data){
+			console.log(data);
+			alert("ERROR:: 신고접수를 실패했습니다.");
+		}
+		
+		
+		
+		
+	});
+	
+	
+	
+});
+
+
+
+</script>
+
+
+
+
+
 
 </body>
 </html>

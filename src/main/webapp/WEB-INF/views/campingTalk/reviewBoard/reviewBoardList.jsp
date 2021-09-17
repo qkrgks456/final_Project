@@ -53,10 +53,12 @@
     </tr>
   </c:forEach>
   </tbody>
-</table>    
+</table>
+<c:if test="${sessionScope.loginId ne null}">
 	<div class="d-flex flex-row-reverse">
     <input class="btn btn-primary d-flex" type="button" value="리뷰쓰기" onclick="location.href='./reviewWriteForm'">
     </div>
+</c:if>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="${path}/resources/js/bootstrap.js"></script>

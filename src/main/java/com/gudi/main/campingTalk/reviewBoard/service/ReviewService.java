@@ -50,7 +50,7 @@ public class ReviewService {
 	}
 
 	public int reviewWrite(HashMap<String, String> params) {
-		logger.info(params.get("title")+" / "+params.get("content"));
+		logger.info(params.get("title")+" / "+params.get("content")+" / "+params.get("loginId"));
 		
 		return dao.reviewWrite(params);
 	}
@@ -118,6 +118,11 @@ public class ReviewService {
 	public void reviewHit(int boardNum) {
 		logger.info("조회수 올리셈::");
 		dao.reviewHit(boardNum);
+	}
+
+	public void reviewReport(HashMap<String, String> map, String loginId) {
+		map.put("loginId", loginId);
+		dao.reviewReport(map);
 	}
 
 	

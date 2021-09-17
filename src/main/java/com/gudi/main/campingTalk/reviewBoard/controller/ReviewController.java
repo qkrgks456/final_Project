@@ -104,7 +104,7 @@ public class ReviewController {
     	mav.addObject("phoDtos",phoDto);
     	HashMap<String,Object> map = cmService.cmList(Integer.toString(boardNum), "review", 1);
     	map.put("goodCount",goodMapper.goodCount(Integer.toString(boardNum), "review"));
-    	String check = "";
+    	String check = null;
     	if(loginId != null) {
     		check = goodMapper.goodCheck(Integer.toString(boardNum), "review", loginId);
     	}
@@ -185,6 +185,15 @@ public class ReviewController {
     }
     
 
+    //신고등록 요청
+    @RequestMapping(value = "/reviewReport")
+    @ResponseBody
+    public void reviewReportForm(@RequestParam HashMap<String, String> map, HttpSession session) {
+    	String loginId = (String)session.getAttribute("loginId");
+    	logger.info("리뷰 신고 등록 요청...");
+    	logger.info("보드넘, 리즌, 로그인 아이디:: "+map.get("boardNum")+" / "+map.get("reason")+" / "+loginId);
+    	service.reviewReport(map,loginId);
+    }
     
     
     
