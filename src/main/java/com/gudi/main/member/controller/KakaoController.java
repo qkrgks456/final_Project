@@ -121,7 +121,8 @@ public class KakaoController {
             service.join(map);
         }
         // 회원 아이디 숫자로 되어있음
-        session.setAttribute("loginId", jsonObject.get("id"));
+        String loginId = Long.toString((Long) jsonObject.get("id"));
+        session.setAttribute("loginId", loginId);
         System.out.println(jsonObject.get("id"));
         session.setAttribute("access_token", access_token);
         return "redirect:/";
