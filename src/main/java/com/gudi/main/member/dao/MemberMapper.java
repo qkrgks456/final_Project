@@ -15,4 +15,12 @@ public interface MemberMapper {
 
     @Select("SELECT pw FROM member WHERE id=#{id} AND delCheck='N'")
     String login(String inputId);
+    
+	
+	@Select("SELECT id FROM member WHERE email=#{email} AND nickname=#{nickName} AND delCheck='N'") 
+	String idfind(HashMap<String, String> params);
+	
+	
+	String passfind(HashMap<String, String> params);
+	 
 }

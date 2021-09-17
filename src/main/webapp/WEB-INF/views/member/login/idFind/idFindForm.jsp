@@ -29,11 +29,45 @@
 <jsp:include page="../../../fix/menu.jsp"/>
 <%-- 내용 넣으세요 --%>
 <div class="container px-3">
-    아이디 찾기
+ 	<div class="container px-5 mt-5 ">
+				<!-- 사이드 바 메뉴-->
+				<h2 class="fw-bold my-3">아이디찾기</h2>
+				<hr />
+				<div class="container px-3 w-50 border my-4">
+					<form action="${path}/member/idFind" method="post" class="my-4" >  
+						<h2 class="fw-bold">닉네임과 이메일로 아이디찾기</h2>
+							<!-- 
+						<p>
+							*본인확인 이메일 주소와 회원가입시 입력한 이메일 주소가 같아야,<br /> 
+							이메일을 통하여 아이디를 확인 받을 수 있습니다.
+						</p>
+						 -->
+						<hr />
+						<div class="form col-md-9 mb-3 mt-3">
+							<label for="validationTooltip04" class="fw-bold my-1">닉네임</label>
+							<input type="text" class="form-control" id="nickName"
+								name="nickName" placeholder="정확하게 입력해주세요" required>
+							<div class="invalid-feedback">필수 정보입니다</div>
+						</div>
+						<div class="form col-md-9 mb-3">
+							<label for="validationTooltipUsername" class="fw-bold my-1">이메일</label>
+							<input type="text" class="form-control" id="email"
+								name="email" placeholder="정확하게 입력해주세요" required>
+							<!--  아이디 찾기 버튼 -->
+							<div class="text-center mt-2">
+								<input class="btn btn-secondary" type="submit" value="아이디 찾기">
+							</div>
+							<div class="invalid-feedback">필수 정보입니다</div>
+						</div>
+					</form>
+				</div>
+			</div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="${path}/resources/js/bootstrap.js"></script>
 <script src="${path}/resources/js/bootstrap.bundle.js"></script>
 <script src="${path}/resources/js/common.js"></script>
+
+
 </body>
 </html>

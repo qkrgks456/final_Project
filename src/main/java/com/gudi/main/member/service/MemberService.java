@@ -35,4 +35,16 @@ public class MemberService {
 	public String login(String inputId) {
 		return mapper.login(inputId);
 	}
+
+
+	public String idfind(HashMap<String, String> params) {
+		String id = mapper.idfind(params);
+		return id;
+	}
+
+
+	public void passfind(HashMap<String, String> params) {
+		mapper.passfind(params);
+		
+	}
 }

@@ -72,8 +72,8 @@
         <div>
             <div class="float-start">
                 <div class="d-grid float-start">
-                    <a href="/Project/login/idFind/idFind.jsp">아이디를 잊으셨나요?</a> <a
-                        href="/Project/login/passwordFind/passwordFind.jsp">비밀번호를 잊으셨나요?</a>
+                    <a href="${path}/member/idFindForm">아이디를 잊으셨나요?</a> <a
+                        href="${path}/member/passFindForm">비밀번호를 잊으셨나요?</a>
                 </div>
             </div>
             <div class="float-end">

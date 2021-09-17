@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
@@ -28,6 +29,55 @@ public class MemberController {
     MemberService service;
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    //아이디찾기
+
+	@RequestMapping(value = "/idFindForm")
+    public String idFindForm(Model model) {
+		
+		return "member/login/idFind/idFindForm";
+    }
+	
+	
+	//아이디찾기 기능  
+	@RequestMapping(value = "/idFind",method = RequestMethod.POST)
+    public String idFind(Model model,@RequestParam HashMap<String,String>params) {
+		
+		logger.info("아이디확인"+params);
+		String id = service.idfind(params);
+		
+		if(id==null) { 
+			 model.addAttribute("suc", false);
+			return "member/login/idFind/idFindForm";
+			
+		}else {
+			model.addAttribute("id", id);
+			return "member/login/idFind/idFindResult";
+		}
+    }
+    
+	//비밀번호찾기 기능 
+	@RequestMapping(value = "/passFind")
+    public String passFind(Model model,@RequestParam HashMap<String,String>params) {
+		logger.info("비밀번호확인"+params);
+		service.passfind(params);
+		
+		return "member/login/passFind/passFind";
+    }
+	
+	
+	
+	
+	
+	//비밀번호찾기 
+	@RequestMapping(value = "/passFindForm")
+    public String passFindForm(Model model) {
+		
+		return "member/login/passFind/passFindForm";
+    }
+	
+	
+	
+    
     // 로그인 폼으로
     @RequestMapping(value = "/loginForm")
     public String loginForm(Model model) {
