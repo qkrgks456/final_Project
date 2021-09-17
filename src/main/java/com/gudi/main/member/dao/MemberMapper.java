@@ -1,7 +1,9 @@
 package com.gudi.main.member.dao;
 
+import com.gudi.main.dtoAll.MemberDTO;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.HashMap;
 
@@ -18,9 +20,11 @@ public interface MemberMapper {
     
 	
 	@Select("SELECT id FROM member WHERE email=#{email} AND nickname=#{nickName} AND delCheck='N'") 
-	String idfind(HashMap<String, String> params);
+	String idFind(HashMap<String, String> params);
 	
-	
-	String passfind(HashMap<String, String> params);
-	 
+	@Select("SELECT id FROM member WHERE email=#{email} AND id=#{id}")
+    String passFind(HashMap<String, String> params);
+
+	@Update("UPDATE member SET pw=#{param1} WHERE id=#{param2}")
+    void passChange(String enc_pass, String id);
 }

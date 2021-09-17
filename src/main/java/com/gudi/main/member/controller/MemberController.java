@@ -1,5 +1,6 @@
 package com.gudi.main.member.controller;
 
+import com.gudi.main.dtoAll.MemberDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,10 @@ import org.springframework.web.client.RestTemplate;
 
 import com.gudi.main.member.service.MemberService;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.PrintWriter;
 import java.util.HashMap;
 
 @Controller
@@ -31,53 +35,63 @@ public class MemberController {
 
     //아이디찾기
 
-	@RequestMapping(value = "/idFindForm")
+    @RequestMapping(value = "/idFindForm")
     public String idFindForm(Model model) {
-		
-		return "member/login/idFind/idFindForm";
+
+        return "member/login/idFind/idFindForm";
     }
-	
-	
-	//아이디찾기 기능  
-	@RequestMapping(value = "/idFind",method = RequestMethod.POST)
-    public String idFind(Model model,@RequestParam HashMap<String,String>params) {
-		
-		logger.info("아이디확인"+params);
-		String id = service.idfind(params);
-		
-		if(id==null) { 
-			 model.addAttribute("suc", false);
-			return "member/login/idFind/idFindForm";
-			
-		}else {
-			model.addAttribute("id", id);
-			return "member/login/idFind/idFindResult";
-		}
+
+
+    //아이디찾기 기능
+    @RequestMapping(value = "/idFind", method = RequestMethod.POST)
+    public String idFind(Model model, @RequestParam HashMap<String, String> params) {
+
+        logger.info("아이디확인" + params);
+        String id = service.idFind(params);
+
+        if (id == null) {
+            model.addAttribute("suc", false);
+            return "member/login/idFind/idFindForm";
+
+        } else {
+            model.addAttribute("id", id);
+            return "member/login/idFind/idFindResult";
+        }
     }
-    
-	//비밀번호찾기 기능 
-	@RequestMapping(value = "/passFind")
-    public String passFind(Model model,@RequestParam HashMap<String,String>params) {
-		logger.info("비밀번호확인"+params);
-		service.passfind(params);
-		
-		return "member/login/passFind/passFind";
+
+    //비밀번호찾기 기능
+    @RequestMapping(value = "/passFind")
+    public String passFind(Model model, @RequestParam HashMap<String, String> params) {
+        String id = service.passFind(params);
+        if (id == null) {
+            model.addAttribute("suc", false);
+            return "member/login/passFind/passFindForm";
+        } else {
+            service.passSend(params.get("id"), params.get("email"));
+            return "redirect:/member/emailSend";
+        }
     }
-	
-	
-	
-	
-	
-	//비밀번호찾기 
-	@RequestMapping(value = "/passFindForm")
+
+    @RequestMapping(value = "/emailSend")
+    public void emailSend(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            String ctx = request.getContextPath();
+            response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert('해당 이메일로 변경된 비밀번호가 전송되었습니다'); location.href='" + ctx + "/';</script>");
+            out.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //비밀번호찾기
+    @RequestMapping(value = "/passFindForm")
     public String passFindForm(Model model) {
-		
-		return "member/login/passFind/passFindForm";
+        return "member/login/passFind/passFindForm";
     }
-	
-	
-	
-    
+
+
     // 로그인 폼으로
     @RequestMapping(value = "/loginForm")
     public String loginForm(Model model) {

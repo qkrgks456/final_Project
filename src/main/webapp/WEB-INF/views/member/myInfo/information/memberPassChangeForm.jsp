@@ -88,11 +88,11 @@
         }
     })
     $(".nullCheck").on("propertychange change keyup paste input", function () {
-        if ($(this).val().length >= 8) {
+        if ($(this).val().length >= 1) {
             $(this).attr('class', 'form-control is-valid nullCheck');
         } else {
             $(this).attr('class', 'form-control is-invalid nullCheck');
-            $(this).nextAll('div.invalid-feedback').text('8자 이상 입력해주세요');
+            $(this).nextAll('div.invalid-feedback').text('1자 이상 입력해주세요');
         }
         if ($(this).val().length >= 100) {
             $(this).attr('class', 'form-control is-invalid nullCheck');

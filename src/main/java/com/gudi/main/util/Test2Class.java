@@ -31,6 +31,8 @@ public class Test2Class {
        headers.put("Content-type", "application/json");
 
        String result = ApiUtil.sendSeverMsg(urls, headers, params, "get");
+
+
        System.out.println(result);
        JSONObject jsonObject1 = ApiUtil.jsonStringToJson(result);
        JSONObject jsonObject2 = ApiUtil.jsonStringToJson(jsonObject1.get("response"));

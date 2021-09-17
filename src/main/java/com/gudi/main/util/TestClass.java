@@ -1,6 +1,10 @@
 package com.gudi.main.util;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONObject;
+import org.json.XML;
+import org.json.simple.JSONArray;
+import org.json.simple.parser.JSONParser;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,7 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class TestClass {
-    /*public static void main(String args[]) {
+    public static void main(String args[]) {
         // TODO Auto-generated method stub
         // url 선언
         String url = "http://api.visitkorea.or.kr/openapi/service/rest/GoCamping/basedList";
@@ -27,11 +31,17 @@ public class TestClass {
         headers.put("Content-type", "application/json");
 
         String result = ApiUtil.sendSeverMsg(urls, headers, params, "get");
+
+
         // 해체쇼
         JSONObject jsonObject1 = ApiUtil.jsonStringToJson(result);
         JSONObject jsonObject2 = ApiUtil.jsonStringToJson(jsonObject1.get("response"));
         JSONObject jsonObject3 = ApiUtil.jsonStringToJson(jsonObject2.get("body"));
         int totalCount = (Integer) jsonObject3.get("totalCount");
+
+
+
+
 
         // url 선언
         url = "http://api.visitkorea.or.kr/openapi/service/rest/GoCamping/basedList";
@@ -42,20 +52,28 @@ public class TestClass {
         // urls 어레이리스트에 담기
         urls = new ArrayList<String>();
         urls.add(url);
+
         // 헤더값 담기
         headers = new HashMap<String, String>();
         headers.put("Content-type", "application/json");
 
         result = ApiUtil.sendSeverMsg(urls, headers, params, "get");
+
+
         // 해체쇼
-        jsonObject1 = ApiUtil.jsonStringToJson(result);
-        jsonObject2 = ApiUtil.jsonStringToJson(jsonObject1.get("response"));
-        jsonObject3 = ApiUtil.jsonStringToJson(jsonObject2.get("body"));
-        JSONObject jsonObject4 = ApiUtil.jsonStringToJson(jsonObject3.get("items"));
+        jsonObject1 = jsonStringToJson(result);
+        jsonObject2 = jsonStringToJson(jsonObject1.get("response"));
+        jsonObject3 = jsonStringToJson(jsonObject2.get("body"));
+        JSONObject jsonObject4 = jsonStringToJson(jsonObject3.get("items"));
+
         // 배열화
-        ArrayList<HashMap<String, Object>> hashMapArrayList = ApiUtil.jsonArray(jsonObject4.get("item"));
+        ArrayList<HashMap<String, Object>> hashMapArrayList = jsonArray(jsonObject4.get("item"));
         System.out.println(hashMapArrayList.size());
+
+
         if (hashMapArrayList.size() == totalCount) {
+
+
             Connection con = null;
             PreparedStatement pstmt = null;
 
@@ -136,5 +154,60 @@ public class TestClass {
                 }
             }
         }
-    }*/
+    }
+
+    /**
+     * api 받은 Json문자열을 JSONObject로 바꿔준다 JSONObject도 map이랑 사용법 똑같다 get,put하면된다 작성자:
+     * 박한솔
+     *
+     * @param result Object
+     * @return 전송 결과 값 JSONObject
+     */
+    public static JSONObject jsonStringToJson(Object result) {
+        System.out.println(result.toString());
+        JSONObject jsonObject = null;
+        try {
+            // json 형태로 만들어버리기
+            jsonObject = new JSONObject(result.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return jsonObject;
+    }
+
+    /**
+     * api 받은 XML문자열을 JSONObject로 바꿔준다 JSONObject도 map이랑 사용법 똑같다 get,put하면된다 작성자:
+     * 박한솔
+     *
+     * @param result Object
+     * @return 전송 결과 값 JSONObject
+     */
+    public static JSONObject XMLStringToJson(Object result) {
+        JSONObject jsonObject = null;
+        try {
+            // json 형태로 만들어버리기
+            jsonObject = XML.toJSONObject(result.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return jsonObject;
+    }
+
+    public static ArrayList<HashMap<String,Object>> jsonArray(Object result) {
+        org.json.simple.JSONArray jsonArr = null;
+        org.json.simple.JSONObject jsonObject = null;
+        HashMap<String,Object> map = null;
+        ArrayList<HashMap<String,Object>> arr = new ArrayList<HashMap<String,Object>>();
+        try {
+            jsonArr = (JSONArray) new JSONParser().parse(result.toString());
+            for (int i = 0; i < jsonArr.size(); i++) {
+                jsonObject = (org.json.simple.JSONObject) jsonArr.get( i );
+                map = new ObjectMapper().readValue(jsonObject.toString(), HashMap.class);
+                arr.add(map);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return arr;
+    }
 }
