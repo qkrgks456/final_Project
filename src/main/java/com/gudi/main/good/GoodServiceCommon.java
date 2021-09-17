@@ -6,9 +6,9 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 
 @Service
-public class GoodService {
+public class GoodServiceCommon {
     @Autowired
-    GoodMapper mapper;
+    GoodMapperCommon mapper;
 
     public HashMap<String, Object> goodData(String contentId, String loginId, String division) {
         HashMap<String, Object> map = new HashMap<String, Object>();

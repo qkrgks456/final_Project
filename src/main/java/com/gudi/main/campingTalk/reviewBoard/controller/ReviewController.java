@@ -23,6 +23,7 @@ import com.gudi.main.campingTalk.reviewBoard.service.ReviewService;
 import com.gudi.main.cm.CmService;
 import com.gudi.main.dtoAll.BoardDTO;
 import com.gudi.main.dtoAll.PhotoDTO;
+import com.gudi.main.good.GoodMapperCommon;
 
 @Controller
 @RequestMapping(value = "/campingTalk")
@@ -31,7 +32,7 @@ public class ReviewController {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired ReviewService service;
     @Autowired CmService cmService;
-    
+    @Autowired GoodMapperCommon goodMapper;
     @RequestMapping(value = "/reviewBoard")
     public ModelAndView reviewBoard() {
     	logger.info("리뷰 리스트(리뷰메인) 요청...");
@@ -58,7 +59,10 @@ public class ReviewController {
     @Transactional(isolation = Isolation.READ_COMMITTED)
     @RequestMapping(value = "/reviewWrite")
     public ModelAndView reviewWrite(@RequestParam HashMap<String, String> params,
-    		MultipartFile[] file) {
+    		MultipartFile[] file, HttpSession session) {
+    	String loginId = (String)session.getAttribute("loginId");
+    	params.put("loginId", loginId);
+    	
     	logger.info("리뷰 등록 요청...");
     	
     	ModelAndView mav = new ModelAndView();
@@ -80,6 +84,7 @@ public class ReviewController {
     @Transactional(isolation = Isolation.READ_COMMITTED)
     @RequestMapping(value = "/reviewDetail/{boardNum}")
     public ModelAndView reviewDetail(@PathVariable int boardNum, HttpSession session) {
+    	String loginId = (String)session.getAttribute("loginId");
     	logger.info("리뷰 상세보기 요청...");
     	logger.info("상세보기할 글의 넘버:: "+boardNum);
     	
@@ -97,10 +102,20 @@ public class ReviewController {
     	mav.setViewName("campingTalk/reviewBoard/reviewDetail");
     	mav.addObject("dto",dto);
     	mav.addObject("phoDtos",phoDto);
-    	
+    	HashMap<String,Object> map = cmService.cmList(Integer.toString(boardNum), "review", 1);
+    	map.put("goodCount",goodMapper.goodCount(Integer.toString(boardNum), "review"));
+    	String check = "";
+    	if(loginId != null) {
+    		check = goodMapper.goodCheck(Integer.toString(boardNum), "review", loginId);
+    	}
+    	if (check == null) {
+            map.put("goodCheck", false);
+        } else {
+            map.put("goodCheck", true);
+        }
     	//댓글 불러옴
-    	mav.addObject("map", cmService.cmList(Integer.toString(boardNum), "review", 1));
-    	
+    	mav.addObject("map", map);
+
         return mav;
     }
     

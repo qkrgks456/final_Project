@@ -34,12 +34,14 @@
 <!-- 상단 -->
 <div class="row">
 	<div class="col">
-		${dto.title}
+		<h3>${dto.title}</h3>
 	</div>
 	
 	<div class="col d-flex flex-row-reverse">
-		<input type="button" value="수정" onclick="location.href='../reviewUpdateForm/${dto.boardNum}'"/>
-		<input type="button" value="삭제" onclick="location.href='../reviewDel/${dto.boardNum}'"/>
+		<c:if test="${sessionScope.loginId eq dto.id}">
+		<input class="btn btn-warning btn-sm me-1" style="height:30px;" type="button" value="삭제" onclick="location.href='../reviewDel/${dto.boardNum}'"/>
+		<input class="btn btn-warning btn-sm me-1" style="height:30px;" type="button" value="수정" onclick="location.href='../reviewUpdateForm/${dto.boardNum}'"/>
+		</c:if>
 	</div>	
 </div>
 
@@ -49,7 +51,7 @@
 	</div>
 	
 	<div class="col d-flex flex-row-reverse">
-		조회수${dto.boardHit} l 좋아요0  l 댓글수0	
+		조회수${dto.boardHit} l l 댓글수${map.cmList.size()}	
 	</div>	
 </div>
 
@@ -72,15 +74,21 @@
 	</div>
 </div>
 
-<div class="d-flex justify-content-center"">
-	<input type="button" value="좋아요"/>
-	<input type="button" value="신고"/>
+
+<div class="d-flex justify-content-center">
+<div id="good" class="btn btn-outline-warning mx-1" goodCheck="${map.goodCheck}">
+   좋아요 ${map.goodCount}개
 </div>
+<c:if test="${sessionScope.loginId ne null}">
+	<input class="btn btn-secondary btn-sm me-1" type="button" value="신고"/>
+</c:if>
+</div>
+
 
 <hr/>
 
 <div class="d-flex flex-row-reverse">
-<input class="btn btn-primary" type="button" value="목록" onclick="location.href='../reviewBoard'">
+<input class="btn btn-secondary" type="button" value="목록" onclick="location.href='../reviewBoard'">
 </div>
 
 <div class="pt-4 border-bottom border-dark">
@@ -182,6 +190,7 @@ page=${map.startPage+1}>
 <script src="${path}/resources/js/bootstrap.bundle.js"></script>
 <script src="${path}/resources/js/common.js"></script>
 <script src="${path}/resources/js/cm.js"></script>
+<script src="${path}/resources/js/good.js?var=2"></script>
 
 </body>
 </html>

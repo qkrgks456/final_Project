@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 @Mapper
-public interface GoodMapper {
+public interface GoodMapperCommon {
     @Select("SELECT goodNum FROM good WHERE divisionNum=#{param1} AND division=#{param2} AND id=#{param3}")
     String goodCheck(String contentId, String division, String loginId);
 

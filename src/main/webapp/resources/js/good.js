@@ -4,9 +4,6 @@
 </div>
 */
 
-let path = $("#infoList").attr("path");
-let division = $("#infoList").attr("division");
-let contentId = $('#infoList').attr('contentId');
 if ($('#good').attr('goodCheck') == "true") {
     $('#good').attr("class", "btn btn-warning mx-1");
 }
@@ -31,7 +28,7 @@ $(document).on('click', '#good', function () {
                     $("#good").attr("goodCheck", "true");
                     $("#good").attr("class", "btn btn-warning mx-1");
                 }
-                content += '가고싶어요 ' + data.goodCount + '개';
+                content += '좋아요 ' + data.goodCount + '개';
                 $("#good").empty();
                 $("#good").append(content);
             } else {

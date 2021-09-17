@@ -10,7 +10,7 @@ import java.util.HashMap;
 @RestController
 @RequestMapping(value = "/good")
 public class GoodController {
-    @Autowired GoodService service;
+    @Autowired GoodServiceCommon service;
 
     @RequestMapping(value = "/goodData")
     public HashMap<String, Object> goodData(HttpSession session, String contentId,String division) throws Exception {

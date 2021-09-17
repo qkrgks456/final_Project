@@ -45,11 +45,11 @@
   <tbody>
   <c:forEach items="${dtoList}" var="dto">
     <tr>
-      <td scope="row">${dto.boardNum}</td>
-      <td><a href="reviewDetail/${dto.boardNum}">${dto.title}</a></td>
-      <td>${dto.id}</td>
-      <td>${dto.boardHit}</td>
-      <td>${dto.dates}</td>
+      <td scope="row" class="py-3">${dto.boardNum}</td>
+      <td class="py-3"><a href="reviewDetail/${dto.boardNum}" style="text-decoration:none;">${dto.title}</a></td>
+      <td class="py-3">${dto.id}</td>
+      <td class="py-3">${dto.boardHit}</td>
+      <td class="py-3">${dto.dates}</td>
     </tr>
   </c:forEach>
   </tbody>

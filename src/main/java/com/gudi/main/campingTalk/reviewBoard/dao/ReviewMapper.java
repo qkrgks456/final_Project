@@ -21,7 +21,7 @@ public interface ReviewMapper {
 	void reviewPhoto(String neww, String ori, String boardNum);
 	
 	//나중에 세션에서 아이디 받아와서 넣어야함
-	@Insert("INSERT INTO reviewboard(boardnum, id, title, content) VALUES (reviewboard_seq.NEXTVAL, 'test', #{title}, #{content})")
+	@Insert("INSERT INTO reviewboard(boardnum, id, title, content) VALUES (reviewboard_seq.NEXTVAL, #{loginId}, #{title}, #{content})")
 	@SelectKey(statement = {"SELECT reviewboard_seq.CURRVAL FROM DUAL"}, keyProperty = "boardnum",resultType = int.class, before = false)
 	int reviewWrite(HashMap<String, String> params);
 	

@@ -51,6 +51,7 @@ public class ReviewService {
 
 	public int reviewWrite(HashMap<String, String> params) {
 		logger.info(params.get("title")+" / "+params.get("content"));
+		
 		return dao.reviewWrite(params);
 	}
 
