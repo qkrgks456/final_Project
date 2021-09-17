@@ -55,6 +55,11 @@ public interface QuestionMapper {
 	@Update("UPDATE questionboard SET title = #{param1}, content = #{param2} WHERE boardnum = #{param3}")
 	int questionUpdate(String title, String content, int boardNum);
 	
+	@Select("SELECT rnum, boardnum,id, title, content,  boardhit, dates FROM (SELECT  ROW_NUMBER() OVER ( ORDER BY boardnum desc) rnum, boardnum,id, title, content,  boardhit, dates,  delcheck  FROM  questionboard where delcheck = 'N') OFFSET #{param1} ROWS FETCH FIRST 10 ROWS ONLY ")
+	ArrayList<BoardDTO> lists(int page);
+
+
+	
 	/*
 	@Delete("DELETE photo WHERE newfilename= #{param1} AND division = 'questionboard' AND divisionnum = #{param2}")
 	void photoDel(String newFileName, int boardNum);

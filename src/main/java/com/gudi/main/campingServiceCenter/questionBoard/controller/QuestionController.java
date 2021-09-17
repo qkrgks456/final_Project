@@ -28,8 +28,10 @@ public class QuestionController {
     QuestionService service;
     
     @RequestMapping(value = "/questionBoard")
-    public String questionBoard(Model model) {
-        return "serviceCenter/questionBoard/questionBoardList";
+    public ModelAndView questionBoard() {
+    	int page = 1;
+        logger.info("공지사항입장");
+        return service.list(page);
     }
     
     @ResponseBody

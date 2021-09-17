@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.gudi.main.campingServiceCenter.questionBoard.dao.QuestionMapper;
 import com.gudi.main.dtoAll.BoardDTO;
 import com.gudi.main.dtoAll.PhotoDTO;
+import com.gudi.main.util.HansolUtil;
 import com.gudi.main.util.UploadUtil;
 
 @Service
@@ -124,6 +125,25 @@ logger.info(params.get("title")+" / "+params.get("content"));
 		return dao.questionUpdate(title,content,boardNum);
 		
 	}
+
+
+
+	public ModelAndView list(int page) {
+		ModelAndView mav = new ModelAndView();
+		int total = dao.allCount();
+		HashMap<String, Object> map = HansolUtil.pagination(page, 10, total);
+		if (page == 1) {
+			page = 0;
+		} else {
+			page = (page - 1) * 10;
+		}
+		ArrayList<BoardDTO> list = dao.lists(page);
+		map.put("list", list);
+		mav.addObject("map", map);
+		mav.setViewName("/serviceCenter/questionBoard/questionBoardList");
+		return mav;
+	}
+	
 
 	/*
 	public void photoDel(HashMap<String, Object> map) {
