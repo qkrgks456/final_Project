@@ -326,9 +326,8 @@
                 </div>
                 <div class="mb-3">
                     <label for="carNum" class="form-label">예약날짜</label>
-                    <input type="text" class="form-control nullCheck" id="reserveDate" disabled="disabled">
+                    <input name="reserveDate" type="text" class="form-control nullCheck" id="reserveDate" readonly>
                     <div class="invalid-feedback">필수 정보 입니다</div>
-                    <div id="reserveDates"></div>
                 </div>
                 <div class="my-2 text-center">
                     <input id="reserveBtn" class="btn btn-warning" type="button"
@@ -366,14 +365,8 @@
                 } else {
                     let dateArr = getDatesStartToLast(info.startStr, info.endStr);
                     dateArr.pop();
-                    $('#reserveDate').val(dateArr[0] + " ~ " + dateArr[dateArr.length - 1]);
+                    $('#reserveDate').val(dateArr[0] + "~" + dateArr[dateArr.length - 1]);
                     $('#reserveDate').attr("class", "form-control nullCheck is-valid");
-                    let content = '';
-                    $.each(dateArr, function (index, el) {
-                        content += '<input type="hidden" name="reserveDate" value="' + el + '">';
-                    })
-                    $('#reserveDates').empty();
-                    $('#reserveDates').append(content);
                 }
             },
             eventSources: [{
@@ -386,11 +379,21 @@
                         },
                         dataType: 'JSON',
                         success: function (data) {
+                            let splitArr = [];
                             let eventArr = [];
+                            let dateArr = [];
+                            let resultArr = [];
                             // 예약날짜가 있다면 해당 로직
                             if (data.length > 0) {
+                                data.forEach(function (item, i) {
+                                    splitArr = item.split('~')
+                                    dateArr = getDatesStartToLast(splitArr[0], splitArr[1]);
+                                    dateArr.forEach(function (item, i) {
+                                        resultArr.push(item);
+                                    })
+                                })
                                 let result = {};
-                                data.forEach((x) => {
+                                resultArr.forEach((x) => {
                                     result[x] = (result[x] || 0) + 1;
                                 });
                                 let keys = Object.keys(result);
@@ -400,7 +403,6 @@
                                     jsonObj.title = "예약수 : " + result[keys[i]];
                                     eventArr.push(jsonObj);
                                 }
-                                console.log(eventArr);
                                 successCallback(eventArr);
                             }
                         }

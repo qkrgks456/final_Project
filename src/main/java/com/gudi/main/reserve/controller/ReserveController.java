@@ -40,17 +40,9 @@ public class ReserveController {
     }
 
     @RequestMapping(value = "/campingReserve/{contentId}")
-    public String campingReserve(@PathVariable String contentId, @RequestParam ArrayList<String> reserveDate,
-                                 String phone, String manCount, String carNum, String reserveName, HttpSession session) {
+    public String campingReserve(@PathVariable String contentId, @RequestParam HashMap<String, String> params, HttpSession session) {
         String loginId = (String) session.getAttribute("loginId");
-        ReserveDTO dto = new ReserveDTO();
-        dto.setPhone(phone);
-        dto.setManCount(manCount);
-        dto.setCarNum(carNum);
-        dto.setReserveName(reserveName);
-        dto.setContentId(contentId);
-        dto.setId(loginId);
-        service.campingReserveInsert(dto, reserveDate);
+        service.campingReserveInsert(params, loginId, contentId);
         return "reserve/campingResult";
     }
 

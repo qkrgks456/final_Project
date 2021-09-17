@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 @Mapper
 public interface ReserveMapper {
@@ -26,5 +27,5 @@ public interface ReserveMapper {
     ArrayList<String> campingReserveList(String contentId);
 
     @InsertProvider(type = ReserveSQL.class, method = "reserveNull")
-    int campingReserveInsert(ReserveDTO dto);
+    int campingReserveInsert(HashMap<String, String> params, String loginId, String contentId);
 }

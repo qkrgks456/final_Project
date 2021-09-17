@@ -37,7 +37,7 @@
         <div class="text-center">
             <p class="fs-5">예약이 완료 되었습니다. 행복한 캠핑을 즐기세요!</p>
             <a href="${path}" class="btn btn-outline-secondary">메인으로</a>
-            <a href="${path}/myInfo/reserveCheck" class="btn btn-outline-secondary mx-2">예약현황</a>
+            <a href="${path}/myInfo/reserveCheck/1" class="btn btn-outline-secondary mx-2">예약현황</a>
         </div>
     </div>
 </div>

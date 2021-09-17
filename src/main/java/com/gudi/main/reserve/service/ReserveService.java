@@ -89,10 +89,7 @@ public class ReserveService {
         return mapper.campingReserveList(contentId);
     }
 
-    public void campingReserveInsert(ReserveDTO dto, ArrayList<String> reserveDate) {
-        for (String date : reserveDate) {
-            dto.setReserveDate(date);
-            mapper.campingReserveInsert(dto);
-        }
+    public void campingReserveInsert(HashMap<String, String> params, String loginId, String contentId) {
+            mapper.campingReserveInsert(params,loginId,contentId);
     }
 }
