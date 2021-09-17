@@ -324,7 +324,6 @@
         $('#good').attr("class", "btn btn-warning mx-1");
     }
     $(document).on('click', '#good', function () {
-        let loginId = $('#infoAttr').attr('loginId');
         let contentId = $('#infoAttr').attr('contentId');
         $.ajax({
             type: "POST",//방식
