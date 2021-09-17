@@ -33,7 +33,7 @@
 	<jsp:include page="../../fix/menu.jsp" />
 	<%-- 내용 넣으세요 --%>
 	<div class="row mt-1">
-		<div class="col-4 border-end border-danger">
+		<div class="col-4">
 			<div id="menu_wrap" class="bg_white">
 				<div class="option">
 
@@ -61,7 +61,7 @@
 			</div>
 		</div>
 		<div class="col-8 ms-0">
-			<div id="map"style="width: 100%; height: 780px; position: relative; overflow: hidden;" class="visually-hidden"></div>
+			<div id="map"style="width: 100%; height: 780px; position: relative; overflow: hidden;" ></div>
 			<div id="map1"style="width: 100%; height: 780px; position: relative; overflow: hidden;"></div>
 		</div>
 	</div>
@@ -72,17 +72,17 @@
 		// 마커를 담을 배열입니다
 		var markers = [];
 		var markers1 = [];
-		var mapContainer = document.getElementById('map');
 		var infowindow = new kakao.maps.InfoWindow({zIndex:1, removable : true});
 		
+		var mapContainer = document.getElementById('map'),
 		mapOption = {
 			center : new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
-			level : 10, // 지도의 확대 레벨
+			level : 11, // 지도의 확대 레벨
 			mapTypeId : kakao.maps.MapTypeId.HYBRID
 		};
 		
 		var mapContainer1 = document.getElementById('map1'), // 지도를 표시할 div 
-		mapOption = {
+		mapOption1 = {
 			center : new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
 			level : 15, // 지도의 확대 레벨
 			mapTypeId : kakao.maps.MapTypeId.ROADMAP
@@ -90,7 +90,7 @@
 
 		// 지도를 생성합니다    
 		var map = new kakao.maps.Map(mapContainer, mapOption);
-		var map1 = new kakao.maps.Map(mapContainer1, mapOption);
+		var map1 = new kakao.maps.Map(mapContainer1, mapOption1);
 		var currPage = 1;
 		var type = document.getElementById("type").options[document.getElementById("type").selectedIndex].value;
 		var word = "";
@@ -166,6 +166,8 @@
 				   (function(marker, title) {
 			            kakao.maps.event.addListener(marker, 'click', function() {
 			                displayInfowindow(marker, title);
+			                map.setLevel(5, {anchor: marker.n});
+			                map.panTo(marker.n);
 			            });
 
 			            /* kakao.maps.event.addListener(marker, 'mouseout', function() {
@@ -198,8 +200,8 @@
 					            
 					             itemEl.onclick =  function () {	         
 					                displayInfowindow1(marker1, title);
-					                var level = map.getLevel() - 6;
-					                map1.setLevel(level, {anchor: marker1.n});
+					                map1.setLevel(5, {anchor: marker1.n});
+					                map1.panTo(marker1.n);
 					            };
 
 
@@ -268,6 +270,7 @@
 					pagePrint(data);
 					removeMarker1(data.list);
 					displayPlaces1(data.list);
+					displayPlaces(data.list);
 				},
 				error : function(error) {
 					console.log(error);
