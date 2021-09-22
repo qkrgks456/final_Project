@@ -77,31 +77,67 @@ public class MyInfoController {
         return "member/myInfo/list/campingClear";
     }
 
-    @RequestMapping(value = "/campingTalk")
-    public String campingTalk() {
-        return "member/myInfo/list/campingTalk";
+    @RequestMapping(value = "/boardList/{page}/{division}")
+    public String boardList(@PathVariable int page, @PathVariable String division, HttpSession session, Model model) {
+        String loginId = (String) session.getAttribute("loginId");
+        HashMap<String, Object> map = service.reviewList(loginId, page, division);
+        model.addAttribute("map", map);
+        if (division.equals("reviewBoard")) {
+            return "member/myInfo/list/boardList/reviewBoard";
+        } else if (division.equals("freeBoard")) {
+            return "member/myInfo/list/boardList/freeBoard";
+        } else if (division.equals("noticeBoard")) {
+            return "member/myInfo/list/boardList/noticeBoard";
+        } else {
+            return "member/myInfo/list/boardList/questionBoard";
+        }
     }
 
-    @RequestMapping(value = "/comment")
-    public String comment() {
-        return "member/myInfo/list/comment";
+    @RequestMapping(value = "/cmList/{page}/{division}")
+    public String comment(HttpSession session, Model model, @PathVariable int page, @PathVariable String division) {
+        String loginId = (String) session.getAttribute("loginId");
+        if (division.equals("review")) {
+            HashMap<String, Object> map = service.myCmList(loginId, page, division);
+            model.addAttribute("map", map);
+            return "member/myInfo/list/cmList/reviewCm";
+        } else if (division.equals("free")) {
+            HashMap<String, Object> map = service.myCmList(loginId, page, division);
+            model.addAttribute("map", map);
+            return "member/myInfo/list/cmList/freeCm";
+        } else if (division.equals("notice")) {
+            HashMap<String, Object> map = service.myCmList(loginId, page, division);
+            model.addAttribute("map", map);
+            return "member/myInfo/list/cmList/noticeCm";
+        } else if (division.equals("question")) {
+            HashMap<String, Object> map = service.myCmList(loginId, page, division);
+            model.addAttribute("map", map);
+            return "member/myInfo/list/cmList/questionCm";
+        } else if (division.equals("camping")) {
+            return "member/myInfo/list/cmList/campingCm";
+        } else {
+            return "member/myInfo/list/cmList/carCm";
+        }
     }
 
-    @RequestMapping(value = "/wantToGo")
-    public String wantToGo() {
+    @RequestMapping(value = "/wantToGo/{page}")
+    public String wantToGo(@PathVariable int page, HttpSession session, Model model) {
+        String loginId = (String) session.getAttribute("loginId");
+        HashMap<String, Object> map = service.wantToGo(loginId, page);
+        model.addAttribute("map", map);
         return "member/myInfo/list/wantToGo";
     }
 
     @RequestMapping(value = "/reserveCheck/{page}")
-    public String reserveCheck(Model model,HttpSession session,@PathVariable int page) {
+    public String reserveCheck(Model model, HttpSession session, @PathVariable int page) {
         String loginId = (String) session.getAttribute("loginId");
-        HashMap<String,Object> map = service.reserveList(loginId,page);
-        model.addAttribute("map",map);
+        HashMap<String, Object> map = service.reserveList(loginId, page);
+        model.addAttribute("map", map);
         return "member/myInfo/reserve/reserveCheck";
     }
 
-    @RequestMapping(value = "/reserveCancel")
-    public String reserveCancel() {
-        return "member/myInfo/reserve/reserveCancel";
+    @RequestMapping(value = "/reserveCancel/{reserveNum}")
+    public String reserveCancel(@PathVariable int reserveNum) {
+        service.reserveCancel(reserveNum);
+        return "redirect:/myInfo/reserveCheck/1";
     }
 }

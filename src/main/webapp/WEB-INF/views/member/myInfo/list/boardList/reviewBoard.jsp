@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="true" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ page session="true" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
@@ -16,44 +16,47 @@
     <link href="${path}/resources/css/common.css?var=3" rel="stylesheet">
     <style>
         a {
-            text-decoration: none;
+            text-decoration-line: none;
+        }
+
+        .active {
+            background-color: #ffc107 !important;
         }
     </style>
 </head>
 <body>
 <%-- 상단 메뉴바 추가 --%>
 <c:if test="${sessionScope.loginId eq null}">
-    <jsp:include page="../../../fix/navbar.jsp"/>
+    <jsp:include page="../../../../fix/navbar.jsp"/>
 </c:if>
 <c:if test="${sessionScope.loginId ne null}">
-    <jsp:include page="../../../fix/loginNavbar.jsp"/>
+    <jsp:include page="../../../../fix/loginNavbar.jsp"/>
 </c:if>
-<jsp:include page="../../../fix/menu.jsp"/>
+<jsp:include page="../../../../fix/menu.jsp"/>
 <div class="row">
-    <jsp:include page="../myInfoSidebar.jsp"/>
+    <jsp:include page="../../myInfoSidebar.jsp"/>
     <div class="col w-100 p-0">
         <div class="container px-3 my-2">
             <div class="pt-4 border-bottom border-dark">
-                <h2 class="fw-bold">가고싶어요</h2>
+                <h2 class="fw-bold">게시글 목록</h2>
             </div>
             <div class="container">
+                <jsp:include page="boardListFix.jsp"/>
                 <c:if test="${fn:length(map.list) ne 0}">
                     <table class="table table-hover mt-3">
                         <thead>
                         <tr>
-                            <th class="fs-5" scope="col">캠핑장이름</th>
-                            <th class="fs-5" scope="col">특징</th>
-                            <th class="fs-5" scope="col">주소</th>
+                            <th class="fs-5 col-2" scope="col">제목</th>
+                            <th class="fs-5 col-3" scope="col">작성일자</th>
+                            <th class="fs-5 col-7" scope="col">내용</th>
                         </tr>
                         </thead>
                         <tbody>
                         <c:forEach items="${map.list}" var="lists">
                             <tr>
-                                <td class="py-3 align-middle"><a
-                                        href="${path}/reserve/campingDetail/${lists.contentId}">${lists.facltNm}</a>
-                                </td>
-                                <td class="py-3 align-middle">${lists.lineIntro}</td>
-                                <td class="py-3 align-middle">${lists.addr1}</td>
+                                <td class="py-3 align-middle">${lists.title}</td>
+                                <td class="py-3 align-middle">${lists.dates}</td>
+                                <td class="py-3 align-middle">${lists.content}</td>
                             </tr>
                         </c:forEach>
                         </tbody>
@@ -61,7 +64,7 @@
                     <ul class="pagination justify-content-center">
                         <c:if test="${map.startPage ne 1}">
                             <li class="page-item">
-                                <a class="page-link" href="${path}/myInfo/wantToGo/${map.startPage-1}"
+                                <a class="page-link" href="${path}/myInfo/boardList/${map.startPage-1}/reviewBoard"
                                    aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
@@ -70,7 +73,7 @@
                         <c:forEach var="i" begin="${map.startPage}" end="${map.endPage}">
                             <c:if test="${i ne map.currPage}">
                                 <li class="page-item"><a class="page-link"
-                                                         href="${path}/myInfo/wantToGo/${i}">${i}</a>
+                                                         href="${path}/myInfo/boardList/${i}/reviewBoard">${i}</a>
                                 </li>
                             </c:if>
                             <c:if test="${i eq map.currPage}">
@@ -79,7 +82,7 @@
                         </c:forEach>
                         <c:if test="${map.totalPage ne map.endPage}">
                             <li class="page-item">
-                                <a class="page-link" href="${path}/myInfo/wantToGo/${map.endPage+1}"
+                                <a class="page-link" href="${path}/myInfo/boardList/${map.endPage+1}/reviewBoard"
                                    aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
@@ -88,8 +91,9 @@
                     </ul>
                 </c:if>
                 <c:if test="${fn:length(map.list) eq 0}">
+                    <hr/>
                     <div class="text-center mt-2">
-                        <p class="text-muted">가고싶은 캠핑장이 없어요</p>
+                        <p class="text-muted">작성한 게시글이 없습니다</p>
                     </div>
                 </c:if>
             </div>
@@ -100,5 +104,8 @@
 <script src="${path}/resources/js/bootstrap.js"></script>
 <script src="${path}/resources/js/bootstrap.bundle.js"></script>
 <script src="${path}/resources/js/common.js"></script>
+<script>
+    $('#menuOne').addClass('active');
+</script>
 </body>
 </html>

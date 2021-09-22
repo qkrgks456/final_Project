@@ -14,7 +14,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     <%-- 공통 css --%>
-    <link href="${path}/resources/css/common.css?var=2" rel="stylesheet">
+    <link href="${path}/resources/css/common.css?var=5" rel="stylesheet">
     <link href="${path}/resources/css/mainWeather.css?var=9" rel="stylesheet">
     <style>
         .imgPlus img {
@@ -27,15 +27,6 @@
 
         .imgPlus {
             overflow: hidden;
-        }
-
-        /* 한줄 ... 처리 */
-        .txt_line {
-            width: 250px;
-            padding: 0 5px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
         }
     </style>
 </head>
@@ -244,7 +235,7 @@
                     <c:forEach items="${map.reviewBoardList}" var="lists">
                         <tr>
                             <td class="py-3">
-                                <div class="txt_line">
+                                <div class="target">
                                     <a class="text-decoration-none text-dark" href="">${lists.title}</a>
                                 </div>
                             </td>
@@ -264,7 +255,7 @@
                     <c:forEach items="${map.freeBoardList}" var="lists">
                         <tr>
                             <td class="py-3">
-                                <div class="txt_line">
+                                <div class="target">
                                     <a class="text-decoration-none text-dark" href="">${lists.title}</a>
                                 </div>
                             </td>
@@ -284,7 +275,7 @@
                     <c:forEach items="${map.questionBoardList}" var="lists">
                         <tr>
                             <td class="py-3">
-                                <div class="txt_line">
+                                <div class="target">
                                     <a class="text-decoration-none text-dark" href="">${lists.title}</a>
                                 </div>
                             </td>
@@ -304,7 +295,7 @@
                     <c:forEach items="${map.noticeBoardList}" var="lists">
                         <tr>
                             <td class="py-3">
-                                <div class="txt_line">
+                                <div class="target">
                                     <a class="text-decoration-none text-dark" href="">${lists.title}</a>
                                 </div>
                             </td>
@@ -326,7 +317,7 @@
 <jsp:include page="fix/alarm.jsp"/>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="${path}/resources/js/bootstrap.bundle.js"></script>
-<script src="${path}/resources/js/common.js?var=1"></script>
+<script src="${path}/resources/js/common.js?var=3"></script>
 <script src="${path}/resources/js/mainWeather.js?var=2"></script>
 <script src="${path}/resources/js/mainLocation.js?var=3"></script>
 </body>

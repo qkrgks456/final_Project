@@ -29,45 +29,57 @@
 <jsp:include page="../../../fix/menu.jsp"/>
 <%-- 내용 넣으세요 --%>
 <div class="container px-3">
- 	<div class="container px-5 mt-5 ">
-				<!-- 사이드 바 메뉴-->
-				<h2 class="fw-bold my-3">아이디찾기</h2>
-				<hr />
-				<div class="container px-3 w-50 border my-4">
-					<form action="${path}/member/idFind" method="post" class="my-4" >  
-						<h2 class="fw-bold">닉네임과 이메일로 아이디찾기</h2>
-							<!-- 
-						<p>
-							*본인확인 이메일 주소와 회원가입시 입력한 이메일 주소가 같아야,<br /> 
-							이메일을 통하여 아이디를 확인 받을 수 있습니다.
-						</p>
-						 -->
-						<hr />
-						<div class="form col-md-9 mb-3 mt-3">
-							<label for="validationTooltip04" class="fw-bold my-1">닉네임</label>
-							<input type="text" class="form-control" id="nickName"
-								name="nickName" placeholder="정확하게 입력해주세요" required>
-							<div class="invalid-feedback">필수 정보입니다</div>
-						</div>
-						<div class="form col-md-9 mb-3">
-							<label for="validationTooltipUsername" class="fw-bold my-1">이메일</label>
-							<input type="text" class="form-control" id="email"
-								name="email" placeholder="정확하게 입력해주세요" required>
-							<!--  아이디 찾기 버튼 -->
-							<div class="text-center mt-2">
-								<input class="btn btn-secondary" type="submit" value="아이디 찾기">
-							</div>
-							<div class="invalid-feedback">필수 정보입니다</div>
-						</div>
-					</form>
-				</div>
-			</div>
+    <div class="container px-5 mt-5 ">
+        <!-- 사이드 바 메뉴-->
+        <h2 class="fw-bold my-3">아이디찾기</h2>
+        <hr/>
+        <div class="container px-3 w-50 border my-4">
+            <form action="${path}/member/idFind" method="post" class="my-4">
+                <h2 class="fw-bold">아이디찾기</h2>
+                <hr/>
+                <div class="form mb-3 mt-3">
+                    <label for="nickName" class="fw-bold my-1">닉네임</label>
+                    <input type="text" class="form-control" id="nickName"
+                           name="nickName" placeholder="정확하게 입력해주세요">
+                </div>
+                <div class="form mb-3">
+                    <label for="email" class="fw-bold my-1">이메일</label>
+                    <input type="text" class="form-control" id="email"
+                           name="email" placeholder="정확하게 입력해주세요">
+                    <!--  아이디 찾기 버튼 -->
+                    <div class="text-center mt-2">
+                        <input class="btn btn-warning" type="submit" value="아이디 찾기">
+                    </div>
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                    <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                    </symbol>
+                    <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                    </symbol>
+                    <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                    </symbol>
+                </svg>
+                <c:if test="${suc eq false}">
+                    <div id="redalert"
+                         class="alert alert-danger d-flex align-items-center"
+                         role="alert">
+                        <svg class="bi flex-shrink-0 me-2" width="24" height="24"
+                             role="img" aria-label="Danger:">
+                            <use xlink:href="#exclamation-triangle-fill"/>
+                        </svg>
+                        <div>정보가 틀립니다 다시 입력해주세요</div>
+                    </div>
+                </c:if>
+            </form>
+        </div>
+    </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="${path}/resources/js/bootstrap.js"></script>
 <script src="${path}/resources/js/bootstrap.bundle.js"></script>
 <script src="${path}/resources/js/common.js"></script>
-
-
 </body>
 </html>

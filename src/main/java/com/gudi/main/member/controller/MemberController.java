@@ -52,7 +52,6 @@ public class MemberController {
         if (id == null) {
             model.addAttribute("suc", false);
             return "member/login/idFind/idFindForm";
-
         } else {
             model.addAttribute("id", id);
             return "member/login/idFind/idFindResult";
@@ -65,24 +64,11 @@ public class MemberController {
         String id = service.passFind(params);
         if (id == null) {
             model.addAttribute("suc", false);
-            return "member/login/passFind/passFindForm";
         } else {
             service.passSend(params.get("id"), params.get("email"));
-            return "redirect:/member/emailSend";
+            model.addAttribute("suc", true);
         }
-    }
-
-    @RequestMapping(value = "/emailSend")
-    public void emailSend(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            String ctx = request.getContextPath();
-            response.setContentType("text/html; charset=UTF-8");
-            PrintWriter out = response.getWriter();
-            out.println("<script>alert('해당 이메일로 변경된 비밀번호가 전송되었습니다'); location.href='" + ctx + "/';</script>");
-            out.flush();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        return "member/login/passFind/passFindForm";
     }
 
     //비밀번호찾기

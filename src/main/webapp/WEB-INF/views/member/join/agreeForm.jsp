@@ -271,7 +271,7 @@
   ② “몰”과 이용자 간에 제기된 전자상거래 소송에는 한국법을 적용합니다.
 </textarea>
             <div class="form-check my-4 ">
-                <input class="form-check-input" type="checkbox" value="1" name="check" id="check1">
+                <input class="form-check-input checks" type="checkbox" value="1" name="check" id="check1">
                 <label class="form-check-label fw-bold" for="check1"> 동의 </label>
                 <div class="invalid-feedback">약관에 동의해주세요</div>
             </div>
@@ -516,7 +516,7 @@
   ② “몰”과 이용자 간에 제기된 전자상거래 소송에는 한국법을 적용합니다.
 </textarea>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="1" name="check" id="check2">
+                <input class="form-check-input checks" type="checkbox" value="1" name="check" id="check2">
                 <label class="form-check-label fw-bold" for="check2"> 동의 </label>
                 <div class="invalid-feedback">약관에 동의해주세요</div>
             </div>
@@ -527,13 +527,13 @@
             </div>
             <hr/>
         </form>
-       <!--  <div class="col text-center">
-            <button id="member" type="button" class="btn btn-dark btn-lg mx-2">회원가입</button>
-        </div> -->
+        <!--  <div class="col text-center">
+             <button id="member" type="button" class="btn btn-dark btn-lg mx-2">회원가입</button>
+         </div> -->
         <div class="col text-center">
-            <a href="${path}/member/joinForm" id=member class="btn btn-dark btn-lg mx-2">회원가입</a>
+            <div location="${path}/member/joinForm" id=joinBtn class="btn btn-warning btn-lg mx-2">회원가입</div>
         </div>
-        
+
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -541,7 +541,28 @@
 <script src="${path}/resources/js/bootstrap.bundle.js"></script>
 <script src="${path}/resources/js/common.js"></script>
 <script>
-    $()
+
+    $('#allCheck').on('click', function () {
+        if ($(this).prop('checked')) {
+            $('.checks').prop('checked', true);
+        } else {
+            $('.checks').prop('checked', false);
+        }
+    })
+    $('#joinBtn').on('click', function () {
+        let check = true;
+        $('.checks').each(function () {
+            if ($(this).prop('checked')) {
+            } else {
+                $(this).addClass('is-invalid');
+                check = false;
+                return false;
+            }
+        })
+        if (check) {
+            location.href = $(this).attr('location');
+        }
+    })
 
 </script>
 </body>

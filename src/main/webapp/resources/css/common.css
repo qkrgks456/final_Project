@@ -18,13 +18,13 @@ html, body {
 /* 글 길면 줄 자르기 -> ...표시 */
 .target {
     /* 한 줄 자르기 */
-    /* display: inline-block;
-    width: 200px;
+    display: inline-block;
+    width: 150px;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;  */
+    text-overflow: ellipsis;
     /* 여러 줄 자르기 추가 스타일 */
-    white-space: normal;
+   /* white-space: normal;
     line-height: 1.4;
     height: 4.2em;
     text-align: left;
@@ -32,5 +32,14 @@ html, body {
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
+    overflow: hidden;*/
+}
+
+/* 한줄 ... 처리 */
+.txt_line {
+    width: 50px;
+    padding: 0 5px;
     overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }

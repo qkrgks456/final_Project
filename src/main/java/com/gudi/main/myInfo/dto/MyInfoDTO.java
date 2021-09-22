@@ -13,5 +13,5 @@ public class MyInfoDTO {
     private String manCount;
     private String carNum;
     private String reserveDate;
-
+    private String contentId;
 }

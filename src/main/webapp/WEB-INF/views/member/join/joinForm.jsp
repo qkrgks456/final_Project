@@ -30,11 +30,11 @@
         <h2 class="fw-bold">회원가입</h2>
     </div>
     <div class="d-flex justify-content-center my-2">
-        <form action="${path}/member/join" class="w-50" method="post">
+        <form action="${path}/member/join" class="w-50" method="post" id="joinForm">
             <div class="mb-3">
                 <label for="id" class="form-label">아이디</label>
                 <input name="id" type="text" class="form-control nullCheck" id="id" placeholder="필수정보 입니다">
-                <div class="invalid-feedback">중복된 아이디입니다</div>
+                <div class="invalid-feedback">다시 중복확인 해주세요</div>
                 <div class="valid-feedback">사용 가능합니다</div>
                 <a id="idCheck" class="btn btn-warning btn-sm mt-2">중복확인</a>
             </div>
@@ -45,14 +45,14 @@
             </div>
             <div class="mb-3">
                 <label for="nickName" class="form-label">닉네임</label>
-                <input name="nickName" type="text" class="form-control nullCheck goCheck" id="nickName"
-                       placeholder="필수정보 입니다">
-                <div class="invalid-feedback"></div>
+                <input name="nickName" type="text" class="form-control nullCheck" id="nickName">
+                <div class="invalid-feedback">1자 이상 입력해주세요</div>
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">이메일</label>
                 <input name="email" type="text" class="form-control nullCheck" id="email" placeholder="필수정보 입니다"
                        readonly>
+                <div class="invalid-feedback">이메일 인증 해주세요</div>
                 <div class="valid-feedback">인증 성공!</div>
                 <button type="button" class="btn btn-warning btn-sm mt-2" data-bs-toggle="modal"
                         data-bs-target="#exampleModal">
@@ -60,7 +60,7 @@
                 </button>
             </div>
             <div class="mb-3 text-center">
-                <input id="joinBtn" type="submit" class="btn btn-warning" value="회원가입">
+                <input id="joinBtn" type="button" class="btn btn-warning" value="회원가입">
             </div>
         </form>
         <!-- 팝업창 -->
@@ -109,28 +109,32 @@
 <script>
     $('#idCheck').on('click', function () {
         let id = $('#id').val();
-        console.log(id);
-        $.ajax({
-            url: 'idCheck',
-            data: {
-                id: id
-            },
-            type: 'post',
-            dataType: "json",
-            success: function (data) {
-                if (data) {
-                    $('#id').removeClass('is-invalid');
-                    $('#id').addClass('is-valid');
-                    $('#id').prop("readonly", true);
-                } else {
-                    $('#id').addClass('is-invalid');
-                    $('#id').removeClass('is-valid');
+        if (id == "") {
+            $(this).prevAll('div.invalid-feedback').text('1자 이상 입력해주세요');
+            $("#id").addClass("is-invalid");
+        } else {
+            $.ajax({
+                url: 'idCheck',
+                data: {
+                    id: id
+                },
+                type: 'post',
+                dataType: "json",
+                success: function (data) {
+                    if (data) {
+                        $('#id').removeClass('is-invalid');
+                        $('#id').addClass('is-valid');
+                        $('#id').prop("readonly", true);
+                    } else {
+                        $('#id').addClass('is-invalid');
+                        $('#id').removeClass('is-valid');
+                    }
+                },
+                error: function (e) {
+                    console.log(e);
                 }
-            },
-            error: function (e) {
-                console.log(e);
-            }
-        })
+            })
+        }
     });
 
     $('#emailCheck').on('click', function () {
@@ -187,18 +191,16 @@
                 return true;
             } else {
                 check = false;
+                $(this).addClass('is-invalid');
                 return false;
             }
         })
         if (check) {
-            $(this).submit();
-        } else {
-            alert('정보를 다시 입력해주세요');
+            $("#joinForm").submit();
         }
-
     })
     $("#pw").on("propertychange change keyup paste input", function () {
-        if ($(this).val().length >= 1) {
+        if ($(this).val().length >= 8) {
             $(this).attr('class', 'form-control is-valid');
         } else {
             $(this).attr('class', 'form-control is-invalid');
@@ -209,7 +211,7 @@
             $(this).nextAll('div.invalid-feedback').text('100자 미만으로 입력해주세요');
         }
     });
-    $("#nicName").on("propertychange change keyup paste input", function () {
+    $("#nickName").on("propertychange change keyup paste input", function () {
         if ($(this).val().length >= 1) {
             $(this).attr('class', 'form-control is-valid');
         } else {
@@ -221,8 +223,6 @@
             $(this).nextAll('div.invalid-feedback').text('100자 미만으로 입력해주세요');
         }
     });
-
-
 </script>
 </body>
 </html>

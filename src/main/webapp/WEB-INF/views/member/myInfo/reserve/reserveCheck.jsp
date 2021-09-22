@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="true" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
@@ -36,54 +37,71 @@
                 <h2 class="fw-bold">예약현황</h2>
             </div>
             <div class="container">
-                <table class="table table-hover mt-3">
-                    <thead>
-                    <tr>
-                        <th class="fs-5" scope="col">예약번호</th>
-                        <th class="fs-5" scope="col">캠핑장이름</th>
-                        <th class="fs-5" scope="col">차번호</th>
-                        <th class="fs-5" scope="col">방문수</th>
-                        <th class="fs-5" scope="col">예약날짜</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach items="${map.list}" var="lists">
+                <c:if test="${fn:length(map.list) ne 0}">
+                    <table class="table table-hover mt-3">
+                        <thead>
                         <tr>
-                            <td class="py-3">${lists.reserveNum}</td>
-                            <td class="py-3">${lists.facltNm}</td>
-                            <td class="py-3">${lists.carNum}</td>
-                            <td class="py-3">${lists.manCount}</td>
-                            <td class="py-3">${lists.reserveDate}</td>
+                            <th class="fs-5" scope="col">예약번호</th>
+                            <th class="fs-5" scope="col">캠핑장이름</th>
+                            <th class="fs-5" scope="col">차번호</th>
+                            <th class="fs-5" scope="col">방문수</th>
+                            <th class="fs-5" scope="col">예약날짜</th>
+                            <th class="fs-5" scope="col">예약취소</th>
                         </tr>
-                    </c:forEach>
-                    </tbody>
-                </table>
-                <ul class="pagination justify-content-center">
-                    <c:if test="${map.startPage ne 1}">
-                        <li class="page-item">
-                            <a class="page-link" href="${path}/myInfo/reserveCheck/${map.startPage-1}"
-                               aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                    </c:if>
-                    <c:forEach var="i" begin="${map.startPage}" end="${map.endPage}">
-                        <c:if test="${i ne map.currPage}">
-                            <li class="page-item"><a class="page-link" href="${path}/myInfo/reserveCheck/${i}">${i}</a>
+                        </thead>
+                        <tbody>
+                        <c:forEach items="${map.list}" var="lists">
+                            <tr>
+                                <td class="py-3 align-middle">${lists.reserveNum}</td>
+                                <td class="py-3 align-middle"><a
+                                        href="${path}/reserve/campingDetail/${lists.contentId}">${lists.facltNm}</a>
+                                </td>
+                                <td class="py-3 align-middle">${lists.carNum}</td>
+                                <td class="py-3 align-middle">${lists.manCount}</td>
+                                <td class="py-3 align-middle">${lists.reserveDate}</td>
+                                <td class="py-3 align-middle">
+                                    <div reserveNum=${lists.reserveNum} path=${path}
+                                         class="btn btn-warning btn-sm reserveCancel">예약취소
+                                    </div>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                    <ul class="pagination justify-content-center">
+                        <c:if test="${map.startPage ne 1}">
+                            <li class="page-item">
+                                <a class="page-link" href="${path}/myInfo/reserveCheck/${map.startPage-1}"
+                                   aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
                             </li>
                         </c:if>
-                        <c:if test="${i eq map.currPage}">
-                            <li class="page-item active"><a class="page-link">${i}</a></li>
+                        <c:forEach var="i" begin="${map.startPage}" end="${map.endPage}">
+                            <c:if test="${i ne map.currPage}">
+                                <li class="page-item"><a class="page-link"
+                                                         href="${path}/myInfo/reserveCheck/${i}">${i}</a>
+                                </li>
+                            </c:if>
+                            <c:if test="${i eq map.currPage}">
+                                <li class="page-item active"><a class="page-link">${i}</a></li>
+                            </c:if>
+                        </c:forEach>
+                        <c:if test="${map.totalPage ne map.endPage}">
+                            <li class="page-item">
+                                <a class="page-link" href="${path}/myInfo/reserveCheck/${map.endPage+1}"
+                                   aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
                         </c:if>
-                    </c:forEach>
-                    <c:if test="${map.totalPage ne map.endPage}">
-                        <li class="page-item">
-                            <a class="page-link" href="${path}/myInfo/reserveCheck/${map.endPage+1}" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    </c:if>
-                </ul>
+                    </ul>
+                </c:if>
+                <c:if test="${fn:length(map.list) eq 0}">
+                    <div class="text-center mt-2">
+                        <p class="text-muted">예약이 없습니다</p>
+                    </div>
+                </c:if>
             </div>
         </div>
     </div>
@@ -92,5 +110,16 @@
 <script src="${path}/resources/js/bootstrap.js"></script>
 <script src="${path}/resources/js/bootstrap.bundle.js"></script>
 <script src="${path}/resources/js/common.js"></script>
+<script>
+    $('.reserveCancel').on('click', function () {
+        let path = $(this).attr('path');
+        let reserveNum = $(this).attr('reserveNum');
+        if (confirm("정말 취소하시겠습니까?") == true) {
+            location.href = path + "/myInfo/reserveCancel/" + reserveNum;
+        } else {
+            return;
+        }
+    })
+</script>
 </body>
 </html>

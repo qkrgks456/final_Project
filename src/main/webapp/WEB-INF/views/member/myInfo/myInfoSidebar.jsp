@@ -20,7 +20,6 @@
             <div class="">
                 <ul class="ms-4 list-unstyled fw-normal pb-1 listHide">
                     <li><a href="${path}/myInfo/reserveCheck/1" class="link-dark rounded fs-4">예약확인</a></li>
-                    <li><a href="${path}/myInfo/reserveCancel" class="link-dark rounded fs-4">예약취소</a></li>
                 </ul>
             </div>
         </li>
@@ -30,10 +29,9 @@
             <p class="ms-4 align-items-center menuClick fw-bold fs-2" style="cursor: default">목록</p>
             <div class="">
                 <ul class="ms-4 list-unstyled fw-normal pb-1 listHide">
-                    <li><a href="${path}/myInfo/comment" class="link-dark rounded fs-4">댓글</a></li>
-                    <li><a href="${path}/myInfo/campingTalk" class="link-dark rounded fs-4">캠핑톡</a></li>
-                    <li><a href="${path}/myInfo/wantToGo" class="link-dark rounded fs-4">가고싶어요</a></li>
-                    <li><a href="${path}/myInfo/campingClear" class="link-dark rounded fs-4">정복한캠핑장</a></li>
+                    <li><a href="${path}/myInfo/cmList/1/review" class="link-dark rounded fs-4">댓글</a></li>
+                    <li><a href="${path}/myInfo/boardList/1/reviewBoard" class="link-dark rounded fs-4">게시글</a></li>
+                    <li><a href="${path}/myInfo/wantToGo/1" class="link-dark rounded fs-4">가고싶어요</a></li>
                 </ul>
             </div>
         </li>

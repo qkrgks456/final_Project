@@ -74,28 +74,29 @@
 <script src="${path}/resources/js/common.js"></script>
 <script>
     $('#updateBtn').on('click', function () {
-        let check = [];
+        let check = true;
         $('.nullCheck').each(function (index, el) {
-            if ($(this).val() == "") {
-                $(this).attr("class", "form-control is-invalid nullCheck");
+            if ($(this).hasClass('is-valid')) {
+                return true;
+            } else {
+                check = false;
+                $(this).addClass('is-invalid');
+                return false;
             }
         })
-        $('.nullCheck').each(function (index, el) {
-            check.push($(this).hasClass("is-valid"));
-        })
-        if (check[0] == true && check[1] == true && check[2] == true) {
-            $('#updateForm').submit();
+        if (check) {
+            $("#updateForm").submit();
         }
     })
     $(".nullCheck").on("propertychange change keyup paste input", function () {
-        if ($(this).val().length >= 1) {
-            $(this).attr('class', 'form-control is-valid nullCheck');
+        if ($(this).val().length >= 1 && $(this).val().trim() != "") {
+            $(this).attr('class', 'form-control is-valid');
         } else {
-            $(this).attr('class', 'form-control is-invalid nullCheck');
+            $(this).attr('class', 'form-control is-invalid');
             $(this).nextAll('div.invalid-feedback').text('1자 이상 입력해주세요');
         }
         if ($(this).val().length >= 100) {
-            $(this).attr('class', 'form-control is-invalid nullCheck');
+            $(this).attr('class', 'form-control is-invalid');
             $(this).nextAll('div.invalid-feedback').text('100자 미만으로 입력해주세요');
         }
     });
@@ -106,6 +107,19 @@
         } else {
             $(this).attr('class', 'form-control is-invalid nullCheck');
             $(this).nextAll('div.invalid-feedback').text('일치하지 않습니다');
+        }
+    });
+
+    $("#pwChange").on("propertychange change keyup paste input", function () {
+        if ($(this).val().length >= 8 && $(this).val().trim() != "") {
+            $(this).attr('class', 'form-control is-valid');
+        } else {
+            $(this).attr('class', 'form-control is-invalid');
+            $(this).nextAll('div.invalid-feedback').text('8자 이상 입력해주세요');
+        }
+        if ($(this).val().length >= 100) {
+            $(this).attr('class', 'form-control is-invalid');
+            $(this).nextAll('div.invalid-feedback').text('100자 미만으로 입력해주세요');
         }
     });
 
