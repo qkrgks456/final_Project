@@ -16,8 +16,8 @@ import com.gudi.main.dtoAll.PhotoDTO;
 @Mapper
 public interface FreeMapper {
 	
-	// 게시판 불러오기 (조건 wehre delcheck = 'n')
-	@Select("SELECT * FROM freeboard")
+	// 게시판 불러오기 
+	@Select("SELECT * FROM freeBoard WHERE delcheck = 'n' ORDER BY boardnum DESC")
 	ArrayList<BoardDTO> freeList();
 	
 	// 글쓰기
@@ -56,6 +56,10 @@ public interface FreeMapper {
 	// 사진 삭제
 	@Delete("DELETE photo WHERE newfilename= #{param1} AND divisionnum = 'free_'||#{param2}")
 	void photoDel(String newFileName, int boardNum);
+	
+	// 글 신고
+	@Insert("INSERT INTO freereport(freeReportNum, boardNum, reporter, reason) VALUES(freeReport_seq.NEXTVAL, #{boardNum}, #{loginId}, #{reason})")
+	void freeReport(HashMap<String, String> map);
 
 	
 }

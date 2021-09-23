@@ -45,18 +45,20 @@
 		<tbody>
 			<c:forEach items="${dtoList}" var="dto">
 				<tr>
-				    <td scope="row">${dto.boardNum}</td>
-				    <td><a href="freeDetail/${dto.boardNum}">${dto.title}</a></td>
-				    <td>${dto.id}</td>
-				    <td>${dto.boardHit}</td>
-				    <td>${dto.dates}</td>
+				   	<td scope="row" class="py-3">${dto.boardNum}</td>
+					<td class="py-3"><a href="freeDetail/${dto.boardNum}" style="text-decoration:none;">${dto.title}</a></td>
+					<td class="py-3">${dto.id}</td>
+					<td class="py-3">${dto.boardHit}</td>
+					<td class="py-3">${dto.dates}</td>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>    
-	<div class="d-flex flex-row-reverse">
-    	<input class="btn btn-primary d-flex" type="button" value="글쓰기" onclick="location.href='./freeWriteForm'">
-    </div>
+	<c:if test="${sessionScope.loginId ne null}">
+		<div class="d-flex flex-row-reverse">
+	    	<input class="btn btn-primary d-flex" type="button" value="글쓰기" onclick="location.href='./freeWriteForm'">
+	    </div>
+    </c:if>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="${path}/resources/js/bootstrap.js"></script>
@@ -65,9 +67,9 @@
 
 <script>
 
-var delmsg = "${delmsg}"
-if(delmsg!=""){
-	alert(delmsg);
+var delMsg = "${delMsg}"
+if(delMsg!=""){
+	alert(delMsg);
 }
 
 </script>

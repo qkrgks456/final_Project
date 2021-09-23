@@ -63,7 +63,7 @@
 				
 		<div class="d-flex flex-row-reverse">
 			<button class="btn btn-primary mx-2" type="submit">등록</button>
-		   	<input class="btn btn-primary d-flex" type="button" value="목록" onclick="location.href='./freeWriteForm'">
+		   	<input class="btn btn-primary d-flex" type="button" value="목록" onclick="location.href='./freeBoard'">
 		</div>
 	    
     </div>
@@ -101,7 +101,7 @@
 
 	$(document).on("click", ".oriphoto", function() {
 		newfilename = $(this).attr('value');
-		alert(newfilename + " / " + boardnum);
+		alert(newfilename + "/" + boardnum);
 		$.ajax({
 			type : "POST",
 			url : "../freePhotoDel",

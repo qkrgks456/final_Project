@@ -31,7 +31,7 @@ public class FreeService {
 	// 글쓰기
 	public int freeWrite(HashMap<String, String> params) {
 		
-		logger.info(params.get("title")+" / "+params.get("content"));
+		logger.info(params.get("title") + "/" + params.get("content") + "/" + params.get("loginId"));
 		return mapper.freeWrite(params);
 		
 	}
@@ -50,14 +50,14 @@ public class FreeService {
 			
 			mapper.freePhoto(neww,ori, boardNum);
 			
-			}
+		}
 		
 	}
 	
 	// 사진 불러오기
 	public ArrayList<PhotoDTO> callPhoto(int boardNum) {
 		
-		String divi = "free_"+Integer.toString(boardNum);
+		String divi = "free" + Integer.toString(boardNum);
 		return mapper.callPhoto(divi);
 		
 	}
@@ -72,7 +72,6 @@ public class FreeService {
 	// 조회수
 	public void freeHit(int boardNum) {
 		
-		logger.info("조회수");
 		mapper.freeHit(boardNum);
 		
 	}
@@ -87,7 +86,7 @@ public class FreeService {
 	// 글 수정
 	public int freeUpdate(HashMap<String, String> params) {
 		
-		logger.info(params.get("title" )+ "/" + params.get("content"));
+		logger.info(params.get("title" ) + "/" + params.get("content"));
 		
 		String title = params.get("title");
 		String content = params.get("content");
@@ -110,7 +109,7 @@ public class FreeService {
 			ori = map.get("oriFileName");
 			
 			mapper.freePhotoUpdate(neww,ori, boardNum);
-		};
+		}
 		
 	}
 	
@@ -124,14 +123,13 @@ public class FreeService {
 		
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
+	// 글 신고
+	public void freeReport(HashMap<String, String> map, String loginId) {
+		
+		map.put("loginId", loginId);
+		mapper.freeReport(map);
+		
+	}
 	
 	
 	

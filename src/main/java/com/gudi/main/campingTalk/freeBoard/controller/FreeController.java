@@ -3,6 +3,8 @@ package com.gudi.main.campingTalk.freeBoard.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +20,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gudi.main.campingTalk.freeBoard.service.FreeService;
+import com.gudi.main.cm.CmService;
 import com.gudi.main.dtoAll.BoardDTO;
 import com.gudi.main.dtoAll.PhotoDTO;
+import com.gudi.main.good.GoodMapperCommon;
 
 @Controller
 @RequestMapping(value = "/campingTalk")
@@ -27,6 +31,8 @@ public class FreeController {
 	
     Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired FreeService service;
+    @Autowired CmService cmService;
+    @Autowired GoodMapperCommon goodMapperCm;
     
     // 글 목록 불러오기
     @RequestMapping(value = "/freeBoard")
@@ -45,11 +51,10 @@ public class FreeController {
     	
     }
     
-    
     // 글 작성 폼
     @RequestMapping(value = "/freeWriteForm")
     public String freeWriteForm(Model model) {
-    	logger.info("글쓰기 요청");
+    	logger.info("글쓰기폼 요청");
         return "campingTalk/freeBoard/freeWriteForm";
     }
     
@@ -57,15 +62,18 @@ public class FreeController {
     @Transactional(isolation = Isolation.READ_COMMITTED)
     @RequestMapping(value = "/freeWrite")
     public ModelAndView freeWrite(@RequestParam HashMap<String, String> params,
-    		MultipartFile[] file) {
-    	logger.info("글쓰기 요청2");
+    		MultipartFile[] file, HttpSession session) {
+    	
+    	String loginId = (String)session.getAttribute("loginId");
+    	
+    	logger.info("글쓰기 요청");
     	
     	ModelAndView mav = new ModelAndView();
     	
-    	// 글 등록
+    	// 글 작성
     	service.freeWrite(params);
     	String boardNum = String.valueOf(params.get("boardnum"));
-    	System.out.println("suc은 시퀀스 넘버인가?:: "+ boardNum);
+    	System.out.println("boardNum : " + boardNum);
     	
     	// 파일업로드
     	service.freePhoto(file, boardNum);
@@ -76,9 +84,13 @@ public class FreeController {
     }
     
     // 상세보기
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     @RequestMapping(value = "/freeDetail/{boardNum}")
-    public ModelAndView freeDetail(@PathVariable int boardNum) {
+    public ModelAndView freeDetail(@PathVariable int boardNum, HttpSession session) {
+    	String loginId = (String)session.getAttribute("loginId");
+    	
     	logger.info("상세보기 요청");
+    	logger.info("boardNum : " + boardNum);
     	
     	ModelAndView mav = new ModelAndView();
     	
@@ -91,9 +103,25 @@ public class FreeController {
     	//조회수 올리기
     	service.freeHit(boardNum);
     	
+    	//댓글 불러옴
+    	HashMap<String,Object> map = cmService.cmList(Integer.toString(boardNum), "free", 1);
+    	
+    	//좋아요 불러옴
+    	map.put("goodCount",goodMapperCm.goodCount(Integer.toString(boardNum), "free"));
+    	String check = null;
+    	if(loginId != null) {
+    		check = goodMapperCm.goodCheck(Integer.toString(boardNum), "free", loginId);
+    	}
+    	if (check == null) {
+            map.put("goodCheck", false);
+        } else {
+            map.put("goodCheck", true);
+        }
+    	
     	mav.setViewName("campingTalk/freeBoard/freeDetail");
     	mav.addObject("dto",dto);
     	mav.addObject("phoDtos",phoDto);
+    	mav.addObject("map", map);
 
         return mav;
     }
@@ -102,27 +130,26 @@ public class FreeController {
     @RequestMapping(value = "/freeDel/{boardNum}")
     public String freeDel(@PathVariable int boardNum, Model model) {
     	logger.info("글 삭제");
-    	logger.info("삭제한 글 번호 : " + boardNum);
+    	logger.info("boardNum : " + boardNum);
     	
     	int suc = service.freeDel(boardNum);
     	if (suc>0) {
-    		String delmsg = "리뷰가 삭제되었습니다.";
-			model.addAttribute("delmsg",delmsg);
+    		String delMsg = "글이 삭제되었습니다.";
+			model.addAttribute("delMsg",delMsg);
 		}
     	
         return "redirect:../freeBoard";
     }
     
-    // 글 수정
+    // 글 수정폼
     @RequestMapping(value = "/freeUpdateForm/{boardNum}")
     public ModelAndView freeUpdateForm(@PathVariable int boardNum) {
-    	logger.info("수정 요청");
-    	logger.info("수정할 글의 글번호 : " + boardNum);
+    	logger.info("글 수정폼 요청");
+    	logger.info("boardNum : " + boardNum);
     	
-    	//수정폼 요청하면서 기존의 글내용을 전달
     	ModelAndView mav = new ModelAndView();
     	
-    	//사진 불러옴
+    	//사진 불러오기
     	ArrayList<PhotoDTO> phoDto = service.callPhoto(boardNum);
     	
     	//글 불러옴
@@ -134,21 +161,21 @@ public class FreeController {
         return mav;
     }
     
-    // 글 수정2
+    // 글 수정
     @Transactional(isolation = Isolation.READ_COMMITTED)
     @RequestMapping(value = "/freeUpdate")
     public ModelAndView freeUpdate(@RequestParam HashMap<String, String> params,
     		MultipartFile[] file) {
-		logger.info("수정 요청2");
-    	
+		logger.info("글 수정 요청");
+		
 		String boardNum = params.get("boardNum");
 		
 		ModelAndView mav = new ModelAndView();
     	
-    	//리뷰글 수정
+    	// 글 수정
     	service.freeUpdate(params);
     	
-    	//사진 업뎃
+    	// 사진 업데이트
     	service.freePhoto(file, boardNum);
     	
     	mav.setViewName("redirect:./freeDetail/" + boardNum);
@@ -156,12 +183,22 @@ public class FreeController {
         return mav;  	
     }
     
-    // newfilename 으로 파일 삭제
+    // newfilename 으로 파일 삭제하기
     @RequestMapping(value = "/freePhotoDel")
     @ResponseBody
     public void photoDel(@RequestParam HashMap<String, Object> map) {
-    	logger.info("리뷰 사진 삭제 요청...");
+    	logger.info("글 사진 삭제 요청");
     	service.photoDel(map);
+    }
+    
+    // 신고
+    @RequestMapping(value = "/freeReport")
+    @ResponseBody
+    public void reviewReportForm(@RequestParam HashMap<String, String> map, HttpSession session) {
+    	String loginId = (String)session.getAttribute("loginId");
+    	logger.info("글 신고");
+    	logger.info("boardNum, 사유, loginId : " + map.get("boardNum") + "/" + map.get("reason") + "/" + loginId);
+    	service.freeReport(map,loginId);
     }
     
     
