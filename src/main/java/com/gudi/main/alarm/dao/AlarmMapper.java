@@ -21,14 +21,14 @@ public interface AlarmMapper {
 	void goodDelete(String contentId, String division, String loginId);
 
 	//테스트 성공시 나중에 뒤에 붙히기(and id != writeid) 자기자신이 누르고 쓴것은 안가져오게
-	@Select("select count(alarmnum) from alarm where writeId = #{param1} and alarmcheck = '0'")
-	int read(String loginId);
+	@Select("select * from alarm where writeId = #{param1} and alarmCheck = '0'")
+	ArrayList<AlarmDTO> read(String loginId);
 
 	@Select("select alarmnum,id,content,division,divisionnum from alarm where writeId = #{param1} and alarmcheck = '0'")
 	ArrayList<AlarmDTO> detail(String loginId);
 
-	@Update("update alarm set alarmcheck = '1' where alarmnum = #{param}")
-	boolean update(String alarmNum);
+	@Update("update alarm set alarmcheck = '1' where writeId = #{param1}")
+	boolean update(String loginId);
 	
 	@Delete("DELETE FROM alarm WHERE divisionNum=#{param1} AND division=#{param2} AND id=#{param3} AND content='cm'")
 	void cmDelete(String contentId, String division, String loginId);

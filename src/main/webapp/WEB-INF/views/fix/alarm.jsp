@@ -1,146 +1,85 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page session="true" %>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="${path}/resources/js/bootstrap.js"></script>
-<script src="${path}/resources/js/bootstrap.bundle.js"></script>
-<script>
-$('.toast').hide();
-</script>
-<div class="toast-container">
-<div class="toast position-fixed bottom-0 end-0 mb-3 me-3" role="alert"	aria-live="assertive" aria-atomic="true">
-	<!-- <div class="d-flex">
-		<div class="toast-body" id="body">내용</div>
-		<button id="alarmClose" type="button" class="btn-close me-2 m-auto"
-			data-bs-dismiss="toast" aria-label="Close"></button>
-	</div> -->
+<div id="loginId" class="toast-container position-fixed bottom-0 end-0 mb-3 me-3" loginId="${sessionScope.loginId}">
 </div>
-</div>
-
-
-
-
-<%-- <script src="${path}/resources/js/common.js?var=1"></script> --%>
-
 <script>
-var loginId = '<%=(String) session.getAttribute("loginId")%>';
+    let loginId = $('#loginId').attr("loginId");
+    let interval = setInterval(alarmRead, 2000);
 
-var readInterval = setInterval(alarmRead, 3000);
-//#alarmClose
-$(document).on("click",'.btn-close', function () {
-	console.log("안녕")
-	$(this).prevAll('.toast-body').addClass("visually-hidden");
-   /*  $('.toast').hide(300); */
-})
+    function alarmRead() {
+        $.ajax({
+            url: "alarm/read",
+            type: 'post',
+            data: {
+                "loginId": loginId
+            },
+            dataType: 'json',
+            success: function (data) {
+                if (Object.keys(data).length != 0) {
+                    if (Object.keys(data.list).length != 0) {
+                        $.each(data.list, function (i, dto) {
+                            print(dto);
+                        })
+                        $('.toast').show(300);
+                        $.ajax({
+                            url: "alarm/update",
+                            type: 'post',
+                            data: {
+                                "loginId": loginId
+                            },
+                            dataType: 'json',
+                            success: function (data) {
 
-$('.toast').on("click", function () {
-	clearInterval(readInterval);
-	alarmDetail();
-	$('.toast').show();
-})
+                            },
+                            error: function (error) {
+                                console.log(error);
+                            }
+                        })
+                    }
+                }
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
 
-	if (loginId !== "null") {
-		alarmRead();
-		$('.toast').show();
-	} else{
-		$('.toast').hide();
-	}
+    function print(dto) {
+        let content = '<div class="toast" role="alert" aria-live="assertive" aria-atomic="true">'
+        content += '<div class="d-flex">'
+        content += '<div class="toast-body" id="body">'
+        if (dto.content == 'cm') {
+            content += dto.id + ' 님이 게시글에 댓글을 작성했습니다'
+        } else if (dto.content == 'good') {
+            content += dto.id + ' 님이 게시글에 좋아요를 했습니다'
+        }
+        content += '</div>'
+        content += '<button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>';
+        content += '</div>'
+        $('#loginId').prepend(content);
+    }
 
-	function alarmRead() {
-		$.ajax({
-			url : "alarm/read",
-			type : 'post',
-			data : {
-				"loginId" : loginId
-			},
-			dataType : 'json',
-			success : function(data) {
-				//console.log(data);
-				if(data.alarmTotal=="0"){
-				$('.toast').empty();
-				}else{
-					
-				print(data);
-				}
-			},
-			error : function(error) {
-				console.log(error);
-			}
-		});
-	}
-	
-	function alarmDetail() {
-		$.ajax({
-			url : "alarm/detail",
-			type : 'post',
-			data : {
-				"loginId" : loginId
-			},
-			dataType : 'json',
-			success : function(data) {
-				//console.log(data);
-				$('.toast').empty();
-				printDetail(data.list); 
-			},
-			error : function(error) {
-				console.log(error);
-			}
-		});
-	}
+    $(document).on('click', '.btn-close', function () {
+        $(this).closest('div.toast').hide(300);
+    })
+    /*  $(document).on('click', '.btn-close', function () {
+          let alarmNum = $(this).attr('alarmNum');
+          $(this).closest('div.toast').hide(300);
+          $.ajax({
+              url: "alarm/update",
+              type: 'post',
+              data: {
+                  "alarmNum": alarmNum
+              },
+              dataType: 'json',
+              success: function (data) {
 
-	function print(data) {
-		var content = '<div class="alarmClose">'
-			content += 	'<div class="d-flex go"><div class="toast-body" id="body">총 '	+ data.alarmTotal + ' 건의 알람이 있습니다.</div>';
-		content += '<button id="alarmClose" type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div>';
-		content += '</div>'
-		$('.toast').empty();
-		$('.toast').append(content);
-	}
-	
-	function printDetail(data){
-		console.log(data);
-		content1 = "";
-		for (var i = 0; i < data.length; i++) {
-		content1 +='<div class="d-flex"><div class="toast-body" id="body'+[i]+'">';
-		content1 += '<a onclick="update('+data[i].alarmNum+')"';
-		
-		//게시판 구분
-		if(data[i].division =='notice'){
-		content1 += 'href="serviceCenter/noticeDetail/'+data[i].divisionNum+'">';
-		}
-		
-		
-		//댓글 좋아요 구분
-		 if(data[i].content == "cm"){
-			content1 += data[i].id+' 님이 게시글에 댓글을 달았습니다.';
-		}else{
-			content1 += data[i].id+' 님이 게시글에 좋아요를 눌렀습니다.';
-		} 
-		content1 += '</a></div><button id="alarmClose" type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div>';
-		}
-		
-		$('.toast').append(content1);
-		console.log(content1);
-	}
-	
-	function update(data){
-		$.ajax({
-			url : "alarm/update",
-			type : 'post',
-			data : {
-				"alarmNum" : data
-			},
-			dataType : 'json',
-			success : function(data) {
-				console.log(data);
-				console.log("알림확인");
-				readInterval = setInterval(alarmRead, 3000);
-			},
-			error : function(error) {
-				console.log(error);
-			}
-		});
-		
-	}
-			
-	
+              },
+              error: function (error) {
+                  console.log(error);
+              }
+          });
+      })*/
 </script>

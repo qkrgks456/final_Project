@@ -12,8 +12,8 @@ $(document).ready(function () {
         return new bootstrap.Toast(toastEl)
     })
     $('.toast').show(300);
-    $('#alarmClose').on("click", function () {
+    /*$('#alarmClose').on("click", function () {
         $('.toast').hide(300);
-    })
+    })*/
 })
 
