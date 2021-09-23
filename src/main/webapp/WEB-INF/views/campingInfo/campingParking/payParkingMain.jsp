@@ -82,7 +82,31 @@
 		    }; 
 
 		// 지도를 생성한다 
-		var map = new kakao.maps.Map(mapContainer, mapOption); 
+		var map = new kakao.maps.Map(mapContainer, mapOption);
+		
+		// HTML5의 geolocation으로 사용할 수 있는지 확인합니다 
+		if (navigator.geolocation) {
+		    
+		    // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+		    navigator.geolocation.getCurrentPosition(function(position) {
+		        
+		        var lat = position.coords.latitude, // 위도
+		            lon = position.coords.longitude; // 경도
+		        
+		        var locPosition = new kakao.maps.LatLng(lat, lon); // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+           		
+		     	// 지도 중심좌표를 접속위치로 변경합니다
+			    map.setCenter(locPosition);
+		    });
+		    
+		} else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
+		    
+		    var locPosition = new kakao.maps.LatLng(33.450701, 126.570667);
+			
+		 	// 지도 중심좌표를 접속위치로 변경합니다
+		    map.setCenter(locPosition);
+
+		}
 
 		// 지도 타입 변경 컨트롤을 생성한다
 		var mapTypeControl = new kakao.maps.MapTypeControl();
@@ -96,9 +120,16 @@
 		// 지도의 우측에 확대 축소 컨트롤을 추가한다
 		map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 		
-		
 		// 지도위에 생성된 마커들을 담는 배열임!
 		var markers = [];
+		
+		// 지도위에 표시될 마커들을 담는 배열임!
+		var infowindows = [];
+		
+		// 마커 아이콘 입히기
+		var imageSrc = "${path}/resources/img/chaback.png",
+		 	 imageSize = new kakao.maps.Size(40, 42),
+		 	 markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 		
 		// 지도 중심 좌표 변화 이벤트를 등록한다
 		kakao.maps.event.addListener(map, 'dragend', function (){
@@ -110,6 +141,10 @@
 			}
 			$(".list").empty();
 			
+			// 지도에 표시된 인포윈도우 닫기
+			for (var e = 0; e < infowindows.length; e++) {
+				infowindows[e].close();
+			}
 			
 			console.log('지도의 중심 좌표는 ' + map.getCenter().toString() +' 입니다.');
 			var aaa = map.getCenter().toString()
@@ -136,26 +171,28 @@
 				
 					// 지도에 마커를 생성하고 표시한다	
 					for (var i = 0; i < data.length; i++) {
-						var imageSrc = "${path}/resources/img/chaback.png",
-					 	 imageSize = new kakao.maps.Size(40, 42),
-					 	 markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize)
+						
 						//마커생성 여러번!
 						var marker = new kakao.maps.Marker({
 						    position: new kakao.maps.LatLng(data[i].mapY, data[i].mapX), // 마커의 좌표
-						    map: map, // 마커를 표시할 지도 객체
+						    map: map, // 마커를 표시할 지도 객체          //경도                    //위도
 						    image: markerImage
 						});
 						
-						marker.setMap(map);
+						//marker.setMap(map);
 						
 						// 생성된 마커들을 배열에 담음(지도 이동할때마다, 이전에 표시된 마커 지우려고 담는거임)
 						markers.push(marker);
+						
 						listPrint(data[i]); //리스트 그리기
+						
+						var iwContent = '<div style="padding:3px; background:#fff;">'+data[i].facltNm+'</div>';
 						
 						// 인포윈도우를 생성합니다
 						var infowindow = new kakao.maps.InfoWindow({
-						    content : data[i].facltNm
+						    content : iwContent
 						});
+						infowindows.push(infowindow);
 						
 						//마우스 이벤트 등록
 						kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
@@ -195,9 +232,16 @@
 		
 		function listPrint(data){
 			var content = "";
+			
+			var xxx = data.mapX;
+			var yyy = data.mapY;
+			
+			console.log(xxx);
+			console.log(yyy);
+			
 			content +=  '<div class="card mb-1">'
             content +=   '<div class="ms-2 mt-2 col-md">'
-            content +=    '<h5 class="card-title"><a href="../reserve/campingDetail/'+data.contentId+'" style="text-decoration:none;">'+data.facltNm+'</a></h5>';
+            content +=    '<h5 class="card-title"><a onmouseover="moe('+xxx+','+yyy+')" href="../reserve/campingDetail/'+data.contentId+'" style="text-decoration:none;">'+data.facltNm+'</a></h5>';
             content +=    '<div class="card-text"><small>'+"주소: "+data.addr1+'</small></div>';
             content +=    '<div class="card-text mb-1"><small class="text-muted">'+"전화번호: "+data.tel+'</small></div></div></div>';
 			$(".list").append(content);
@@ -212,6 +256,10 @@
 			content += '</div>'
 			
 			$(".list").append(content);
+		}
+		
+		function moe(xxx,yyy){
+			map.panTo(new kakao.maps.LatLng(yyy, xxx));
 		}
 
 </script>

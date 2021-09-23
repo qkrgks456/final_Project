@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.gudi.main.campingInfo.parking.dao.ParkingMapper;
 import com.gudi.main.dtoAll.CampingDTO;
+import com.gudi.main.dtoAll.GoodDTO;
 import com.gudi.main.dtoAll.ParkingDTO;
 import com.gudi.main.util.HansolUtil;
 
@@ -19,7 +20,6 @@ public class ParkingService {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired ParkingMapper dao;
 	
-
 	public ArrayList<ParkingDTO> getZapyo(HashMap<String, Object> map) {
 		
 		String wido = (String) map.get("wido");
@@ -31,8 +31,8 @@ public class ParkingService {
 	}
 
 
-	public ParkingDTO freeParkDetail(String prkplcenm) {
-		return dao.freeParkDetail(prkplcenm);
+	public ParkingDTO freeParkDetail(String prknum) {
+		return dao.freeParkDetail(prknum);
 	}
 
 
@@ -45,6 +45,11 @@ public class ParkingService {
 		
 		return dao.payZapyo(wido,kyongdo);
 		
+	}
+
+
+	public ArrayList<GoodDTO> callRank() {
+		return dao.callRank();
 	}
 
 	

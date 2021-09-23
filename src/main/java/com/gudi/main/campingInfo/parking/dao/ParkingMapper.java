@@ -6,36 +6,58 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 import com.gudi.main.dtoAll.CampingDTO;
+import com.gudi.main.dtoAll.GoodDTO;
 import com.gudi.main.dtoAll.ParkingDTO;
 
 @Mapper
 public interface ParkingMapper {
-	
-	@Select("SELECT count(contentid) FROM campingapi")
-	int test();
 	
 //	@Select("SELECT * FROM ( " +
 //			"SELECT ( 6371 * acos( cos( radians( #{param1} ) ) * cos( radians( latitude) ) * cos( radians( longitude ) - radians(#{param2}) ) + sin( radians(#{param1}) ) * sin( radians(latitude) ) ) ) AS distance, prkplcese, lnmadr, prkcmprt, parkingchrgeinfo, operday, institutionnm, phonenumber, prkplcenm, rdnmadr, latitude, longitude " +
 //			"FROM parkingapi " +
 //			") DATA " +
 //			"WHERE DATA.distance < 7")
-	@Select("SELECT distance, prkplcese, lnmadr, prkcmprt, parkingchrgeinfo,operday, institutionnm, phonenumber, prkplcenm, rdnmadr, latitude, longitude, (SELECT COUNT(goodNum)FROM good WHERE s.prkplcenm=division)count\r\n" + 
+	/*
+	@Select("SELECT distance, prkplcese, lnmadr, prkcmprt, parkingchrgeinfo,operday, institutionnm, phonenumber, prkplcenm, rdnmadr, latitude, longitude, prknum \r\n" + 
 			"FROM (SELECT * FROM ( SELECT ( 6371 * acos( cos( radians( #{param1} ) ) * cos( radians( \r\n" + 
 			"latitude) ) * cos( radians( longitude ) - radians(#{param2}) ) + sin( radians(#{param1}) \r\n" + 
 			") * sin( radians(latitude) ) ) ) AS distance, prkplcese, lnmadr, prkcmprt, parkingchrgeinfo, \r\n" + 
-			"operday, institutionnm, phonenumber, prkplcenm, rdnmadr, latitude, longitude FROM parkingapi \r\n" + 
-			") DATA WHERE DATA.distance < 7) s")
+			"operday, institutionnm, phonenumber, prkplcenm, rdnmadr, latitude, longitude, prknum FROM prkapi \r\n" + 
+			") DATA WHERE DATA.distance < 5")
+	*/
+	
+	@Select("SELECT * FROM ( " +
+			"SELECT ( 6371 * acos( cos( radians( #{param1} ) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(#{param2}) ) + sin( radians(#{param1}) ) * sin( radians(latitude) ) ) ) AS distance, prkplcese, lnmadr, prkcmprt, parkingchrgeinfo,operday, institutionnm, phonenumber, prkplcenm, rdnmadr, latitude, longitude, prknum " +
+			"FROM prkapi " +
+			") DATA " +
+			"WHERE DATA.distance < 5")
 	ArrayList<ParkingDTO> getZapyo(String wido, String kyongdo);
 
-	@Select("SELECT * FROM parkingapi WHERE prkplcenm = #{param1}")
-	ParkingDTO freeParkDetail(String prkplcenm);
+	@Select("SELECT * FROM prkapi WHERE prknum = #{param1}")
+	ParkingDTO freeParkDetail(String prknum);
 
+	@Select("SELECT divisionnum, cnt FROM\r\n" + 
+			"(SELECT row_number() OVER(ORDER BY cnt, divisionnum) as num, cnt, divisionnum FROM\r\n" + 
+			"(SELECT COUNT(divisionnum) cnt, divisionnum FROM good WHERE division='parking' GROUP BY divisionnum)\r\n" + 
+			")\r\n" + 
+			"WHERE num BETWEEN 1 AND 6 ORDER BY cnt DESC")
+	ArrayList<GoodDTO> callRank();
+	
+	
+	
+	
+	//유료차박
 	@Select("SELECT * FROM ( " +
 			"SELECT ( 6371 * acos( cos( radians( #{param1} ) ) * cos( radians( mapy ) ) * cos( radians( mapx ) - radians(#{param2}) ) + sin( radians(#{param1}) ) * sin( radians(mapy) ) ) ) AS distance, contentid, facltnm, addr1, mapx, mapy, tel, lctcl, homepage, induty " +
 			"FROM campingapi " +
 			") DATA " +
 			"WHERE DATA.distance < 10 AND induty like '%자동차%'")
 	ArrayList<CampingDTO> payZapyo(String wido, String kyongdo);
+
+	@Select("SELECT prkplcenm FROM prkapi WHERE prknum = #{param1}")
+	String searchPrkName(String divisionNum);
+
+	
 
 
 

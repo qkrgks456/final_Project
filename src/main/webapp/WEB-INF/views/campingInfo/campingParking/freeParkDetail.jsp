@@ -172,7 +172,7 @@ page=${map.startPage+1}>
 </ul>
 </div>
 </div>
-<input id="infoList" type = "hidden" contentId="000000" division="${dto.prkplcenm}" path="${path}"/>
+<input id="infoList" type = "hidden" contentId="${dto.prknum}" division="parking" path="${path}"/>
     
 </div>    
 </div>

@@ -19,4 +19,6 @@ public interface GoodMapper {
 
     @Select("SELECT COUNT(goodNum) FROM good WHERE divisionNum=#{param1} AND division=#{param2}")
     int goodCount(String contentId, String camping);
+    
+    
 }

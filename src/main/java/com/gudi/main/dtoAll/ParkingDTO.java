@@ -19,6 +19,7 @@ public class ParkingDTO {
 	private String longitude;
 	private String prkplcenm;
 	private String rdnmadr;
+	private String prknum;
 	private int count;
 }
 

@@ -8,7 +8,6 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,12 +16,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.gudi.main.campingInfo.parking.dao.ParkingMapper;
 import com.gudi.main.campingInfo.parking.service.ParkingService;
 import com.gudi.main.cm.CmService;
 import com.gudi.main.dtoAll.CampingDTO;
+import com.gudi.main.dtoAll.GoodDTO;
 import com.gudi.main.dtoAll.ParkingDTO;
 import com.gudi.main.reserve.dao.GoodMapper;
-import com.gudi.main.reserve.service.GoodService;
 
 @Controller
 @RequestMapping(value = "/campingInfo")
@@ -32,11 +32,31 @@ public class ParkingController {
     @Autowired ParkingService service;
     @Autowired CmService cmService;
     @Autowired GoodMapper goodMapper;
+    @Autowired ParkingMapper prkMapper;
     
     @RequestMapping(value = "/campingParking")
-    public String campingParking(Model model) {
+    public ModelAndView campingParking() {
     	logger.info("차박지도 메인 불러오셈::");
-        return "campingInfo/campingParking/campingParkingMain";
+    	ModelAndView mav = new ModelAndView();
+    	
+    	//차트에 표시할 순위 불러오기
+    	ArrayList<GoodDTO> rank = service.callRank();
+    	logger.info("rank 형태확인:: "+rank.size());
+    	
+    	String[] prkNames = new String[6];
+    	String prkName = null;
+    	//디비전넘으로 주차장명 받아오기
+    	for (int i = 0; i < rank.size(); i++) {
+    		prkName = prkMapper.searchPrkName(rank.get(i).getDivisionNum());
+    		prkNames[i] = prkName;
+		}
+    	System.out.println("prkNames:: "+prkNames[0]+" / "+prkNames[1]+" / "+prkNames[2]+" / "+prkNames[3]+" / "+prkNames[4]+" / "+prkNames[5]);
+    	
+    	mav.addObject("rank", rank);
+    	mav.addObject("prkNames", prkNames);
+    	mav.setViewName("campingInfo/campingParking/campingParkingMain");
+    	
+        return mav;
     }
     
 
@@ -48,8 +68,6 @@ public class ParkingController {
     	
     	ArrayList<ParkingDTO> dto = service.getZapyo(map);
     	
-    	
-    	
     	System.out.println("dto는??:: "+dto);
     	//ArrayList<ParkingDTO> dto = [class(key=value),class(key=value)]
     	System.out.println("dto 사이즈는??:: "+dto.size());
@@ -59,33 +77,32 @@ public class ParkingController {
         return dto;
     }
     
-    @RequestMapping(value = "/freeParkDetail/{prkplcenm}")
+    @RequestMapping(value = "/freeParkDetail/{prknum}")
     @ResponseBody
-    public ModelAndView freeParkDetail (@PathVariable String prkplcenm, HttpSession session) {
+    public ModelAndView freeParkDetail (@PathVariable String prknum, HttpSession session) {
     	String loginId = (String) session.getAttribute("loginId");
-    	logger.info("차박지도 상세보기:: "+ prkplcenm);
+    	logger.info("차박지도 상세보기:: "+ prknum);
     	
     	ModelAndView mav = new ModelAndView();
     	
     	//주차장 상세정보
-    	ParkingDTO dto = service.freeParkDetail(prkplcenm);
-    	
+    	ParkingDTO dto = service.freeParkDetail(prknum);
     	
     	//댓글 불러옴
-	    HashMap<String, Object> map = cmService.cmList("000000", prkplcenm, 1);
+	    HashMap<String, Object> map = cmService.cmList(prknum,"parking", 1);
 	    
 	    //총 추천수 불러옴
-    	map.put("goodCount",goodMapper.goodCount("000000",prkplcenm));
+    	map.put("goodCount",goodMapper.goodCount(prknum,"parking"));
     	
     	//내가 추천했는지 체크
     	String check = null;
     	if(loginId != null) {
-    		check = goodMapper.goodCheck("000000", "review", loginId);
+    		check = goodMapper.goodCheck(prknum, "parking", loginId);
     	}
     	if (check == null) { 
-            map.put("goodCheck", true);
-        } else { 
             map.put("goodCheck", false);
+        } else { 
+            map.put("goodCheck", true);
         }
 	    
     	mav.addObject("map",map);
