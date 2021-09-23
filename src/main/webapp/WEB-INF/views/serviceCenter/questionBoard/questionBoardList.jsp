@@ -79,14 +79,16 @@
                 </li>
             </c:if>
     </ul>
+		<c:if test="${sessionScope.admin eq 'Y'}">
 		<input class="btn btn-primary" type="button" value="문의하기쓰기" onclick="location.href='questionWriteForm'">
+			</c:if>
 	</div>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="${path}/resources/js/bootstrap.js"></script>
 	<script src="${path}/resources/js/bootstrap.bundle.js"></script>
 	<script src="${path}/resources/js/common.js"></script>
 	<script>
-	var currPage = 1;
+	/* var currPage = 1;
 	var per = 10;
 	//listCall(currPage);
 
@@ -138,7 +140,7 @@
 			$("#list").empty();
 			$("#list").append(content);
 		}
-	}
+	} */
 	</script>
 </body>
 </html>

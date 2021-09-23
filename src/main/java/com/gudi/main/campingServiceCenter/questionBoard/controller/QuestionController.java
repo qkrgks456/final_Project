@@ -2,6 +2,8 @@ package com.gudi.main.campingServiceCenter.questionBoard.controller;
 
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,9 +47,10 @@ public class QuestionController {
     }
 
     @RequestMapping(value = "/questionDetail/{boardNum}")
-    public ModelAndView questionDetail(@PathVariable int boardNum) {
-    	logger.info("공지사항 디테일 실행");
-        return service.detail(boardNum);
+    public ModelAndView questionDetail(@PathVariable int boardNum,HttpSession session) {
+    	String loginId = (String)session.getAttribute("loginId");
+    	logger.info("문의사항 디테일 실행");
+        return service.detail(boardNum,loginId);
         
     }
     

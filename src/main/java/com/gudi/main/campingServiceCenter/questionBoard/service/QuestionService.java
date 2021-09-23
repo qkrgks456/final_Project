@@ -8,21 +8,24 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-
 import com.gudi.main.campingServiceCenter.questionBoard.dao.QuestionMapper;
+import com.gudi.main.cm.CmService;
 import com.gudi.main.dtoAll.BoardDTO;
-import com.gudi.main.dtoAll.PhotoDTO;
+import com.gudi.main.good.GoodMapperCommon;
 import com.gudi.main.util.HansolUtil;
-import com.gudi.main.util.UploadUtil;
 
 @Service
 public class QuestionService {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	QuestionMapper dao;
+	
+	@Autowired
+	CmService service;
+	
+	@Autowired GoodMapperCommon goodMapper;
 
 	public HashMap<String, Object> list(int page, int pagePerNum) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -48,8 +51,9 @@ public class QuestionService {
 	
 
 	@Transactional
-	public ModelAndView detail(int boardNum) {
+	public ModelAndView detail(int boardNum,String loginId) {
 		ModelAndView mav = new ModelAndView();
+		HashMap<String,Object> map = service.cmList(Integer.toString(boardNum), "question", 1);
 		dao.up(boardNum);
 		
 		/*
@@ -62,7 +66,19 @@ public class QuestionService {
 		ArrayList<PhotoDTO> file = dao.file(boardNum);
 		mav.addObject("phoDtos", phoDto);
 		*/
-		mav.addObject("file" /*, file*/);
+		map.put("goodCount",goodMapper.goodCount(Integer.toString(boardNum), "question"));
+    	String check = null;
+    	if(loginId != null) {
+    		check = goodMapper.goodCheck(Integer.toString(boardNum), "question", loginId);
+    	}
+    	if (check == null) {
+            map.put("goodCheck", false);
+        } else {
+            map.put("goodCheck", true);
+        }
+    	
+    	mav.addObject("map", map);
+    	
 		mav.setViewName("/serviceCenter/questionBoard/questionDetail");
 		return mav;
 	}
