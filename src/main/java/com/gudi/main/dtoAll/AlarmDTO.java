@@ -11,6 +11,9 @@ public class AlarmDTO {
     private int alarmNum;
     private String id;
     private String content;
-    private String date;
+    private String dates;
     private String alarmCheck;
+    private String division;
+    private String divisionNum;
+    private String writeId;
 }

@@ -43,7 +43,7 @@
     <mybatis-spring:scan base-package="com.gudi.main.campingSearch.tagSearch.dao"/>
     <mybatis-spring:scan base-package="com.gudi.main.cm"/>
     <mybatis-spring:scan base-package="com.gudi.main.good"/>
-
+    <mybatis-spring:scan base-package="com.gudi.main.alarm"/>
 
 
     <!-- 트랜잭션 대상 지정 -->

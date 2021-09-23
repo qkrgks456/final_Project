@@ -73,7 +73,7 @@ public class NoticeService {
 	}
 
 	public int noticeWrite(HashMap<String, String> params) {
-		logger.info(params.get("title") + " / " + params.get("content"));
+		//logger.info(params.get("title") + " / " + params.get("content"));
 		return dao.noticeWrite(params);
 
 	}

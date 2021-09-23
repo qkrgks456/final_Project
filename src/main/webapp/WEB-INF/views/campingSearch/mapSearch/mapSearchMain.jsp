@@ -60,9 +60,9 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-8 ms-0">
-			<div id="map"style="width: 100%; height: 780px; position: relative; overflow: hidden;" ></div>
-			<div id="map1"style="width: 100%; height: 780px; position: relative; overflow: hidden;"></div>
+		<div class="col-8 ms-0" style="position: relative;">
+			<div id="map"style="width: 100%; height: 780px; position: relative; overflow: hidden;  position: absolute; " ></div>
+			<div id="map1"style="width: 100%; height: 780px; position: relative; overflow: hidden; visibility:hidden; position: absolute;"  ></div>
 		</div>
 	</div>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -195,10 +195,13 @@
 						   (function(marker1, title) {
 					            kakao.maps.event.addListener(marker1, 'click', function() {
 					                displayInfowindow1(marker1, title);
+					                map1.setLevel(5, {anchor: marker1.n});
+					                map1.panTo(marker1.n);
 					            });
 
 					            
 					             itemEl.onclick =  function () {	         
+					                open();
 					                displayInfowindow1(marker1, title);
 					                map1.setLevel(5, {anchor: marker1.n});
 					                map1.panTo(marker1.n);
@@ -383,6 +386,11 @@
         el.removeChild (el.lastChild);
     }
 }
+		
+		function open(){
+			document.getElementById('map1').style.visibility = "visible";
+			document.getElementById('map').style.visibility = "hidden";
+		}
 	</script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="${path}/resources/js/bootstrap.js"></script>

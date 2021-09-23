@@ -1,19 +1,21 @@
 package com.gudi.main.cm;
 
-import com.gudi.main.dtoAll.CommentDTO;
-import com.gudi.main.reserve.dao.CommentMapper;
-import com.gudi.main.util.HansolUtil;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import com.gudi.main.alarm.dao.AlarmMapper;
+import com.gudi.main.dtoAll.CommentDTO;
+import com.gudi.main.util.HansolUtil;
 
 @Service
 public class CmService {
     @Autowired
     CmMapper cmMapper;
+    @Autowired AlarmMapper alarm;
 
     // 해당 댓글리스트 가져오기
     @Transactional
@@ -34,6 +36,9 @@ public class CmService {
     public HashMap<String, Object> cmInsert(String contentId, String commentContent, String loginId, String division) {
         // 댓글 인서트
         int suc = cmMapper.cmInsert(loginId, commentContent, contentId, division);
+        // 알람 인서트
+        String cm ="cm";
+       alarm.insert(loginId, contentId, division,cm);
         // 리스트 뿌려주기
         HashMap<String, Object> map = cmList(contentId, division, 1);
         map.put("loginId", loginId);

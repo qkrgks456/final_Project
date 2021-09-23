@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page session="true"%>
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <html>
@@ -34,111 +35,113 @@
 	<jsp:include page="../../fix/menu.jsp" />
 	<%-- 내용 넣으세요 --%>
 	<div class="container px-3 mt-2">
-	<h3>공지사항</h3>
-		<table  class="table table-hover text-center">
-		<thead>
-		<tr>
-			<th scope="col" class="col-md-8">제목</th>
-			<th scope="col" class="col-md-1 ">작성자</th>
-			<th scope="col" class="col-md-2 ">날짜</th>
-			<th scope="col" class="col-md-1 ">조회수</th>
-		</tr>
-		</thead>
-		<tbody id="list">
-		<c:forEach items="${map.list}" var="i">
-			 <tr onClick = "location.href='noticeDetail/${i.boardNum}'">
-			<td>${i.title}</td>
-			<td>${i.id}</td>
-			<td>${i.dates}</td>
-			<td>${i.boardHit}</td>
-			</tr>
-			</c:forEach>
-		</tbody>
+		<h3>공지사항</h3>
+		<table class="table table-hover text-center">
+			<thead>
+				<tr>
+					<th scope="col" class="col-md-1">제목</th>
+					<th scope="col" class="col-md-7">제목</th>
+					<th scope="col" class="col-md-1 ">작성자</th>
+					<th scope="col" class="col-md-2 ">날짜</th>
+					<th scope="col" class="col-md-1 ">조회수</th>
+				</tr>
+			</thead>
+			<tbody id="list">
+				<c:forEach items="${map.list}" var="i" varStatus="vs">
+					<tr onClick="location.href='noticeDetail/${i.boardNum}'">
+						<td>${fn:length(map.list) - vs.index}</td>
+						<td>${i.title}</td>
+						<td>${i.id}</td>
+						<td>${i.dates}</td>
+						<td>${i.boardHit}</td>
+					</tr>
+				</c:forEach>
+			</tbody>
 		</table>
 		<ul class="pagination justify-content-center">
-            <c:if test="${map.startPage ne 1}">
-                <li class="page-item">
-                <a class="page-link" href="${path}/noticeBoard/${map.startPage-1}" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-                </a>
-                </li>
-            </c:if>
-            <c:forEach var="i" begin="${map.startPage}" end="${map.endPage}">
-                <c:if test="${i ne map.currPage}">
-                    <li class="page-item"><a class="page-link" href="${path}/noticeBoard/${i}">${i}</a></li>
-                </c:if>
-                <c:if test="${i eq map.currPage}">
-                    <li class="page-item active"><a class="page-link">${i}</a></li>
-                </c:if>
-            </c:forEach>
-            <c:if test="${map.totalPage ne map.endPage}">
-                <li class="page-item">
-                <a class="page-link" href="${path}/noticeBoard/${map.endPage+1}" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-                </a>
-                </li>
-            </c:if>
-    </ul>
-		<input class="btn btn-primary" type="button" value="공지사항쓰기" onclick="location.href='noticeWriteForm'">
+			<c:if test="${map.startPage ne 1}">
+				<li class="page-item"><a class="page-link"
+					href="${path}/serviceCenter/noticeBoard/${map.startPage-1}"
+					aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+				</a></li>
+			</c:if>
+			<c:forEach var="i" begin="${map.startPage}" end="${map.endPage}">
+				<c:if test="${i ne map.currPage}">
+					<li class="page-item"><a class="page-link"
+						href="${path}/serviceCenter/noticeBoard/${i}">${i}</a></li>
+				</c:if>
+				<c:if test="${i eq map.currPage}">
+					<li class="page-item active"><a class="page-link">${i}</a></li>
+				</c:if>
+			</c:forEach>
+			<c:if test="${map.totalPage ne map.endPage}">
+				<li class="page-item"><a class="page-link"
+					href="${path}/serviceCenter/noticeBoard/${map.endPage+1}"
+					aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+				</a></li>
+			</c:if>
+		</ul>
+		<input class="btn btn-primary" type="button" value="공지사항쓰기"
+			onclick="location.href='noticeWriteForm'">
 	</div>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="${path}/resources/js/bootstrap.js"></script>
 	<script src="${path}/resources/js/bootstrap.bundle.js"></script>
 	<script src="${path}/resources/js/common.js"></script>
 	<script>
-	var currPage = 1;
-	var per = 10;
-	//listCall(currPage);
+		/* var currPage = 1;
+		var per = 10;
+		//listCall(currPage);
 
 
-	function listCall(page) {
-		//{pagePerNum}/{page}
-		var reqUrl = 'noticeBoardList/' + per + "/" + page;
-		//console.log('request page' + reqUrl);
-		console.log(page + " page가져오기");
-		console.log(reqUrl);
+		function listCall(page) {
+			//{pagePerNum}/{page}
+			var reqUrl = 'noticeBoardList/' + per + "/" + page;
+			//console.log('request page' + reqUrl);
+			console.log(page + " page가져오기");
+			console.log(reqUrl);
 
-		 $.ajax({
-			url : reqUrl,
-			type : 'get',
-			dataType : 'json',
-			success : function(data) { //데이터가 성공적으로 들어왔다면
-				console.log(data);
-				listPrint(data.list); //리스트 그리기
-				currPage = data.currPage;
-				//페이징 처리
-				$("#pagination").twbsPagination({
-					startPage:data.currPage,//시작페이지 -> service에서 sql실행하여 map으로 보낸 데이타 값
-					totalPages:data.pages,//총 페이지 갯수 -> service에서 sql실행하여 map으로 보낸 데이타 값
-					visiblePages:5,//보여줄 페이지 갯수
-					onPageClick: function(e,page){
-						console.log(e,page);
-						listCall(page);
-					}
-				});
-			},
-			error : function(error) {
-				console.log(error);
-			}
-		});
-	}
-	
-	function listPrint(list){
-		var content = "";
-		
-		for(var i = 0; i<list.length; i++){
-			
-			content += "<tr onClick = \" location.href='noticeDetail/"+list[i].boardNum+"'\">";
-			content +="<td>"+list[i].title+"</td>";
-			content +="<td>"+list[i].id+"</td>";
-			var date = new Date(list[i].dates);
-			content +="<td>"+date.toLocaleDateString("ko-KR")+"</td>";
-			content +="<td>"+list[i].boardHit+"</td>";
-			content +="</tr>";
-			$("#list").empty();
-			$("#list").append(content);
+			 $.ajax({
+				url : reqUrl,
+				type : 'get',
+				dataType : 'json',
+				success : function(data) { //데이터가 성공적으로 들어왔다면
+					console.log(data);
+					listPrint(data.list); //리스트 그리기
+					currPage = data.currPage;
+					//페이징 처리
+					$("#pagination").twbsPagination({
+						startPage:data.currPage,//시작페이지 -> service에서 sql실행하여 map으로 보낸 데이타 값
+						totalPages:data.pages,//총 페이지 갯수 -> service에서 sql실행하여 map으로 보낸 데이타 값
+						visiblePages:5,//보여줄 페이지 갯수
+						onPageClick: function(e,page){
+							console.log(e,page);
+							listCall(page);
+						}
+					});
+				},
+				error : function(error) {
+					console.log(error);
+				}
+			});
 		}
-	}
+		
+		function listPrint(list){
+			var content = "";
+			
+			for(var i = 0; i<list.length; i++){
+				
+				content += "<tr onClick = \" location.href='noticeDetail/"+list[i].boardNum+"'\">";
+				content +="<td>"+list[i].title+"</td>";
+				content +="<td>"+list[i].id+"</td>";
+				var date = new Date(list[i].dates);
+				content +="<td>"+date.toLocaleDateString("ko-KR")+"</td>";
+				content +="<td>"+list[i].boardHit+"</td>";
+				content +="</tr>";
+				$("#list").empty();
+				$("#list").append(content);
+			}
+		} */
 	</script>
 </body>
 </html>

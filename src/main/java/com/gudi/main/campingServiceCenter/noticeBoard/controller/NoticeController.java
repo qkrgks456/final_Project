@@ -40,6 +40,7 @@ public class NoticeController {
     
     @RequestMapping(value = "/noticeBoard/{page}")
     public ModelAndView NoticeBoard(@PathVariable int page) {
+    	System.out.println(page+" 페이지 공지사항");
         	return service.list(page);
     }
 
@@ -70,12 +71,12 @@ public class NoticeController {
     @Transactional
     @RequestMapping(value = "/noticeWrite")
     public ModelAndView reviewWrite(@RequestParam HashMap<String, String> params,
-    		MultipartFile[] file) {
+    		MultipartFile[] file, HttpSession session) {
     	logger.info("공지사항 작성"+params);
-    	
-    	
+    	String loginId = (String)session.getAttribute("loginId");
     	ModelAndView mav = new ModelAndView();
     	
+    	params.put("id", loginId);
     	//리뷰글 등록
     	service.noticeWrite(params);
     	String boardNum = String.valueOf(params.get("boardnum"));

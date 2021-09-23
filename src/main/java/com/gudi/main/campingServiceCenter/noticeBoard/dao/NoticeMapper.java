@@ -36,7 +36,7 @@ public interface NoticeMapper {
 	@Insert("INSERT INTO photo(photonum, id, division, newfilename, orifilename, divisionnum) VALUES (photo_seq.NEXTVAL, 'test', 'noticeboard', #{param1}, #{param2}, #{param3})")
 	void noticePhoto(String neww, String ori, String boardNum);
 
-	@Insert("INSERT INTO noticeboard(boardnum, id, title, content, delcheck) VALUES (noticeboard_seq.NEXTVAL, 'test', #{title}, #{content}, 'N')")
+	@Insert("INSERT INTO noticeboard(boardnum, id, title, content, delcheck) VALUES (noticeboard_seq.NEXTVAL, #{id}, #{title}, #{content}, 'N')")
 	@SelectKey(statement = {"SELECT noticeboard_seq.CURRVAL FROM DUAL"}, keyProperty = "boardnum",resultType = int.class, before = false)
 	int noticeWrite(HashMap<String, String> params);
 
@@ -52,7 +52,7 @@ public interface NoticeMapper {
 	@Delete("DELETE photo WHERE newfilename= #{param1} AND division = 'noticeboard' AND divisionnum = #{param2}")
 	void photoDel(String newFileName, int boardNum);
 
-	@Select("SELECT COUNT(boardnum) FROM noticeboard")
+	@Select("SELECT COUNT(boardnum) FROM noticeboard where delcheck='N'")
 	int total();
 
 	@Select("SELECT rnum, boardnum,id, title, content,  boardhit, dates FROM (SELECT  ROW_NUMBER() OVER ( ORDER BY boardnum desc) rnum, boardnum,id, title, content,  boardhit, dates,  delcheck  FROM  noticeboard where delcheck = 'N') OFFSET #{param1} ROWS FETCH FIRST 10 ROWS ONLY ")
