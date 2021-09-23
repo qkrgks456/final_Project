@@ -28,4 +28,7 @@ public interface MemberMapper {
 
     @Update("UPDATE member SET pw=#{param1} WHERE id=#{param2}")
     void passChange(String enc_pass, String id);
+
+    @Select("SELECT admin FROM member WHERE id = #{param1}")
+    String adminCheck(String inputId);
 }

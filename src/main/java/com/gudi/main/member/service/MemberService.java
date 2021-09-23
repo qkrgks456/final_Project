@@ -82,4 +82,8 @@ public class MemberService {
             e.printStackTrace();
         }
     }
+
+    public String adminCheck(String inputId) {
+        return mapper.adminCheck(inputId);
+    }
 }
