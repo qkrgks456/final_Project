@@ -40,11 +40,12 @@ public class ParkingController {
     	ModelAndView mav = new ModelAndView();
     	
     	//차트에 표시할 순위 불러오기
-    	ArrayList<GoodDTO> rank = service.callRank();
+    	ArrayList<GoodDTO> rank = service.callRank(); //divisionnum, cnt
     	logger.info("rank 형태확인:: "+rank.size());
     	
     	String[] prkNames = new String[6];
     	String prkName = null;
+    	
     	//디비전넘으로 주차장명 받아오기
     	for (int i = 0; i < rank.size(); i++) {
     		prkName = prkMapper.searchPrkName(rank.get(i).getDivisionNum());
