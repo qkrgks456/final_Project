@@ -5,6 +5,12 @@
 <html>
 <head>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- 차트용 Resources -->
+<script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+
 	<meta charset="utf-8">
     <title>Final</title>
     <%-- 부트 스트랩 메타태그 --%>
@@ -18,7 +24,7 @@
     <%-- 공통 css --%>
     <link href="${path}/resources/css/common.css?var=2" rel="stylesheet">   
     
-<!-- 차트 -->    
+<!-- 차트용 스타일 -->    
 <style>
 #chartdiv {
   width: 100%;
@@ -26,11 +32,6 @@
 }
 
 </style>
-<!-- Resources -->
-<script src="https://cdn.amcharts.com/lib/4/core.js"></script>
-<script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
-<script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
-<!-- 차트끝 -->  
 
 </head>
 <body>
@@ -99,10 +100,6 @@
 </div><!-- 전체 div -->
 
 
-
-
-
-
 <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=379ea69d5a147ed25817ca69e93842c3&​&libraries=services"></script>
 	<script>
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
@@ -141,16 +138,16 @@
 		}
 		
 		// 지도 타입 변경 컨트롤을 생성한다
-		var mapTypeControl = new kakao.maps.MapTypeControl();
+		//var mapTypeControl = new kakao.maps.MapTypeControl();
 
 		// 지도의 상단 우측에 지도 타입 변경 컨트롤을 추가한다
-		map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);	
+		//map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);	
 
 		// 지도에 확대 축소 컨트롤을 생성한다
-		var zoomControl = new kakao.maps.ZoomControl();
+		//var zoomControl = new kakao.maps.ZoomControl();
 
 		// 지도의 우측에 확대 축소 컨트롤을 추가한다
-		map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+		//map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 		
 		// 지도위에 생성된 마커들을 담는 배열임!
 		var markers = [];
@@ -299,13 +296,49 @@
 		
 </script>
 
-
-
-
-
 <script src="${path}/resources/js/bootstrap.js"></script>
 <script src="${path}/resources/js/bootstrap.bundle.js"></script>
 <script src="${path}/resources/js/common.js"></script>
+
+<script>
+
+//추천순위 클릭시 상세보기
+$('document').ready(function(){
+	
+	$('g[role="menuitem"]:eq(0)').on("click",function(){
+		console.log("0클릭");
+		location.href="./freeParkDetail/${rank.get(0).getDivisionNum()}";
+	});	
+	
+	$('g[role="menuitem"]:eq(1)').on("click",function(){
+		console.log("1클릭");
+		location.href="./freeParkDetail/${rank.get(1).getDivisionNum()}";
+	});
+	
+	$('g[role="menuitem"]:eq(2)').on("click",function(){
+		console.log("2클릭");
+		location.href="./freeParkDetail/${rank.get(2).getDivisionNum()}";
+	});
+	
+	$('g[role="menuitem"]:eq(3)').on("click",function(){
+		console.log("3클릭");
+		location.href="./freeParkDetail/${rank.get(3).getDivisionNum()}";
+	});
+	
+	$('g[role="menuitem"]:eq(4)').on("click",function(){
+		console.log("4클릭");
+		location.href="./freeParkDetail/${rank.get(4).getDivisionNum()}";
+	});
+	
+	$('g[role="menuitem"]:eq(5)').on("click",function(){
+		console.log("5클릭");
+		location.href="./freeParkDetail/${rank.get(5).getDivisionNum()}";
+	});
+
+});
+		
+</script>
+
 
 
 <!-- Chart code -->
@@ -327,7 +360,7 @@ chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
 chart.paddingBottom = 30;
 
 chart.data = [{
-    "name": "${prkNames[0]}",
+    "name":  "${prkNames[0]}",
     "steps": "${rank.get(0).getCnt()}",
     "href": "${path}/resources/img/chaback.png"
 }, {
@@ -442,6 +475,8 @@ chart.cursor.events.on("cursorpositionchanged", function (event) {
 
 }); // end am4core.ready()
 </script>
+
+
 
 <script>
 
