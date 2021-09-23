@@ -96,21 +96,15 @@ public class MyInfoController {
     @RequestMapping(value = "/cmList/{page}/{division}")
     public String comment(HttpSession session, Model model, @PathVariable int page, @PathVariable String division) {
         String loginId = (String) session.getAttribute("loginId");
+        HashMap<String, Object> map = service.myCmList(loginId, page, division);
+        model.addAttribute("map", map);
         if (division.equals("review")) {
-            HashMap<String, Object> map = service.myCmList(loginId, page, division);
-            model.addAttribute("map", map);
             return "member/myInfo/list/cmList/reviewCm";
         } else if (division.equals("free")) {
-            HashMap<String, Object> map = service.myCmList(loginId, page, division);
-            model.addAttribute("map", map);
             return "member/myInfo/list/cmList/freeCm";
         } else if (division.equals("notice")) {
-            HashMap<String, Object> map = service.myCmList(loginId, page, division);
-            model.addAttribute("map", map);
             return "member/myInfo/list/cmList/noticeCm";
         } else if (division.equals("question")) {
-            HashMap<String, Object> map = service.myCmList(loginId, page, division);
-            model.addAttribute("map", map);
             return "member/myInfo/list/cmList/questionCm";
         } else if (division.equals("camping")) {
             return "member/myInfo/list/cmList/campingCm";
@@ -139,5 +133,13 @@ public class MyInfoController {
     public String reserveCancel(@PathVariable int reserveNum) {
         service.reserveCancel(reserveNum);
         return "redirect:/myInfo/reserveCheck/1";
+    }
+
+    @RequestMapping(value = "/reportCmList/{page}")
+    public String reportCmList(@PathVariable int page, Model model, HttpSession session) {
+        String loginId = (String) session.getAttribute("loginId");
+        HashMap<String, Object> map = service.reportCmList(page, loginId);
+        model.addAttribute("map", map);
+        return "member/myInfo/list/cmList/reportCm";
     }
 }

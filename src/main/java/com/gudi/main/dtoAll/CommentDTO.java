@@ -17,4 +17,11 @@ public class CommentDTO {
     private String dates;
     private String delCheck;
     private int divisionNum;
+    private int boardNum;
+    private String title;
+    private String contentId;
+    private String facltnm;
+    private String nnmadr;
+    private String prkplceNm;
+    private int prkNum;
 }

@@ -27,6 +27,6 @@ public class CmReportController {
     @RequestMapping(value = "/cmReport")
     public String cmReport(Model model, @RequestParam HashMap<String, String> params) {
         service.cmReport(params);
-        return "redirect:/myInfo/cmList/1/review";
+        return "redirect:/myInfo/reportCmList/1";
     }
 }

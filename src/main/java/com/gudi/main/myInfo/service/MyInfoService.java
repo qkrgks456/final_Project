@@ -98,4 +98,16 @@ public class MyInfoService {
         return map;
 
     }
+
+    public HashMap<String, Object> reportCmList(int page, String loginId) {
+        int start = 0;
+        if (page != 1) {
+            start = (page - 1) * 8;
+        }
+        int total = dao.reportCmTotal(loginId);
+        ArrayList<CommentReportDTO> list = dao.reportCmList(loginId, start);
+        HashMap<String, Object> map = HansolUtil.pagination(page, 15, total);
+        map.put("list",list);
+        return map;
+    }
 }

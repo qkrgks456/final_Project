@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="true" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
@@ -16,6 +17,10 @@
     <style>
         a {
             text-decoration: none;
+        }
+
+        .active {
+            background-color: #ffc107 !important;
         }
     </style>
 </head>
@@ -37,61 +42,61 @@
             </div>
             <jsp:include page="cmListFix.jsp"/>
             <div class="container">
-                <table class="table table-hover mt-3">
-                    <thead>
-                    <tr>
-                        <th class="fs-5 col-2" scope="col">구분</th>
-                        <th class="fs-5 col-3" scope="col">작성일자</th>
-                        <th class="fs-5 col-7" scope="col">내용</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach items="${map.list}" var="lists">
+                <c:if test="${fn:length(map.list) ne 0}">
+                    <table class="table table-hover mt-3">
+                        <thead>
                         <tr>
-                            <c:if test="${lists.division eq 'notice'}">
-                                <td class="py-3 align-middle">공지사항</td>
-                            </c:if>
-                            <c:if test="${lists.division eq 'camping'}">
-                                <td class="py-3 align-middle"><a
-                                        href="${path}/reserve/campingDetail/${lists.divisionNum}">캠핑장</a></td>
-                            </c:if>
-                            <c:if test="${lists.divisionNum eq 0}">
-                                <td class="py-3 align-middle">차박정보</td>
-                            </c:if>
-                            <td class="py-3 align-middle">${lists.dates}</td>
-                            <td class="py-3 align-middle">${lists.content}</td>
+                            <th class="fs-5 col-2" scope="col">제목</th>
+                            <th class="fs-5 col-3" scope="col">작성일자</th>
+                            <th class="fs-5 col-7" scope="col">내용</th>
                         </tr>
-                    </c:forEach>
-                    </tbody>
-                </table>
-                <ul class="pagination justify-content-center">
-                    <c:if test="${map.startPage ne 1}">
-                        <li class="page-item">
-                            <a class="page-link" href="${path}/myInfo/comment/${map.startPage-1}"
-                               aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                    </c:if>
-                    <c:forEach var="i" begin="${map.startPage}" end="${map.endPage}">
-                        <c:if test="${i ne map.currPage}">
-                            <li class="page-item"><a class="page-link"
-                                                     href="${path}/myInfo/comment/${i}">${i}</a>
+                        </thead>
+                        <tbody>
+                        <c:forEach items="${map.list}" var="lists">
+                            <tr>
+                                <td class="py-3 align-middle"><a
+                                        href="${path}/campingTalk/freeDetail/${lists.boardNum}">${lists.title}</a></td>
+                                <td class="py-3 align-middle">${lists.dates}</td>
+                                <td class="py-3 align-middle">${lists.content}</td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                    <ul class="pagination justify-content-center">
+                        <c:if test="${map.startPage ne 1}">
+                            <li class="page-item">
+                                <a class="page-link" href="${path}/myInfo/cmList/${map.startPage-1}/free"
+                                   aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
                             </li>
                         </c:if>
-                        <c:if test="${i eq map.currPage}">
-                            <li class="page-item active"><a class="page-link">${i}</a></li>
+                        <c:forEach var="i" begin="${map.startPage}" end="${map.endPage}">
+                            <c:if test="${i ne map.currPage}">
+                                <li class="page-item"><a class="page-link"
+                                                         href="${path}/myInfo/cmList/${i}/free">${i}</a>
+                                </li>
+                            </c:if>
+                            <c:if test="${i eq map.currPage}">
+                                <li class="page-item active"><a class="page-link">${i}</a></li>
+                            </c:if>
+                        </c:forEach>
+                        <c:if test="${map.totalPage ne map.endPage}">
+                            <li class="page-item">
+                                <a class="page-link" href="${path}/myInfo/cmList/${map.endPage+1}/free"
+                                   aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
                         </c:if>
-                    </c:forEach>
-                    <c:if test="${map.totalPage ne map.endPage}">
-                        <li class="page-item">
-                            <a class="page-link" href="${path}/myInfo/comment/${map.endPage+1}"
-                               aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    </c:if>
-                </ul>
+                    </ul>
+                </c:if>
+                <c:if test="${fn:length(map.list) eq 0}">
+                    <hr/>
+                    <div class="text-center mt-2">
+                        <p class="text-muted">작성한 댓글이 없습니다</p>
+                    </div>
+                </c:if>
             </div>
         </div>
     </div>
@@ -100,5 +105,8 @@
 <script src="${path}/resources/js/bootstrap.js"></script>
 <script src="${path}/resources/js/bootstrap.bundle.js"></script>
 <script src="${path}/resources/js/common.js?var=2"></script>
+<script>
+    $('#menuTwo').addClass('active');
+</script>
 </body>
 </html>

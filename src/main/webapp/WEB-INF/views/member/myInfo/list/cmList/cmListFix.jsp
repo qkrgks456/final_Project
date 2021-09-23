@@ -11,19 +11,19 @@
            href="${path}/myInfo/cmList/1/free">자유게시판</a>
     </li>
     <li class="nav-item">
-        <a id="menuThree" class="nav-link text-dark border-end border-dark rounded-0 fs-4"
-           href="${path}/myInfo/cmList/1/question">문의하기</a>
-    </li>
-    <li class="nav-item">
-        <a id="menuFour" class="nav-link text-dark fs-4 rounded-0 border-end border-dark"
+        <a id="menuThree" class="nav-link text-dark fs-4 rounded-0 border-end border-dark"
            href="${path}/myInfo/cmList/1/notice">공지사항</a>
     </li>
     <li class="nav-item">
-        <a id="menuFive" class="nav-link text-dark fs-4 rounded-0 border-end border-dark"
+        <a id="menuFour" class="nav-link text-dark fs-4 rounded-0 border-end border-dark"
            href="${path}/myInfo/cmList/1/camping">캠핑장</a>
     </li>
     <li class="nav-item">
-        <a id="menuSix" class="nav-link text-dark fs-4 rounded-0"
+        <a id="menuFive" class="nav-link text-dark fs-4 rounded-0 border-end border-dark"
            href="${path}/myInfo/cmList/1/parking">차박정보</a>
+    </li>
+    <li class="nav-item">
+        <a id="menuSix" class="nav-link text-dark fs-4 rounded-0"
+           href="${path}/myInfo/reportCmList/1">신고한댓글</a>
     </li>
 </ul>

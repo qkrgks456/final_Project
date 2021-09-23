@@ -46,19 +46,21 @@
                     <table class="table table-hover mt-3">
                         <thead>
                         <tr>
-                            <th class="fs-5 col-2" scope="col">주차장명</th>
-                            <th class="fs-5 col-3" scope="col">작성일자</th>
-                            <th class="fs-5 col-7" scope="col">내용</th>
+                            <th class="fs-5 col-2" scope="col">댓글번호</th>
+                            <th class="fs-5 col-2" scope="col">신고일자</th>
+                            <th class="fs-5 col-2" scope="col">내용</th>
+                            <th class="fs-5 col-2" scope="col">처리상태</th>
+                            <th class="fs-5 col-2" scope="col">사유</th>
                         </tr>
                         </thead>
                         <tbody>
                         <c:forEach items="${map.list}" var="lists">
                             <tr>
-                                <td class="py-3 align-middle"><a
-                                        href="${path}/campingInfo/freeParkDetail/${lists.prkNum}">${lists.prkplceNm}</a>
-                                </td>
+                                <td class="py-3 align-middle">${lists.cmNum}</td>
                                 <td class="py-3 align-middle">${lists.dates}</td>
                                 <td class="py-3 align-middle">${lists.content}</td>
+                                <td class="py-3 align-middle">${lists.status}</td>
+                                <td class="py-3 align-middle">${lists.reason}</td>
                             </tr>
                         </c:forEach>
                         </tbody>
@@ -66,7 +68,7 @@
                     <ul class="pagination justify-content-center">
                         <c:if test="${map.startPage ne 1}">
                             <li class="page-item">
-                                <a class="page-link" href="${path}/myInfo/cmList/${map.startPage-1}/parking"
+                                <a class="page-link" href="${path}/myInfo/reportCmList/${map.startPage-1}"
                                    aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
@@ -75,7 +77,7 @@
                         <c:forEach var="i" begin="${map.startPage}" end="${map.endPage}">
                             <c:if test="${i ne map.currPage}">
                                 <li class="page-item"><a class="page-link"
-                                                         href="${path}/myInfo/cmList/${i}/parking">${i}</a>
+                                                         href="${path}/myInfo/reportCmList/${i}">${i}</a>
                                 </li>
                             </c:if>
                             <c:if test="${i eq map.currPage}">
@@ -84,7 +86,7 @@
                         </c:forEach>
                         <c:if test="${map.totalPage ne map.endPage}">
                             <li class="page-item">
-                                <a class="page-link" href="${path}/myInfo/cmList/${map.endPage+1}/parking"
+                                <a class="page-link" href="${path}/myInfo/reportCmList/${map.endPage+1}"
                                    aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
@@ -95,7 +97,7 @@
                 <c:if test="${fn:length(map.list) eq 0}">
                     <hr/>
                     <div class="text-center mt-2">
-                        <p class="text-muted">작성한 댓글이 없습니다</p>
+                        <p class="text-muted">신고한 댓글이 없습니다</p>
                     </div>
                 </c:if>
             </div>
@@ -107,7 +109,7 @@
 <script src="${path}/resources/js/bootstrap.bundle.js"></script>
 <script src="${path}/resources/js/common.js?var=2"></script>
 <script>
-    $('#menuFive').addClass('active');
+    $('#menuSix').addClass('active');
 </script>
 </body>
 </html>

@@ -4,11 +4,7 @@ import java.util.ArrayList;
 
 import com.gudi.main.dtoAll.*;
 import com.gudi.main.myInfo.dto.MyInfoDTO;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 @Mapper
 public interface MyInfoMapper {
@@ -42,7 +38,8 @@ public interface MyInfoMapper {
     @Select("SELECT COUNT(cmNum) FROM cm WHERE id = #{param1} AND division = #{param2}")
     int myCmTotal(String loginId, String division);
 
-    @Select("SELECT * FROM cm WHERE id = #{param1} AND division = #{param3} ORDER BY cmNum DESC OFFSET #{param2} ROWS FETCH FIRST 15 ROWS ONLY")
+    /*@Select("SELECT * FROM cm WHERE id = #{param1} AND division = #{param3} ORDER BY cmNum DESC OFFSET #{param2} ROWS FETCH FIRST 15 ROWS ONLY")*/
+    @SelectProvider(type = MyInfoSQL.class, method = "boardCheck")
     ArrayList<CommentDTO> myCmList(String loginId, int start, String division);
 
     @Select("SELECT COUNT(boardNum) FROM ${param2} WHERE id = #{param1}")
@@ -58,4 +55,11 @@ public interface MyInfoMapper {
             "g.divisionNum = c.contentId WHERE g.id =#{param1} AND g.division = 'camping' " +
             "ORDER BY g.goodNum DESC OFFSET #{param2} ROWS FETCH FIRST 15 ROWS ONLY")
     ArrayList<CampingDTO> wantToGoCampingList(String loginId, int start);
+
+    @Select("SELECT COUNT(cmReportNum) FROM cmReport WHERE reporter = #{param1}")
+    int reportCmTotal(String loginId);
+
+    @Select("SELECT c.cmNum,c.status,c.dates,c.reason,cm.content FROM cm LEFT OUTER JOIN cmReport c" +
+            " ON cm.cmNum = c.cmNum WHERE reporter = #{param1} ORDER BY cmReportNum DESC OFFSET 0 ROWS FETCH FIRST 15 ROWS ONLY")
+    ArrayList<CommentReportDTO> reportCmList(String loginId, int start);
 }

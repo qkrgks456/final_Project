@@ -11,7 +11,8 @@ public class CommentReportDTO {
     private int cmReportNum;
     private int cmNum;
     private String reporter;
-    private String date;
+    private String dates;
     private String status;
     private String reason;
+    private String content;
 }
