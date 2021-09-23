@@ -15,5 +15,6 @@ public class BoardDTO {
     private String dates;
     private String boardHit;
     private String delCheck;
+    private int division;
 
 }

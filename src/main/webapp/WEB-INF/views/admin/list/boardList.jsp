@@ -40,7 +40,6 @@
 						<select id="selectType" class="form-select" name="boardListSelect">
 							<option value="title" selected>게시글 제목</option>
 							<option value="id">아이디</option>
-							<option value="email">이메일</option>
 						</select>
 					</div>
 					<!-- 검색/버튼 -->
@@ -64,8 +63,6 @@
 					<thead>
 						<tr>
 							<th scope="col" class="col-md-2">아아디</th>
-							<th scope="col" class="col-md-2">이름</th>
-							<th scope="col" class="col-md-2">이메일</th>
 							<th scope="col" class="col-md-2">게시글</th>
 							<th scope="col" class="col-md-2">블라인드</th>
 							<th scope="col" class="col-md-2">상세보기</th>
@@ -134,11 +131,11 @@
 		for (var i = 0; i < list.length; i++) {
 			content += "<tr>";
 			content += "<td>" + list[i].id + "</td>";
-			content += "<td>" + list[i].nickName + "</td>";
-			content += "<td>" + list[i].eamil + "</td>";
-			content += "<td>" + "게시글 제목" + "</td>";
-			content += "<td>" + "블라인드 여부" + "</td>";
-			content += "<td>"+"<a class='btn btn-sm btn-dark' >상세보기</a>"+ "</td>";
+			content += "<td>" + list[i].title + "</td>";
+			content += "<td>" + list[i].delCheck + "</td>";
+			content += "<td>"
+			content += "<a class='btn btn-sm btn-dark' href='boardListDetailInfo?boardNum="+list[i].boardNum+"&division="+list[i].division+"'>상세보기</a>"
+			content += "</td>";
 			content += "</tr>";
 		}
 		$("#list").empty();

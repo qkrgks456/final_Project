@@ -38,7 +38,6 @@
 						<tr>
 							<th scope="col" class="col-md-2">아이디</th>
 							<th scope="col" class="col-md-2">예약자</th>
-							<th scope="col" class="col-md-2">이메일</th>
 							<th scope="col" class="col-md-2">인원</th>
 							<th scope="col" class="col-md-2">캠핑장</th>
 							<th scope="col" class="col-md-2">예약날짜</th>
@@ -80,7 +79,6 @@ function memberReserveList(list){
 		content +="<tr>";
 		content +="<td>"+ list[i].id+"</td>";
 		content +="<td>"+ list[i].reserveName +"</td>";
-		content +="<td>"+ list[i].email +"</td>";
 		content +="<td>"+ list[i].manCount +"</td>";
 		content +="<td>"+ list[i].contentId +"</td>";
 		content +="<td>"+ list[i].reserveDate +"</td>";

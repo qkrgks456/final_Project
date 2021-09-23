@@ -40,7 +40,7 @@
 			<th scope="col" class="col-md-3">아아디</th>
 			<th scope="col" class="col-md-2">이름</th>
 			<th scope="col" class="col-md-3">이메일</th>
-			<th scope="col" class="col-md-2">등급</th>
+			<th scope="col" class="col-md-2">관리자 권한</th>
 			<th scope="col" class="col-md-2">권한삭제</th>
 		</tr>
 		</thead>
