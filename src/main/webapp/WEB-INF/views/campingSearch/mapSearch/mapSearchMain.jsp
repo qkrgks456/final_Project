@@ -195,13 +195,10 @@
             menuEl = document.getElementById('menu_wrap'),
             fragment = document.createDocumentFragment();
         //마커 바꾸기
-        /* var cimageSrc = "
-
-
-
-        ${path}/resources/img/clickMarker.png",
+        
+      	var  cimageSrc = "${path}/resources/img/clickMarker.png",
 			        cimageSize = new kakao.maps.Size(50, 52),
-			        cmarkerImage = new kakao.maps.MarkerImage(cimageSrc, cimageSize); */
+			        cmarkerImage = new kakao.maps.MarkerImage(cimageSrc, cimageSize);
 
         removeAllChildNods(listEl);
         for (var i = 0; i < place.length; i++) {
@@ -216,8 +213,9 @@
                     displayInfowindow1(marker1, title);
                     map1.setLevel(5, {anchor: marker1.n});
                     map1.panTo(marker1.n);
+                    resetMarker();
                     //마커바꾸기
-                    //marker1.setImage(cmarkerImage);
+                    marker1.setImage(cmarkerImage);
                 });
 
 
@@ -226,15 +224,16 @@
                     displayInfowindow1(marker1, title);
                     map1.setLevel(7, {anchor: marker1.n});
                     map1.panTo(marker1.n);
+                    resetMarker();
                     //마커바꾸기
-                    // marker1.setImage(cmarkerImage);
-
+                    marker1.setImage(cmarkerImage);
 
                 };
 
 
             })(marker1, place[i]);
             fragment.appendChild(itemEl);
+             
         }
         listEl.appendChild(fragment);
     }
@@ -328,7 +327,7 @@
 
         return el;
 
-        /* } */
+        
     };
 
     //페이징 그리기
@@ -368,14 +367,15 @@
         $('#pagination').append(content);
     }
 
-    //마커 지우기
-    /* function removeMarker() {
+    //마커 리셋
+    function resetMarker() {
+    	 var imageSrc = "${path}/resources/img/mapMarker.png", // 마커 이미지 url, 스프라이트 이미지를 씁니다
+            imageSize = new kakao.maps.Size(40, 42),  // 마커 이미지의 크기
+            markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
         for (var i = 0; i < markers.length; i++) {
-            console.log(markers);
-            markers[i].setMap(null);
+            markers1[i].setImage(markerImage);
         }
-        markers = [];
-    }; */
+    }; 
     //marker1 지우기
     function removeMarker1() {
         for (var i = 0; i < markers1.length; i++) {
