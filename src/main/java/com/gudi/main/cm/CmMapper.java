@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 @Mapper
 public interface CmMapper {
@@ -15,7 +16,7 @@ public interface CmMapper {
     ArrayList<CommentDTO> cmList(String contentId, String division, int page);
 
     @Select("SELECT COUNT(cmNum) FROM cm WHERE division = #{param2} AND divisionNum = #{param1} AND delCheck='N'")
-    int cmTotal(String contentId,String division);
+    int cmTotal(String contentId, String division);
 
     @Insert(CmSQL.CM_INSERT)
     int cmInsert(String loginId, String commentContent, String contentId, String division);
@@ -28,4 +29,7 @@ public interface CmMapper {
 
     @Update("UPDATE cm SET delCheck = 'Y' WHERE cmNum = #{cmNum}")
     void cmDelete(String cmNum);
+
+    @Insert(CmSQL.CM_REPORT_INSERT)
+    void cmReport(HashMap<String, String> params);
 }

@@ -9,4 +9,6 @@ public class CmSQL {
             "(SELECT cmNum FROM cm WHERE division = #{param2} AND divisionNum = #{param1} AND delCheck='N'" +
             "ORDER BY cmNum DESC OFFSET #{param4} ROWS FETCH FIRST 8 ROWS ONLY)" +
             "WHERE cmNum=#{param3}";
+    public static final String CM_REPORT_INSERT = "INSERT INTO cmReport(cmReportNum,cmNum,reporter,status,reason) " +
+            "VALUES(cmReport_seq.NEXTVAL,#{cmNum},#{reporter},'N',#{reason})";
 }

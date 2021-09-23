@@ -85,4 +85,8 @@ public class CmService {
         map.put("loginId", loginId);
         return map;
     }
+
+    public void cmReport(HashMap<String, String> params) {
+        cmMapper.cmReport(params);
+    }
 }
