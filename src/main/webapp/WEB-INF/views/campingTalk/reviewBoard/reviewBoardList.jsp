@@ -54,6 +54,33 @@
   </c:forEach>
   </tbody>
 </table>
+
+    <ul class="pagination justify-content-center">
+            <c:if test="${map.startPage ne 1}">
+                <li class="page-item">
+                <a class="page-link" href="${path}/campingTalk/reviewBoard/${map.startPage-1}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                </a>
+                </li>
+            </c:if>
+            <c:forEach var="i" begin="${map.startPage}" end="${map.endPage}">
+                <c:if test="${i ne map.currPage}">
+                    <li class="page-item"><a class="page-link" href="${path}/campingTalk/reviewBoard/${i}">${i}</a></li>
+                </c:if>
+                <c:if test="${i eq map.currPage}">
+                    <li class="page-item active"><a class="page-link">${i}</a></li>
+                </c:if>
+            </c:forEach>
+            <c:if test="${map.totalPage ne map.endPage}">
+                <li class="page-item">
+                <a class="page-link" href="${path}/campingTalk/reviewBoard/${map.endPage+1}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+                </a>
+                </li>
+            </c:if>
+    </ul>
+
+
 <c:if test="${sessionScope.loginId ne null}">
 	<div class="d-flex flex-row-reverse">
     <input class="btn btn-primary d-flex" type="button" value="리뷰쓰기" onclick="location.href='./reviewWriteForm'">
@@ -66,11 +93,16 @@
 <script src="${path}/resources/js/common.js"></script>
 
 <script>
+var currPage = 1;
+var per = 10;
 
 var delmsg = "${delmsg}"
 if(delmsg!=""){
 	alert(delmsg);
 }
+
+
+
 
 </script>
 

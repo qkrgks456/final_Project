@@ -15,4 +15,5 @@ public class GoodDTO {
     private String division;
     private String divisionNum;
     private int cnt;
+    private int rnum;
 }

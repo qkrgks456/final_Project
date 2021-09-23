@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.gudi.main.campingTalk.reviewBoard.dao.ReviewMapper;
 import com.gudi.main.campingTalk.reviewBoard.service.ReviewService;
 import com.gudi.main.cm.CmService;
 import com.gudi.main.dtoAll.BoardDTO;
@@ -33,19 +34,19 @@ public class ReviewController {
     @Autowired ReviewService service;
     @Autowired CmService cmService;
     @Autowired GoodMapperCommon goodMapper;
+    @Autowired ReviewMapper dao;
+    
     @RequestMapping(value = "/reviewBoard")
     public ModelAndView reviewBoard() {
     	logger.info("리뷰 리스트(리뷰메인) 요청...");
-    	
-    	ModelAndView mav = new ModelAndView();
-    	
-    	//글 리스트
-    	ArrayList<BoardDTO> dto = service.reviewList();
-    	    	
-    	mav.addObject("dtoList", dto);
-    	mav.setViewName("/campingTalk/reviewBoard/reviewBoardList");
-    	
-        return mav;
+    	int page = 1;
+        return service.reviewList(page);
+    }
+    
+    @RequestMapping(value = "/reviewBoard/{page}")
+    public ModelAndView reviewBoard(@PathVariable int page) {
+    	logger.info("리뷰 리스트(리뷰메인) 요청... 페이지는??:: "+page);	
+        return service.reviewList(page);
     }
     
     //리뷰작성 폼 요청

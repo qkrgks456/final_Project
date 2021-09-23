@@ -225,7 +225,6 @@
 		
 		function makeClickListener(contentId) {
 		    return function() {
-		      alert(contentId);
 		      location.href= "../reserve/campingDetail/"+contentId;    
 			};
 		}

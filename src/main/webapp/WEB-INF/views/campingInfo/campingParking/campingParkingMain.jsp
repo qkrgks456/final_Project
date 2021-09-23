@@ -81,14 +81,70 @@
 
 <!-- 차박지 순위 -->
 <div class="col">
-<h5>차박 추천 순위</h5>
+<h5>차박지 추천 순위</h5>
 <div id="chartdiv"></div>
 </div>
 
+
 <!-- 추천태그? 물, 바다, 산 -->
+<!-- 
 <div class="col">
-추천 태그 영역
+<h5>추천 태그 영역</h5>
+<div class="col d-flex flex-row-reverse mt-2">
+ <button onclick="location.href=''" class="btn btn-warning btn-sm">산</button>
+ <button onclick="location.href=''" class="btn btn-warning btn-sm me-2">물</button>
+ <button onclick="location.href=''" class="btn btn-warning btn-sm me-2">바다</button>
 </div>
+
+
+<div class="row">
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">주차장명</th>
+      <th scope="col">주소</th>
+
+    </tr>
+  </thead>
+  <tbody>
+  	<c:forEach items="${tags}" var="tag">
+  		<tr>
+  		<td>${tag.prkplcenm}</td>
+  		<td>주소</td>
+  		</tr>
+  	</c:forEach>
+  </tbody>
+</table>
+
+<ul class="pagination justify-content-center">
+            <c:if test="${map.startPage ne 1}">
+                <li class="page-item">
+                <a class="page-link" href="${path}/campingTalk/reviewBoard/${map.startPage-1}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                </a>
+                </li>
+            </c:if>
+            <c:forEach var="i" begin="${map.startPage}" end="${map.endPage}">
+                <c:if test="${i ne map.currPage}">
+                    <li class="page-item"><a class="page-link" href="${path}/campingTalk/reviewBoard/${i}">${i}</a></li>
+                </c:if>
+                <c:if test="${i eq map.currPage}">
+                    <li class="page-item active"><a class="page-link">${i}</a></li>
+                </c:if>
+            </c:forEach>
+            <c:if test="${map.totalPage ne map.endPage}">
+                <li class="page-item">
+                <a class="page-link" href="${path}/campingTalk/reviewBoard/${map.endPage+1}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+                </a>
+                </li>
+            </c:if>
+    </ul>
+</div>
+ 
+ 
+</div>
+-->
 
 </div> <!-- 지도 아래부분 div 끝 -->
 
@@ -273,7 +329,7 @@
 
 			content +=  '<div class="card mb-1">'
             content +=   '<div class="ms-2 mt-2 col-md">'
-            content +=    '<h5 class="card-title"><a onmouseover="moe('+xxx+','+yyy+')" href="./freeParkDetail/'+data.prknum+'" style="text-decoration:none;">'+prk+'</a></h5>';
+            content +=    '<h5 class="card-title"><a onmouseover="moe('+xxx+','+yyy+')" onmouseout="moeClose()" href="./freeParkDetail/'+data.prknum+'" style="text-decoration:none;">'+prk+'</a></h5>';
             content +=    '<div class="card-text"><small>'+"주차구획 수: "+data.prkcmprt+'</small></div>';
             content +=    '<div class="card-text"><small>'+"추천수: "+data.count+'</small></div>';
             content +=    '<div class="card-text mb-1"><small class="text-muted">'+"전화번호: "+data.phonenumber+'</small></div></div></div>';
@@ -290,9 +346,34 @@
 			$(".list").append(content);
 		}
 		
+		
+		var markers2 = [];
+		
 		function moe(xxx,yyy){
 			map.panTo(new kakao.maps.LatLng(xxx, yyy));
+			
+			var imageSrc = "${path}/resources/img/chaback.png", // 마커이미지의 주소입니다    
+		    imageSize = new kakao.maps.Size(75, 80), // 마커이미지의 크기입니다
+		    imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+		 	// 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+		    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
+		        markerPosition = new kakao.maps.LatLng(xxx, yyy); // 마커가 표시될 위치입니다
+		 	// 마커를 생성합니다
+		    var marker2 = new kakao.maps.Marker({
+		        		position: markerPosition, 
+		        		image: markerImage // 마커이미지 설정 
+		    });
+		    // 마커가 지도 위에 표시되도록 설정합니다
+		    marker2.setMap(map);
+		    markers2.push(marker2);	    
 		}
+		
+		function moeClose(){
+			for (var e = 0; e < markers2.length; e++) {
+				markers2[e].setMap(null);
+			}
+		}
+		
 		
 </script>
 
@@ -334,9 +415,25 @@ $('document').ready(function(){
 		console.log("5클릭");
 		location.href="./freeParkDetail/${rank.get(5).getDivisionNum()}";
 	});
-
+	
+	$('g[role="menuitem"]:eq(6)').on("click",function(){
+		console.log("6클릭");
+		location.href="./freeParkDetail/${rank.get(6).getDivisionNum()}";
+	});
+	$('g[role="menuitem"]:eq(7)').on("click",function(){
+		console.log("7클릭");
+		location.href="./freeParkDetail/${rank.get(7).getDivisionNum()}";
+	});
+	$('g[role="menuitem"]:eq(8)').on("click",function(){
+		console.log("8클릭");
+		location.href="./freeParkDetail/${rank.get(8).getDivisionNum()}";
+	});
+	$('g[role="menuitem"]:eq(9)').on("click",function(){
+		console.log("9클릭");
+		location.href="./freeParkDetail/${rank.get(9).getDivisionNum()}";
+	});
 });
-		
+
 </script>
 
 
@@ -383,7 +480,25 @@ chart.data = [{
     "name": "${prkNames[5]}",
     "steps": "${rank.get(5).getCnt()}",
     "href": "${path}/resources/img/chaback.png"
+}, {
+    "name": "${prkNames[6]}",
+    "steps": "${rank.get(6).getCnt()}",
+    "href": "${path}/resources/img/chaback.png"
+}, {
+    "name": "${prkNames[7]}",
+    "steps": "${rank.get(7).getCnt()}",
+    "href": "${path}/resources/img/chaback.png"
+}, {
+    "name": "${prkNames[8]}",
+    "steps": "${rank.get(8).getCnt()}",
+    "href": "${path}/resources/img/chaback.png"
+}, {
+    "name": "${prkNames[9]}",
+    "steps": "${rank.get(9).getCnt()}",
+    "href": "${path}/resources/img/chaback.png"
 }];
+
+
 
 var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
 categoryAxis.dataFields.category = "name";
@@ -476,27 +591,6 @@ chart.cursor.events.on("cursorpositionchanged", function (event) {
 }); // end am4core.ready()
 </script>
 
-
-
-<script>
-
-/*  
-$.ajax({
-    url:'apiCall',
-    type:'POST',
-    data:{},
-    dataType:'JSON',
-    success:function(data){
-        console.log(data);
-        console.log(typeof data);
-
-    },
-    error:function(data){
-        console.log(data);
-    }
-});
-*/
-</script>
 
 </body>
 </html>

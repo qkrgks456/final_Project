@@ -36,16 +36,12 @@ public interface ParkingMapper {
 	@Select("SELECT * FROM prkapi WHERE prknum = #{param1}")
 	ParkingDTO freeParkDetail(String prknum);
 
-	@Select("SELECT divisionnum, cnt FROM\r\n" + 
-			"(SELECT row_number() OVER(ORDER BY cnt, divisionnum) as num, cnt, divisionnum FROM\r\n" + 
-			"(SELECT COUNT(divisionnum) cnt, divisionnum FROM good WHERE division='parking' GROUP BY divisionnum)\r\n" + 
-			")\r\n" + 
-			"WHERE num BETWEEN 1 AND 6 ORDER BY cnt DESC")
+	@Select("SELECT rnum, cnt, divisionnum \r\n" + 
+			"FROM(SELECT row_number() OVER (ORDER BY cnt desc) rnum, cnt, divisionnum FROM (SELECT COUNT(divisionnum)cnt, divisionnum FROM good WHERE division='parking' GROUP BY divisionnum) ORDER BY cnt DESC)\r\n" + 
+			"WHERE rnum BETWEEN 1 AND 10")
 	ArrayList<GoodDTO> callRank();
 	
-	
-	
-	
+
 	//유료차박
 	@Select("SELECT * FROM ( " +
 			"SELECT ( 6371 * acos( cos( radians( #{param1} ) ) * cos( radians( mapy ) ) * cos( radians( mapx ) - radians(#{param2}) ) + sin( radians(#{param1}) ) * sin( radians(mapy) ) ) ) AS distance, contentid, facltnm, addr1, mapx, mapy, tel, lctcl, homepage, induty " +
@@ -57,7 +53,7 @@ public interface ParkingMapper {
 	@Select("SELECT prkplcenm FROM prkapi WHERE prknum = #{param1}")
 	String searchPrkName(String divisionNum);
 
-	
+
 
 
 

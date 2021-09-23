@@ -4,6 +4,8 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <meta charset="utf-8">
     <title>Final</title>
     <%-- 부트 스트랩 메타태그 --%>
@@ -172,23 +174,18 @@ page=${map.startPage+1}>
 </ul>
 </div>
 </div>
+
 <input id="infoList" type = "hidden" contentId="${dto.prknum}" division="parking" path="${path}"/>
     
 </div>    
 </div>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="${path}/resources/js/bootstrap.js"></script>
-<script src="${path}/resources/js/bootstrap.bundle.js"></script>
-<script src="${path}/resources/js/common.js"></script>
-<script src="${path}/resources/js/cm.js"></script>
-<script src="${path}/resources/js/recomend.js"></script>
 
 <script>
 
 let contentId = $("#infoList").attr("contentId");
 let division = $("#infoList").attr("division");
 let path = $("#infoList").attr("path");
+
 /* 댓글 등록 ajax */
 $('#cmInsertBtn').on('click', function () {
     // 여기에 받을 변수 써주세용
@@ -353,6 +350,11 @@ function commentList(map) {
 }
 
 </script>
+<script src="${path}/resources/js/bootstrap.js"></script>
+<script src="${path}/resources/js/bootstrap.bundle.js"></script>
+<script src="${path}/resources/js/common.js"></script>
+<script src="${path}/resources/js/cm.js"></script>
+<script src="${path}/resources/js/recomend.js"></script>
 
 </body>
 </html>

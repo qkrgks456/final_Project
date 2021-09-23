@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.gudi.main.campingTalk.reviewBoard.dao.ReviewMapper;
 import com.gudi.main.dtoAll.BoardDTO;
@@ -69,8 +70,24 @@ public class ReviewService {
 		return dao.reviewDel(boardNum);
 	}
 
-	public ArrayList<BoardDTO> reviewList() {
-		return dao.reviewList();
+	public ModelAndView reviewList(int page) {
+		ModelAndView mav = new ModelAndView();
+		int total = dao.total();
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map = HansolUtil.pagination(page, 10, total);
+		
+		if (page == 1) {
+			page = 0;
+		} else {
+			page = (page - 1) * 10;
+		}
+	
+		ArrayList<BoardDTO> dto = dao.reviewList(page);
+		mav.addObject("map", map);
+    	mav.addObject("dtoList", dto);
+    	mav.setViewName("/campingTalk/reviewBoard/reviewBoardList");
+		return mav;
 	}
 
 	public int reviewUpdate(HashMap<String, String> params) {
