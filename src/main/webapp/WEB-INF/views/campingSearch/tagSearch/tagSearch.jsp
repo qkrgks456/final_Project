@@ -64,14 +64,14 @@
 					</div>
 					<br/><br/>
 						</c:if>
-					<c:forEach var="i" begin="${map.startPage}" end="${map.endPage}">
+				<%-- 	<c:forEach var="i" begin="${map.startPage}" end="${map.endPage}">
 						<form action="${path}/campingSearch/search/${i}" class="text-center" method="post">
 						</c:forEach>
 							<div class="d-flex justify-content-center mt-3">
 								<input class="form-control w-50 me-2" type="text" id="keyword" name="word" >
 								<button class="btn btn-warning btn-sm" type="submit">검색</button>
 							</div>
-						</form>
+						</form> --%>
 					</div>
 				</div>
 						<c:if test="${empty map.list}">

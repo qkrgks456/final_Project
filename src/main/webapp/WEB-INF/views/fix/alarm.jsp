@@ -26,8 +26,10 @@ var loginId = '<%=(String) session.getAttribute("loginId")%>';
 
 var readInterval = setInterval(alarmRead, 3000);
 //#alarmClose
-$('.btn-close').on("click", function () {
-    $('.toast').hide(300);
+$(document).on("click",'.btn-close', function () {
+	console.log("안녕")
+	$(this).prevAll('.toast-body').addClass("visually-hidden");
+   /*  $('.toast').hide(300); */
 })
 
 $('.toast').on("click", function () {
@@ -86,8 +88,10 @@ $('.toast').on("click", function () {
 	}
 
 	function print(data) {
-		var content = '<div class="d-flex"><div class="toast-body" id="body">총 '	+ data.alarmTotal + ' 건의 알람이 있습니다.</div>';
+		var content = '<div class="alarmClose">'
+			content += 	'<div class="d-flex go"><div class="toast-body" id="body">총 '	+ data.alarmTotal + ' 건의 알람이 있습니다.</div>';
 		content += '<button id="alarmClose" type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div>';
+		content += '</div>'
 		$('.toast').empty();
 		$('.toast').append(content);
 	}

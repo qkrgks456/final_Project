@@ -39,7 +39,6 @@
 		<table class="table table-hover text-center">
 			<thead>
 				<tr>
-					<th scope="col" class="col-md-1">제목</th>
 					<th scope="col" class="col-md-7">제목</th>
 					<th scope="col" class="col-md-1 ">작성자</th>
 					<th scope="col" class="col-md-2 ">날짜</th>
@@ -48,12 +47,11 @@
 			</thead>
 			<tbody id="list">
 				<c:forEach items="${map.list}" var="i" varStatus="vs">
-					<tr onClick="location.href='noticeDetail/${i.boardNum}'">
-						<td>${fn:length(map.list) - vs.index}</td>
-						<td>${i.title}</td>
-						<td>${i.id}</td>
-						<td>${i.dates}</td>
-						<td>${i.boardHit}</td>
+					<tr onClick="location.href='${path}/serviceCenter/noticeDetail/${i.boardNum}'" style="cursor:pointer;">
+						<td class="py-3">${i.title}</td>
+						<td class="py-3">${i.id}</td>
+						<td class="py-3">${i.dates}</td>
+						<td class="py-3">${i.boardHit}</td>
 					</tr>
 				</c:forEach>
 			</tbody>

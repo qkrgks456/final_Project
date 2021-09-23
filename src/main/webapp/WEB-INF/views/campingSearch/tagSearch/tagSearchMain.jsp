@@ -51,8 +51,8 @@ background-color: #FFC1B7;
 								<span class="tag_stt">추천태그를 선택 후 검색해보세요.<br>원하는 유형의
 									캠핑장 정보를 확인하실 수 있습니다.
 								</span>
-							<div class="tagBtn_group" style="background-color: #F6F5F4;">
-								<ul style="list-style:none; background-color: #F6F5F4;">
+							<div class="tagBtn_group mt-2">
+								<ul style="list-style:none;">
 									<c:forEach var="i" items="${map.them}">
 										<li style="float:left; margin-right:10px; border:1px solid #FF7D69; padding:5px;" >
 										<a href="#none" class="tagBtn "  value="${i}" style=" text-align:center; padding-top:10px; text-decoration:none; color:#000000;">#${i}</a>
@@ -61,6 +61,9 @@ background-color: #FFC1B7;
 									<li style="float:left; margin-right:10px; background-color:#FAB3DA; padding:5px;" >
 										<a href="#" id="reset" style=" text-align:center; padding-top:10px; text-decoration:none; color:#000000;">초기화</a>
 										</li>
+										<li>
+											<button class="btn btn-warning btn-sm" type="submit" form="tagForm">검색</button>
+											</li>
 								</ul>
 							</div>
 							</div>
@@ -70,14 +73,14 @@ background-color: #FFC1B7;
 					<br/><br/>
 					<div class="mt-1">
 							<c:forEach var="i" begin="${map.startPage}" end="${map.endPage}">
-								<form action="${path}/campingSearch/search/${i}"	class="text-center" method="post">
-							</c:forEach>
-							<div class="d-flex justify-content-center mt-3">
-								<input class="form-control w-50 me-2" type="text" id="keyword"	 name="word">
+								<form action="${path}/campingSearch/search/${i}"	class="text-center" method="post" id="tagForm">
+								<input class="form-control w-50 me-2" type="hidden" id="keyword"	 name="word">
 								<input type="hidden" id="hidden" name="word">
+								</form>
+							</c:forEach>
+					<!-- 		<div class="d-flex justify-content-center mt-3">
 								<button class="btn btn-warning btn-sm" type="submit">검색</button>
-							</div>
-							</form>
+							</div> -->
 					</div>
 					<c:forEach var="map" items="${map.list}">
 						<div class="card border-white" style="background-color: #f8fcfe">
