@@ -65,6 +65,8 @@ public class NoticeController {
     
     @RequestMapping(value = "/noticeWriteForm")
 	public String noticeWriteForm() {
+    	
+    	
 		return "serviceCenter/noticeBoard/noticeWriteForm";
 	}
     

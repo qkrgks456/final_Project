@@ -136,6 +136,7 @@ public class MemberController {
     @RequestMapping(value = "/logout")
     public String logout(HttpSession session) throws Exception {
         session.removeAttribute("loginId");
+        session.removeAttribute("admin");
         String access_token = (String) session.getAttribute("access_token");
         System.out.println(access_token);
         if (access_token != null) {

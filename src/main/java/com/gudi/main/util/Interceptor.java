@@ -25,6 +25,14 @@ public class Interceptor extends HandlerInterceptorAdapter {
                 out.flush();
             }
         }
+        if (addr.contains("/serviceCenter/noticeWriteForm")) {
+        	if(session.getAttribute("admin") == null || session.getAttribute("admin") == "N") {
+        		response.setContentType("text/html; charset=UTF-8");
+                PrintWriter out = response.getWriter();
+                out.println("<script>alert('관리자만 가능합니다 ^^'); location.href='" + ctx + "/serviceCenter/noticeBoard';</script>");
+                out.flush();
+        	}
+        }
         return true;
     }
 

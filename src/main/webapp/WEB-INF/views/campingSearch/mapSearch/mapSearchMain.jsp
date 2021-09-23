@@ -32,6 +32,7 @@
 	<%-- 상단 메뉴바 --%>
 	<jsp:include page="../../fix/menu.jsp" />
 	<%-- 내용 넣으세요 --%>
+	<div class="mx-4">
 	<div class="row mt-1">
 		<div class="col-4">
 			<div id="menu_wrap" class="bg_white">
@@ -62,8 +63,11 @@
 		</div>
 		<div class="col-8 ms-0" style="position: relative;">
 			<div id="map"style="width: 100%; height: 780px; position: relative; overflow: hidden;  position: absolute; " ></div>
-			<div id="map1"style="width: 100%; height: 780px; position: relative; overflow: hidden; visibility:hidden; position: absolute;"  ></div>
+			<div id="map1"style="width: 100%; height: 780px; position: relative; overflow: hidden; visibility:hidden; position: absolute;"  >
+				<div id="close" style="padding: 5px; position:absolute;top:10px;left:10px;border-radius: 5px; border:1px solid #909090;box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);background: #fff;overflow: hidden;z-index: 2; cursor: pointer;">닫기</div>
+			</div>
 		</div>
+	</div>
 	</div>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script
@@ -166,7 +170,7 @@
 				   (function(marker, title) {
 			            kakao.maps.event.addListener(marker, 'click', function() {
 			                displayInfowindow(marker, title);
-			                map.setLevel(5, {anchor: marker.n});
+			                map.setLevel(7, {anchor: marker.n});
 			                map.panTo(marker.n);
 			            });
 
@@ -203,7 +207,7 @@
 					             itemEl.onclick =  function () {	         
 					                open();
 					                displayInfowindow1(marker1, title);
-					                map1.setLevel(5, {anchor: marker1.n});
+					                map1.setLevel(7, {anchor: marker1.n});
 					                map1.panTo(marker1.n);
 					            };
 
@@ -216,7 +220,7 @@
 			 
 			 //정보띄우는 함수
 			 function displayInfowindow(marker, title) {
-				    var content = '<div class="card mb-1" style="max-width: 300px;"><div class="row g-0"><div class="col-md-4">';
+				    var content = '<div class="card mx-1 my-1" style="max-width: 350px;"><div class="row g-0"><div class="col-md-4">';
                         content += '<img src="'+ title.firstImageUrl +'" class="img-fluid w-100 h-100 rounded-start me-1" alt="'+title.facltNm+'">';
                         content += '</div><div class="ms-2 col-md-7">';
                         content += '<h5 class="card-title">' + title.facltNm  + '</h5>';
@@ -229,7 +233,7 @@
 				
 				 //정보띄우는 함수
 				 function displayInfowindow1(marker, data) {
-					    var content = '<div class="card mb-1" style="max-width: 300px;"><div class="row g-0"><div class="col-md-4">';
+					    var content = '<div class="card mx-1 my-1" style="max-width: 350px;"><div class="row g-0 border-white"><div class="col-md-4">';
 	                        content += '<img src="'+ data.firstImageUrl +'" class="img-fluid w-100 h-100 rounded-start me-1" alt="'+data.facltNm+'">';
 	                        content += '</div><div class="ms-2 col-md-7">';
 	                        content += '<h5 class="card-title">' + data.facltNm  + '</h5>';
@@ -274,6 +278,12 @@
 					removeMarker1(data.list);
 					displayPlaces1(data.list);
 					displayPlaces(data.list);
+					
+					if(!data.list.length){
+						console.log("널~!")
+						printNone();
+					}
+					
 				},
 				error : function(error) {
 					console.log(error);
@@ -390,6 +400,19 @@
 		function open(){
 			document.getElementById('map1').style.visibility = "visible";
 			document.getElementById('map').style.visibility = "hidden";
+		}
+		
+		$("#close").click(function(){
+			document.getElementById('map').style.visibility = "visible";
+			document.getElementById('map1').style.visibility = "hidden";
+		});
+		
+		function printNone(){
+			var content = '<div class="text-center " style="max-width: 500px;"><div class="row g-0">';
+			content += '<h5 class="card-title">검색 결과가 없습니다. 다시 검색해주세요.</h5>'
+			content += '</div>'
+				$('#placesList').append(content);
+			  	$('#pagination').empty();
 		}
 	</script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
