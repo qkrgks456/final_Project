@@ -107,6 +107,8 @@ public class MemberController {
             result = encoder.matches(inputPass, pw);
             logger.info("결과 체크 " + result);
             if (result) {
+                String check = service.adminCheck(inputId);
+                session.setAttribute("admin", check);
                 session.setAttribute("loginId", inputId);
                 return "redirect:/";
             } else {
