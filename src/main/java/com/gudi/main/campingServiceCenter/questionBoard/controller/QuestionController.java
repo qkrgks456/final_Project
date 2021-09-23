@@ -13,12 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-
 
 import com.gudi.main.campingServiceCenter.questionBoard.service.QuestionService;
 
@@ -55,20 +52,25 @@ public class QuestionController {
     
     @RequestMapping(value = "/questionWriteForm")
 	public String questionWriteForm() {
-		return "serviceCenter/questionBoard/questionWriteForm";
+		System.out.println("폼이동");
+    	return "serviceCenter/questionBoard/questionWriteForm";
 	}
     
     @Transactional
     @RequestMapping(value = "/questionWrite")
     public ModelAndView reviewWrite(@RequestParam HashMap<String, String> params,
-    		MultipartFile[] file) {
+    		MultipartFile[] file,HttpSession session) {
     	logger.info("공지사항 작성"+params);
     	
     	
     	ModelAndView mav = new ModelAndView();
     	
+    	String loginId=(String) session.getAttribute("loginId");
+    	
+    	
+    	
     	//리뷰글 등록
-    	service.questionWrite(params);
+    	service.questionWrite(params,loginId);
     	String boardNum = String.valueOf(params.get("boardnum"));
     	System.out.println("suc은 시퀀스 넘버인가?:: "+ boardNum);
     	

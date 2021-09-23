@@ -39,7 +39,7 @@ public interface QuestionMapper {
 	void questionPhoto(String neww, String ori, String boardNum);
 */
 	
-	@Insert("INSERT INTO questionboard(boardnum, id, title, content, delcheck) VALUES (questionboard_seq.NEXTVAL, 'test', #{title}, #{content}, 'N')")
+	@Insert("INSERT INTO questionboard(boardnum, id, title, content, delcheck) VALUES (questionboard_seq.NEXTVAL, #{loginId}, #{title}, #{content}, 'N')")
 	@SelectKey(statement = {"SELECT questionboard_seq.CURRVAL FROM DUAL"}, keyProperty = "boardnum",resultType = int.class, before = false)
 	int questionWrite(HashMap<String, String> params);
 

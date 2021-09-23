@@ -80,7 +80,7 @@
         </c:if>
     </ul>
     <c:if test="${sessionScope.admin eq 'Y'}">
-        <input class="btn btn-primary" type="button" value="문의하기쓰기" onclick="location.href='questionWriteForm'">
+        <a href="${path}/serviceCenter/questionWriteForm"class="btn btn-primary" type="button">문의하기쓰기</a>
     </c:if>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

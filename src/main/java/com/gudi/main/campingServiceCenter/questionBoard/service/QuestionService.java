@@ -63,8 +63,9 @@ public class QuestionService {
 	}
 	
 
-	public int questionWrite(HashMap<String, String> params) {
-		logger.info(params.get("title") + " / " + params.get("content"));
+	public int questionWrite(HashMap<String, String> params, String loginId) {
+		//logger.info(params.get("title") + " / " + params.get("content"));
+		params.put("loginId",loginId);
 		return dao.questionWrite(params);
 
 	}
