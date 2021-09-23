@@ -17,6 +17,10 @@
         a {
             text-decoration: none;
         }
+        #id{
+        	width:15px;
+        	text-overflow:ellipsis;
+        }
     </style>
 </head>
 <body>
@@ -39,7 +43,6 @@
 					<div class="form-group col-2 m-0 p-0">
 						<select id = "selectType" class="form-select" name="selectType">
 							<option value="id" selected>아이디</option>
-							<option value="email">이메일</option>
 							<option value="content" selected>댓글 내용</option>
 						</select>
 					</div>
@@ -64,8 +67,7 @@
 					<thead>
 						<tr>
 							<th scope="col" class="col-md-2">아아디</th>
-							<th scope="col" class="col-md-2">이름</th>
-							<th scope="col" class="col-md-2">이메일</th>
+							
 							<th scope="col" class="col-md-2">댓글내용</th>
 							<th scope="col" class="col-md-2">블라인드</th>
 							<th scope="col" class="col-md-2">상세보기</th>
@@ -137,11 +139,10 @@
 		for (var i = 0; i < list.length; i++) {
 			content += "<tr>";
 			content += "<td>" + list[i].id + "</td>";
-			content += "<td>" + list[i].nickName + "</td>";
-			content += "<td>" + list[i].email + "</td>";
-			content += "<td>" + "댓글내용" + "</td>";
-			content += "<td>" + "블라인드 여부" + "</td>";
-			content += "<td>"+"<a class='btn btn-sm btn-dark' >상세보기</a>"+ "</td>";
+
+			content += "<td id='content'>" + list[i].content + "</td>";
+			content += "<td>" + list[i].delCheck + "</td>";
+			content += "<td>"+"<a class='btn btn-sm btn-dark'href='cmDetail?cmNum="+list[i].cmNum+"'>상세보기</a>"+ "</td>";
 			content += "</tr>";
 		}
 		$("#list").empty();

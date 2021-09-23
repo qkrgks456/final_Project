@@ -32,8 +32,40 @@
     <jsp:include page="../adminSidebar.jsp"/>
     <div class="col w-100 p-0">
         <div class="container px-3 my-2">
+        <h3>게시글 상세보기</h3>
+            <div class="col-md-9 mt-5 ">
             
+            <table class="table text-center">
+            <tr>
+            	<th>아이디</th>
+            	<td>${detail.id}</td>
+            </tr>
+            <tr>
+            	<th>제목</th>
+            	<td>${detail.title}</td>
+            </tr>
+            <tr>
+            	<th>내용</th>
+            	<td>${detail.content}</td>
+            </tr>
+            <tr>
+            	<th>블라인드 여부</th>
+            	<td>${detail.delCheck}</td>
+            </tr>
+            	
+            </table>
+            <div class="">
+            <c:if test="${detail.delCheck=='N'}">
+            <a class="btn btn-sm btn-dark" href='boardListBlack?boardNum=${detail.boardNum}&division=${detail.division}'>블라인드 처리</a>
+            </c:if>
+            <c:if test=""></c:if>
             
+            <c:if test="${detail.delCheck=='Y'}">
+            <a class="btn btn-sm btn-dark" href='boardListUnBlack?boardNum=${detail.boardNum}&division=${detail.division}'>블라인드 해제</a>
+            </c:if>
+            
+            <a class="btn btn-sm btn-dark" href='./boardList' >리스트로</a>
+            </div>
         </div>
     </div>
 </div>

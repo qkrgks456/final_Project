@@ -139,7 +139,16 @@ $('#searchBtn').on('click', function() {
 			content += "<td>" + list[i].nickName + "</td>";
 			content += "<td>" + list[i].delCheck + "</td>";
 			content += "<td>";
-			content += "<a class='btn btn-sm btn-dark' >블랙리스트 추가</a>";
+			if(list[i].delCheck=="Y"){
+				content += "<a class='btn btn-sm btn-dark' href='memberInfoBlackDel?id=" + list[i].id
+				+ "'>블랙리스트  해제</a>";
+			}
+			if(list[i].delCheck=="N"){
+				content += "<a class='btn btn-sm btn-dark' href='memberInfoBlackList?id=" + list[i].id
+				+ "&nickName="+list[i].nickName+"'>블랙리스트  추가</a>";
+			}
+			
+			
 			content += "</td>";
 			content += "</tr>";
 		}

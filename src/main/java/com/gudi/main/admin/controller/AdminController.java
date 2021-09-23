@@ -2,6 +2,7 @@ package com.gudi.main.admin.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gudi.main.admin.service.AdminService;
+import com.gudi.main.dtoAll.BoardDTO;
+import com.gudi.main.dtoAll.CommentDTO;
 import com.gudi.main.dtoAll.MemberDTO;
 
 @Controller
@@ -50,7 +53,7 @@ public class AdminController {
     	logger.info("관리자 임명");
         return adminService.adminInsertList();
     }
-
+    
     @RequestMapping(value = "/adminInsertAuthority",method = RequestMethod.GET)
     public String adminInsertAuthority(@RequestParam("id") String id){
     	logger.info("관리자 임명 버튼 클릭");
@@ -97,12 +100,30 @@ public class AdminController {
     	logger.info("회원정보 조회Ajax");
         return adminService.memberInfo();
     }
+    @RequestMapping(value = "/memberInfoBlackDel")
+    public String memberInfoBlackDel(@RequestParam("id") String id) {
+    	logger.info("회원 블랙리스트 제거 조회");
+    	logger.info("id: "+id+" 회원 블랙리스트 제거");
+    	adminService.memberInfoBlackDel(id);
+        return "admin/list/memberInfo";
+    }
     
     @RequestMapping(value = "/memberInfoBlackList")
-    public String memberInfoBlackList() {
-    	logger.info("회원 블랙리스트 추가/제거 조회");
+    public String memberInfoBlackList(@RequestParam("id") String id,@RequestParam("nickName") String nickName, Model model) {
+    	logger.info("id: "+id+" 회원 블랙리스트 추가 페이지");
+    	model.addAttribute("id",id);
+    	model.addAttribute("nickName",nickName);
         return "admin/list/memberInfoBlackList";
     }
+    
+    @RequestMapping(value = "/memberInfoBlackInsert")
+    public String memberInfoBlackInsert(@RequestParam("id") String id,@RequestParam("reason") String reason) {
+    	logger.info("id: "+id+" 회원 블랙리스트 추가");
+    	logger.info("사유: " +reason);
+    	adminService.memberInfoBlackInsert(id, reason);
+        return "admin/list/memberInfo";
+    }
+    
     
     @RequestMapping(value = "/memberReserve")
     public String memberReserve() {
@@ -133,11 +154,45 @@ public class AdminController {
     	logger.info("셀렉터: "+selectType+", 검색내용: "+boardListSearch);
         return adminService.boardListSearch(selectType,boardListSearch);
     }
+    @RequestMapping(value = "/boardListDetailInfo",method = RequestMethod.GET)
+    public String boardListDetailInfo(@RequestParam("boardNum") String boardNum,@RequestParam("division") String division,Model model){
+    	logger.info("게시글 상세");
+    	logger.info("게시글 번호: "+boardNum+"게시판 구분: "+division);
+    	BoardDTO detail =adminService.boardListDetailInfo(boardNum,division);
+    	model.addAttribute("detail", detail);
+    	logger.info(detail.getId());
+        return "admin/list/boardListDetail";
+    }
+    
+    @RequestMapping(value = "/boardListBlack",method = RequestMethod.GET)
+    public String boardListBlack(@RequestParam("boardNum") String boardNum,@RequestParam("division") String division){
+    	logger.info("게시글 블랙리스트 추가");;
+    	logger.info("게시글 번호: "+boardNum+"게시판 구분: "+division);
+    	adminService.boardListBlack(boardNum,division);
+        return "admin/list/boardList";
+    }
+    
+    @RequestMapping(value = "/boardListUnBlack",method = RequestMethod.GET)
+    public String boardListUnBlack(@RequestParam("boardNum") String boardNum,@RequestParam("division") String division){
+    	logger.info("게시글 블랙리스트 해제");
+    	logger.info("게시글 번호: "+boardNum+"게시판 구분: "+division);
+    	adminService.boardListUnBlack(boardNum,division);
+        return "admin/list/boardList";
+    }
     
     @RequestMapping(value = "/comment")
     public String comment(Model model) {
         return "admin/comment/comment";
     }
+    @RequestMapping(value = "/cmDetail")
+    public String cmDetail(@RequestParam("cmNum") String cmNum,Model model) {
+    	logger.info("댓글 상세보기");
+    	logger.info(cmNum+"번 상세보기");
+    	CommentDTO detail = adminService.cmDetail(cmNum);
+    	model.addAttribute("detail", detail);
+        return "admin/comment/cmDetail";
+    }
+    
     
     @ResponseBody
     @RequestMapping(value = "/commentListAjax")
