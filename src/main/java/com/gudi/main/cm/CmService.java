@@ -15,7 +15,8 @@ import com.gudi.main.util.HansolUtil;
 public class CmService {
     @Autowired
     CmMapper cmMapper;
-    @Autowired AlarmMapper alarm;
+    @Autowired
+    AlarmMapper alarm;
 
     // 해당 댓글리스트 가져오기
     @Transactional
@@ -37,8 +38,10 @@ public class CmService {
         // 댓글 인서트
         int suc = cmMapper.cmInsert(loginId, commentContent, contentId, division);
         // 알람 인서트
-        String cm ="cm";
-       alarm.insert(loginId, contentId, division,cm);
+        String cm = "cm";
+        if (!division.equals("parking")) {
+            alarm.insert(loginId, contentId, division, cm);
+        }
         // 리스트 뿌려주기
         HashMap<String, Object> map = cmList(contentId, division, 1);
         map.put("loginId", loginId);

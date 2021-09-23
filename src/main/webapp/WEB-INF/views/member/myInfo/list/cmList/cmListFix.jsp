@@ -24,6 +24,6 @@
     </li>
     <li class="nav-item">
         <a id="menuSix" class="nav-link text-dark fs-4 rounded-0"
-           href="${path}/myInfo/cmList/1/car">차박정보</a>
+           href="${path}/myInfo/cmList/1/parking">차박정보</a>
     </li>
 </ul>
