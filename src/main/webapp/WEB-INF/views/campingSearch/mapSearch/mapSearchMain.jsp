@@ -85,7 +85,7 @@
     var mapContainer = document.getElementById('map'),
         mapOption = {
             center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
-            level: 15, // 지도의 확대 레벨
+            level: 12, // 지도의 확대 레벨
             mapTypeId: kakao.maps.MapTypeId.HYBRID
         };
 
@@ -95,7 +95,7 @@
     var mapContainer1 = document.getElementById('map1'), // 지도를 표시할 div
         mapOption1 = {
             center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
-            level: 15, // 지도의 확대 레벨
+            level: 12, // 지도의 확대 레벨
             mapTypeId: kakao.maps.MapTypeId.ROADMAP
         };
 
@@ -372,7 +372,7 @@
     	 var imageSrc = "${path}/resources/img/mapMarker.png", // 마커 이미지 url, 스프라이트 이미지를 씁니다
             imageSize = new kakao.maps.Size(40, 42),  // 마커 이미지의 크기
             markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-        for (var i = 0; i < markers.length; i++) {
+        for (var i = 0; i < markers1.length; i++) {
             markers1[i].setImage(markerImage);
         }
     }; 
