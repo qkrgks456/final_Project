@@ -29,14 +29,13 @@ public class QuestionController {
     @Autowired
     QuestionService service;
     
-    @RequestMapping(value = "/questionBoard")
-    public ModelAndView questionBoard() {
-    	int page = 1;
+    @RequestMapping(value = "/questionBoard/{page}")
+    public ModelAndView questionBoard(@PathVariable int page) {
         logger.info("공지사항입장");
         return service.list(page);
     }
     
-    @ResponseBody
+   /* @ResponseBody
     @RequestMapping(value = "/questionBoardList/{pagePerNum}/{page}", method = RequestMethod.GET)
     public HashMap<String, Object> list(@PathVariable int pagePerNum, @PathVariable int page) {
         logger.info("공지사항 리스트");
@@ -44,7 +43,7 @@ public class QuestionController {
         logger.info("pagePerNum : {} / page : {}", pagePerNum, page);
         HashMap<String, Object> map = service.list(page, pagePerNum);
         return map;
-    }
+    }*/
 
     @RequestMapping(value = "/questionDetail/{boardNum}")
     public ModelAndView questionDetail(@PathVariable int boardNum,HttpSession session) {

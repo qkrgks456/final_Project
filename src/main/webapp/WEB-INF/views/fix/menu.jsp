@@ -10,7 +10,6 @@
         </div>
         <div>
             <div class="d-flex justify-content-center">
-                <a class="nav-link fs-5 mx-3 text-black mt-2" href="${path}/campingAll/AllList">전체</a>
                 <div class="dropdown">
                     <a class="nav-link fs-5 mx-3 text-black mt-2" data-bs-toggle="dropdown"
                        aria-expanded="true" href="">검색</a>
@@ -41,7 +40,7 @@
                     <a class="nav-link fs-5 mx-3 text-black mt-2" data-bs-toggle="dropdown"
                        aria-expanded="true" href="">고객센터</a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton4">
-                        <li><a class="dropdown-item" href="${path}/serviceCenter/questionBoard">문의하기</a></li>
+                        <li><a class="dropdown-item" href="${path}/serviceCenter/questionBoard/1">문의하기</a></li>
                         <li><a class="dropdown-item" href="${path}/serviceCenter/noticeBoard">공지사항</a></li>
                     </ul>
                 </div>

@@ -236,7 +236,8 @@
                         <tr>
                             <td class="py-3">
                                 <div class="target">
-                                    <a class="text-decoration-none text-dark" href="">${lists.title}</a>
+                                    <a class="text-decoration-none text-dark"
+                                       href="${path}/campingTalk/reviewDetail/${lists.boardNum}">${lists.title}</a>
                                 </div>
                             </td>
                         </tr>
@@ -267,7 +268,7 @@
             <div class="col-md-3 border-end text-center">
                 <div class="d-flex">
                     <h1>문의하기</h1>
-                    <a href="" class="ms-2 mt-1 text-decoration-none text-dark"><i
+                    <a href="${path}/serviceCenter/questionBoard/1" class="ms-2 mt-1 text-decoration-none text-dark"><i
                             class="bi bi-plus-circle fs-1"></i></a>
                 </div>
                 <table class="table table-hover px-2">
@@ -276,7 +277,8 @@
                         <tr>
                             <td class="py-3">
                                 <div class="target">
-                                    <a class="text-decoration-none text-dark" href="">${lists.title}</a>
+                                    <a class="text-decoration-none text-dark"
+                                       href="${path}/serviceCenter/questionDetail/${lists.boardNum}">${lists.title}</a>
                                 </div>
                             </td>
                         </tr>
@@ -287,7 +289,7 @@
             <div class="col-md-3 text-center">
                 <div class="d-flex">
                     <h1>공지사항</h1>
-                    <a href="" class="ms-2 mt-1 text-decoration-none text-dark"><i
+                    <a href="${path}/serviceCenter/noticeBoard/1" class="ms-2 mt-1 text-decoration-none text-dark"><i
                             class="bi bi-plus-circle fs-1"></i></a>
                 </div>
                 <table class="table table-hover px-2">
@@ -296,7 +298,8 @@
                         <tr>
                             <td class="py-3">
                                 <div class="target">
-                                    <a class="text-decoration-none text-dark" href="">${lists.title}</a>
+                                    <a class="text-decoration-none text-dark"
+                                       href="${path}/serviceCenter/noticeDetail/${lists.boardNum}">${lists.title}</a>
                                 </div>
                             </td>
                         </tr>

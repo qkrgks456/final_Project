@@ -32,6 +32,11 @@ public class MainController {
         return "main";
     }
 
+    @RequestMapping(value = "/exp")
+    public String exp(HttpSession session, Model model) {
+        return "exception/error";
+    }
+
     @ResponseBody
     @RequestMapping(value = "/MainPageNation/{page}/{location}")
     public HashMap<String, Object> MainPageNation(HttpSession session, @PathVariable int page, @PathVariable String location) {
