@@ -81,9 +81,12 @@
 		var mapContainer = document.getElementById('map'),
 		mapOption = {
 			center : new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
-			level : 11, // 지도의 확대 레벨
+			level : 15, // 지도의 확대 레벨
 			mapTypeId : kakao.maps.MapTypeId.HYBRID
 		};
+		
+		/* var zoomControl = new kakao.maps.ZoomControl();
+		map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT); */
 		
 		var mapContainer1 = document.getElementById('map1'), // 지도를 표시할 div 
 		mapOption1 = {
@@ -108,8 +111,8 @@
 		 var bbb = aaa.replace(/\(|\)| /g,'');
 		// console.log(bbb);
 		 var ccc = bbb.split(",");
-		 console.log(ccc[0]);//위도 
-		 console.log(ccc[1]);//경도
+		 //console.log(ccc[0]);//위도 
+		// console.log(ccc[1]);//경도
 		 var wido = ccc[0];
 		 var kyongdo = ccc[1];
 		 $.ajax({
@@ -186,7 +189,11 @@
 			 function displayPlaces1(place){
 				 var listEl = document.getElementById('placesList'), 
 				    menuEl = document.getElementById('menu_wrap'),
-				    fragment = document.createDocumentFragment(); 
+				    fragment = document.createDocumentFragment();
+				//마커 바꾸기
+				 /* var cimageSrc = "${path}/resources/img/clickMarker.png",
+			        cimageSize = new kakao.maps.Size(50, 52),
+			        cmarkerImage = new kakao.maps.MarkerImage(cimageSrc, cimageSize); */
 				
 				 removeAllChildNods(listEl);
 					 for (var i = 0; i < place.length; i++) {
@@ -201,6 +208,8 @@
 					                displayInfowindow1(marker1, title);
 					                map1.setLevel(5, {anchor: marker1.n});
 					                map1.panTo(marker1.n);
+					                //마커바꾸기
+					                //marker1.setImage(cmarkerImage);
 					            });
 
 					            
@@ -209,6 +218,10 @@
 					                displayInfowindow1(marker1, title);
 					                map1.setLevel(7, {anchor: marker1.n});
 					                map1.panTo(marker1.n);
+					                //마커바꾸기
+					               // marker1.setImage(cmarkerImage);
+					                
+					                
 					            };
 
 
@@ -272,7 +285,7 @@
 				dataType : 'json',
 				success : function(data) { //데이터가 성공적으로 들어왔다면
 					var check = true;
-					console.log(data);
+					//console.log(data);
 					//listPrint(data.list); //리스트 그리기
 					pagePrint(data);
 					removeMarker1(data.list);
@@ -280,7 +293,7 @@
 					displayPlaces(data.list);
 					
 					if(!data.list.length){
-						console.log("널~!")
+						//console.log("널~!")
 						printNone();
 					}
 					
