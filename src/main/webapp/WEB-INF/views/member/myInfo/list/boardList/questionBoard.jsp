@@ -18,6 +18,7 @@
         a {
             text-decoration-line: none;
         }
+
         .active {
             background-color: #ffc107 !important;
         }
@@ -53,7 +54,9 @@
                         <tbody>
                         <c:forEach items="${map.list}" var="lists">
                             <tr>
-                                <td class="py-3 align-middle">${lists.title}</td>
+                                <td class="py-3 align-middle"><a
+                                        href="${path}/serviceCenter/questionDetail/${lists.boardNum}">${lists.title}</a>
+                                </td>
                                 <td class="py-3 align-middle">${lists.dates}</td>
                                 <td class="py-3 align-middle">${lists.content}</td>
                             </tr>

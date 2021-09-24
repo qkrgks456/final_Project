@@ -35,7 +35,7 @@ public interface MyInfoMapper {
     @Delete("DELETE FROM reserve WHERE reserveNum = #{param1}")
     void reserveCancel(int reserveNum);
 
-    @Select("SELECT COUNT(cmNum) FROM cm WHERE id = #{param1} AND division = #{param2}")
+    @Select("SELECT COUNT(cmNum) FROM cm WHERE id = #{param1} AND division = #{param2} AND delCheck='N'")
     int myCmTotal(String loginId, String division);
 
     /*@Select("SELECT * FROM cm WHERE id = #{param1} AND division = #{param3} ORDER BY cmNum DESC OFFSET #{param2} ROWS FETCH FIRST 15 ROWS ONLY")*/

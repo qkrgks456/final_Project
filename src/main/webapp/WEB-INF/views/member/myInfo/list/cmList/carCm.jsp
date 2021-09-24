@@ -46,9 +46,9 @@
                     <table class="table table-hover mt-3">
                         <thead>
                         <tr>
-                            <th class="fs-5 col-2" scope="col">주차장명</th>
-                            <th class="fs-5 col-3" scope="col">작성일자</th>
-                            <th class="fs-5 col-7" scope="col">내용</th>
+                            <th class="fs-5 col-3" scope="col">주차장명</th>
+                            <th class="fs-5 col-2" scope="col">작성일자</th>
+                            <th class="fs-5" scope="col">내용</th>
                         </tr>
                         </thead>
                         <tbody>

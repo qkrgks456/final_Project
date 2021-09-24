@@ -48,7 +48,7 @@ public class MyInfoService {
     public HashMap<String, Object> reserveList(String loginId, int page) {
         int start = 0;
         if (page != 1) {
-            start = (page - 1) * 8;
+            start = (page - 1) * 15;
         }
         int total = dao.reserveTotal(loginId);
         HashMap<String, Object> map = HansolUtil.pagination(page, 15, total);
@@ -65,7 +65,7 @@ public class MyInfoService {
     public HashMap<String, Object> myCmList(String loginId, int page, String division) {
         int start = 0;
         if (page != 1) {
-            start = (page - 1) * 8;
+            start = (page - 1) * 15;
         }
         int total = dao.myCmTotal(loginId, division);
         ArrayList<CommentDTO> list = dao.myCmList(loginId, start, division);
@@ -77,7 +77,7 @@ public class MyInfoService {
     public HashMap<String, Object> reviewList(String loginId, int page, String division) {
         int start = 0;
         if (page != 1) {
-            start = (page - 1) * 8;
+            start = (page - 1) * 15;
         }
         int total = dao.myBoardTotal(loginId, division);
         ArrayList<BoardDTO> list = dao.reviewList(loginId, start, division);
@@ -89,7 +89,7 @@ public class MyInfoService {
     public HashMap<String, Object> wantToGo(String loginId, int page) {
         int start = 0;
         if (page != 1) {
-            start = (page - 1) * 8;
+            start = (page - 1) * 15;
         }
         int total = dao.wantToGoTotal(loginId);
         ArrayList<CampingDTO> list = dao.wantToGoCampingList(loginId, start);
@@ -102,7 +102,7 @@ public class MyInfoService {
     public HashMap<String, Object> reportCmList(int page, String loginId) {
         int start = 0;
         if (page != 1) {
-            start = (page - 1) * 8;
+            start = (page - 1) * 15;
         }
         int total = dao.reportCmTotal(loginId);
         ArrayList<CommentReportDTO> list = dao.reportCmList(loginId, start);
