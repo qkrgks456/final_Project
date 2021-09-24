@@ -30,7 +30,7 @@ public interface NoticeMapper {
 	@Select("select * from noticeboard where boardnum = #{boardnum}")
 	BoardDTO detail(int boardNum);
 
-	@Select("SELECT photonum, newFileName, oriFileName, id, dates FROM photo WHERE division = 'noticeboard' and divisionnum = #{boardnum}")
+	@Select("SELECT photonum, newFileName, oriFileName, id, dates FROM photo WHERE division = 'notice' and divisionnum = #{boardnum}")
 	ArrayList<PhotoDTO> file(int boardNum);
 
 	@Insert("INSERT INTO photo(photonum, id, division, newfilename, orifilename, divisionnum) VALUES (photo_seq.NEXTVAL, #{param4}, 'notice', #{param1}, #{param2}, #{param3})")
@@ -40,7 +40,7 @@ public interface NoticeMapper {
 	@SelectKey(statement = {"SELECT noticeboard_seq.CURRVAL FROM DUAL"}, keyProperty = "boardnum",resultType = int.class, before = false)
 	int noticeWrite(HashMap<String, String> params);
 
-	@Select("SELECT newfilename, orifilename FROM photo WHERE division = 'noticeboard' AND divisionnum = #{param1}")
+	@Select("SELECT newfilename, orifilename FROM photo WHERE division = 'notice' AND divisionnum = #{param1}")
 	ArrayList<PhotoDTO> callPhoto(int boardNum);
 
 	@Update("UPDATE noticeboard SET delcheck = 'Y' WHERE boardnum = #{boardNum} ")
@@ -49,7 +49,7 @@ public interface NoticeMapper {
 	@Update("UPDATE noticeboard SET title = #{param1}, content = #{param2} WHERE boardnum = #{param3}")
 	int noticeUpdate(String title, String content, int boardNum);
 
-	@Delete("DELETE photo WHERE newfilename= #{param1} AND division = 'noticeboard' AND divisionnum = #{param2}")
+	@Delete("DELETE photo WHERE newfilename= #{param1} AND division = 'notice' AND divisionnum = #{param2}")
 	void photoDel(String newFileName, int boardNum);
 
 	@Select("SELECT COUNT(boardnum) FROM noticeboard where delcheck='N'")
