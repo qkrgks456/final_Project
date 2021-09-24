@@ -336,6 +336,19 @@ public class AdminService {
 		return detail;
 	}
 
+	public CommentReportDTO reportCmDetail(String cmNum) {
+		logger.info("신고 댓글 상세보기 서비스");
+		CommentReportDTO detail = new CommentReportDTO();
+		detail=dao.reportCmDetail(cmNum);
+		return detail;
+	}
+
+	public void reportCommentProcess(int cmReportNum) {
+		logger.info("신고댓글 처리 서비스");
+		int success = dao.reportCommentProcess(cmReportNum);
+		
+	}
+
 	
 	
 	

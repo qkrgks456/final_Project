@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.gudi.main.admin.service.AdminService;
 import com.gudi.main.dtoAll.BoardDTO;
 import com.gudi.main.dtoAll.CommentDTO;
+import com.gudi.main.dtoAll.CommentReportDTO;
 import com.gudi.main.dtoAll.MemberDTO;
 
 @Controller
@@ -193,6 +194,14 @@ public class AdminController {
         return "admin/comment/cmDetail";
     }
     
+    @RequestMapping(value = "/reportCmDetail")
+    public String reportCmDetail(@RequestParam("cmNum") String cmNum,Model model) {
+    	logger.info("신고 댓글 상세보기");
+    	logger.info(cmNum+"번 상세보기");
+    	CommentReportDTO detail = adminService.reportCmDetail(cmNum);
+    	model.addAttribute("detail", detail);
+        return "admin/comment/reportCmDetail";
+    }
     
     @ResponseBody
     @RequestMapping(value = "/commentListAjax/{page}")
@@ -219,6 +228,13 @@ public class AdminController {
     public HashMap<String, Object> reportCommentList(@PathVariable int page) {
         return adminService.reportCommentList(page);
     }
+    @RequestMapping(value = "/reportCommentProcess")
+    public String reportCommentProcess(@RequestParam int cmReportNum) {
+    	logger.info("신고댓글 처리: "+cmReportNum);
+    	adminService.reportCommentProcess(cmReportNum);
+        return "admin/comment/reportComment";
+    }
+    
     
     
 

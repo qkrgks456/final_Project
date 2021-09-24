@@ -88,6 +88,8 @@ a {
 	<script src="${path}/resources/js/common.js"></script>
 </body>
 <script>
+var searchCheck = 0;
+if(searchCheck=0){
 $(document).on('click','.page-info',function(){
 	let page = $(this).attr('page');
 	$.ajax({
@@ -102,6 +104,23 @@ $(document).on('click','.page-info',function(){
 		}
 	});
 })
+}
+if(searchCheck=1){
+	$(document).on('click','.page-info',function(){
+		let page = $(this).attr('page');
+		$.ajax({
+			url: 'memberInfoAjax/'+page,
+			type: 'get',
+			dataType: 'json',
+			success:function(map){
+				memberInfoList(map);
+			},
+			error:function(error){
+				console.log(error);
+			}
+		});
+	})
+}
 
 memberInfo();
 $('#memberInfoSearch').on('keypress', function(e) {
@@ -109,10 +128,13 @@ $('#memberInfoSearch').on('keypress', function(e) {
 		$('#searchBtn').click();
 	}
 });
+
 $('#searchBtn').on('click', function() {
 	//var selectType = $("#selectType").val();
 	//var insertSearch=$("#insertSearch").val();
 	//console.log("타입: "+ selectType+ "내용: "+insertSearch);
+	searchCheck = 1;
+	console.log("서치 여부: " +searchCheck);
 	$.ajax({
 		url : 'memberInfoSearch/1/'+$("#memberInfoSearch").val()+"/"+$("#selectType").val(),
 		type : 'get',
@@ -125,6 +147,8 @@ $('#searchBtn').on('click', function() {
 			console.log(error);
 		}
 	});
+		
+	
 });
 
 	
@@ -142,6 +166,7 @@ $('#searchBtn').on('click', function() {
 			}
 
 		});
+		
 	}
 	function memberInfoList(map) {
 		var content = "";

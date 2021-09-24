@@ -47,6 +47,7 @@ public class RecipeService {
             page = (page - 1) * display;
         }
         
+       
         
         String apiURL = "https://openapi.naver.com/v1/search/blog?query=" + text+"&start="+page+"&display="+display;    // json 결과
        
@@ -57,9 +58,11 @@ public class RecipeService {
         requestHeaders.put("X-Naver-Client-Secret", clientSecret);
         String responseBody = get(apiURL,requestHeaders); //주소와 헤더
         
+        //int total = Integer.parseInt((String)map.get("total"));
+        //int total=3051;//임시
+		//map = HansolUtil.pagination(page, 10, total);
         
-        
-        HashMap<String, Object> map = new HashMap<String, Object>();
+        HashMap<String, Object> map2 = new HashMap<String, Object>();
         System.out.println(responseBody);
         
        
@@ -67,17 +70,17 @@ public class RecipeService {
         if(!responseBody.contains("Fail")) {
 			ObjectMapper mapper = new ObjectMapper();
 			try {
-				 map = mapper.readValue(responseBody, new TypeReference<HashMap<String, Object>>(){});//문자열을,무엇으로 변환 할 것이냐?
+				 map2 = mapper.readValue(responseBody, new TypeReference<HashMap<String, Object>>(){});//문자열을,무엇으로 변환 할 것이냐?
 			} catch (Exception e) {
 				e.printStackTrace();
 			} 			
 		}		
-		map.put("blogApi", responseBody);
+		map2.put("blogApi", responseBody);
+		ArrayList<HashMap<String, Object>> list = (ArrayList<HashMap<String, Object>>) map2.get("data");
+		 logger.info("토탈:"+map2.get("total"));
 		
-		ArrayList<HashMap<String, Object>> list = (ArrayList<HashMap<String, Object>>) map.get("data");
-		 //int total = parse.int(map.get("total"));
-	      //map = HansolUtil.pagination(page, 10, total);
-		return map;
+		 
+		return map2;
     }
 
 
