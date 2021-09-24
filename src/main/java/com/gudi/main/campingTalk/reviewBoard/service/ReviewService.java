@@ -73,9 +73,7 @@ public class ReviewService {
 	public ModelAndView reviewList(int page) {
 		ModelAndView mav = new ModelAndView();
 		int total = dao.total();
-		
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map = HansolUtil.pagination(page, 10, total);
+		HashMap<String, Object> map = HansolUtil.pagination(page, 10, total);
 		
 		if (page == 1) {
 			page = 0;

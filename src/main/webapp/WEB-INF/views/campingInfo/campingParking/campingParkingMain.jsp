@@ -386,7 +386,7 @@
 //추천순위 클릭시 상세보기
 $('document').ready(function(){
 	
-	$('g[role="menuitem"]:eq(0)').on("click",function(){
+	$('g[role="menuitem"]:eq(0)').on("click",,function(){
 		console.log("0클릭");
 		location.href="./freeParkDetail/${rank.get(0).getDivisionNum()}";
 	});	
