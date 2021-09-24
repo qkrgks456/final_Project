@@ -22,14 +22,14 @@
 <%-- 공통 css --%>
 <link href="${path}/resources/css/common.css?var=2" rel="stylesheet">
 <style>
-#dimention{
-	height:750px;
-}
-#blog{
-	width:800px;
-	height:750px;
+#dimention {
+	height: 750px;
 }
 
+#blog {
+	width: 800px;
+	height: 750px;
+}
 </style>
 </head>
 <body>
@@ -43,13 +43,15 @@
 	<%-- 상단 메뉴바 --%>
 	<jsp:include page="../fix/menu.jsp" />
 	<%-- 내용 넣으세요 --%>
-	<div class="container px-3">
-		<h3>캠핑 레시피</h3>
+	<div class="mx-3">
+		<div class="border-bottom mb-3 border-dark">
+			<h2 class="">캠핑레시피</h2>
+		</div>
 		<h5 id="total"></h5>
-		<div class="d-flex justify-content-start">
-			<div class="col-5 m-0 p-0">
+		<div class="row">
+			<div class="col-4 ms-3">
 				<!-- 왼쪽으로 당기기 -->
-				<div class="row">
+				<div class="row mb-2">
 					<!-- 검색 공간 -->
 					<div class=" col-10 ps-3 pe-0">
 						<input type="text" class="form-control" id="searchInput"
@@ -61,24 +63,18 @@
 					</div>
 				</div>
 				<!-- 레시피 부분 -->
-				<div id ="scroll" class="overflow-scroll">
-				<div id="dimention" class="d-flex justify-content-start row">
-					<div id="card" class="row row-cols-1 row-cols-md-2 g-4">
-					
+				<div id="scroll" class="overflow-scroll">
+					<div id="dimention" class="d-flex justify-content-start row">
+						<div id="card" class="row row-cols-1 row-cols-md-2 g-4"></div>
 					</div>
-
 				</div>
+				<div id="paginationBox">
 				</div>
-
 			</div>
-			<div id="blog" class="ml-3">블로그화면 공간
-			<div class="ratio ratio-16x9">
- 			 <iframe src="https://blog.naver.com/esther78944/222498429159" title="YouTube video" allowfullscreen>
- 			 
- 			 </iframe>
+			<div id="blog" class="ms-3">
+			<iframe id="link"
+					src="https:\/\/blog.naver.com\/duri3576?Redirect=Log&logNo=222298424685" style="width:1200px;height:820px;margin-left:60px"> </iframe>
 			</div>
-			</div>
-			<p id="blog"></p>
 		</div>
 	</div>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -86,14 +82,38 @@
 	<script src="${path}/resources/js/bootstrap.bundle.js"></script>
 	<script src="${path}/resources/js/common.js"></script>
 	<script>
+		$(document).on('click','.page-info',function(){
+			let page = $(this).attr('page');
+			$.ajax({
+				url: 'RecipeApi/'+page+'/'+search,
+				type: 'get',
+				dataType: 'json',
+				success:function(map){
+					memberInfoList(map);
+				},
+				error:function(error){
+					console.log(error);
+				}
+			});
+		})
 	
-		
+		var firstLink="";
+		//$(document).
+		$(document).on('click',".clickCard",function(){
+			let url = $(this).attr('url');
+			console.log(url)
+			$("#link").attr('src',url);
+		});
+	
 		var search = "캠핑";
 		blog(search);
 		
 		$('#searchBtn').on('click',function(){
 			search=$("#searchInput").val();
 			blog(search);
+		});
+		$('#clickCard').on('click',function(){
+			//
 		});
 		
 		$('#searchInput').on('keypress', function(e) {
@@ -106,44 +126,68 @@
 				$("#card").empty();
 					search += "레시피";
 					$.ajax({
-						url : 'RecipeApi',
+						url : 'RecipeApi/1/'+search,
 						type : 'GET',
-						data : {
-							"search" : search,
-							"page" : 1,
-							"perPage" : 10
-						},
+					
 						dataType : 'JSON',
-						success : function(data) {
-							console.log(data);
-							var content = "";
-
-							$("#total").empty();
-							$("#total").append("총 검색 수: " + data.total);
+						success : function(map) {
+							console.log(map);
+							RecipeList(map);
 							
-							//블로그 게시물들
-							for (var i = 0; i < data.items.length; i++){
-								//카드
-							content = "";
-							content += "<div class='col'>";
-							content += "<div class='card border-dark'>";
-							content += "<div class='card-body'>";
-							content += "<h5 class='card-title'>"+data.items[i].title+"</h5>";
-							content += "<p class='card-text'>"+data.items[i].description+"</p>";
-							content += "</div>";
-							content += "</div>";
-							content += "</div>";
-							$("#card").append(content);
-							}
-							
-
 						},
 						error : function(e) {
 							console.log(e);
-						}
+						}// data.items[i].link 바꿀링크
 					});
 			}
-			
+			function RecipeList(map){
+				var content = "";
+
+				$("#total").empty();
+				$("#total").append("총 검색 수: " + map.total);
+				
+				//블로그 게시물들
+				for (var i = 0; i < map.items.length; i++){
+					//카드
+				content = "";
+				content += "<div class='col'>";
+				content += "<div id='' class='clickCard card border-dark' url='"+map.items[i].link+"' style='cursor:pointer'>";
+				content += "<div class='card-body'>";
+				content += "<h5 class='card-title'>"+map.items[i].title+"</h5>";
+				content += "<p class='card-text'>"+map.items[i].description+"</p>";
+				content += "</div>";
+				content += "</div>";
+				content += "</div>";
+				$("#card").append(content);
+				}
+				//페이지네이션
+				 content = '';
+				    content += '<ul class="pagination justify-content-center">'
+				    if (map.startPage != 1) {
+				        content += '<li class="page-item">'
+				        content += '<a class="page-link page-info" page="' + (map.startPage - 1) + '" aria-label="Previous" style="cursor:pointer;">'
+				        content += '<span aria-hidden="true">&laquo;</span>'
+				        content += '</a>'
+				        content += '</li>'
+				    }
+				    for (let i = map.startPage; i <= map.endPage; i++) {
+				        if (map.currPage != i) {
+				            content += '<li class="page-item"><a style="cursor:pointer;" class="page-link page-info" page="' + i + '" >' + i + '</a></li>'
+				        } else {
+				            content += '<li class="page-item active"><a class="page-link">' + i + '</a></li>'
+				        }
+				    }
+				    if (map.totalPage != map.endPage) {
+				        content += '<li class="page-item">'
+				        content += '<a class="page-link page-info" page="' + (map.endPage + 1) + '" aria-label="Next" style="cursor:pointer;">'
+				        content += '<span aria-hidden="true">&raquo;</span>'
+				        content += '</a>'
+				        content += '</li>'
+				    }
+				    content += '</ul>'
+				    $('#paginationBox').empty();
+				    $('#paginationBox').append(content);
+			}
 	</script>
 </body>
 

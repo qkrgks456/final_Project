@@ -77,6 +77,8 @@ a {
 							<!-- 가져올 리스트 -->
 						</tbody>
 					</table>
+					<div id="paginationBox">
+					</div>
 				</div>
 			</div>
 		</div>
@@ -87,6 +89,22 @@ a {
 		<script src="${path}/resources/js/common.js"></script>
 </body>
 <script>
+$(document).on('click','.page-info',function(){
+	let page = $(this).attr('page');
+	$.ajax({
+		url: 'adminInsertAjax/'+page,
+		type: 'get',
+		dataType: 'json',
+		success:function(map){
+			adminList(map);
+		},
+		error:function(error){
+			console.log(error);
+		}
+	});
+})
+
+
 	adminInsert();
 	$('#insertSearch').on('keypress', function(e) {
 		if (e.keyCode == '13') {
@@ -98,16 +116,11 @@ a {
 		//var insertSearch=$("#insertSearch").val();
 		//console.log("타입: "+ selectType+ "내용: "+insertSearch);
 		$.ajax({
-			url : 'insertSearch',
+			url : 'insertSearch/1/'+$("#insertSearch").val()+"/"+$("#selectType").val(),
 			type : 'get',
-			data : {
-				insertSearch : $("#insertSearch").val(),
-				selectType : $("#selectType").val()
-			},
 			dataType : 'JSON',
-			success : function(data) {
-				console.log(data);
-				adminList(data.list);
+			success : function(map) {
+				adminList(map);
 			},
 			error : function(error) {
 				console.log(error);
@@ -119,12 +132,11 @@ a {
 		console.log("jsp에서 관리자 ajax조회");
 
 		$.ajax({
-			url : 'adminInsertAjax',
+			url : 'adminInsertAjax/1',
 			type : 'get',
 			dataType : 'json',
-			success : function(data) {
-				console.log(data);
-				adminList(data.list);
+			success : function(map) {
+				adminList(map);
 			},
 			error : function(error) {
 				console.log(error);
@@ -134,21 +146,53 @@ a {
 	}
 	/* onclick='location.href=/final_Project/adminInsertAuthority' */
 	/* 관리자 임명 리스트 출력 */
-	function adminList(list) {
+	function adminList(map) {
 		var content = "";
-		for (var i = 0; i < list.length; i++) {
+		for (var i = 0; i < map.list.length; i++) {
 			content += "<tr>";
-			content += "<td>" + list[i].id + "</td>";
-			content += "<td>" + list[i].nickName + "</td>";
-			content += "<td>" + list[i].email + "</td>";
-			content += "<td>";
-			content += "<a class='btn btn-sm btn-dark' href='adminInsertAuthority?id=" + list[i].id
+			content += "<td class='align-middle'>" + map.list[i].id + "</td>";
+			content += "<td class='align-middle'>" + map.list[i].nickName + "</td>";
+			content += "<td class='align-middle'>" + map.list[i].email + "</td>";
+			content += "<td class='align-middle'>";
+			content += "<a class='btn btn-sm btn-dark' href='adminInsertAuthority?id=" + map.list[i].id
 					+ "'>임명</a>";
 			content += "</td>";
 			content += "</tr>";
 		}
 		$("#list").empty();
 		$("#list").append(content);
+		
+		
+		
+		
+		/* 페이지네이션 불러오기 욕나오네 */
+	    content = '';
+	    content += '<ul class="pagination justify-content-center">'
+	    if (map.startPage != 1) {
+	        content += '<li class="page-item">'
+	        content += '<a class="page-link page-info" page="' + (map.startPage - 1) + '" aria-label="Previous" style="cursor:pointer;">'
+	        content += '<span aria-hidden="true">&laquo;</span>'
+	        content += '</a>'
+	        content += '</li>'
+	    }
+	    for (let i = map.startPage; i <= map.endPage; i++) {
+	        if (map.currPage != i) {
+	            content += '<li class="page-item"><a style="cursor:pointer;" class="page-link page-info" page="' + i + '" >' + i + '</a></li>'
+	        } else {
+	            content += '<li class="page-item active"><a class="page-link">' + i + '</a></li>'
+	        }
+	    }
+	    if (map.totalPage != map.endPage) {
+	        content += '<li class="page-item">'
+	        content += '<a class="page-link page-info" page="' + (map.endPage + 1) + '" aria-label="Next" style="cursor:pointer;">'
+	        content += '<span aria-hidden="true">&raquo;</span>'
+	        content += '</a>'
+	        content += '</li>'
+	    }
+	    content += '</ul>'
+	    $('#paginationBox').empty();
+	    $('#paginationBox').append(content);
+		
 	}
 </script>
 </html>

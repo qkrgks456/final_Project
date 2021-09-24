@@ -17,6 +17,7 @@ import java.util.Map;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gudi.main.campingInfo.campingRecipe.dao.RecipeMapper;
+import com.gudi.main.util.HansolUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
@@ -27,21 +28,28 @@ public class RecipeService {
 	@Autowired RecipeMapper dao;
 
 
-	public HashMap<String, Object> RecipeApi(HashMap<String, String> params) {
+	public HashMap<String, Object> RecipeApi(int page, String search) {
         String clientId = "t_xaPvX2tbyw7jAnrUXq"; 
         String clientSecret = "HAa1m6DIeN"; 
 
 
         String text = null;
         try {
-            text = URLEncoder.encode(params.get("search"), "UTF-8");
+            text = URLEncoder.encode(search, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException("검색어 인코딩 실패",e);
         }
-
-
-        String apiURL = "https://openapi.naver.com/v1/search/blog?query=" + text;    // json 결과
-  
+     
+        int display=10;
+        //start 검색 시작 수
+        //display 스타트부터 검색수
+        if (page != 1) {
+            page = (page - 1) * display;
+        }
+        
+        
+        String apiURL = "https://openapi.naver.com/v1/search/blog?query=" + text+"&start="+page+"&display="+display;    // json 결과
+       
 
 
         Map<String, String> requestHeaders = new HashMap<>();
@@ -54,6 +62,8 @@ public class RecipeService {
         HashMap<String, Object> map = new HashMap<String, Object>();
         System.out.println(responseBody);
         
+       
+        
         if(!responseBody.contains("Fail")) {
 			ObjectMapper mapper = new ObjectMapper();
 			try {
@@ -65,7 +75,8 @@ public class RecipeService {
 		map.put("blogApi", responseBody);
 		
 		ArrayList<HashMap<String, Object>> list = (ArrayList<HashMap<String, Object>>) map.get("data");
-		
+		 //int total = parse.int(map.get("total"));
+	      //map = HansolUtil.pagination(page, 10, total);
 		return map;
     }
 
@@ -124,4 +135,7 @@ public class RecipeService {
             throw new RuntimeException("API 응답을 읽는데 실패했습니다.", e);
         }
     }
+
+
+
 }

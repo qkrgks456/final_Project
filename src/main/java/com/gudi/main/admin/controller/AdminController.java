@@ -35,10 +35,10 @@ public class AdminController {
     }
     
     @ResponseBody
-    @RequestMapping(value = "/adminSearch", method = RequestMethod.GET)
-    public HashMap<String, Object> adminSearch() {
+    @RequestMapping(value = "/adminSearch/{page}", method = RequestMethod.GET)
+    public HashMap<String, Object> adminSearch(@PathVariable int page) {
     	logger.info("관리자 조회");
-        return adminService.adminSearch();
+        return adminService.adminSearch(page);
     }
     
     @RequestMapping(value = "/adminInsert")
@@ -48,10 +48,10 @@ public class AdminController {
     }
     
     @ResponseBody
-    @RequestMapping(value = "/adminInsertAjax",method = RequestMethod.GET)
-    public HashMap<String, Object> adminInsertAjax(){
+    @RequestMapping(value = "/adminInsertAjax/{page}",method = RequestMethod.GET)
+    public HashMap<String, Object> adminInsertAjax(@PathVariable int page){
     	logger.info("관리자 임명");
-        return adminService.adminInsertList();
+        return adminService.adminInsertList(page);
     }
     
     @RequestMapping(value = "/adminInsertAuthority",method = RequestMethod.GET)
@@ -63,11 +63,11 @@ public class AdminController {
     }
     
     @ResponseBody
-    @RequestMapping(value = "/insertSearch",method = RequestMethod.GET)
-    public HashMap<String, Object> insertSearch(@RequestParam("insertSearch") String insertSearch, @RequestParam("selectType") String selectType){
+    @RequestMapping(value = "/insertSearch/{page}/{insertSearch}/{selectType}",method = RequestMethod.GET)
+    public HashMap<String, Object> insertSearch(@PathVariable int page, @PathVariable String insertSearch, @PathVariable String selectType){
     	logger.info("관리자 임명 검색");
     	logger.info("셀렉터: "+selectType+", 검색내용: "+insertSearch);
-        return adminService.insertSearch(selectType,insertSearch);
+        return adminService.insertSearch(selectType,insertSearch,page);
     }
     
     @RequestMapping(value = "/adminDeleteAuthority",method = RequestMethod.GET)
@@ -87,18 +87,18 @@ public class AdminController {
     }
     
     @ResponseBody
-    @RequestMapping(value = "/memberInfoSearch",method = RequestMethod.GET)
-    public HashMap<String, Object> memberInfoSearch(@RequestParam("memberInfoSearch") String memberInfoSearch, @RequestParam("selectType") String selectType){
+    @RequestMapping(value = "/memberInfoSearch/{page}/{memberInfoSearch}/{selectType}",method = RequestMethod.GET)
+    public HashMap<String, Object> memberInfoSearch(@PathVariable int page, @PathVariable String memberInfoSearch, @PathVariable String selectType){
     	logger.info("회원정보 검색");
     	logger.info("셀렉터: "+selectType+", 검색내용: "+memberInfoSearch);
-        return adminService.memberInfoSearch(selectType,memberInfoSearch);
+        return adminService.memberInfoSearch(selectType,memberInfoSearch,page);
     }
     
     @ResponseBody
-    @RequestMapping(value = "/memberInfoAjax",method = RequestMethod.GET)
-    public HashMap<String, Object> memberInfoAjax() {
+    @RequestMapping(value = "/memberInfoAjax/{page}",method = RequestMethod.GET)
+    public HashMap<String, Object> memberInfoAjax(@PathVariable int page) {
     	logger.info("회원정보 조회Ajax");
-        return adminService.memberInfo();
+        return adminService.memberInfo(page);
     }
     @RequestMapping(value = "/memberInfoBlackDel")
     public String memberInfoBlackDel(@RequestParam("id") String id) {
@@ -131,20 +131,20 @@ public class AdminController {
         return "admin/list/memberReserve";
     }
     @ResponseBody
-    @RequestMapping(value = "/memberReserveAjax",method = RequestMethod.GET)
-    public HashMap<String, Object> memberReserveAjax() {
+    @RequestMapping(value = "/memberReserveAjax/{page}",method = RequestMethod.GET)
+    public HashMap<String, Object> memberReserveAjax(@PathVariable int page) {
     	logger.info("예약자 조회");
-        return adminService.memberReserve();
+        return adminService.memberReserve(page);
     }
     @RequestMapping(value = "/boardList")
     public String boardList(Model model) {
         return "admin/list/boardList";
     }
     @ResponseBody
-    @RequestMapping(value = "/boardListAjax",method = RequestMethod.GET)
-    public HashMap<String, Object> boardList() {
+    @RequestMapping(value = "/boardListAjax/{page}",method = RequestMethod.GET)
+    public HashMap<String, Object> boardList(@PathVariable int page) {
     	logger.info("게시글 조회 Ajax");
-        return adminService.boardList();
+        return adminService.boardList(page);
     }
     
     @ResponseBody
@@ -195,18 +195,18 @@ public class AdminController {
     
     
     @ResponseBody
-    @RequestMapping(value = "/commentListAjax")
-    public HashMap<String, Object> commentList() {
+    @RequestMapping(value = "/commentListAjax/{page}")
+    public HashMap<String, Object> commentList(@PathVariable int page) {
     	logger.info("댓글 조회 Ajax");
-        return adminService.commentList();
+        return adminService.commentList(page);
     }
     
     @ResponseBody
-    @RequestMapping(value = "/commentListSearch",method = RequestMethod.GET)
-    public HashMap<String, Object> commentListSearch(@RequestParam("commentListSearch") String commentListSearch, @RequestParam("selectType") String selectType){
+    @RequestMapping(value = "/commentListSearch/{page}/{commentListSearch}/{selectType}",method = RequestMethod.GET)
+    public HashMap<String, Object> commentListSearch(@PathVariable int page, @PathVariable String commentListSearch, @PathVariable String selectType){
     	logger.info("일반댓글 검색");
     	logger.info("셀렉터: "+selectType+", 검색내용: "+commentListSearch);
-        return adminService.commentListSearch(selectType,commentListSearch);
+        return adminService.commentListSearch(selectType,commentListSearch,page);
     }
     
     @RequestMapping(value = "/reportComment")
@@ -215,9 +215,9 @@ public class AdminController {
     }
     
     @ResponseBody
-    @RequestMapping(value = "/reportCommentAjax",method = RequestMethod.GET)
-    public HashMap<String, Object> reportCommentList() {
-        return adminService.reportCommentList();
+    @RequestMapping(value = "/reportCommentAjax/{page}",method = RequestMethod.GET)
+    public HashMap<String, Object> reportCommentList(@PathVariable int page) {
+        return adminService.reportCommentList(page);
     }
     
     

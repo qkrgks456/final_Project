@@ -74,6 +74,8 @@ a {
 						<!-- 가져올 리스트 -->
 					</tbody>
 				</table>
+				<div id="paginationBox">
+				</div>
 				<%-- <button class="btn btn-dark" type="button" onclick="location.href='memberInfoBlackList?id=${list.id}'">상세보기</button> --%>
 			</div>
 		</div>
@@ -86,6 +88,21 @@ a {
 	<script src="${path}/resources/js/common.js"></script>
 </body>
 <script>
+$(document).on('click','.page-info',function(){
+	let page = $(this).attr('page');
+	$.ajax({
+		url: 'memberInfoAjax/'+page,
+		type: 'get',
+		dataType: 'json',
+		success:function(map){
+			memberInfoList(map);
+		},
+		error:function(error){
+			console.log(error);
+		}
+	});
+})
+
 memberInfo();
 $('#memberInfoSearch').on('keypress', function(e) {
 	if (e.keyCode == '13') {
@@ -97,16 +114,12 @@ $('#searchBtn').on('click', function() {
 	//var insertSearch=$("#insertSearch").val();
 	//console.log("타입: "+ selectType+ "내용: "+insertSearch);
 	$.ajax({
-		url : 'memberInfoSearch',
+		url : 'memberInfoSearch/1/'+$("#memberInfoSearch").val()+"/"+$("#selectType").val(),
 		type : 'get',
-		data : {
-			memberInfoSearch : $("#memberInfoSearch").val(),
-			selectType : $("#selectType").val()
-		},
 		dataType : 'JSON',
-		success : function(data) {
-			console.log(data);
-			memberInfoList(data.list);
+		success : function(map) {
+
+			memberInfoList(map);
 		},
 		error : function(error) {
 			console.log(error);
@@ -118,12 +131,11 @@ $('#searchBtn').on('click', function() {
 	function memberInfo() {
 		console.log("jsp에서 관리자 ajax조회");
 		$.ajax({
-			url : 'memberInfoAjax',
+			url : 'memberInfoAjax/1',
 			type : 'get',
 			dataType : 'json',
-			success : function(data) {
-				console.log(data);
-				memberInfoList(data.list);
+			success : function(map) {
+				memberInfoList(map);
 			},
 			error : function(error) {
 				console.log(error);
@@ -131,21 +143,21 @@ $('#searchBtn').on('click', function() {
 
 		});
 	}
-	function memberInfoList(list) {
+	function memberInfoList(map) {
 		var content = "";
-		for (var i = 0; i < list.length; i++) {
+		for (var i = 0; i < map.list.length; i++) {
 			content += "<tr>";
-			content += "<td>" + list[i].id + "</td>";
-			content += "<td>" + list[i].nickName + "</td>";
-			content += "<td>" + list[i].delCheck + "</td>";
-			content += "<td>";
-			if(list[i].delCheck=="Y"){
-				content += "<a class='btn btn-sm btn-dark' href='memberInfoBlackDel?id=" + list[i].id
+			content += "<td class='align-middle'>" + map.list[i].id + "</td>";
+			content += "<td class='align-middle'>" + map.list[i].nickName + "</td>";
+			content += "<td class='align-middle'>" + map.list[i].delCheck + "</td>";
+			content += "<td class='align-middle'>";
+			if(map.list[i].delCheck=="Y"){
+				content += "<a class='btn btn-sm btn-dark' href='memberInfoBlackDel?id=" + map.list[i].id
 				+ "'>블랙리스트  해제</a>";
 			}
-			if(list[i].delCheck=="N"){
-				content += "<a class='btn btn-sm btn-dark' href='memberInfoBlackList?id=" + list[i].id
-				+ "&nickName="+list[i].nickName+"'>블랙리스트  추가</a>";
+			if(map.list[i].delCheck=="N"){
+				content += "<a class='btn btn-sm btn-dark' href='memberInfoBlackList?id=" + map.list[i].id
+				+ "&nickName="+map.list[i].nickName+"'>블랙리스트  추가</a>";
 			}
 			
 			
@@ -154,6 +166,34 @@ $('#searchBtn').on('click', function() {
 		}
 		$("#list").empty();
 		$("#list").append(content);
+		
+		//페이지네이션
+		 content = '';
+		    content += '<ul class="pagination justify-content-center">'
+		    if (map.startPage != 1) {
+		        content += '<li class="page-item">'
+		        content += '<a class="page-link page-info" page="' + (map.startPage - 1) + '" aria-label="Previous" style="cursor:pointer;">'
+		        content += '<span aria-hidden="true">&laquo;</span>'
+		        content += '</a>'
+		        content += '</li>'
+		    }
+		    for (let i = map.startPage; i <= map.endPage; i++) {
+		        if (map.currPage != i) {
+		            content += '<li class="page-item"><a style="cursor:pointer;" class="page-link page-info" page="' + i + '" >' + i + '</a></li>'
+		        } else {
+		            content += '<li class="page-item active"><a class="page-link">' + i + '</a></li>'
+		        }
+		    }
+		    if (map.totalPage != map.endPage) {
+		        content += '<li class="page-item">'
+		        content += '<a class="page-link page-info" page="' + (map.endPage + 1) + '" aria-label="Next" style="cursor:pointer;">'
+		        content += '<span aria-hidden="true">&raquo;</span>'
+		        content += '</a>'
+		        content += '</li>'
+		    }
+		    content += '</ul>'
+		    $('#paginationBox').empty();
+		    $('#paginationBox').append(content);
 	}
 </script>
 

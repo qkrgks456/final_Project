@@ -40,23 +40,23 @@
 					<thead>
 						<tr>
 							<th scope="col" class="col-md-3">댓글 번호</th>
-							<td>${detail.cmNum}</td>
+							<td class='align-middle'>${detail.cmNum}</td>
 						</tr>
 						<tr>
 							<th scope="col" class="col-md-3">게시판 구분</th>
-							<td>${detail.division}</td>
+							<td class='align-middle'>${detail.division}</td>
 						</tr>
 						<tr>
 							<th scope="col" class="col-md-3">아아디</th>
-							<td>${detail.id}</td>
+							<td class='align-middle'>${detail.id}</td>
 						</tr>
 						<tr>
 							<th scope="col" class="col-md-3">댓글내용</th>
-							<td>${detail.content}</td>
+							<td class='align-middle'>${detail.content}</td>
 						</tr>
 						<tr>
 							<th scope="col" class="col-md-3">블라인드 여부</th>
-							<td>${detail.delCheck}</td>
+							<td class='align-middle'>${detail.delCheck}</td>
 						</tr>
 					</thead>
 				</table>

@@ -14,6 +14,7 @@ import com.gudi.main.dtoAll.CommentDTO;
 import com.gudi.main.dtoAll.CommentReportDTO;
 import com.gudi.main.dtoAll.MemberDTO;
 import com.gudi.main.dtoAll.ReserveDTO;
+import com.gudi.main.util.HansolUtil;
 
 @Service
 public class AdminService {
@@ -25,42 +26,55 @@ public class AdminService {
 	ArrayList<BoardDTO> list3 = null;
 	ArrayList<CommentDTO> list4 = null;
 	
-	public HashMap<String, Object> adminSearch() {
+	public HashMap<String, Object> adminSearch(int page) {
 		logger.info("관리자 조회 서비스");
-		map = new HashMap<String , Object>();
-		list = new ArrayList<MemberDTO>();
-		list = dao.adminList();
+		 int start = 0;
+	        if (page != 1) {
+	            start = (page - 1) * 15;
+	        }
+	    int total = dao.page();
+	    HashMap<String, Object> map = HansolUtil.pagination(page, 15, total);
+		list = dao.adminList(start);
 		map.put("list", list);
-		logger.info("서비스 받아온 후");
 		return map;
 	}
 
-	public HashMap<String, Object> adminInsertList() {
+	public HashMap<String, Object> adminInsertList(int page) {
 		logger.info("관리자 임명 리스트 서비스");
-		list = new ArrayList<MemberDTO>();
-		map = new HashMap<String , Object>();
-		
-		list = dao.adminInsertList();
+		 int start = 0;
+	        if (page != 1) {
+	            start = (page - 1) * 15;
+	     }
+	    int total = dao.adminN();
+	    HashMap<String, Object> map = HansolUtil.pagination(page, 15, total);
+		list = dao.adminInsertList(start);
 		map.put("list",list);
-		
 		return map;
 	}
 
-	public HashMap<String, Object> memberReserve() {
+	public HashMap<String, Object> memberReserve(int page) {
 		logger.info("예약자 조회 서비스");
-		list2 = new ArrayList<ReserveDTO>();
-		map = new HashMap<String , Object>();
-		list2 = dao.memberReserve();
+		int start = 0;
+        if (page != 1) {
+            start = (page - 1) * 15;
+        }
+        int total = dao.memberReservepage();
+        HashMap<String, Object> map = HansolUtil.pagination(page, 15, total);
+		list2 = dao.memberReserve(start);
 		map.put("list",list2);
 		logger.info("예약자 수: " + list2.size());
 		return map;
 	}
 
-	public HashMap<String, Object> memberInfo() {
+	public HashMap<String, Object> memberInfo(int page) {
 		logger.info("회원 조회 서비스");
-		list = new ArrayList<MemberDTO>();
-		map = new HashMap<String , Object>();
-		list = dao.memberInfo();
+		int start = 0;
+        if (page != 1) {
+            start = (page - 1) * 15;
+        }
+        int total = dao.memberPage();
+        HashMap<String, Object> map = HansolUtil.pagination(page, 15, total);
+		list = dao.memberInfo(start);
 		map.put("list",list);
 		return map;
 	}
@@ -71,21 +85,36 @@ public class AdminService {
 		return null;
 	}
 
-	public HashMap<String, Object> insertSearch(String selectType, String insertSearch) {
+	public HashMap<String, Object> insertSearch(String selectType, String insertSearch, int page) {
 		logger.info("관리자 임명 검색 서비스");
-		list = new ArrayList<MemberDTO>();
-		map = new HashMap<String , Object>();
+		
+		int start = 0;
+        if (page != 1) {
+            start = (page - 1) * 15;
+        }
+        
+        int total=0;
+        HashMap<String, Object> map = null;
 		switch(selectType){
 		case "nickName":
-			list= dao.insertSearchByNicknameWithAdmin(insertSearch);
+			total = dao.insertSearchByNicknameWithAdminPage(insertSearch);
+			map = HansolUtil.pagination(page, 15, total);
+			list= dao.insertSearchByNicknameWithAdmin(insertSearch,start);
 			break;
 		case "email":
-			list= dao.insertSearchByEmailWithAdmin(insertSearch);
+			total = dao.insertSearchByEmailnameWithAdminPage(insertSearch);
+			map = HansolUtil.pagination(page, 15, total);
+			list= dao.insertSearchByEmailWithAdmin(insertSearch,start);
 			break;
+			
 		case "id":
-			list= dao.insertSearchByIdWithAdmin(insertSearch);
+			total = dao.insertSearchByIdnameWithAdminPage(insertSearch);
+			map = HansolUtil.pagination(page, 15, total);
+			list= dao.insertSearchByIdWithAdmin(insertSearch,start);
 			break;
-		}
+		} 
+		
+		
 		// 이름 list= dao.insertSearchByNickname(insertSearch);
 		//아이디
 		//이메일
@@ -99,47 +128,71 @@ public class AdminService {
 		return success;
 	}
 
-	public HashMap<String, Object> boardList() {
+	public HashMap<String, Object> boardList(int page) {
 		logger.info("게시글 조회 서비스");
-		list3 = new ArrayList<BoardDTO>();
-		map = new HashMap<String , Object>();
-		list3 = dao.boardList();
+		int start = 0;
+        if (page != 1) {
+            start = (page - 1) * 15;
+        }
+        int total = dao.boardListPage();
+        HashMap<String, Object> map = HansolUtil.pagination(page, 15, total);
+		list3 = dao.boardList(start);
 		map.put("list",list3);
 		return map;
 	}
 
-	public HashMap<String, Object> commentList() {
+	public HashMap<String, Object> commentList(int page) {
 		logger.info("댓글 조회 서비스");
-		list4 = new ArrayList<CommentDTO>();
-		map = new HashMap<String , Object>();
-		list4 = dao.commentList();
+		int start = 0;
+        if (page != 1) {
+            start = (page - 1) * 15;
+        }
+        int total = dao.commentListPage();
+        HashMap<String, Object> map = HansolUtil.pagination(page, 15, total);
+		list4 = dao.commentList(start);
 		logger.info("댓글 갯수: "+list4.size());
 		map.put("list",list4);
 		return map;
 	}
 
-	public HashMap<String, Object> reportCommentList() {
+	public HashMap<String, Object> reportCommentList(int page) {
 		logger.info("신고댓글 조회 서비스");
 		ArrayList<CommentReportDTO> list5 = new ArrayList<CommentReportDTO>();
-		map = new HashMap<String , Object>();
-		list5 = dao.reportCommentList();
+		int start = 0;
+        if (page != 1) {
+            start = (page - 1) * 15;
+        }
+        int total = dao.reportCommentListPage();
+        HashMap<String, Object> map = HansolUtil.pagination(page, 15, total);
+		list5 = dao.reportCommentList(start);
 		map.put("list",list5);
 		return map;
 	}
 
-	public HashMap<String, Object> memberInfoSearch(String selectType, String memberInfoSearch) {
+	public HashMap<String, Object> memberInfoSearch(String selectType, String memberInfoSearch, int page) {
 		logger.info("회원정보 검색 서비스");
-		list = new ArrayList<MemberDTO>();
-		map = new HashMap<String , Object>();
+		int start = 0;
+        if (page != 1) {
+            start = (page - 1) * 15;
+        }
+        
+        int total=0;
+        HashMap<String, Object> map = null;
 		switch(selectType){
 		case "nickName":
-			list= dao.memberInfoSearchByNickName(memberInfoSearch);
+			total = dao.memberInfoSearchByNickNamePage(memberInfoSearch);
+			map = HansolUtil.pagination(page, 15, total);
+			list= dao.memberInfoSearchByNickName(memberInfoSearch,start);
 			break;
 		case "email":
-			list= dao.memberInfoSearchByEmail(memberInfoSearch);
+			total = dao.memberInfoSearchByEmailPage(memberInfoSearch);
+			map = HansolUtil.pagination(page, 15, total);
+			list= dao.memberInfoSearchByEmail(memberInfoSearch, start);
 			break;
 		case "id":
-			list= dao.memberInfoSearchById(memberInfoSearch);
+			total = dao.memberInfoSearchByIdPage(memberInfoSearch);
+			map = HansolUtil.pagination(page, 15, total);
+			list= dao.memberInfoSearchById(memberInfoSearch,start);
 			break;
 		}
 		map.put("list",list);
@@ -165,17 +218,26 @@ public class AdminService {
 		return map;
 	}
 
-	public HashMap<String, Object> commentListSearch(String selectType, String commentListSearch) {
+	public HashMap<String, Object> commentListSearch(String selectType, String commentListSearch, int page) {
 		logger.info("댓글 리스트 검색 서비스");
-		list4 = new ArrayList<CommentDTO>();
-		map = new HashMap<String , Object>();
+		int start = 0;
+        if (page != 1) {
+            start = (page - 1) * 15;
+        }
+        
+        int total=0;
+        HashMap<String, Object> map = null;
 		switch(selectType){
 		case "content":
-			list4= dao.commentListSearchByContent(commentListSearch);
+			total = dao.commentListSearchByContentPage(commentListSearch);
+			map = HansolUtil.pagination(page, 15, total);
+			list4= dao.commentListSearchByContent(commentListSearch,start);
 			break;
 
 		case "id":
-			list4= dao.commentListSearchById(commentListSearch);
+			total = dao.commentListSearchByIdPage(commentListSearch);
+			map = HansolUtil.pagination(page, 15, total);
+			list4= dao.commentListSearchById(commentListSearch,start);
 			break;
 		}
 		map.put("list",list4);

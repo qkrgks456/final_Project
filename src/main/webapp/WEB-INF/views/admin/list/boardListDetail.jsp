@@ -38,19 +38,19 @@
             <table class="table text-center">
             <tr>
             	<th>아이디</th>
-            	<td>${detail.id}</td>
+            	<td class='align-middle'>${detail.id}</td>
             </tr>
             <tr>
             	<th>제목</th>
-            	<td>${detail.title}</td>
+            	<td class='align-middle'>${detail.title}</td>
             </tr>
             <tr>
             	<th>내용</th>
-            	<td>${detail.content}</td>
+            	<td class='align-middle'>${detail.content}</td>
             </tr>
             <tr>
             	<th>블라인드 여부</th>
-            	<td>${detail.delCheck}</td>
+            	<td class='align-middle'>${detail.delCheck}</td>
             </tr>
             	
             </table>

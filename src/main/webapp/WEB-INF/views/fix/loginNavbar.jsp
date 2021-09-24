@@ -17,7 +17,7 @@
             <a href="${path}/serviceCenter/noticeBoard" class="fs-6 btn-sm btn-outline-light text-dark" style="text-decoration:none">공지사항</a>
         </div>
         <div class="">
-            <a href="${path}/admin/adminSearch" class="fs-6 btn-sm btn-outline-light text-dark" style="text-decoration:none">관리자</a>
+            <a href="${path}/admin/authority" class="fs-6 btn-sm btn-outline-light text-dark" style="text-decoration:none">관리자</a>
         </div>
     </div>
 </div>

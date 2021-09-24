@@ -71,6 +71,8 @@
 						<!-- 가져올 리스트 -->
 					</tbody>
 				</table>
+				<div id="paginationBox">
+				</div>
 			</div>
 		</div>
 	</div>
@@ -81,6 +83,22 @@
 	<script src="${path}/resources/js/common.js"></script>
 </body>
 <script>
+
+	$(document).on('click','.page-info',function(){
+		let page = $(this).attr('page');
+		$.ajax({
+			url: 'boardListAjax/'+page,
+			type: 'get',
+			dataType: 'json',
+			success:function(map){
+				boardListAjax(map);
+			},
+			error:function(error){
+				console.log(error);
+			}
+		});
+	})
+
 	boardList();
 	
 	$('#boardListSearch').on('keypress', function(e) {
@@ -93,16 +111,15 @@
 		//var insertSearch=$("#insertSearch").val();
 		//console.log("타입: "+ selectType+ "내용: "+insertSearch);
 		$.ajax({
-			url : 'boardListSearch',
+			url : 'boardListSearch/1',
 			type : 'get',
 			data : {
 				boardListSearch : $("#boardListSearch").val(),
 				selectType : $("#selectType").val()
 			},
 			dataType : 'JSON',
-			success : function(data) {
-				console.log(data);
-				boardListAjax(data.list);
+			success : function(map) {
+				boardListAjax(map);
 			},
 			error : function(error) {
 				console.log(error);
@@ -116,9 +133,8 @@
 			url : 'boardListAjax',
 			type : 'get',
 			dataType : 'json',
-			success : function(data) {
-				console.log(data);
-				boardListAjax(data.list);
+			success : function(map) {
+				boardListAjax(map);
 			},
 			error : function(error) {
 				console.log(error);
@@ -126,19 +142,47 @@
 
 		});
 	}
-	function boardListAjax(list) {
+	function boardListAjax(map) {
 		var content = "";
-		for (var i = 0; i < list.length; i++) {
+		for (var i = 0; i < map.list.length; i++) {
 			content += "<tr>";
-			content += "<td>" + list[i].id + "</td>";
-			content += "<td>" + list[i].title + "</td>";
-			content += "<td>" + list[i].delCheck + "</td>";
-			content += "<td>"
-			content += "<a class='btn btn-sm btn-dark' href='boardListDetailInfo?boardNum="+list[i].boardNum+"&division="+list[i].division+"'>상세보기</a>"
+			content += "<td class='align-middle'>" + map.list[i].id + "</td>";
+			content += "<td class='align-middle'>" + map.list[i].title + "</td>";
+			content += "<td class='align-middle'>" + map.list[i].delCheck + "</td>";
+			content += "<td class='align-middle'>"
+			content += "<a class='btn btn-sm btn-dark' href='boardListDetailInfo?boardNum="+map.list[i].boardNum+"&division="+map.list[i].division+"'>상세보기</a>"
 			content += "</td>";
 			content += "</tr>";
 		}
 		$("#list").empty();
 		$("#list").append(content);
+		
+		//페이지네이션
+		 content = '';
+		    content += '<ul class="pagination justify-content-center">'
+		    if (map.startPage != 1) {
+		        content += '<li class="page-item">'
+		        content += '<a class="page-link page-info" page="' + (map.startPage - 1) + '" aria-label="Previous" style="cursor:pointer;">'
+		        content += '<span aria-hidden="true">&laquo;</span>'
+		        content += '</a>'
+		        content += '</li>'
+		    }
+		    for (let i = map.startPage; i <= map.endPage; i++) {
+		        if (map.currPage != i) {
+		            content += '<li class="page-item"><a style="cursor:pointer;" class="page-link page-info" page="' + i + '" >' + i + '</a></li>'
+		        } else {
+		            content += '<li class="page-item active"><a class="page-link">' + i + '</a></li>'
+		        }
+		    }
+		    if (map.totalPage != map.endPage) {
+		        content += '<li class="page-item">'
+		        content += '<a class="page-link page-info" page="' + (map.endPage + 1) + '" aria-label="Next" style="cursor:pointer;">'
+		        content += '<span aria-hidden="true">&raquo;</span>'
+		        content += '</a>'
+		        content += '</li>'
+		    }
+		    content += '</ul>'
+		    $('#paginationBox').empty();
+		    $('#paginationBox').append(content);
 	}
 </script>

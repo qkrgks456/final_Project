@@ -16,38 +16,38 @@ import com.gudi.main.dtoAll.ReserveDTO;
 @Mapper
 public interface AdminMapper {
 	
-	@Select("Select * from member where admin != '0'")
-	ArrayList<MemberDTO> adminList();
+	@Select("Select * from member where admin = 'Y' OFFSET #{param1} ROWS FETCH FIRST 15 ROWS ONLY")
+	ArrayList<MemberDTO> adminList(int start);
 	
-	@Select("Select * from member where admin='0'")
-	ArrayList<MemberDTO> adminInsertList();
+	@Select("Select * from member where admin='N' OFFSET #{param1} ROWS FETCH FIRST 15 ROWS ONLY")
+	ArrayList<MemberDTO> adminInsertList(int start);
 	
-	@Select("Select r.id, r.reserveName,r.manCount, r.contentId, r.reserveDate from reserve r")
-	ArrayList<ReserveDTO> memberReserve();
+	@Select("Select r.id, r.reserveName,r.manCount, r.contentId, r.reserveDate from reserve r OFFSET 0 ROWS FETCH FIRST 15 ROWS ONLY")
+	ArrayList<ReserveDTO> memberReserve(int start);
 
-	@Select("Select * from member where admin='N'")
-	ArrayList<MemberDTO> memberInfo();
+	@Select("Select * from member where admin='N' OFFSET #{param1} ROWS FETCH FIRST 15 ROWS ONLY")
+	ArrayList<MemberDTO> memberInfo(int start);
 	
-	@Select("Select *from member where nickName LIKE '%'||#{insertSearch}||'%'")
-	ArrayList<MemberDTO> memberInfoSearchByNickName(String memberInfoSearch);
+	@Select("Select *from member where nickName LIKE '%'||#{param1}||'%' OFFSET #{param2} ROWS FETCH FIRST 15 ROWS ONLY")
+	ArrayList<MemberDTO> memberInfoSearchByNickName(String memberInfoSearch, int start);
 	
-	@Select("Select *from member where email LIKE '%'||#{insertSearch}||'%' ")
-	ArrayList<MemberDTO> memberInfoSearchByEmail(String memberInfoSearch);
+	@Select("Select *from member where email LIKE '%'||#{param1}||'%' OFFSET #{param2} ROWS FETCH FIRST 15 ROWS ONLY")
+	ArrayList<MemberDTO> memberInfoSearchByEmail(String memberInfoSearch, int start);
 
-	@Select("Select *from member where id LIKE '%'||#{insertSearch}||'%'")
-	ArrayList<MemberDTO> memberInfoSearchById(String memberInfoSearch);
+	@Select("Select *from member where id LIKE '%'||#{param1}||'%' OFFSET #{param2} ROWS FETCH FIRST 15 ROWS ONLY")
+	ArrayList<MemberDTO> memberInfoSearchById(String memberInfoSearch, int start);
 
 	@Update("update member SET admin='Y' where id =#{id} ")
 	void adminInsert(String id);
 	
-	@Select("Select *from member where nickName LIKE '%'||#{insertSearch}||'%' AND admin = '0'")
-	ArrayList<MemberDTO> insertSearchByNicknameWithAdmin(String insertSearch);
+	@Select("Select *from member where nickName LIKE '%'||#{param1}||'%' AND admin = 'N' OFFSET #{param2} ROWS FETCH FIRST 15 ROWS ONLY")
+	ArrayList<MemberDTO> insertSearchByNicknameWithAdmin(String insertSearch, int start);
 	
-	@Select("Select *from member where email LIKE '%'||#{insertSearch}||'%' AND admin = '0'")
-	ArrayList<MemberDTO> insertSearchByEmailWithAdmin(String insertSearch);
+	@Select("Select *from member where email LIKE '%'||#{param1}||'%' AND admin = 'N' OFFSET #{param2} ROWS FETCH FIRST 15 ROWS ONLY")
+	ArrayList<MemberDTO> insertSearchByEmailWithAdmin(String insertSearch, int start);
 
-	@Select("Select *from member where id LIKE '%'||#{insertSearch}||'%' AND admin = '0'")
-	ArrayList<MemberDTO> insertSearchByIdWithAdmin(String insertSearch);
+	@Select("Select *from member where id LIKE '%'||#{param1}||'%' AND admin = 'N' OFFSET #{param2} ROWS FETCH FIRST 15 ROWS ONLY")
+	ArrayList<MemberDTO> insertSearchByIdWithAdmin(String insertSearch, int start);
 	
 	@Update("update member SET admin='0' where id =#{id} ")
 	int adminDelete(String id);
@@ -55,14 +55,14 @@ public interface AdminMapper {
 	@Select("select division,boardNum,id,title, delcheck from noticeBoard UNION all"+
 			" select division,boardNum,id, title, cast('delcheck' as nvarchar2(100)) from questionBoard UNION all" + 
 			" select division,boardNum,id,title, delcheck from freeBoard UNION all" + 
-			" select division,boardNum,id,title, cast('delcheck' as nvarchar2(100)) from reviewBoard")
-	ArrayList<BoardDTO> boardList();
+			" select division,boardNum,id,title, cast('delcheck' as nvarchar2(100)) from reviewBoard OFFSET 0 ROWS FETCH FIRST 15 ROWS ONLY")
+	ArrayList<BoardDTO> boardList(int start);
 
-	@Select("Select * from cm")
-	ArrayList<CommentDTO> commentList();
+	@Select("Select * from cm OFFSET #{param1} ROWS FETCH FIRST 15 ROWS ONLY")
+	ArrayList<CommentDTO> commentList(int start);
 	
-	@Select("Select * from cmReport")
-	ArrayList<CommentReportDTO> reportCommentList();
+	@Select("Select * from cmReport OFFSET #{param1} ROWS FETCH FIRST 15 ROWS ONLY")
+	ArrayList<CommentReportDTO> reportCommentList(int start);
 
 	//게시글 조회 검색
 	//게시글 조인
@@ -86,12 +86,12 @@ public interface AdminMapper {
 	
 	//일반 댓글조회 검색
 	//댓글, 멤버 조인
-	@Select("Select *from cm where content LIKE '%'||#{insertSearch}||'%'")
-	ArrayList<CommentDTO> commentListSearchByContent(String commentListSearch);
+	@Select("Select *from cm where content LIKE '%'||#{param1}||'%' OFFSET #{param2} ROWS FETCH FIRST 15 ROWS ONLY")
+	ArrayList<CommentDTO> commentListSearchByContent(String commentListSearch, int start);
 	
 	
-	@Select("Select *from cm where id LIKE '%'||#{insertSearch}||'%'")
-	ArrayList<CommentDTO> commentListSearchById(String commentListSearch);
+	@Select("Select *from cm where id LIKE '%'||#{param1}||'%' OFFSET #{param2} ROWS FETCH FIRST 15 ROWS ONLY")
+	ArrayList<CommentDTO> commentListSearchById(String commentListSearch, int start);
 	
 	@Update("update member SET DELCHECK='N' where id =#{id} ")
 	int memberInfoBlackDel(String id);
@@ -148,6 +148,56 @@ public interface AdminMapper {
 
 	@Select("select * from cm where cmNum=#{cmNum}")
 	CommentDTO cmDetail(String cmNum);
+
+	@Select("select COUNT(*) from member where admin='Y'")
+	int page();
+	
+	@Select("select COUNT(*) from member where admin='N'")
+	int adminN();
+	
+	@Select("select COUNT(*) from member where admin='N'")
+	int memberPage();
+	
+	@Select("Select COUNT(*) from reserve ")
+	int memberReservepage();
+	
+	@Select("select COUNT(*) from noticeBoard UNION all"+
+			" select COUNT(*) from questionBoard UNION all" + 
+			" select COUNT(*) from freeBoard UNION all" + 
+			" select COUNT(*) from reviewBoard")
+	int boardListPage();
+	
+	@Select("Select COUNT(*) from cm ")
+	int commentListPage();
+	
+	@Select("Select COUNT(*) from cmReport ")
+	int reportCommentListPage();
+	
+	@Select("Select COUNT(*) from member where nickName LIKE '%'||#{insertSearch}||'%' AND admin = 'N'")
+	int insertSearchByNicknameWithAdminPage(String insertSearch);
+	
+	@Select("Select COUNT(*) from member where email LIKE '%'||#{insertSearch}||'%' AND admin = 'N'")
+	int insertSearchByEmailnameWithAdminPage(String insertSearch);
+	
+	@Select("Select COUNT(*) from member where id LIKE '%'||#{insertSearch}||'%' AND admin = 'N'")
+	int insertSearchByIdnameWithAdminPage(String insertSearch);
+
+	
+	@Select("Select COUNT(*) from member where nickName LIKE '%'||#{memberInfoSearch}||'%'")
+	int memberInfoSearchByNickNamePage(String memberInfoSearch);
+	
+	@Select("Select COUNT(*) from member where email LIKE '%'||#{memberInfoSearch}||'%'")
+	int memberInfoSearchByEmailPage(String memberInfoSearch);
+
+	@Select("Select COUNT(*) from member where id LIKE '%'||#{memberInfoSearch}||'%'")
+	int memberInfoSearchByIdPage(String memberInfoSearch);
+	
+	@Select("Select COUNT(*) from cm where content LIKE '%'||#{param1}||'%'")
+	int commentListSearchByContentPage(String commentListSearch);
+
+	@Select("Select COUNT(*) from cm where id LIKE '%'||#{param1}||'%'")
+	int commentListSearchByIdPage(String commentListSearch);
+	
 
 	
 	

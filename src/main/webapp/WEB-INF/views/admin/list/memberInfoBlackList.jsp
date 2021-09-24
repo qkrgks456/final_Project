@@ -64,7 +64,7 @@
 					</thead>
 					<tbody id ="list">
 						<tr>
-							<td>
+							<td class='align-middle'>
 							<textarea class= "form-control" name="reason" rows="10" cols="50" placeholder="사유를 입력하세요."style="resize:none"></textarea>
 							</td>
 							
