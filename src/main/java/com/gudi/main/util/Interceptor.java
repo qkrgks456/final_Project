@@ -25,7 +25,7 @@ public class Interceptor extends HandlerInterceptorAdapter {
                 out.flush();
             }
         }
-        if (addr.contains("/serviceCenter/noticeWriteForm")) {
+        if (addr.contains("/serviceCenter/noticeWriteForm")||addr.contains("/serviceCenter/noticeDel")||addr.contains("/serviceCenter/noticeUpdateForm")) {
         	if(session.getAttribute("admin") == null || session.getAttribute("admin") == "N") {
         		response.setContentType("text/html; charset=UTF-8");
                 PrintWriter out = response.getWriter();
@@ -34,6 +34,10 @@ public class Interceptor extends HandlerInterceptorAdapter {
         	}
         }
         return true;
+        
+        
+        
+        
     }
 
     @Override

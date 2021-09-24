@@ -39,13 +39,14 @@
 			<!-- 상단 -->
 			<div class="row">
 				<div class="col">${dto.title}</div>
-
+		<c:if test="${sessionScope.admin eq 'Y'}">
 				<div class="col d-flex flex-row-reverse">
 					<input type="button" value="수정"
 						onclick="location.href='../noticeUpdateForm/${dto.boardNum}'" /> <input
 						type="button" value="삭제"
 						onclick="location.href='../noticeDel/${dto.boardNum}'" />
 				</div>
+				</c:if>
 			</div>
 
 			<div class="row">
