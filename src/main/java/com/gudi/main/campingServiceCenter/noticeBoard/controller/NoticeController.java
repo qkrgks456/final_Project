@@ -115,14 +115,15 @@ public class NoticeController {
     @Transactional(isolation = Isolation.READ_COMMITTED)
     @RequestMapping(value = "/noticeUpdate")
     public ModelAndView reviewUpdate(@RequestParam HashMap<String, String> params,
-    		MultipartFile[] file) {
+    		MultipartFile[] file,HttpSession session) {
 		logger.info("수정 등록 요청...");
+		String loginId = (String)session.getAttribute("loginId");
 		String boardNum = params.get("boardNum");
 		ModelAndView mav = new ModelAndView();
     	//리뷰글 수정
     	service.noticeUpdate(params);
     	//사진 업뎃
-    	service.noticePhoto(file, boardNum);
+    	service.noticePhoto(file, boardNum,loginId);
     	mav.setViewName("redirect:./noticeDetail/"+boardNum);
         return mav;  	
     }
