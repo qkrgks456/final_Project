@@ -42,10 +42,10 @@
   <textarea style="resize:none" rows="10" class="form-control" name="content" placeholder="내용을 입력해주세요" aria-label="With textarea" required="required"></textarea>
 </div>
 
- <label class="mt-3">파일</label>
+ <!-- <label class="mt-3">파일</label>
 <div class="form-group mt-3" id="file-list">
         <a href="#this" onclick="addFile()">파일추가(+)</a>
-        <div class="file-group">
+        <div class="file-group"> -->
         <!-- 
             <input type="file" name="file"><a href='#this' name='file-delete'>삭제</a>
          -->
