@@ -240,7 +240,7 @@
 			
 			content +=  '<div class="card mb-1">'
             content +=   '<div class="ms-2 mt-2 col-md">'
-            content +=    '<h5 class="card-title"><a onmouseover="moe('+xxx+','+yyy+')" href="../reserve/campingDetail/'+data.contentId+'" style="text-decoration:none;">'+data.facltNm+'</a></h5>';
+            content +=    '<h5 class="card-title"><a onmouseover="moe('+xxx+','+yyy+')" onmouseout="moeClose()" href="../reserve/campingDetail/'+data.contentId+'" style="text-decoration:none;">'+data.facltNm+'</a></h5>';
             content +=    '<div class="card-text"><small>'+"주소: "+data.addr1+'</small></div>';
             content +=    '<div class="card-text mb-1"><small class="text-muted">'+"전화번호: "+data.tel+'</small></div></div></div>';
 			$(".list").append(content);
@@ -257,10 +257,34 @@
 			$(".list").append(content);
 		}
 		
+		//마우스 오버시 반응할 놈
+		var markers2 = [];
+		
+		var imageSrc = "${path}/resources/img/chaback.png", // 마커이미지의 주소입니다    
+	    imageSize = new kakao.maps.Size(75, 80), // 마커이미지의 크기입니다
+	    imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+		
 		function moe(xxx,yyy){
 			map.panTo(new kakao.maps.LatLng(yyy, xxx));
+			
+			// 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+		    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
+		        markerPosition = new kakao.maps.LatLng(yyy, xxx); // 마커가 표시될 위치입니다
+		 	// 마커를 생성합니다
+		    var marker2 = new kakao.maps.Marker({
+		        		position: markerPosition, 
+		        		image: markerImage // 마커이미지 설정 
+		    });
+		    // 마커가 지도 위에 표시되도록 설정합니다
+		    marker2.setMap(map);
+		    markers2.push(marker2);
 		}
 
+		function moeClose(){
+			for (var e = 0; e < markers2.length; e++) {
+				markers2[e].setMap(null);
+			}
+		}
 </script>
 
 
@@ -271,48 +295,6 @@
 <script src="${path}/resources/js/bootstrap.js"></script>
 <script src="${path}/resources/js/bootstrap.bundle.js"></script>
 <script src="${path}/resources/js/common.js"></script>
-
-<script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*  
-$.ajax({
-    url:'apiCall',
-    type:'POST',
-    data:{},
-    dataType:'JSON',
-    success:function(data){
-        console.log(data);
-        console.log(typeof data);
-
-    },
-    error:function(data){
-        console.log(data);
-    }
-});
-*/
-</script>
 
 </body>
 </html>

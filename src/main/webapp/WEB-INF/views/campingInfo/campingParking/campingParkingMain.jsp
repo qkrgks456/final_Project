@@ -347,14 +347,16 @@
 		}
 		
 		
+		//마우스 오버시 반응할 놈
 		var markers2 = [];
+		
+		var imageSrc = "${path}/resources/img/chaback.png", // 마커이미지의 주소입니다    
+	    imageSize = new kakao.maps.Size(75, 80), // 마커이미지의 크기입니다
+	    imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
 		
 		function moe(xxx,yyy){
 			map.panTo(new kakao.maps.LatLng(xxx, yyy));
 			
-			var imageSrc = "${path}/resources/img/chaback.png", // 마커이미지의 주소입니다    
-		    imageSize = new kakao.maps.Size(75, 80), // 마커이미지의 크기입니다
-		    imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
 		 	// 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
 		    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
 		        markerPosition = new kakao.maps.LatLng(xxx, yyy); // 마커가 표시될 위치입니다
@@ -386,7 +388,7 @@
 //추천순위 클릭시 상세보기
 $('document').ready(function(){
 	
-	$('g[role="menuitem"]:eq(0)').on("click",,function(){
+	$('g[role="menuitem"]:eq(0)').on("click",function(){
 		console.log("0클릭");
 		location.href="./freeParkDetail/${rank.get(0).getDivisionNum()}";
 	});	
@@ -432,6 +434,7 @@ $('document').ready(function(){
 		console.log("9클릭");
 		location.href="./freeParkDetail/${rank.get(9).getDivisionNum()}";
 	});
+	
 });
 
 </script>
