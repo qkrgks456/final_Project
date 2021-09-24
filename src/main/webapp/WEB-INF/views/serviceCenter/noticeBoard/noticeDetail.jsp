@@ -38,7 +38,7 @@
 
 			<!-- 상단 -->
 			<div class="row">
-				<div class="col">${dto.title}</div>
+				<div class="col"><h3>${dto.title}</h3></div>
 		<c:if test="${sessionScope.admin eq 'Y'}">
 				<div class="col d-flex flex-row-reverse">
 					<input type="button" value="수정"
