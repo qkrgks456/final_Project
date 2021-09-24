@@ -33,8 +33,8 @@ public interface NoticeMapper {
 	@Select("SELECT photonum, newFileName, oriFileName, id, dates FROM photo WHERE division = 'noticeboard' and divisionnum = #{boardnum}")
 	ArrayList<PhotoDTO> file(int boardNum);
 
-	@Insert("INSERT INTO photo(photonum, id, division, newfilename, orifilename, divisionnum) VALUES (photo_seq.NEXTVAL, 'test', 'noticeboard', #{param1}, #{param2}, #{param3})")
-	void noticePhoto(String neww, String ori, String boardNum);
+	@Insert("INSERT INTO photo(photonum, id, division, newfilename, orifilename, divisionnum) VALUES (photo_seq.NEXTVAL, #{param4}, 'notice', #{param1}, #{param2}, #{param3})")
+	void noticePhoto(String neww, String ori, String boardNum, String loginId);
 
 	@Insert("INSERT INTO noticeboard(boardnum, id, title, content, delcheck) VALUES (noticeboard_seq.NEXTVAL, #{id}, #{title}, #{content}, 'N')")
 	@SelectKey(statement = {"SELECT noticeboard_seq.CURRVAL FROM DUAL"}, keyProperty = "boardnum",resultType = int.class, before = false)

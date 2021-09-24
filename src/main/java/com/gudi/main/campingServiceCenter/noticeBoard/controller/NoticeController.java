@@ -85,7 +85,7 @@ public class NoticeController {
     	System.out.println("suc은 시퀀스 넘버인가?:: "+ boardNum);
     	
     	//파일업로드
-    	service.noticePhoto(file, boardNum);
+    	service.noticePhoto(file, boardNum,loginId);
     	
     	mav.setViewName("redirect:./noticeDetail/"+boardNum);
      	

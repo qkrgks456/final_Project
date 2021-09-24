@@ -78,7 +78,7 @@ public class NoticeService {
 
 	}
 
-	public void noticePhoto(MultipartFile[] file, String boardNum) {
+	public void noticePhoto(MultipartFile[] file, String boardNum, String loginId) {
 		HashMap<String, String> map;
 		String neww = "";
 		String ori = "";
@@ -88,7 +88,7 @@ public class NoticeService {
 			neww = map.get("newFileName");
 			ori = map.get("oriFileName");
 
-			dao.noticePhoto(neww, ori, boardNum);
+			dao.noticePhoto(neww, ori, boardNum,loginId);
 
 		}
 
