@@ -227,7 +227,7 @@
             <div class="col-md-3 border-end text-center">
                 <div class="d-flex">
                     <h1>캠핑리뷰</h1>
-                    <a href="" class="ms-2 mt-1 text-decoration-none text-dark"><i
+                    <a href="${path}/campingTalk/reviewBoard/1" class="ms-2 mt-1 text-decoration-none text-dark"><i
                             class="bi bi-plus-circle fs-1"></i></a>
                 </div>
                 <table class="table table-hover px-2">

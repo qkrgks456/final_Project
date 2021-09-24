@@ -4,17 +4,20 @@ import com.gudi.main.dtoAll.ReserveDTO;
 import org.apache.ibatis.jdbc.SQL;
 
 public class MainSQL {
-    public static final String GOOD_LIST = "SELECT firstImageUrl,contentId,facltNm,themaEnvrnCl,goodCount"
+    public static final String GOOD_LIST = "SELECT firstImageUrl,contentId,facltNm,themaEnvrnCl,goodCount FROM(SELECT firstImageUrl,contentId,facltNm,themaEnvrnCl,goodCount"
             + " FROM(SELECT firstImageUrl,contentId,facltNm,themaEnvrnCl,(SELECT COUNT(goodNum) FROM good WHERE divisionNum = contentId AND dates LIKE '%'||#{month}||'%') goodCount FROM campingApi)"
-            + "WHERE goodCount > 0 AND ROWNUM <= 4 ORDER BY goodCount DESC";
+            + "WHERE goodCount > 0 ORDER BY goodCount DESC) WHERE ROWNUM <= 4";
 
     public String boardList(String board) {
         return new SQL() {{
             SELECT("*");
-            FROM(board);
-            WHERE("delCheck='N'");
+            FROM("("+new SQL() {{
+                SELECT("*");
+                FROM(board);
+                WHERE("delCheck='N'");
+                ORDER_BY("boardNum DESC");
+            }}.toString()+")");
             WHERE("ROWNUM <= 7");
-            ORDER_BY("boardNum DESC");
         }}.toString();
     }
 
