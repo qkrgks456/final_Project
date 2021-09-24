@@ -62,8 +62,8 @@ public class ReviewService {
 	
 	public ArrayList<PhotoDTO> callPhoto(int boardNum) {
 		
-		String divi = "review_"+Integer.toString(boardNum);
-		return dao.callPhoto(divi);
+		
+		return dao.callPhoto(boardNum);
 	}
 
 	public int reviewDel(int boardNum) {

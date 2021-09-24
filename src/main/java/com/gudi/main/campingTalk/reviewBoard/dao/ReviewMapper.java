@@ -17,7 +17,7 @@ import com.gudi.main.dtoAll.PhotoDTO;
 @Mapper
 public interface ReviewMapper {
 
-	@Insert("INSERT INTO photo(photonum, id, division, newfilename, orifilename, divisionnum) VALUES (photo_seq.NEXTVAL, 'test', 'review', #{param1}, #{param2}, 'review_'||#{param3})")
+	@Insert("INSERT INTO photo(photonum, id, division, newfilename, orifilename, divisionnum) VALUES (photo_seq.NEXTVAL, 'test', 'review', #{param1}, #{param2}, #{param3})")
 	void reviewPhoto(String neww, String ori, String boardNum);
 
 	@Insert("INSERT INTO reviewboard(boardnum, id, title, content) VALUES (reviewboard_seq.NEXTVAL, #{loginId}, #{title}, #{content})")
@@ -28,8 +28,8 @@ public interface ReviewMapper {
 	@Select("SELECT * FROM reviewboard WHERE boardNum = #{param1}")
 	BoardDTO reviewDetail(int boardNum);
 
-	@Select("SELECT newfilename, orifilename FROM photo WHERE divisionnum = #{divi}")
-	ArrayList<PhotoDTO> callPhoto(String divi);
+	@Select("SELECT newfilename, orifilename FROM photo WHERE divisionnum = #{boardNum}")
+	ArrayList<PhotoDTO> callPhoto(int boardNum);
 
 	@Update("UPDATE reviewboard SET delcheck = 'Y' WHERE boardnum = #{boardNum}")
 	int reviewDel(int boardNum);
@@ -44,10 +44,10 @@ public interface ReviewMapper {
 	@Update("UPDATE reviewboard SET title = #{param1}, content = #{param2} WHERE boardnum = #{param3}")
 	int reviewUpdate(String title, String content, int boardNum);
 
-	@Update("UPDATE photo SET newfilename = #{param1}, orifilename = #{param2} WHERE divisionnum = 'review_'||#{param3}")
+	@Update("UPDATE photo SET newfilename = #{param1}, orifilename = #{param2} WHERE divisionnum = #{param3}")
 	void reviewPhotoUpdate(String neww, String ori, int boardNum);
 
-	@Delete("DELETE photo WHERE newfilename= #{param1} AND divisionnum = 'review_'||#{param2}")
+	@Delete("DELETE photo WHERE newfilename= #{param1} AND divisionnum = #{param2}")
 	void photoDel(String newFileName, int boardNum);
 
 	@Update("UPDATE reviewboard SET boardhit = boardhit+1 WHERE boardNum = #{param1}")
