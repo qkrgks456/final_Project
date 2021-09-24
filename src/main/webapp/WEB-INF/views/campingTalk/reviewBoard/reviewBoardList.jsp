@@ -31,14 +31,14 @@
 <div class="container px-3">
     <h3>리뷰</h3>
     
-<table class="table table-hover">
+<table class="table table-hover text-center">
   <thead>
     <tr>
-      <th scope="col">No</th>
-      <th scope="col">제목</th>
-      <th scope="col">작성자</th>
-      <th scope="col">조회수</th>
-      <th scope="col">작성일</th>
+      <th scope="col" class="col-md-1">No</th>
+      <th scope="col" class="col-md-5">제목</th>
+      <th scope="col" class="col-md-2">작성자</th>
+      <th scope="col" class="col-md-1">조회수</th>
+      <th scope="col" class="col-md-2">작성일</th>
     </tr>
   </thead>
   
