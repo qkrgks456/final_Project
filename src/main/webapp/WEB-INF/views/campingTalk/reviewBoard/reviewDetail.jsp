@@ -74,6 +74,8 @@
 	</div>
 </div>
 
+<br/>
+<br/>
 
 <!-- 좋아요, 신고 -->
 <div class="d-flex justify-content-center">

@@ -46,7 +46,7 @@
   <c:forEach items="${dtoList}" var="dto">
     <tr>
       <td scope="row" class="py-3">${dto.boardNum}</td>
-      <td class="py-3"><a href="reviewDetail/${dto.boardNum}" style="text-decoration:none;">${dto.title}</a></td>
+      <td class="py-3"><a href="${path}/campingTalk/reviewDetail/${dto.boardNum}" style="text-decoration:none;">${dto.title}</a></td>
       <td class="py-3">${dto.id}</td>
       <td class="py-3">${dto.boardHit}</td>
       <td class="py-3">${dto.dates}</td>
@@ -83,7 +83,7 @@
 
 <c:if test="${sessionScope.loginId ne null}">
 	<div class="d-flex flex-row-reverse">
-    <input class="btn btn-primary d-flex" type="button" value="리뷰쓰기" onclick="location.href='./reviewWriteForm'">
+    <input class="btn btn-primary d-flex" type="button" value="리뷰쓰기" onclick="location.href='${path}/campingTalk/reviewWriteForm'">
     </div>
 </c:if>
 </div>
