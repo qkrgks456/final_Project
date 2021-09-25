@@ -31,7 +31,9 @@
 <jsp:include page="../../fix/menu.jsp"/>
 <%-- 내용 넣으세요 --%>
 <div class="container px-3">
-    차박지도
+    <div class="border-bottom mb-3">
+            <h2 class="">차박지도</h2>
+        </div>
 
 <div class="row">
     <div class="col-4 mt-4">
