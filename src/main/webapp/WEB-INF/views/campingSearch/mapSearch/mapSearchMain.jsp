@@ -33,8 +33,8 @@
 <jsp:include page="../../fix/menu.jsp"/>
 <%-- 내용 넣으세요 --%>
 <div class="mx-4">
-    <div class="row mt-1">
-        <div class="col-4">
+    <div class="row mt-1" >
+        <div class="col-4" >
             <div id="menu_wrap" class="bg_white">
                 <div class="option">
                     <form onsubmit="searchPlaces(); return false;" class="text-center"
@@ -314,7 +314,7 @@
     function listPrint(index, list) {
         var el = document.createElement('li'),
             /* for (var i = 0; i < list.length; i++) { */
-            content = '<div class="card mb-1 marker_' + (index) + '" style="max-width: 500px; cursor: pointer"><div class="row g-0"><div class="col-md-4">'
+            content = '<div class="card mb-1 marker_' + (index) + '" style="max-width: 500px; cursor: pointer; background-color:#f0f8ff;"><div class="row g-0"><div class="col-md-4">'
         content += '<img src="' + list.firstImageUrl + '" class="img-fluid w-100 h-100 rounded-start me-1" alt="' + list.facltNm + '">'
         content += '</div><div class="ms-2 col-md-7">'
         content += '<h5 class="card-title">' + list.facltNm + '</h5>'

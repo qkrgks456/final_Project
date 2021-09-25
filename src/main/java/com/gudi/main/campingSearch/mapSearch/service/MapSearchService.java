@@ -22,6 +22,11 @@ public class MapSearchService {
 
 	public HashMap<String, Object> list(int page, String word, String type) {
 		//int total = dao.allCount();
+		if(type.equals("addr")) {
+			type="addr1";
+		}else {
+			type="themaEnvrnCl";
+		}
 		int total = dao.total(word,type);
 		HashMap<String, Object> map = new HansolUtil().pagination(page,10, total);
 		//1.list
@@ -29,11 +34,6 @@ public class MapSearchService {
 			page = 0;
 		} else {
 			page = (page - 1) * 10;
-		}
-		if(type.equals("addr")) {
-			type="addr1";
-		}else {
-			type="themaEnvrnCl";
 		}
 		ArrayList<CampingDTO> list = dao.list(page, word,10,type);
 		map.put("list", list);

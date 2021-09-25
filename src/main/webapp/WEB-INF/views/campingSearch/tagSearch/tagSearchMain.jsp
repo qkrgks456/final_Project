@@ -63,6 +63,10 @@
                                         <a href="#" id="reset"
                                            style=" text-align:center; padding-top:10px; text-decoration:none; color:#000000;">초기화</a>
                                     </li>
+                                     <li style="float:left; margin-right:10px; background-color:#7b68ee; padding:5px;">
+                                        <a href="#" id="mine"
+                                           style=" text-align:center; padding-top:10px; text-decoration:none; color:#000000;">직접입력</a>
+                                    </li>
                                     <li>
                                         <button class="btn btn-warning btn-sm" type="submit" form="tagForm">검색</button>
                                     </li>
@@ -72,18 +76,18 @@
                     </div>
                 </div>
             </div>
-            <br/><br/>
             <div class="mt-1">
                 <c:forEach var="i" begin="${map.startPage}" end="${map.endPage}">
                     <form action="${path}/campingSearch/search/${i}" class="text-center" method="post" id="tagForm">
-                        <input class="form-control w-50 me-2" type="hidden" id="keyword" name="word">
+                </c:forEach>
+                        <input class="form-control w-50 me-2" type="hidden" id="keyword" name="word" placeholder="태그를 직접 입력 후 검색을 클릭하세요.">
                         <input type="hidden" id="hidden" name="word">
                     </form>
-                </c:forEach>
                 <!-- 		<div class="d-flex justify-content-center mt-3">
                             <button class="btn btn-warning btn-sm" type="submit">검색</button>
                         </div> -->
             </div>
+            <br/>
             <c:forEach var="map" items="${map.list}">
                 <div class="card border-white" style="background-color: #f8fcfe">
                     <div class="row g-0">
@@ -202,7 +206,7 @@
     <script
             src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=de13013a67053c1d19922fa8b31042a9"></script>
     <script>
-
+    
         var word = [];
         $(".tagBtn").on("click", function () {
             var val = $(this).attr('value');
@@ -226,6 +230,11 @@
             $("#hidden").val(word);
             console.log($("#hidden").val());
         });
+        
+        $("#mine").on("click",function(){
+        	$("#keyword").prop("type", "text");
+        	
+        })
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="${path}/resources/js/bootstrap.js"></script>
