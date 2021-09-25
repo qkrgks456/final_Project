@@ -82,7 +82,7 @@
 
 			<div class="d-flex flex-row-reverse">
 				<input class="btn btn-primary" type="button" value="목록"
-					onclick="location.href='../questionBoard'">
+					onclick="location.href='../questionBoard/1'">
 			</div>
 
 
@@ -91,7 +91,7 @@
 				<h4 class="fw-bold">답변</h4>
 			</div>
 			<%-- 댓글 입력 폼 --%>
-			<c:if test="${sessionScope.admin eq 'Y'}">
+			<c:if test="${sessionScope.loginId ne null}">
 			
 			<div class="d-flex align-items-center mt-2">
 				<div class="form-floating flex-grow-1 px-2">
