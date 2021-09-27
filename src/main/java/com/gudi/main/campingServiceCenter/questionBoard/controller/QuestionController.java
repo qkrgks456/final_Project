@@ -28,7 +28,7 @@ public class QuestionController {
     
     @RequestMapping(value = "/questionBoard/{page}")
     public ModelAndView questionBoard(@PathVariable int page) {
-        logger.info("공지사항입장");
+        logger.info("문의하기입장");
         return service.list(page);
     }
     

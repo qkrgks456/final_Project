@@ -55,7 +55,10 @@
 <hr/>
 <div class="d-flex flex-row-reverse">
 <button class="btn btn-primary mx-2" type="submit">등록</button>
-<input class="btn btn-primary" type="button" value="목록" onclick="location.href='questionBoard'">
+  
+  	<input class="btn btn-primary" type="button" value="목록"
+					onclick="location.href='../serviceCenter/questionBoard/1'">
+<!--  <input class="btn btn-primary" type="button" value="목록" onclick="location.href='questionBoardList'">  -->
 </div>
 </form>
 

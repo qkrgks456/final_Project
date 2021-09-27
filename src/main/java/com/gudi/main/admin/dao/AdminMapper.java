@@ -55,7 +55,7 @@ public interface AdminMapper {
 	@Select("select division,boardNum,id,title, delcheck from noticeBoard UNION all"+
 			" select division,boardNum,id, title, cast('delcheck' as nvarchar2(100)) from questionBoard UNION all" + 
 			" select division,boardNum,id,title, delcheck from freeBoard UNION all" + 
-			" select division,boardNum,id,title, cast('delcheck' as nvarchar2(100)) from reviewBoard OFFSET 0 ROWS FETCH FIRST 15 ROWS ONLY")
+			" select division,boardNum,id,title, cast('delcheck' as nvarchar2(100)) from reviewBoard OFFSET #{param1} ROWS FETCH FIRST 15 ROWS ONLY")
 	ArrayList<BoardDTO> boardList(int start);
 
 	@Select("Select * from cm OFFSET #{param1} ROWS FETCH FIRST 15 ROWS ONLY")
@@ -164,10 +164,11 @@ public interface AdminMapper {
 	@Select("Select COUNT(*) from reserve ")
 	int memberReservepage();
 	
-	@Select("select COUNT(*) from noticeBoard UNION all"+
-			" select COUNT(*) from questionBoard UNION all" + 
-			" select COUNT(*) from freeBoard UNION all" + 
-			" select COUNT(*) from reviewBoard")
+	@Select("select COUNT(*) from (" + 
+			"    select division,boardNum,id,title, delcheck from noticeBoard UNION all" + 
+			"	 select division,boardNum,id, title, cast('delcheck' as nvarchar2(100)) from questionBoard UNION all" + 
+			"    select division,boardNum,id,title, delcheck from freeBoard UNION all" + 
+			"	 select division,boardNum,id,title, cast('delcheck' as nvarchar2(100)) from reviewBoard)")
 	int boardListPage();
 	
 	@Select("Select COUNT(*) from cm ")

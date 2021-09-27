@@ -58,14 +58,14 @@
     <ul class="pagination justify-content-center">
         <c:if test="${map.startPage ne 1}">
             <li class="page-item">
-                <a class="page-link" href="${path}/questionBoard/${map.startPage-1}" aria-label="Previous">
+                <a class="page-link" href="${path}/serviceCenter/questionBoard/${map.startPage-1}" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
         </c:if>
         <c:forEach var="i" begin="${map.startPage}" end="${map.endPage}">
             <c:if test="${i ne map.currPage}">
-                <li class="page-item"><a class="page-link" href="${path}/questionBoard/${i}">${i}</a></li>
+                <li class="page-item"><a class="page-link" href="${path}/serviceCenter/questionBoard/${i}">${i}</a></li>
             </c:if>
             <c:if test="${i eq map.currPage}">
                 <li class="page-item active"><a class="page-link">${i}</a></li>
@@ -73,7 +73,7 @@
         </c:forEach>
         <c:if test="${map.totalPage ne map.endPage}">
             <li class="page-item">
-                <a class="page-link" href="${path}/questionBoard/${map.endPage+1}" aria-label="Next">
+                <a class="page-link" href="${path}/serviceCenter/questionBoard/${map.endPage+1}" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>
