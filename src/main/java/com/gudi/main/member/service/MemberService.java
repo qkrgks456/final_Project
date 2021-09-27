@@ -44,9 +44,9 @@ public class MemberService {
     }
 
 
-    public String idFind(HashMap<String, String> params) {
-        String id = mapper.idFind(params);
-        return id;
+    public ArrayList<String> idFind(HashMap<String, String> params) {
+        ArrayList<String> list = mapper.idFind(params);
+        return list;
     }
 
 

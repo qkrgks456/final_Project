@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 @Controller
@@ -47,13 +48,13 @@ public class MemberController {
     public String idFind(Model model, @RequestParam HashMap<String, String> params) {
 
         logger.info("아이디확인" + params);
-        String id = service.idFind(params);
+        ArrayList<String> list = service.idFind(params);
 
-        if (id == null) {
+        if (list.size() == 0) {
             model.addAttribute("suc", false);
             return "member/login/idFind/idFindForm";
         } else {
-            model.addAttribute("id", id);
+            model.addAttribute("list", list);
             return "member/login/idFind/idFindResult";
         }
     }

@@ -44,7 +44,9 @@
                 <hr/>
                 <div class="form mb-3 mt-3">
                     <div>아이디</div>
-                    <h2 class="fw-bold">${id}</h2>
+                    <c:forEach items="${list}" var="lists">
+                        <h2 class="fw-bold">${lists}</h2>
+                    </c:forEach>
                     <div class="text-center">
                         <a href="${path}" class="btn btn-warning">메인으로</a>
                         <a href="${path}/member/loginForm" class="btn btn-warning mx-2">로그인</a>
