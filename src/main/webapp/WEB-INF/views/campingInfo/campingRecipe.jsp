@@ -55,7 +55,7 @@
 					<!-- 검색 공간 -->
 					<div class=" col-10 ps-3 pe-0">
 						<input type="text" class="form-control" id="searchInput"
-							name="searchInput" />
+							name="searchInput" placeholder="레시피를 검색해주세요"/>
 					</div>
 					<!-- 검색 버튼 공간 -->
 					<div class="form-group col-2 p-0">
@@ -82,112 +82,129 @@
 	<script src="${path}/resources/js/bootstrap.bundle.js"></script>
 	<script src="${path}/resources/js/common.js"></script>
 	<script>
-		$(document).on('click','.page-info',function(){
-			let page = $(this).attr('page');
-			$.ajax({
-				url: 'RecipeApi/'+page+'/'+search,
-				type: 'get',
-				dataType: 'json',
-				success:function(map){
-					memberInfoList(map);
-				},
-				error:function(error){
-					console.log(error);
-				}
-			});
-		})
-	
-		var firstLink="";
-		//$(document).
-		$(document).on('click',".clickCard",function(){
-			let url = $(this).attr('url');
-			console.log(url)
-			$("#link").attr('src',url);
-		});
-	
-		var search = "캠핑";
-		blog(search);
-		
-		$('#searchBtn').on('click',function(){
-			search=$("#searchInput").val();
-			blog(search);
-		});
-		$('#clickCard').on('click',function(){
-			//
-		});
-		
-		$('#searchInput').on('keypress', function(e) {
-			if (e.keyCode == '13') {
-				$('#searchBtn').click();
+	var search = "캠핑";
+	$(document).on('click', '.page-info', function() {
+		let page = $(this).attr('page');
+		$("#card").empty();
+		search += "레시피";
+		$.ajax({
+			url : 'RecipeApi/' + page + '/' + search,
+			type : 'get',
+			dataType : 'json',
+			success : function(map) {
+				console.log(map)
+				RecipeList(map);
+			},
+			error : function(error) {
+				console.log(error);
 			}
 		});
-		
-		function blog(search) {
-				$("#card").empty();
-					search += "레시피";
-					$.ajax({
-						url : 'RecipeApi/1/'+search,
-						type : 'GET',
-					
-						dataType : 'JSON',
-						success : function(map) {
-							console.log(map);
-							RecipeList(map);
-							
-						},
-						error : function(e) {
-							console.log(e);
-						}
-					});
-			}
-			function RecipeList(map){
-				var content = "";
+	})
+	page = 1;
+	var searchCount = 0;
+	var firstLink = "";
+	
+	//카드가 클릭 되었을 때 
+	$(document).on('click', ".clickCard", function() {
+		let url = $(this).attr('url');
+		console.log(url)
+		$("#link").attr('src', url);
+	});
 
-				$("#total").empty();
-				$("#total").append("총 검색 수: " + map.total);
-				
-				//블로그 게시물들
-				for (var i = 0; i < map.items.length; i++){
-					//카드
-				content = "";
-				content += "<div class='col'>";
-				content += "<div id='' class='clickCard card border-dark' url='"+map.items[i].link+"' style='cursor:pointer'>";
-				content += "<div class='card-body'>";
-				content += "<h5 class='card-title'>"+map.items[i].title+"</h5>";
-				content += "<p class='card-text'>"+map.items[i].description+"</p>";
-				content += "</div>";
-				content += "</div>";
-				content += "</div>";
-				$("#card").append(content);
-				}
-				//페이지네이션
-				 content = '';
-				    content += '<ul class="pagination justify-content-center">'
-				    if (map.startPage != 1) {
-				        content += '<li class="page-item">'
-				        content += '<a class="page-link page-info" page="' + (map.map.startPage - 1) + '" aria-label="Previous" style="cursor:pointer;">'
-				        content += '<span aria-hidden="true">&laquo;</span>'
-				        content += '</a>'
-				        content += '</li>'
-				    }
-				    for (let i = map.map.startPage; i <= map.map.endPage; i++) {
-				        if (map.map.currPage != i) {
-				            content += '<li class="page-item"><a style="cursor:pointer;" class="page-link page-info" page="' + i + '" >' + i + '</a></li>'
-				        } else {
-				            content += '<li class="page-item active"><a class="page-link">' + i + '</a></li>'
-				        }
-				    }
-				    if (map.totalPage != map.map.endPage) {
-				        content += '<li class="page-item">'
-				        content += '<a class="page-link page-info" page="' + (map.map.endPage + 1) + '" aria-label="Next" style="cursor:pointer;">'
-				        content += '<span aria-hidden="true">&raquo;</span>'
-				        content += '</a>'
-				        content += '</li>'
-				    }
-				    content += '</ul>'
-				    $('#paginationBox').empty();
-				    $('#paginationBox').append(content);
+	
+	blog(search);
+
+	//검색 클릭되었을때
+	$('#searchBtn').on('click', function() {
+		search = $("#searchInput").val();
+		blog(search);
+	});
+	
+	//검색칸 엔터가 눌렸을 때 
+	$('#searchInput').on('keypress', function(e) {
+		if (e.keyCode == '13') {
+			$('#searchBtn').click();
+		}
+	});
+	
+	//초반, 검색 데이터 입력 map받음
+	function blog(search) {
+		$("#card").empty();
+		search += "레시피";
+		$.ajax({
+			url : 'RecipeApi/' + page + '/' + search,
+			type : 'GET',
+
+			dataType : 'JSON',
+			success : function(map) {
+				console.log(map);
+				RecipeList(map);
+
+			},
+			error : function(e) {
+				console.log(e);
 			}
+		});
+	}
+	
+	//게시물들 출력
+	function RecipeList(map) {
+		
+		
+		$("#total").empty();
+		$("#total").append("총 검색 수: " + map.total);
+		var content = "";
+
+		//블로그 게시물들
+		for (var i = 0; i <10; i++) {
+			//카드
+			content += "<div class='col'>";
+			content += "<div id='' class='clickCard card border-dark' url='"+map.items[i].link+"' style='cursor:pointer'>";
+			content += "<div class='card-body'>";
+			content += "<h5 class='card-title'>" + map.items[i].title
+					+ "</h5>";
+			content += "<p class='card-text'>" + map.items[i].description
+					+ "</p>";
+			content += "</div>";
+			content += "</div>";
+			content += "</div>";
+			
+		}$("#card").empty;
+		$("#card").append(content);
+		//페이지네이션
+		content = '';
+		content += '<ul class="pagination justify-content-center">'
+		if (map.startPage != 1) {
+			content += '<li class="page-item">'
+			content += '<a class="page-link page-info" page="'
+					+ (map.map.startPage - 1)
+					+ '" aria-label="Previous" style="cursor:pointer;">'
+			content += '<span aria-hidden="true">&laquo;</span>'
+			content += '</a>'
+			content += '</li>'
+		}
+		for (let i = map.map.startPage; i <= map.map.endPage; i++) {
+			if (map.map.currPage != i) {
+				content += '<li class="page-item"><a style="cursor:pointer;" class="page-link page-info" page="' + i + '" >'
+						+ i + '</a></li>'
+			} else {
+				content += '<li class="page-item active"><a class="page-link">'
+						+ i + '</a></li>'
+			}
+		}
+		if (map.totalPage != map.map.endPage) {
+			content += '<li class="page-item">'
+			content += '<a class="page-link page-info" page="'
+					+ (map.map.endPage + 1)
+					+ '" aria-label="Next" style="cursor:pointer;">'
+			content += '<span aria-hidden="true">&raquo;</span>'
+			content += '</a>'
+			content += '</li>'
+		}
+		content += '</ul>'
+		$('#paginationBox').empty();
+		$('#paginationBox').append(content);
+	}
 	</script>
 </body>
 
