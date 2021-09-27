@@ -76,7 +76,7 @@
                     </div>
                 </div>
             </div>
-            <div class="mt-1">
+            <div class="mt-1"  style="text-align:center;">
                 <c:forEach var="i" begin="${map.startPage}" end="${map.endPage}">
                     <form action="${path}/campingSearch/search/${i}" class="text-center" method="post" id="tagForm">
                 </c:forEach>

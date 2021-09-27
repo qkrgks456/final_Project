@@ -42,8 +42,8 @@
                         <div class="d-flex justify-content-center mt-2">
                             <select class="form-select form-select-sm col"
                                     aria-label=".form-select-sm example" required="required" id="type">
-                                <option value="addr" selected>주소</option>
-                                <option value="them">태그</option>
+                                <option value="addr" selected>지역</option>
+                                <option value="name">업체명</option>
                             </select> <input class="form-control w-50 me-2" type="text" id="keyword">
                             <button class="btn btn-warning btn-sm" type="submit">검색하기</button>
                         </div>

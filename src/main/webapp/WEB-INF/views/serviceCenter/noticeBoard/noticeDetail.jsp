@@ -76,7 +76,6 @@
 				<div id="good" class="btn btn-outline-warning mx-1" goodCheck="${map.goodCheck}">
    					 좋아요 ${map.goodCount}개
 				</div>
-				 <input type="button" value="신고" />
 			</div>
 
 			<hr />

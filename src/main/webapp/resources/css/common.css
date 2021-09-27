@@ -35,6 +35,18 @@ html, body {
     overflow: hidden;*/
 }
 
+
+.lineCard{
+	  white-space: normal;
+    line-height: 1.4;
+    height: 4.2em;
+    text-align: left;
+    word-wrap: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
 /* 한줄 ... 처리 */
 .txt_line {
     width: 50px;

@@ -25,7 +25,7 @@ public class MapSearchService {
 		if(type.equals("addr")) {
 			type="addr1";
 		}else {
-			type="themaEnvrnCl";
+			type="facltNm";
 		}
 		int total = dao.total(word,type);
 		HashMap<String, Object> map = new HansolUtil().pagination(page,10, total);
