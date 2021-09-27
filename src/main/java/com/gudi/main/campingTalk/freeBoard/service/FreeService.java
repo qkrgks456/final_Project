@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.gudi.main.campingTalk.freeBoard.dao.FreeMapper;
 import com.gudi.main.dtoAll.BoardDTO;
 import com.gudi.main.dtoAll.PhotoDTO;
+import com.gudi.main.util.HansolUtil;
 import com.gudi.main.util.UploadUtil;
 
 @Service
@@ -22,18 +23,30 @@ public class FreeService {
 	@Autowired FreeMapper mapper;
 	
 	// 리스트
-	public ArrayList<BoardDTO> freeList() {
+	public ModelAndView freeList(int page) {
+		ModelAndView mav = new ModelAndView();
+		int total = mapper.total();
+		HashMap<String, Object> map = HansolUtil.pagination(page, 10, total);
 		
-		return mapper.freeList();
-		
+		if (page == 1) {
+			page = 0;
+		} else {
+			page = (page - 1) * 10;
+		}
+	
+		ArrayList<BoardDTO> dto = mapper.freeList(page);
+		mav.addObject("map", map);
+    	mav.addObject("dtoList", dto);
+    	mav.setViewName("/campingTalk/freeBoard/freeBoardList");
+    	return mav;
 	}
+		
 	
 	// 글쓰기
 	public int freeWrite(HashMap<String, String> params) {
 		
 		logger.info(params.get("title") + "/" + params.get("content") + "/" + params.get("loginId"));
 		return mapper.freeWrite(params);
-		
 	}
 	
 	// 사진 업로드
@@ -49,38 +62,31 @@ public class FreeService {
 			ori = map.get("oriFileName");
 			
 			mapper.freePhoto(neww,ori, boardNum);
-			
 		}
-		
 	}
 	
 	// 사진 불러오기
 	public ArrayList<PhotoDTO> callPhoto(int boardNum) {
 		
-		String divi = "free" + Integer.toString(boardNum);
-		return mapper.callPhoto(divi);
-		
+		return mapper.callPhoto(boardNum);
 	}
 	
 	// 상세보기
 	public BoardDTO freeDetail(int boardNum) {
 		
 		return mapper.freeDetail(boardNum);
-		
 	}
 	
 	// 조회수
 	public void freeHit(int boardNum) {
 		
 		mapper.freeHit(boardNum);
-		
 	}
 	
 	// 글 삭제
 	public int freeDel(int boardNum) {
 		
 		return mapper.freeDel(boardNum);
-		
 	}
 	
 	// 글 수정
@@ -93,7 +99,6 @@ public class FreeService {
 		int boardNum = Integer.parseInt(params.get("boardNum"));
 		
 		return mapper.freeUpdate(title,content,boardNum);
-		
 	}
 	
 	// 사진 수정
@@ -110,7 +115,6 @@ public class FreeService {
 			
 			mapper.freePhotoUpdate(neww,ori, boardNum);
 		}
-		
 	}
 	
 	// 사진 삭제
@@ -120,7 +124,6 @@ public class FreeService {
 		String newFileName = (String) map.get("newFileName");
 		
 		mapper.photoDel(newFileName, boardNum);
-		
 	}
 	
 	// 글 신고
@@ -128,7 +131,6 @@ public class FreeService {
 		
 		map.put("loginId", loginId);
 		mapper.freeReport(map);
-		
 	}
 	
 	

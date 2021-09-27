@@ -37,7 +37,6 @@
 		<div class="input-group mb-3">
 			<input type="text" name="title" class="form-control" placeholder="제목을 입력해주세요" required="required" aria-label="Username" aria-describedby="basic-addon1">
 		</div>
-		
 		 내용
 		<div class="input-group">
 			<textarea name="content" style="resize:none" rows="10" class="form-control"  placeholder="내용을 입력해주세요" required="required" aria-label="With textarea"></textarea>
@@ -63,7 +62,7 @@
 		
 		<div class="d-flex flex-row-reverse">
 	    	<button class="btn btn-primary mx-2" type="submit">등록</button>
-			<input class="btn btn-primary" type="button" value="목록" onclick="location.href='./freeBoard'">
+			<input class="btn btn-primary" type="button" value="목록" onclick="location.href='${path}/campingTalk/freeBoard'">
 	    </div>
 	</div>
 </div>

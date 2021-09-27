@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.gudi.main.campingTalk.freeBoard.dao.FreeMapper;
 import com.gudi.main.campingTalk.freeBoard.service.FreeService;
 import com.gudi.main.cm.CmService;
 import com.gudi.main.dtoAll.BoardDTO;
@@ -33,25 +34,27 @@ public class FreeController {
     @Autowired FreeService service;
     @Autowired CmService cmService;
     @Autowired GoodMapperCommon goodMapperCm;
+    @Autowired FreeMapper mapper;
     
     // 글 목록 불러오기
     @RequestMapping(value = "/freeBoard")
     public ModelAndView freeBoard() {
     	
+    	int page = 1;
+    	
     	logger.info("리스트 요청");
     	
-    	ModelAndView mav = new ModelAndView();
-    	
-    	ArrayList<BoardDTO> dto = service.freeList();
-    	    	
-    	mav.addObject("dtoList", dto);
-    	mav.setViewName("/campingTalk/freeBoard/freeBoardList");
-    	
-        return mav;
-    	
+    	return service.freeList(page);
     }
     
-    // 글 작성 폼
+    // 페이징 처리
+    @RequestMapping(value = "/freeBoard/{page}")
+    public ModelAndView reviewBoard(@PathVariable int page) {
+    	logger.info("게시글 리스트 확인 페이지 수 : " + page);	
+        return service.freeList(page);
+    }
+    
+    // 글 쓰기 폼 부분
     @RequestMapping(value = "/freeWriteForm")
     public String freeWriteForm(Model model) {
     	logger.info("글쓰기폼 요청");
@@ -65,17 +68,18 @@ public class FreeController {
     		MultipartFile[] file, HttpSession session) {
     	
     	String loginId = (String)session.getAttribute("loginId");
+    	params.put("loginId", loginId);
     	
     	logger.info("글쓰기 요청");
     	
     	ModelAndView mav = new ModelAndView();
     	
-    	// 글 작성
+    	// 글 쓰기 부분
     	service.freeWrite(params);
     	String boardNum = String.valueOf(params.get("boardnum"));
     	System.out.println("boardNum : " + boardNum);
     	
-    	// 파일업로드
+    	// 파일업로드 부분
     	service.freePhoto(file, boardNum);
     	
     	mav.setViewName("redirect:./freeDetail/"+boardNum);
@@ -94,10 +98,10 @@ public class FreeController {
     	
     	ModelAndView mav = new ModelAndView();
     	
-    	//사진 불러옴 (여러개임)
+    	//사진 불러오기(여러개 가능)
     	ArrayList<PhotoDTO> phoDto = service.callPhoto(boardNum);
     	
-    	//글 불러옴
+    	//글 가져오기
     	BoardDTO dto = service.freeDetail(boardNum);
     	
     	//조회수 올리기
@@ -196,7 +200,7 @@ public class FreeController {
     @ResponseBody
     public void reviewReportForm(@RequestParam HashMap<String, String> map, HttpSession session) {
     	String loginId = (String)session.getAttribute("loginId");
-    	logger.info("글 신고");
+    	logger.info("글 신고 요청");
     	logger.info("boardNum, 사유, loginId : " + map.get("boardNum") + "/" + map.get("reason") + "/" + loginId);
     	service.freeReport(map,loginId);
     }

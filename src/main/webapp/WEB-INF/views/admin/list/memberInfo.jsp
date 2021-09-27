@@ -88,12 +88,20 @@ a {
 	<script src="${path}/resources/js/common.js"></script>
 </body>
 <script>
-var searchCheck = 0;
-if(searchCheck=0){
+
+
 $(document).on('click','.page-info',function(){
 	let page = $(this).attr('page');
+	
+	var url="";
+	if(searchCount==0){
+		url='memberInfoAjax/'+page;
+	}
+	if(searchCount==1){
+		url='memberInfoSearch/'+page+"/"+$("#memberInfoSearch").val()+"/"+$("#selectType").val();
+	}
 	$.ajax({
-		url: 'memberInfoAjax/'+page,
+		url: url,
 		type: 'get',
 		dataType: 'json',
 		success:function(map){
@@ -104,23 +112,9 @@ $(document).on('click','.page-info',function(){
 		}
 	});
 })
-}
-if(searchCheck=1){
-	$(document).on('click','.page-info',function(){
-		let page = $(this).attr('page');
-		$.ajax({
-			url: 'memberInfoAjax/'+page,
-			type: 'get',
-			dataType: 'json',
-			success:function(map){
-				memberInfoList(map);
-			},
-			error:function(error){
-				console.log(error);
-			}
-		});
-	})
-}
+
+	
+var searchCount = 0;
 
 memberInfo();
 $('#memberInfoSearch').on('keypress', function(e) {
@@ -130,11 +124,9 @@ $('#memberInfoSearch').on('keypress', function(e) {
 });
 
 $('#searchBtn').on('click', function() {
-	//var selectType = $("#selectType").val();
-	//var insertSearch=$("#insertSearch").val();
-	//console.log("타입: "+ selectType+ "내용: "+insertSearch);
-	searchCheck = 1;
-	console.log("서치 여부: " +searchCheck);
+	searchCount = 1;
+	console.log("검색체크: "+searchCount);
+	
 	$.ajax({
 		url : 'memberInfoSearch/1/'+$("#memberInfoSearch").val()+"/"+$("#selectType").val(),
 		type : 'get',
@@ -154,6 +146,8 @@ $('#searchBtn').on('click', function() {
 	
 	function memberInfo() {
 		console.log("jsp에서 관리자 ajax조회");
+		searchCount = 0;
+		console.log("검색체크: "+searchCount);
 		$.ajax({
 			url : 'memberInfoAjax/1',
 			type : 'get',

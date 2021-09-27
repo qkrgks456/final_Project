@@ -91,8 +91,15 @@ a {
 <script>
 $(document).on('click','.page-info',function(){
 	let page = $(this).attr('page');
+	var url="";
+	if(searchCount==0){
+		url='adminInsertAjax/'+page;
+	}
+	if(searchCount==1){
+		url='insertSearch/'+page+"/"+$("#insertSearch").val()+"/"+$("#selectType").val();
+	}
 	$.ajax({
-		url: 'adminInsertAjax/'+page,
+		url: url,
 		type: 'get',
 		dataType: 'json',
 		success:function(map){
@@ -104,7 +111,8 @@ $(document).on('click','.page-info',function(){
 	});
 })
 
-
+	var searchCount = 0;
+	
 	adminInsert();
 	$('#insertSearch').on('keypress', function(e) {
 		if (e.keyCode == '13') {
@@ -112,9 +120,8 @@ $(document).on('click','.page-info',function(){
 		}
 	});
 	$('#searchBtn').on('click', function() {
-		//var selectType = $("#selectType").val();
-		//var insertSearch=$("#insertSearch").val();
-		//console.log("타입: "+ selectType+ "내용: "+insertSearch);
+		searchCount = 1;
+		console.log("검색체크: "+searchCount);
 		$.ajax({
 			url : 'insertSearch/1/'+$("#insertSearch").val()+"/"+$("#selectType").val(),
 			type : 'get',
@@ -130,7 +137,8 @@ $(document).on('click','.page-info',function(){
 
 	function adminInsert() {
 		console.log("jsp에서 관리자 ajax조회");
-
+		searchCount = 0;
+		console.log("검색체크: "+searchCount);
 		$.ajax({
 			url : 'adminInsertAjax/1',
 			type : 'get',
@@ -165,7 +173,7 @@ $(document).on('click','.page-info',function(){
 		
 		
 		
-		/* 페이지네이션 불러오기 욕나오네 */
+		/* 페이지네이션 */
 	    content = '';
 	    content += '<ul class="pagination justify-content-center">'
 	    if (map.startPage != 1) {

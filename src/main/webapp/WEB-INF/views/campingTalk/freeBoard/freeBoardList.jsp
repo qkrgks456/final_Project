@@ -46,7 +46,7 @@
 			<c:forEach items="${dtoList}" var="dto">
 				<tr>
 				   	<td scope="row" class="py-3">${dto.boardNum}</td>
-					<td class="py-3"><a href="freeDetail/${dto.boardNum}" style="text-decoration:none;">${dto.title}</a></td>
+					<td class="py-3"><a href="${path}/campingTalk/freeDetail/${dto.boardNum}" style="text-decoration:none;">${dto.title}</a></td>
 					<td class="py-3">${dto.id}</td>
 					<td class="py-3">${dto.boardHit}</td>
 					<td class="py-3">${dto.dates}</td>
@@ -54,9 +54,36 @@
 			</c:forEach>
 		</tbody>
 	</table>    
+	
+	<ul class="pagination justify-content-center">
+		<c:if test="${map.startPage ne 1}">
+			<li class="page-item">
+				<a class="page-link" href="${path}/campingTalk/freeBoard/${map.startPage-1}" aria-label="Previous">
+                	<span aria-hidden="true">&laquo;</span>
+                </a>
+			</li>
+		</c:if>
+		<c:forEach var="i" begin="${map.startPage}" end="${map.endPage}">
+			<c:if test="${i ne map.currPage}">
+				<li class="page-item">
+					<a class="page-link" href="${path}/campingTalk/freeBoard/${i}">${i}</a>
+				</li>
+			</c:if>
+			<c:if test="${i eq map.currPage}">
+				<li class="page-item active"><a class="page-link">${i}</a></li>
+			</c:if>
+		</c:forEach>
+		<c:if test="${map.totalPage ne map.endPage}">
+			<li class="page-item">
+				<a class="page-link" href="${path}/campingTalk/freeBoard/${map.endPage+1}" aria-label="Next">
+                	<span aria-hidden="true">&raquo;</span>
+				</a>
+			</li>
+		</c:if>
+	</ul>
 	<c:if test="${sessionScope.loginId ne null}">
 		<div class="d-flex flex-row-reverse">
-	    	<input class="btn btn-primary d-flex" type="button" value="글쓰기" onclick="location.href='./freeWriteForm'">
+	    	<input class="btn btn-primary d-flex" type="button" value="글쓰기" onclick="location.href='${path}/campingTalk/freeWriteForm'">
 	    </div>
     </c:if>
 </div>
@@ -66,12 +93,13 @@
 <script src="${path}/resources/js/common.js"></script>
 
 <script>
+	var currPage = 1;
+	var per = 10;
 
-var delMsg = "${delMsg}"
-if(delMsg!=""){
-	alert(delMsg);
-}
-
+	var delMsg = "${delMsg}"
+	if (delMsg != "") {
+		alert(delMsg);
+	}
 </script>
 </body>
 </html>

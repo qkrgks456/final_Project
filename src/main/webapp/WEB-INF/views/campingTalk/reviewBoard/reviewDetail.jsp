@@ -149,7 +149,7 @@ style="height: 100px; resize: none;"></textarea>
 <div class="d-flex justify-content-end">
     <div>
         <c:if test="${sessionScope.loginId ne dto.id && sessionScope.loginId != null}">
-            <a class="btn btn-warning btn-sm" href="">신고</a>
+            <a class="btn btn-warning btn-sm" href="${path}/cm/cmReportForm/${dto.cmNum}">신고</a>
         </c:if>
         <c:if test="${sessionScope.loginId eq dto.id}">
             <a class='cmUpdateBtnForm btn btn-warning btn-sm'>수정</a>

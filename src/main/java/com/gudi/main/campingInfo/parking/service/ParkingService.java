@@ -51,4 +51,9 @@ public class ParkingService {
 	}
 
 
+	public ArrayList<GoodDTO> callPayRank() {
+		return dao.callPayRank();
+	}
+
+
 }

@@ -30,6 +30,9 @@
   width: 100%;
   height: 500px;
 }
+path {
+cursor:pointer;
+}
 
 </style>
 
@@ -81,7 +84,7 @@
 
 <!-- 차박지 순위 -->
 <div class="col">
-<h5>차박지 추천 순위</h5>
+<h5>무료 차박지 추천 순위</h5>
 <div id="chartdiv"></div>
 </div>
 
@@ -422,18 +425,6 @@ $('document').ready(function(){
 		console.log("6클릭");
 		location.href="./freeParkDetail/${rank.get(6).getDivisionNum()}";
 	});
-	$('g[role="menuitem"]:eq(7)').on("click",function(){
-		console.log("7클릭");
-		location.href="./freeParkDetail/${rank.get(7).getDivisionNum()}";
-	});
-	$('g[role="menuitem"]:eq(8)').on("click",function(){
-		console.log("8클릭");
-		location.href="./freeParkDetail/${rank.get(8).getDivisionNum()}";
-	});
-	$('g[role="menuitem"]:eq(9)').on("click",function(){
-		console.log("9클릭");
-		location.href="./freeParkDetail/${rank.get(9).getDivisionNum()}";
-	});
 	
 });
 
@@ -457,7 +448,7 @@ am4core.useTheme(am4themes_animated);
 var chart = am4core.create("chartdiv", am4charts.XYChart);
 chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
 
-chart.paddingBottom = 30;
+chart.paddingBottom = 40;
 
 chart.data = [{
     "name":  "${prkNames[0]}",
@@ -486,18 +477,6 @@ chart.data = [{
 }, {
     "name": "${prkNames[6]}",
     "steps": "${rank.get(6).getCnt()}",
-    "href": "${path}/resources/img/chaback.png"
-}, {
-    "name": "${prkNames[7]}",
-    "steps": "${rank.get(7).getCnt()}",
-    "href": "${path}/resources/img/chaback.png"
-}, {
-    "name": "${prkNames[8]}",
-    "steps": "${rank.get(8).getCnt()}",
-    "href": "${path}/resources/img/chaback.png"
-}, {
-    "name": "${prkNames[9]}",
-    "steps": "${rank.get(9).getCnt()}",
     "href": "${path}/resources/img/chaback.png"
 }];
 
@@ -592,6 +571,7 @@ chart.cursor.events.on("cursorpositionchanged", function (event) {
 })
 
 }); // end am4core.ready()
+
 </script>
 
 

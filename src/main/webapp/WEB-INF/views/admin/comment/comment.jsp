@@ -90,8 +90,17 @@
 <script>
 $(document).on('click','.page-info',function(){
 	let page = $(this).attr('page');
+	
+	var url="";
+	if(searchCount==0){
+		url='commentListAjax/'+page;
+	}
+	if(searchCount==1){
+		url='commentListSearch/'+page+"/"+$("#commentListSearch").val()+"/"+$("#selectType").val();
+	}
+	
 	$.ajax({
-		url: 'commentListAjax/'+page,
+		url: url,
 		type: 'get',
 		dataType: 'json',
 		success:function(map){
@@ -102,7 +111,7 @@ $(document).on('click','.page-info',function(){
 		}
 	});
 })
-
+var searchCount = 0;
 	commentList();
 
 	$('#commentListSearch').on('keypress', function(e) {
@@ -111,9 +120,10 @@ $(document).on('click','.page-info',function(){
 		}
 	});
 	$('#searchBtn').on('click', function() {
-		//var selectType = $("#selectType").val();
-		//var insertSearch=$("#insertSearch").val();
-		//console.log("타입: "+ selectType+ "내용: "+insertSearch);
+		
+		searchCount = 1;
+		console.log("검색체크: "+searchCount);
+		
 		$.ajax({
 			url : 'commentListSearch/1/'+$("#commentListSearch").val()+"/"+$("#selectType").val(),
 			type : 'get',
@@ -129,6 +139,10 @@ $(document).on('click','.page-info',function(){
 	
 	function commentList() {
 		console.log("jsp에서 관리자 ajax조회");
+		
+		searchCount = 0;
+		console.log("검색체크: "+searchCount);
+		
 		$.ajax({
 			url : 'commentListAjax/1',
 			type : 'get',
