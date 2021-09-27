@@ -40,7 +40,7 @@ public class KakaoController {
             String reqUrl =
                     "redirect:https://kauth.kakao.com/oauth/authorize"
                             + "?client_id=510dfee7db026dbcc8df7b0a51993201"
-                            + "&redirect_uri=http://localhost:8090" + ctx + "/kakao/callback"
+                            + "&redirect_uri=http://192.168.0.175:8080" + ctx + "/kakao/callback"
                             + "&response_type=code";
             logger.info(reqUrl);
             return reqUrl;
@@ -62,7 +62,7 @@ public class KakaoController {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", "authorization_code");
         params.add("client_id", "510dfee7db026dbcc8df7b0a51993201");
-        params.add("redirect_uri", "http://localhost:8090" + ctx + "/kakao/callback");
+        params.add("redirect_uri", "http://192.168.0.175:8080" + ctx + "/kakao/callback");
         params.add("code", code);
         // 헤더랑 파라미터 담은녀석
         HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest = new HttpEntity<>(params, headers);

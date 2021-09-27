@@ -233,7 +233,8 @@
                 <table class="table table-hover px-2">
                     <tbody>
                     <c:forEach items="${map.reviewBoardList}" var="lists">
-                        <tr>
+                        <tr onclick="location.href='${path}/campingTalk/reviewDetail/${lists.boardNum}'"
+                            style="cursor: pointer">
                             <td class="py-3">
                                 <div class="target">
                                     <a class="text-decoration-none text-dark"
@@ -248,13 +249,13 @@
             <div class="col-md-3 border-end text-center">
                 <div class="d-flex">
                     <h1>자유게시판</h1>
-                    <a href="" class="ms-2 mt-1 text-decoration-none text-dark"><i
+                    <a href="${path}/campingTalk/freeBoard/1" class="ms-2 mt-1 text-decoration-none text-dark"><i
                             class="bi bi-plus-circle fs-1"></i></a>
                 </div>
                 <table class="table table-hover px-2">
                     <tbody>
                     <c:forEach items="${map.freeBoardList}" var="lists">
-                        <tr>
+                        <tr onclick="location.href='${path}/campingTalk/freeDetail/${lists.boardNum}'" style="cursor: pointer">
                             <td class="py-3">
                                 <div class="target">
                                     <a class="text-decoration-none text-dark" href="">${lists.title}</a>
@@ -274,11 +275,11 @@
                 <table class="table table-hover px-2">
                     <tbody>
                     <c:forEach items="${map.questionBoardList}" var="lists">
-                        <tr>
+                        <tr onclick="location.href='${path}/serviceCenter/questionDetail/${lists.boardNum}'"
+                            style="cursor: pointer">
                             <td class="py-3">
                                 <div class="target">
-                                    <a class="text-decoration-none text-dark"
-                                       href="${path}/serviceCenter/questionDetail/${lists.boardNum}">${lists.title}</a>
+                                    <a class="text-decoration-none text-dark">${lists.title}</a>
                                 </div>
                             </td>
                         </tr>
@@ -295,11 +296,11 @@
                 <table class="table table-hover px-2">
                     <tbody>
                     <c:forEach items="${map.noticeBoardList}" var="lists">
-                        <tr>
+                        <tr onclick="location.href='${path}/serviceCenter/noticeDetail/${lists.boardNum}'"
+                            style="cursor: pointer">
                             <td class="py-3">
                                 <div class="target">
-                                    <a class="text-decoration-none text-dark"
-                                       href="${path}/serviceCenter/noticeDetail/${lists.boardNum}">${lists.title}</a>
+                                    <a class="text-decoration-none text-dark">${lists.title}</a>
                                 </div>
                             </td>
                         </tr>

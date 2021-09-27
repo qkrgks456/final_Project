@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public interface MemberMapper {
@@ -21,7 +22,7 @@ public interface MemberMapper {
 
 
     @Select("SELECT id FROM member WHERE email=#{email} AND nickname=#{nickName} AND delCheck='N'")
-    String idFind(HashMap<String, String> params);
+    ArrayList<String> idFind(HashMap<String, String> params);
 
     @Select("SELECT id FROM member WHERE email=#{email} AND id=#{id}")
     String passFind(HashMap<String, String> params);
