@@ -20,15 +20,15 @@ public interface FreeMapper {
 	// @Select("SELECT * FROM freeBoard WHERE delcheck = 'n' ORDER BY boardnum DESC")
 	@Select("SELECT rnum, BOARDNUM, ID, CONTENT, TITLE, DATES, BOARDHIT\r\n" + 
 			"FROM\r\n" + 
-			"(SELECT row_number() OVER(ORDER BY boardnum DESC) rnum,BOARDNUM,ID,CONTENT,TITLE,DATES,BOARDHIT,DELCHECK,DIVISION FROM freeboard WHERE delcheck = 'n') OFFSET #{param1} ROWS FETCH FIRST 10 ROWS ONLY")
+			"(SELECT row_number() OVER(ORDER BY boardnum DESC) rnum,BOARDNUM,ID,CONTENT,TITLE,DATES,BOARDHIT,DELCHECK,DIVISION FROM freeboard WHERE delcheck = 'N') OFFSET #{param1} ROWS FETCH FIRST 10 ROWS ONLY")
 	ArrayList<BoardDTO> freeList(int page);
 	
 	// 전체 페이지 수 삭제처리 한거 제외
-	@Select("SELECT COUNT(boardnum) FROM freeboard where delcheck='n'")
+	@Select("SELECT COUNT(boardnum) FROM freeboard where delcheck='N'")
 	int total();
 	
 	// 글쓰기
-	@Insert("INSERT INTO freeboard(boardnum, id, title, content) VALUES (freeboard_seq.NEXTVAL, 'test', #{title}, #{content})")
+	@Insert("INSERT INTO freeboard(boardnum, id, title, content) VALUES (freeboard_seq.NEXTVAL, #{loginId}, #{title}, #{content})")
 	@SelectKey(statement = {"SELECT freeboard_seq.CURRVAL FROM DUAL"}, keyProperty = "boardnum",resultType = int.class, before = false)
 	int freeWrite(HashMap<String, String> params);
 	
@@ -49,7 +49,7 @@ public interface FreeMapper {
 	void freeHit(int boardNum);
 	
 	// 글 삭제
-	@Update("UPDATE freeboard SET delcheck = 'y' WHERE boardnum = #{boardNum}")
+	@Update("UPDATE freeboard SET delcheck = 'Y' WHERE boardnum = #{boardNum}")
 	int freeDel(int boardNum);
 	
 	// 글 수정

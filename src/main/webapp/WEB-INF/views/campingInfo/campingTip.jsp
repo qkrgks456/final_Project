@@ -55,18 +55,18 @@
 				<div class="form-group col-2 p-0">
 					<button type="button" class="btn btn-primary" id="searchBtn">검색</button>
 				</div>
-				<!-- 검색결과 부분 -->
-				<div id="scroll" class="overflow-scroll">
-					<div id="searchResult" class="d-flex justify-content-start row">
-						<div id="card" class="row row-cols-1 row-cols-md-2 g-4"></div>
-					</div>
-				</div>
-				<div id="paginationBox">
-				</div>
-				<div id="blog" class="ms-3">
-					<iframe id="link" src="https:\/\/blog.naver.com\/marquiz?Redirect=Log&logNo=222239234835" style="width:800px;height:1200px;margin-left:60px"> </iframe>
+			</div>
+			<!-- 검색결과 부분 -->
+			<div id="scroll" class="overflow-scroll">
+				<div id="searchResult" class="d-flex justify-content-start row">
+					<div id="card" class="row row-cols-1 row-cols-md-2 g-4"></div>
 				</div>
 			</div>
+			<div id="paginationBox">
+			</div>
+		</div>
+		<div id="blog" class="ms-3">
+			<iframe id="link" src="https:\/\/blog.naver.com\/marquiz?Redirect=Log&logNo=222239234835" style="width:800px;height:820px;margin-left:60px"> </iframe>
 		</div>
 	</div>
 </div>
