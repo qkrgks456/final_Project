@@ -201,17 +201,26 @@ public class AdminService {
 		return map;
 	}
 
-	public HashMap<String, Object> boardListSearch(String selectType, String boardListSearch) {
+	public HashMap<String, Object> boardListSearch(int page, String selectType, String boardListSearch) {
 		logger.info("게시글 리스트 검색 서비스");
-		list3 = new ArrayList<BoardDTO>();
-		map = new HashMap<String , Object>();
+		int start = 0;
+        if (page != 1) {
+            start = (page - 1) * 15;
+        }
+        
+        int total=0;
+        HashMap<String, Object> map = null;
 		switch(selectType){
 		case "title":
-			list3= dao.boardListSearchBytitle(boardListSearch);
+			total = dao.commentListSearchByContentPage(boardListSearch);
+			map = HansolUtil.pagination(page, 15, total);
+			list3= dao.boardListSearchBytitle(boardListSearch,start);
 			break;
 	
 		case "id":
-			list3= dao.boardListSearchById(boardListSearch);
+			total = dao.commentListSearchByContentPage(boardListSearch);
+			map = HansolUtil.pagination(page, 15, total);
+			list3= dao.boardListSearchById(boardListSearch,start);
 			break;
 		}
 		map.put("list",list3);

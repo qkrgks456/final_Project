@@ -66,23 +66,23 @@ public interface AdminMapper {
 
 	//게시글 조회 검색
 	//게시글 조인
-	@Select("select division,boardNum, id,title, delcheck from noticeBoard where title LIKE '%'||#{insertSearch}||'%'"+ 
+	@Select("select * from (select division,boardNum, id,title, delcheck from noticeBoard where title LIKE '%'||#{param1}||'%'"+ 
 			" UNION all"+
-			" select division,boardNum,id, title, cast('delcheck' as nvarchar2(100)) from questionBoard where title LIKE '%'||#{insertSearch}||'%'"+ 
+			" select division,boardNum,id, title, cast('delcheck' as nvarchar2(100)) from questionBoard where title LIKE '%'||#{param1}||'%'"+ 
 			" UNION all" + 
-			" select division,boardNum,id,title, delcheck from freeBoard where title LIKE '%'||#{insertSearch}||'%'"+ 
+			" select division,boardNum,id,title, delcheck from freeBoard where title LIKE '%'||#{param1}||'%'"+ 
 			" UNION all" + 
-			" select division,boardNum,id,title, cast('delcheck' as nvarchar2(100)) from reviewBoard where title LIKE '%'||#{insertSearch}||'%'")
-	ArrayList<BoardDTO> boardListSearchBytitle(String boardListSearch);
+			" select division,boardNum,id,title, cast('delcheck' as nvarchar2(100)) from reviewBoard where title LIKE '%'||#{param1}||'%') OFFSET #{param2} ROWS FETCH FIRST 15 ROWS ONLY")
+	ArrayList<BoardDTO> boardListSearchBytitle(String boardListSearch, int start);
 
-	@Select("select division,boardNum,id,title, delcheck from noticeBoard where id LIKE '%'||#{insertSearch}||'%'"+ 
+	@Select("select * from (select division,boardNum,id,title, delcheck from noticeBoard where id LIKE '%'||#{param1}||'%'"+ 
 			" UNION all"+
-			" select division,boardNum,id, title, cast('delcheck' as nvarchar2(100)) from questionBoard where id LIKE '%'||#{insertSearch}||'%'"+ 
+			" select division,boardNum,id, title, cast('delcheck' as nvarchar2(100)) from questionBoard where id LIKE '%'||#{param1}||'%'"+ 
 			" UNION all" + 
-			" select division,boardNum,id,title, delcheck from freeBoard where id LIKE '%'||#{insertSearch}||'%'"+ 
+			" select division,boardNum,id,title, delcheck from freeBoard where id LIKE '%'||#{param1}||'%'"+ 
 			" UNION all" + 
-			" select division,boardNum,id,title, cast('delcheck' as nvarchar2(100)) from reviewBoard where id LIKE '%'||#{insertSearch}||'%'")
-	ArrayList<BoardDTO> boardListSearchById(String boardListSearch);
+			" select division,boardNum,id,title, cast('delcheck' as nvarchar2(100)) from reviewBoard where id LIKE '%'||#{param1}||'%') OFFSET #{param2} ROWS FETCH FIRST 15 ROWS ONLY")
+	ArrayList<BoardDTO> boardListSearchById(String boardListSearch, int start);
 	
 	//일반 댓글조회 검색
 	//댓글, 멤버 조인

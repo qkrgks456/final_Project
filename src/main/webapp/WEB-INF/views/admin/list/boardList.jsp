@@ -86,8 +86,16 @@
 
 	$(document).on('click','.page-info',function(){
 		let page = $(this).attr('page');
+		var url="";
+		if(searchCount==0){
+			url='boardListAjax/'+page;
+		}
+		if(searchCount==1){
+			url='boardListSearch/'+page+"/"+$("#boardListSearch").val()+"/"+$("#selectType").val();
+		}
+		
 		$.ajax({
-			url: 'boardListAjax/'+page,
+			url: url,
 			type: 'get',
 			dataType: 'json',
 			success:function(map){
@@ -98,7 +106,8 @@
 			}
 		});
 	})
-
+	var searchCount = 0;
+	
 	boardList();
 	
 	$('#boardListSearch').on('keypress', function(e) {
@@ -107,16 +116,14 @@
 		}
 	});
 	$('#searchBtn').on('click', function() {
-		//var selectType = $("#selectType").val();
-		//var insertSearch=$("#insertSearch").val();
-		//console.log("타입: "+ selectType+ "내용: "+insertSearch);
+
+		searchCount = 1;
+		console.log("검색체크: "+searchCount);
+		
 		$.ajax({
-			url : 'boardListSearch/1',
+			url : 'boardListSearch/1/'+$("#boardListSearch").val()+"/"+$("#selectType").val(),
 			type : 'get',
-			data : {
-				boardListSearch : $("#boardListSearch").val(),
-				selectType : $("#selectType").val()
-			},
+	
 			dataType : 'JSON',
 			success : function(map) {
 				boardListAjax(map);
@@ -129,6 +136,9 @@
 	
 	function boardList() {
 		console.log("jsp에서 관리자 ajax조회");
+		
+		searchCount = 0;
+		console.log("검색체크: "+searchCount);
 		$.ajax({
 			url : 'boardListAjax/1',
 			type : 'get',

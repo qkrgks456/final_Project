@@ -149,11 +149,11 @@ public class AdminController {
     }
     
     @ResponseBody
-    @RequestMapping(value = "/boardListSearch",method = RequestMethod.GET)
-    public HashMap<String, Object> boardListSearch(@RequestParam("boardListSearch") String boardListSearch, @RequestParam("selectType") String selectType){
+    @RequestMapping(value = "/boardListSearch/{page}/{boardListSearch}/{selectType}",method = RequestMethod.GET)
+    public HashMap<String, Object> boardListSearch(@PathVariable int page,@PathVariable("boardListSearch") String boardListSearch, @PathVariable("selectType") String selectType){
     	logger.info("게시글 검색");
     	logger.info("셀렉터: "+selectType+", 검색내용: "+boardListSearch);
-        return adminService.boardListSearch(selectType,boardListSearch);
+        return adminService.boardListSearch(page,selectType,boardListSearch);
     }
     @RequestMapping(value = "/boardListDetailInfo",method = RequestMethod.GET)
     public String boardListDetailInfo(@RequestParam("boardNum") String boardNum,@RequestParam("division") String division,Model model){
