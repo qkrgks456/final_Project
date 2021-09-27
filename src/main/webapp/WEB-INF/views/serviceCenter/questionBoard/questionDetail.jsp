@@ -87,29 +87,29 @@
 					onclick="location.href='../questionBoard/1'">
 			</div>
 
-
+				
 			<!-- 댓글 -->
 			<div class="pt-4 border-bottom border-dark">
 				<h4 class="fw-bold">답변</h4>
 			</div>
-			
-			<c:if test="${sessionScope.admin eq 'Y' and sessionScope.loginId eq dto.id}">
+		
 			<%-- 댓글 입력 폼 --%>	
+			<c:if test="${sessionScope.admin eq 'Y' }">
 			<div class="d-flex align-items-center mt-2">
 				<div class="form-floating flex-grow-1 px-2">
 					<textarea class="form-control" placeholder="Leave a comment here"
 						name="commentContent" id="commentContent"
 						style="height: 100px; resize: none;"></textarea>
 					<div class="invalid-feedback">1자 이상 입력해주세요</div>
-					<c:if test="${sessionScope.loginId eq null}">
+					<c:if test="${sessionScope.loginId  eq null}">
 						<label for="commentContent">답변을 작성하려면, 로그인 해주세요</label>
 					</c:if>
-					<c:if test="${sessionScope.loginId ne null}">
-						<label for="commentContent">${sessionScope.loginId}님 이곳에
-							댓글을 작성하세요</label>
+					<c:if test="${sessionScope.admin eq 'Y'}">
+						<label for="commentContent">관리자님 이곳에
+							답변을 작성하세요</label>
 					</c:if>
 				</div>
-				<c:if test="${sessionScope.loginId ne null}">
+				<c:if test="${sessionScope.admin eq 'Y'}">
 					<a id="cmInsertBtn" class="btn btn-warning btn-sm">등록</a>
 				</c:if>
 			</div>
@@ -125,11 +125,11 @@
 						<div class="lh-sm">${dto.content}</div>
 						<div class="d-flex justify-content-end">
 							<div>
-								<c:if
+								<%-- <c:if
 									test="${sessionScope.loginId ne dto.id && sessionScope.loginId != null}">
 									<a class="btn btn-warning btn-sm" href="">신고</a>
-								</c:if>
-								<c:if test="${sessionScope.loginId eq dto.id}">
+								</c:if> --%>
+								<c:if test="${sessionScope.loginId eq dto.id and sessionScope.admin eq 'Y'}">
 								
 									<a class='cmUpdateBtnForm btn btn-warning btn-sm'>수정</a>
 									<a cmNum="${dto.cmNum}" class='cmDelBtn btn btn-warning btn-sm'>삭제</a> 
