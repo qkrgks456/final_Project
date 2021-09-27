@@ -30,42 +30,36 @@
 <%-- 내용 넣으세요 --%>
 <div class="container px-3 my-3">
 	<div class="container mx-2">
-    	
     	<h3>게시글 수정</h3>
 		<form action="../freeUpdate" method="post" enctype="multipart/form-data">
-		제목
-		<div class="input-group mb-3">
-			<input type="hidden" name="boardNum" value="${dto.boardNum}" class="boardnum"/>
-		<input type="text" name="title" class="form-control" placeholder="${dto.title}" required="required" aria-label="Username" aria-describedby="basic-addon1">
-		</div>
-		
-		내용
-		<div class="input-group mb-3">
-			<textarea name="content" style="resize:none" rows="10" class="form-control"  placeholder="${dto.content}" required="required" aria-label="With textarea"></textarea>
-		</div>
-		
-		업로드한 사진
-		<div class="row">
-			<c:forEach var="photo" items="${phoDtos}">
-			<div class="row ms-1">
-				<a href='#this' class="oriphoto" value="${photo.newFileName}">${photo.oriFileName}    [삭제]</a>
+			제목
+			<div class="input-group mb-3">
+				<input type="hidden" name="boardNum" value="${dto.boardNum}" class="boardnum"/>
+				<input type="text" name="title" class="form-control" placeholder="${dto.title}" required="required" aria-label="Username" aria-describedby="basic-addon1">
 			</div>
-			</c:forEach>
-		</div>
-				
-		<div class="form-group mt-3" id="file-list">
-			<a href="#this" onclick="addFile()">파일추가(+)</a>
-		    <div class="file-group">			
-		    </div>
-		</div>
-		
-		<hr/>
-				
-		<div class="d-flex flex-row-reverse">
-			<button class="btn btn-primary mx-2" type="submit">등록</button>
-		   	<input class="btn btn-primary d-flex" type="button" value="목록" onclick="location.href='./freeBoard'">
-		</div>
-	    
+			내용
+			<div class="input-group mb-3">
+				<textarea name="content" style="resize:none" rows="10" class="form-control"  placeholder="${dto.content}" required="required" aria-label="With textarea"></textarea>
+			</div>
+			업로드한 사진
+			<div class="row">
+				<c:forEach var="photo" items="${phoDtos}">
+				<div class="row ms-1">
+					<a href='#this' class="oriphoto" value="${photo.newFileName}">${photo.oriFileName}    [삭제]</a>
+				</div>
+				</c:forEach>
+			</div>
+			<div class="form-group mt-3" id="file-list">
+				<a href="#this" onclick="addFile()">파일추가(+)</a>
+			    <div class="file-group">			
+			    </div>
+			</div>
+			<hr/>
+			<div class="d-flex flex-row-reverse">
+				<button class="btn btn-primary mx-2" type="submit">등록</button>
+			   	<input class="btn btn-primary d-flex" type="button" value="목록" onclick="location.href='./freeBoard'">
+			</div>
+		</form>
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

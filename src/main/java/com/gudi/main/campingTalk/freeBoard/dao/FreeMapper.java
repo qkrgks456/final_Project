@@ -17,8 +17,15 @@ import com.gudi.main.dtoAll.PhotoDTO;
 public interface FreeMapper {
 	
 	// 게시판 불러오기 
-	@Select("SELECT * FROM freeBoard WHERE delcheck = 'n' ORDER BY boardnum DESC")
-	ArrayList<BoardDTO> freeList();
+	// @Select("SELECT * FROM freeBoard WHERE delcheck = 'n' ORDER BY boardnum DESC")
+	@Select("SELECT rnum, BOARDNUM, ID, CONTENT, TITLE, DATES, BOARDHIT\r\n" + 
+			"FROM\r\n" + 
+			"(SELECT row_number() OVER(ORDER BY boardnum DESC) rnum,BOARDNUM,ID,CONTENT,TITLE,DATES,BOARDHIT,DELCHECK,DIVISION FROM freeboard WHERE delcheck = 'n') OFFSET #{param1} ROWS FETCH FIRST 10 ROWS ONLY")
+	ArrayList<BoardDTO> freeList(int page);
+	
+	// 전체 페이지 수 삭제처리 한거 제외
+	@Select("SELECT COUNT(boardnum) FROM freeboard where delcheck='n'")
+	int total();
 	
 	// 글쓰기
 	@Insert("INSERT INTO freeboard(boardnum, id, title, content) VALUES (freeboard_seq.NEXTVAL, 'test', #{title}, #{content})")
@@ -26,12 +33,12 @@ public interface FreeMapper {
 	int freeWrite(HashMap<String, String> params);
 	
 	// 사진 업로드
-	@Insert("INSERT INTO photo(photonum, id, division, newfilename, orifilename, divisionnum) VALUES (photo_seq.NEXTVAL, 'test', 'free', #{param1}, #{param2}, 'free_'||#{param3})")
+	@Insert("INSERT INTO photo(photonum, id, division, newfilename, orifilename, divisionnum) VALUES (photo_seq.NEXTVAL, 'test', 'free', #{param1}, #{param2}, #{param3})")
 	void freePhoto(String neww, String ori, String boardNum);
 	
 	// 사진 불러오기
-	@Select("SELECT newfilename, orifilename FROM photo WHERE divisionnum = #{divi}")
-	ArrayList<PhotoDTO> callPhoto(String divi);
+	@Select("SELECT newfilename, orifilename FROM photo WHERE divisionnum = #{boardNum}")
+	ArrayList<PhotoDTO> callPhoto(int boardNum);
 	
 	// 상세보기
 	@Select("SELECT * FROM freeboard WHERE boardNum = #{param1}")
@@ -50,16 +57,18 @@ public interface FreeMapper {
 	int freeUpdate(String title, String content, int boardNum);
 	
 	// 사진 수정
-	@Update("UPDATE photo SET newfilename = #{param1}, orifilename = #{param2} WHERE divisionnum = 'free_'||#{param3}")
+	@Update("UPDATE photo SET newfilename = #{param1}, orifilename = #{param2} WHERE divisionnum = #{param3}")
 	void freePhotoUpdate(String neww, String ori, int boardNum);
 	
 	// 사진 삭제
-	@Delete("DELETE photo WHERE newfilename= #{param1} AND divisionnum = 'free_'||#{param2}")
+	@Delete("DELETE photo WHERE newfilename= #{param1} AND divisionnum = #{param2}")
 	void photoDel(String newFileName, int boardNum);
 	
 	// 글 신고
 	@Insert("INSERT INTO freereport(freeReportNum, boardNum, reporter, reason) VALUES(freeReport_seq.NEXTVAL, #{boardNum}, #{loginId}, #{reason})")
 	void freeReport(HashMap<String, String> map);
+
+	
 
 	
 }
