@@ -43,7 +43,7 @@ public class ParkingController {
     	ArrayList<GoodDTO> rank = service.callRank(); //divisionnum, cnt
     	logger.info("rank 형태확인:: "+rank.size());
     	
-    	String[] prkNames = new String[10];
+    	String[] prkNames = new String[7];
     	String prkName = null;
     	
     	//디비전넘으로 주차장명 받아오기
@@ -120,9 +120,34 @@ public class ParkingController {
     
     
     @RequestMapping(value = "/payPark")
-    public String payPark(Model model) {
+    public ModelAndView payPark(Model model) {
     	logger.info("차박 유료지도 메인 불러오셈::");
-        return "campingInfo/campingParking/payParkingMain";
+    	ModelAndView mav = new ModelAndView();
+    	
+    	//차트에 표시할 순위 불러오기
+    	ArrayList<GoodDTO> rank = service.callPayRank(); //divisionnum, cnt
+    	logger.info("rank 형태확인:: "+rank.size());
+    	
+    	String[] prkNames = new String[7];
+    	String prkName = null;
+    	
+    	//디비전넘으로 주차장명 받아오기
+    	for (int i = 0; i < rank.size(); i++) {
+    		prkName = prkMapper.searchPayPrkName(rank.get(i).getDivisionNum());
+    		prkNames[i] = prkName;
+		}
+    	System.out.println("prkNames:: "+prkNames[0]+" / "+prkNames[1]+" / "+prkNames[2]+" / "+prkNames[3]+" / "+prkNames[4]+" / "+prkNames[5]);
+    	
+    	/*
+    	ArrayList<ParkingDTO> tag = service.badaTag();
+    	mav.addObject("tags", tag);
+    	*/
+    	
+    	mav.addObject("rank", rank);
+    	mav.addObject("prkNames", prkNames);
+    	mav.setViewName("campingInfo/campingParking/payParkingMain");
+    	
+        return mav;
     }
     
     @RequestMapping(value = "/payZapyo")
