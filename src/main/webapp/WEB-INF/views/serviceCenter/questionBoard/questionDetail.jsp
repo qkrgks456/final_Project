@@ -38,13 +38,15 @@
 			<!-- 상단 -->
 			<div class="row">
 				<div class="col">${dto.title}</div>
-
+				<c:if test="${sessionScope.admin eq 'Y'}">
 				<div class="col d-flex flex-row-reverse">
+				
 					<input type="button" value="수정"
-						onclick="location.href='../noticeUpdateForm/${dto.boardNum}'" /> <input
+						onclick="location.href='../questionUpdateForm/${dto.boardNum}'" /> <input
 						type="button" value="삭제"
-						onclick="location.href='../noticeDel/${dto.boardNum}'" />
+						onclick="location.href='../questionDel/${dto.boardNum}'" />
 				</div>
+				</c:if>
 			</div>
 
 			<div class="row">
@@ -75,7 +77,7 @@
 				<div id="good" class="btn btn-outline-warning mx-1" goodCheck="${map.goodCheck}">
    					 좋아요 ${map.goodCount}개
 				</div>
-				 <input type="button" value="신고" />
+				<!--  <input type="button" value="신고" /> -->
 			</div>
 
 			<hr />
@@ -127,8 +129,9 @@
 									<a class="btn btn-warning btn-sm" href="">신고</a>
 								</c:if>
 								<c:if test="${sessionScope.loginId eq dto.id}">
+								
 									<a class='cmUpdateBtnForm btn btn-warning btn-sm'>수정</a>
-									<a cmNum="${dto.cmNum}" class='cmDelBtn btn btn-warning btn-sm'>삭제</a>
+									<a cmNum="${dto.cmNum}" class='cmDelBtn btn btn-warning btn-sm'>삭제</a> 
 								</c:if>
 							</div>
 						</div>
