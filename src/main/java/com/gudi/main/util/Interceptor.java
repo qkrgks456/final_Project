@@ -16,6 +16,7 @@ public class Interceptor extends HandlerInterceptorAdapter {
         String uri = request.getRequestURI();
         String ctx = request.getContextPath();
         String addr = uri.substring(ctx.length());
+        System.out.println(addr);
         // 예약하기,로그인 체크
         if (addr.contains("/reserve/campingReserve")) {
             if (session.getAttribute("loginId") == null) {
@@ -26,12 +27,20 @@ public class Interceptor extends HandlerInterceptorAdapter {
             }
         }
         if (addr.contains("/serviceCenter/noticeWriteForm")||addr.contains("/serviceCenter/noticeDel")||addr.contains("/serviceCenter/noticeUpdateForm")) {
-        	if(session.getAttribute("admin") == null || session.getAttribute("admin") == "N") {
+        	if(session.getAttribute("admin") == null || session.getAttribute("admin").equals("N")) {
         		response.setContentType("text/html; charset=UTF-8");
                 PrintWriter out = response.getWriter();
-                out.println("<script>alert('관리자만 가능합니다 ^^'); location.href='" + ctx + "/serviceCenter/noticeBoard';</script>");
+                out.println("<script>alert('관리자만 가능합니다 ^^'); location.href='" + ctx + "/';</script>");
                 out.flush();
         	}
+        }
+        if(addr.contains("/admin")){
+            if(session.getAttribute("admin") == null || session.getAttribute("admin").equals("N")) {
+                response.setContentType("text/html; charset=UTF-8");
+                PrintWriter out = response.getWriter();
+                out.println("<script>alert('관리자만 가능합니다 ^^'); location.href='" + ctx + "/';</script>");
+                out.flush();
+            }
         }
         return true;
         

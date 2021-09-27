@@ -19,7 +19,7 @@ public interface AdminMapper {
 	@Select("Select * from member where admin = 'Y' OFFSET #{param1} ROWS FETCH FIRST 15 ROWS ONLY")
 	ArrayList<MemberDTO> adminList(int start);
 	
-	@Select("Select * from member where admin='N' OFFSET #{param1} ROWS FETCH FIRST 15 ROWS ONLY")
+	@Select("Select * from member where admin='0' OFFSET #{param1} ROWS FETCH FIRST 15 ROWS ONLY")
 	ArrayList<MemberDTO> adminInsertList(int start);
 	
 	@Select("Select r.id, r.reserveName,r.manCount, r.contentId, r.reserveDate from reserve r OFFSET 0 ROWS FETCH FIRST 15 ROWS ONLY")
