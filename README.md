@@ -26,19 +26,19 @@
 ![20210927_193557](https://user-images.githubusercontent.com/76519060/134892964-49c67eef-123a-4b64-b152-f232228e03b5.png)
 # 기능
 
-## 실시간 예약
+## 실시간 예약 현황을 통한 혼잡도 체크 및 예약
 ![20210927_192258](https://user-images.githubusercontent.com/76519060/134891331-0cb7faab-8c42-4228-8870-4542efda589e.png)
-## 태그 검색
+## 태그에 따른 캠핑장 검색
 ![20210927_192243](https://user-images.githubusercontent.com/76519060/134891383-208a24ca-a6ab-4623-ba9f-5be963778c61.png)
-## 지도 검색
+## KAKAO지도와 API 를 사용한 편리한 검색
 ![20210927_192309](https://user-images.githubusercontent.com/76519060/134891425-5a6c01d5-fc8d-44ff-9e76-8570b5754146.png)
-## 차박 지도 검색
+## 차박을위한 차박전용 지도
 ![20210927_192318](https://user-images.githubusercontent.com/76519060/134891476-78265da9-2b67-4aec-a5da-905d50bcb7f1.png)
-## 캠핑 정보
+## 캠핑과 관련된 팁과 레시피를 유튜브와 블로그로
 ![20210927_192328](https://user-images.githubusercontent.com/76519060/134891501-1635f5e0-2f8d-4755-9087-03d42ea5dd39.png)
-## 카카오 로그인
+## 편리한 카카오 로그인 서비스
 ![20210927_192339](https://user-images.githubusercontent.com/76519060/134891536-63f4f926-62ce-496c-bee4-f8f9adfb270f.png)
-## 암호화
+## Spring Security를 이용한 암호화
 ![20210927_192347](https://user-images.githubusercontent.com/76519060/134891565-1264d0d8-1e16-4b15-93c6-c8793bf47d9c.png)
-## 스프링 스케쥴러
+## 스프링 scheduler 를 활용한 매월 캠핑데이터 최신화
 ![20210927_192355](https://user-images.githubusercontent.com/76519060/134891604-65d1d274-cdb3-4cbb-bc08-5e2b4a0d3bb3.png)
