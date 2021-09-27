@@ -130,7 +130,7 @@
 	function boardList() {
 		console.log("jsp에서 관리자 ajax조회");
 		$.ajax({
-			url : 'boardListAjax',
+			url : 'boardListAjax/1',
 			type : 'get',
 			dataType : 'json',
 			success : function(map) {

@@ -135,6 +135,7 @@ public class AdminService {
             start = (page - 1) * 15;
         }
         int total = dao.boardListPage();
+        logger.info("토탈: "+total);
         HashMap<String, Object> map = HansolUtil.pagination(page, 15, total);
 		list3 = dao.boardList(start);
 		map.put("list",list3);
