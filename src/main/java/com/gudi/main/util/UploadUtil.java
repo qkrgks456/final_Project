@@ -41,6 +41,23 @@ public class UploadUtil {
         try {
             byte[] bytes = file.getBytes();
             // 이 저장 방법은 자바 7부터 가능(java.nio)
+            
+            //폴더생성 추가!
+        	File Folder = new File(root);
+        	// 해당 디렉토리가 없을경우 디렉토리를 생성합니다.
+        	if (!Folder.exists()) {
+        		try{
+        		    Folder.mkdir(); //폴더 생성합니다.
+        		    System.out.println("폴더가 생성되었습니다.");
+        	        } 
+        	        catch(Exception e){
+        		    e.getStackTrace();
+        		}        
+                 }else {
+        		System.out.println("이미 폴더가 생성되어 있습니다.");
+        	}
+        	//폴더생성 추가 끝!
+            
             Path filePath = Paths.get(root + newFileName); //경로 지정
             Files.write(filePath, bytes); //저장               
             map.put("oriFileName", oriFileName);
