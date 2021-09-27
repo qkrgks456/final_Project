@@ -52,8 +52,8 @@
 			<div class="row">
 				<div class="col">${dto.id} l ${dto.dates}</div>
 
-				<div class="col d-flex flex-row-reverse">조회수${dto.boardHit} l
-					좋아요0 l 댓글수0</div>
+				<div class="col d-flex flex-row-reverse">조회수${dto.boardHit} 
+					</div>
 			</div>
 
 			<hr />
