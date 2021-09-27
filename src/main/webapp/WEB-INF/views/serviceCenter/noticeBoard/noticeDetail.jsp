@@ -39,7 +39,7 @@
 			<!-- 상단 -->
 			<div class="row">
 				<div class="col"><h3>${dto.title}</h3></div>
-		<c:if test="${sessionScope.admin eq 'Y'}">
+		<c:if test="${sessionScope.admin eq 'Y' and sessionScope.loginId eq dto.id}">
 				<div class="col d-flex flex-row-reverse">
 					<input type="button" value="수정"
 						onclick="location.href='../noticeUpdateForm/${dto.boardNum}'" /> <input

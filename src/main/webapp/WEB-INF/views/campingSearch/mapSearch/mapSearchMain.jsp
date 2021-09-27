@@ -50,7 +50,7 @@
                     </form>
                 </div>
                 <hr>
-                <div class="list" style="overflow-y: scroll; height: 700px;">
+                <div class="list" style="overflow-y: scroll; height: 560px;">
                     <div>
                         <ul id="placesList" class="list-group list-group">
                             <!-- 리스트 -->
@@ -62,9 +62,9 @@
         </div>
         <div class="col-8 ms-0" style="position: relative;">
             <div id="map"
-                 style="width: 100%; height: 780px; position: relative; overflow: hidden;  position: absolute; "></div>
+                 style="width: 100%; height: 645px; position: relative; overflow: hidden;  position: absolute; "></div>
             <div id="map1"
-                 style="width: 100%; height: 780px; position: relative; overflow: hidden; visibility:hidden; position: absolute;">
+                 style="width: 100%; height: 645px; position: relative; overflow: hidden; visibility:hidden; position: absolute;">
                 <div id="close"
                      style="padding: 5px; position:absolute;top:10px;left:10px;border-radius: 5px; border:1px solid #909090;box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);background: #fff;overflow: hidden;z-index: 2; cursor: pointer;">
                     닫기
