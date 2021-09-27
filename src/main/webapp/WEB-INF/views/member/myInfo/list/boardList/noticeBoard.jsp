@@ -14,6 +14,7 @@
     <link href="${path}/resources/css/bootstrap.css" rel="stylesheet">
     <%-- 공통 css --%>
     <link href="${path}/resources/css/common.css?var=3" rel="stylesheet">
+    <link href="${path}/resources/css/lineSmall.css?var=2" rel="stylesheet">
     <style>
         a {
             text-decoration-line: none;
@@ -58,7 +59,7 @@
                                         href="${path}/serviceCenter/noticeDetail/${lists.boardNum}">${lists.title}</a>
                                 </td>
                                 <td class="py-3 align-middle">${lists.dates}</td>
-                                <td class="py-3 align-middle">${lists.content}</td>
+                                <td class="py-3 align-middle lineSmall">${lists.content}</td>
                             </tr>
                         </c:forEach>
                         </tbody>

@@ -14,6 +14,7 @@
     <link href="${path}/resources/css/bootstrap.css" rel="stylesheet">
     <%-- 공통 css --%>
     <link href="${path}/resources/css/common.css?var=8" rel="stylesheet">
+    <link href="${path}/resources/css/lineSmall.css?var=2" rel="stylesheet">
     <style>
         a {
             text-decoration: none;
@@ -46,11 +47,11 @@
                     <table class="table table-hover mt-3">
                         <thead>
                         <tr>
-                            <th class="fs-5 col-2" scope="col">댓글번호</th>
+                            <th class="fs-5 col-1" scope="col">댓글번호</th>
                             <th class="fs-5 col-2" scope="col">신고일자</th>
-                            <th class="fs-5 col-2" scope="col">내용</th>
-                            <th class="fs-5 col-2" scope="col">처리상태</th>
-                            <th class="fs-5 col-2" scope="col">사유</th>
+                            <th class="fs-5 col-1" scope="col">처리상태</th>
+                            <th class="fs-5 col-3" scope="col">내용</th>
+                            <th class="fs-5 col-3" scope="col">사유</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -58,9 +59,9 @@
                             <tr>
                                 <td class="py-3 align-middle">${lists.cmNum}</td>
                                 <td class="py-3 align-middle">${lists.dates}</td>
-                                <td class="py-3 align-middle">${lists.content}</td>
                                 <td class="py-3 align-middle">${lists.status}</td>
-                                <td class="py-3 align-middle">${lists.reason}</td>
+                                <td class="py-3 align-middle lineSmall">${lists.content}</td>
+                                <td class="py-3 align-middle lineSmall">${lists.reason}</td>
                             </tr>
                         </c:forEach>
                         </tbody>

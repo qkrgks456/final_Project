@@ -14,6 +14,7 @@
     <link href="${path}/resources/css/bootstrap.css" rel="stylesheet">
     <%-- 공통 css --%>
     <link href="${path}/resources/css/common.css?var=3" rel="stylesheet">
+    <link href="${path}/resources/css/lineSmall.css?var=2" rel="stylesheet">
     <style>
         a {
             text-decoration-line: none;
@@ -46,8 +47,8 @@
                     <table class="table table-hover mt-3">
                         <thead>
                         <tr>
-                            <th class="fs-5 col-2" scope="col">제목</th>
-                            <th class="fs-5 col-3" scope="col">작성일자</th>
+                            <th class="fs-5 col-3" scope="col">제목</th>
+                            <th class="fs-5 col-2" scope="col">작성일자</th>
                             <th class="fs-5 col-7" scope="col">내용</th>
                         </tr>
                         </thead>
@@ -58,7 +59,7 @@
                                         href="${path}/serviceCenter/questionDetail/${lists.boardNum}">${lists.title}</a>
                                 </td>
                                 <td class="py-3 align-middle">${lists.dates}</td>
-                                <td class="py-3 align-middle">${lists.content}</td>
+                                <td class="py-3 align-middle lineSmall">${lists.content}</td>
                             </tr>
                         </c:forEach>
                         </tbody>

@@ -16,7 +16,6 @@ public class Interceptor extends HandlerInterceptorAdapter {
         String uri = request.getRequestURI();
         String ctx = request.getContextPath();
         String addr = uri.substring(ctx.length());
-        System.out.println(addr);
         // 예약하기,로그인 체크
         if (addr.contains("/reserve/campingReserve")) {
             if (session.getAttribute("loginId") == null) {
