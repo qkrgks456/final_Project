@@ -1,191 +1,110 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="true" %>
-<c:set var="path" value="${pageContext.request.contextPath}"/>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page session="true"%>
+<c:set var="path" value="${pageContext.request.contextPath}" />
 <html>
 <head>
 
-    <title>Final</title>
-    <style>
-    	.weather-number {
-    		color : red;
-    	}
-    </style>
-    <%-- 부트 스트랩 메타태그 --%>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <%-- 부트 스트랩 아이콘 --%>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-    <!-- 부트스트랩 css 추가 -->
-    <%--<link href="${path}/resources/css/bootstrap.css" rel="stylesheet">--%>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-    <%-- 공통 css --%>
-    <link href="${path}/resources/css/common.css?var=2" rel="stylesheet">
-    <link href="${path}/resources/css/campingWeather.css?var=9" rel="stylesheet">
+<title>Final</title>
+<style>
+.weather-number {
+	color: red;
+}
+</style>
+<%-- 부트 스트랩 메타태그 --%>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<%-- 부트 스트랩 아이콘 --%>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+<!-- 부트스트랩 css 추가 -->
+<%--<link href="${path}/resources/css/bootstrap.css" rel="stylesheet">--%>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
+	crossorigin="anonymous">
+<%-- 공통 css --%>
+<link href="${path}/resources/css/common.css?var=2" rel="stylesheet">
+<link href="${path}/resources/css/campingWeather.css?var=9"
+	rel="stylesheet">
 </head>
-<body>
-<%-- 상단 로그인 추가 --%>
-<c:if test="${sessionScope.loginId eq null}">
-    <jsp:include page="../../fix/navbar.jsp"/>
-</c:if>
-<c:if test="${sessionScope.loginId ne null}">
-    <jsp:include page="../../fix/loginNavbar.jsp"/>
-</c:if>
-<%-- 상단 메뉴바 --%>
-<jsp:include page="../../fix/menu.jsp"/>
-<%-- 내용 넣으세요 --%>
-	<div class="container px-3">
-		<div>
-			<h3>캠핑 날씨</h3>
-			<ul>
-				<li class="on"><a href="#" id="locational"><span>지역별</span></a></li>
-				<li><a href="#" id="national"><span>전국별</span></a></li>
-			</ul>
-		</div>
-		<div id="widget" style="position:relative;">
-		<!-- 첫번째 날씨 위젯-->
-		<div class="lb-widget">
-			<div class="lb-main">
-				<select class="beom" id="select-box">
-					<option value="1">Seoul, 서울</option>
-					<option value="2">Incheon, 인천</option>
-					<option value="3">Daejeon, 대전</option>
-					<option value="4">Gwangju, 광주</option>
-					<option value="5">Daegu, 대구</option>
-					<option value="6">Ulsan, 울산</option>
-					<option value="7">Busan, 부산</option>
-					<option value="8">Jeju, 제주</option>
-				</select>
+<body style="background-color: aliceblue;">
+	<%-- 상단 로그인 추가 --%>
+	<c:if test="${sessionScope.loginId eq null}">
+		<jsp:include page="../../fix/navbar.jsp" />
+	</c:if>
+	<c:if test="${sessionScope.loginId ne null}">
+		<jsp:include page="../../fix/loginNavbar.jsp" />
+	</c:if>
+	<%-- 상단 메뉴바 --%>
+	<jsp:include page="../../fix/menu.jsp" />
+	<%-- 내용 넣으세요 --%>
+	<div class="container px-3 py-3"  >
+		<div class="border-bottom mb-3">
+            <h2 class="">날씨</h2>
+        </div> 
+	
+		<div class="row">
+			<%-- <div style="position: absolute; z-index: -1;">
+				<img src="${path}/resources/img/koreaMap.png">
+			</div> --%>
+			<div class="col-8">
+				<div class="row row-cols-1 row-cols-md-6 g-1 text-center" id="list">
 			</div>
-			<div id="lb-1" class="lb-weather">
-				<iframe
-					src="https://forecast.io/embed/#lat=37.5266&lon=127.0403&name=Seoul, 서울&color=&font=&units=si"></iframe>
 			</div>
-			<div id="lb-2" class="lb-weather">
-				<iframe
-					src="https://forecast.io/embed/#lat=37.4496&lon=126.7074&name=Incheon, 인천&color=#F6A8A6&font=&units=si"></iframe>
+			<div class="col-4">
+			<!-- 첫번째 날씨 위젯-->
+			<div class="lb-widget" style="margin-top : 150px;">
+				<div class="lb-main">
+					<select class="beom" id="select-box">
+						<option value="1">Seoul, 서울</option>
+						<option value="2">Incheon, 인천</option>
+						<option value="3">Daejeon, 대전</option>
+						<option value="4">Gwangju, 광주</option>
+						<option value="5">Daegu, 대구</option>
+						<option value="6">Ulsan, 울산</option>
+						<option value="7">Busan, 부산</option>
+						<option value="8">Jeju, 제주</option>
+					</select>
+				</div>
+				<div id="lb-1" class="lb-weather">
+					<iframe
+						src="https://forecast.io/embed/#lat=37.5266&lon=127.0403&name=Seoul, 서울&color=&font=&units=si"></iframe>
+				</div>
+				<div id="lb-2" class="lb-weather">
+					<iframe
+						src="https://forecast.io/embed/#lat=37.4496&lon=126.7074&name=Incheon, 인천&color=#F6A8A6&font=&units=si"></iframe>
+				</div>
+				<div id="lb-3" class="lb-weather">
+					<iframe
+						src="https://forecast.io/embed/#lat=36.3512&lon=127.3954&name=Daejeon, 대전&color=#5BC065&font=&units=si"></iframe>
+				</div>
+				<div id="lb-4" class="lb-weather">
+					<iframe
+						src="https://forecast.io/embed/#lat=35.1787&lon=126.8974&name=Gwangju, 광주(전남)&color=#A5C8E4&font=&units=si"></iframe>
+				</div>
+				<div id="lb-5" class="lb-weather">
+					<iframe
+						src="https://forecast.io/embed/#lat=35.8759&lon=128.5964&name=Daegu, 대구&color=#C0ECCC&font=&units=si"></iframe>
+				</div>
+				<div id="lb-6" class="lb-weather">
+					<iframe
+						src="https://forecast.io/embed/#lat=35.538&lon=129.324&name=울산&color=#F9F0C1&font=&units=si"></iframe>
+				</div>
+				<div id="lb-7" class="lb-weather">
+					<iframe
+						src="https://forecast.io/embed/#lat=35.1334&lon=129.1058&name=부산&color=#BA55D3&font=&units=si"></iframe>
+				</div>
+				<div id="lb-8" class="lb-weather">
+					<iframe
+						src="https://forecast.io/embed/#lat=33.5007&lon=126.5288&name=제주&color=#ffc261&font=&units=si"></iframe>
+				</div>
 			</div>
-			<div id="lb-3" class="lb-weather">
-				<iframe
-					src="https://forecast.io/embed/#lat=36.3512&lon=127.3954&name=Daejeon, 대전&color=#5BC065&font=&units=si"></iframe>
 			</div>
-			<div id="lb-4" class="lb-weather">
-				<iframe
-					src="https://forecast.io/embed/#lat=35.1787&lon=126.8974&name=Gwangju, 광주(전남)&color=#A5C8E4&font=&units=si"></iframe>
-			</div>
-			<div id="lb-5" class="lb-weather">
-				<iframe
-					src="https://forecast.io/embed/#lat=35.8759&lon=128.5964&name=Daegu, 대구&color=#C0ECCC&font=&units=si"></iframe>
-			</div>
-			<div id="lb-6" class="lb-weather">
-				<iframe
-					src="https://forecast.io/embed/#lat=35.538&lon=129.324&name=울산&color=#F9F0C1&font=&units=si"></iframe>
-			</div>
-			<div id="lb-7" class="lb-weather">
-				<iframe
-					src="https://forecast.io/embed/#lat=35.1334&lon=129.1058&name=부산&color=#BA55D3&font=&units=si"></iframe>
-			</div>
-			<div id="lb-8" class="lb-weather">
-				<iframe
-					src="https://forecast.io/embed/#lat=33.5007&lon=126.5288&name=제주&color=#ffc261&font=&units=si"></iframe>
-			</div>
-		</div>
-		<!-- 두번쨰 날씨 위젯-->
-		<div class="lb-widget-01">
-			<div id="lbl-1" class="lb-left-weather">
-				<iframe
-					src="https://forecast.io/embed/#lat=37.5266&lon=127.0403&name=서울&color=&font=&units=si"></iframe>
-			</div>
-			<div id="lbl-2" class="lb-left-weather">
-				<iframe
-					src="https://forecast.io/embed/#lat=37.4496&lon=126.7074&name=인천&color=&font=&units=si"></iframe>
-			</div>
-			<div id="lbl-3" class="lb-left-weather">
-				<iframe
-					src="https://forecast.io/embed/#lat=36.3512&lon=127.3954&name=대전&color=&font=&units=si"></iframe>
-			</div>
-			<div id="lbl-4" class="lb-left-weather">
-				<iframe
-					src="https://forecast.io/embed/#lat=35.1787&lon=126.8974&name=광주&color=&font=&units=si"></iframe>
-			</div>
-			<div id="lbl-5" class="lb-left-weather">
-				<iframe
-					src="https://forecast.io/embed/#lat=35.8759&lon=128.5964&name=대구&color=&font=&units=si"></iframe>
-			</div>
-			<div id="lbl-6" class="lb-left-weather">
-				<iframe
-					src="https://forecast.io/embed/#lat=35.538&lon=129.324&name=울산&color=&font=&units=si"></iframe>
-			</div>
-			<div id="lbl-7" class="lb-left-weather">
-				<iframe
-					src="https://forecast.io/embed/#lat=35.1334&lon=129.1058&name=부산&color=&font=&units=si"></iframe>
-			</div>
-			<div id="lbl-8" class="lb-left-weather">
-				<iframe
-					src="https://forecast.io/embed/#lat=33.5007&lon=126.5288&name=제주&color=&font=&units=si"></iframe>
-			</div>
-			<div class="lb-main-01">
-				<select class="beom" id="select-box-01" name="">
-					<option value="1">서울</option>
-					<option value="2">인천</option>
-					<option value="3">대전</option>
-					<option value="4">광주</option>
-					<option value="5">대구</option>
-					<option value="6">울산</option>
-					<option value="7">부산</option>
-					<option value="8">제주</option>
-				</select>
-			</div>
-		</div>
-		<!-- 세번째 날씨 위젯-->
-		<div class="lb-widget-02">
-			<div class="lb-main-02">
-				<select class="beom" id="select-box-02" name="">
-					<option value="1">Seoul</option>
-					<option value="2">Incheon</option>
-					<option value="3">Daejeon</option>
-					<option value="4">Gwangju</option>
-					<option value="5">Daegu</option>
-					<option value="6">Ulsan</option>
-					<option value="7">Busan</option>
-					<option value="8">Jeju</option>
-				</select>
-			</div>
-			<div id="lbr-1" class="lb-right-weather">
-				<iframe
-					src="https://forecast.io/embed/#lat=37.5266&lon=127.0403&name=Seoul&color=&font=&units=si"></iframe>
-			</div>
-			<div id="lbr-2" class="lb-right-weather">
-				<iframe
-					src="https://forecast.io/embed/#lat=37.4496&lon=126.7074&name=Incheon&color=&font=&units=si"></iframe>
-			</div>
-			<div id="lbr-3" class="lb-right-weather">
-				<iframe
-					src="https://forecast.io/embed/#lat=36.3512&lon=127.3954&name=Dajeon&color=&font=&units=si"></iframe>
-			</div>
-			<div id="lbr-4" class="lb-right-weather">
-				<iframe
-					src="https://forecast.io/embed/#lat=35.1787&lon=126.8974&name=Gwangju&color=&font=&units=si"></iframe>
-			</div>
-			<div id="lbr-5" class="lb-right-weather">
-				<iframe
-					src="https://forecast.io/embed/#lat=35.8759&lon=128.5964&name=Daegu&color=&font=&units=si"></iframe>
-			</div>
-			<div id="lbr-6" class="lb-right-weather">
-				<iframe
-					src="https://forecast.io/embed/#lat=35.538&lon=129.324&name=Ulsan&color=&font=&units=si"></iframe>
-			</div>
-			<div id="lbr-7" class="lb-right-weather">
-				<iframe
-					src="https://forecast.io/embed/#lat=35.1334&lon=129.1058&name=Busan&color=&font=&units=si"></iframe>
-			</div>
-			<div id="lbr-8" class="lb-right-weather">
-				<iframe
-					src="https://forecast.io/embed/#lat=33.5007&lon=126.5288&name=Jeju&color=&font=&units=si"></iframe>
-			</div>
-		</div>
-	</div>
-	<%-- 
+		
+</div>
+		<%-- 
 <div class="modal-pop iconguide-wrap" data-pop="open-iconguide-pop">
 	<button class="pop-close" title="날씨기호 설명 닫기"></button>
 	<h2>날씨기호 설명</h2>
@@ -299,180 +218,17 @@
 	</div>
 </div> 
 --%>
-</div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="${path}/resources/js/bootstrap.js"></script>
-<script src="${path}/resources/js/bootstrap.bundle.js"></script>
-<script src="${path}/resources/js/common.js"></script>
-<script src="${path}/resources/js/campingWeather.js?var=2"></script>
-<script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="${path}/resources/js/bootstrap.js"></script>
+	<script src="${path}/resources/js/bootstrap.bundle.js"></script>
+	<script src="${path}/resources/js/common.js"></script>
+	<script src="${path}/resources/js/campingWeather.js?var=5"></script>
+	<script>
 // var apiURI = "http://maps.openweathermap.org/maps/2.0/weather/TA2/10/36.57601009561782/127.9369886453819?appid=55d3503973ed8cc55f407d450e0c3899";
 var apiURI = "http://api.openweathermap.org/data/2.5/weather?q=seoul&appid=55d3503973ed8cc55f407d450e0c3899";
-		
 $(document).ready(function(){
-	
-	$('#locational').on('click', function(){
-		console.log('선택별날씨확인');
-			$('#widget').html('');
-			$.getScript('${path}/resources/js/campingWeather.js?var=2');
-	        var data = `
-	        	<!-- 첫번째 날씨 위젯-->
-	    		<div class="lb-widget">
-	    			<div class="lb-main">
-	    				<select class="beom" id="select-box">
-	    					<option value="1">Seoul, 서울</option>
-	    					<option value="2">Incheon, 인천</option>
-	    					<option value="3">Daejeon, 대전</option>
-	    					<option value="4">Gwangju, 광주</option>
-	    					<option value="5">Daegu, 대구</option>
-	    					<option value="6">Ulsan, 울산</option>
-	    					<option value="7">Busan, 부산</option>
-	    					<option value="8">Jeju, 제주</option>
-	    				</select>
-	    			</div>
-	    			<div id="lb-1" class="lb-weather">
-	    				<iframe
-	    					src="https://forecast.io/embed/#lat=37.5266&lon=127.0403&name=Seoul, 서울&color=&font=&units=si"></iframe>
-	    			</div>
-	    			<div id="lb-2" class="lb-weather">
-	    				<iframe
-	    					src="https://forecast.io/embed/#lat=37.4496&lon=126.7074&name=Incheon, 인천&color=#F6A8A6&font=&units=si"></iframe>
-	    			</div>
-	    			<div id="lb-3" class="lb-weather">
-	    				<iframe
-	    					src="https://forecast.io/embed/#lat=36.3512&lon=127.3954&name=Daejeon, 대전&color=#5BC065&font=&units=si"></iframe>
-	    			</div>
-	    			<div id="lb-4" class="lb-weather">
-	    				<iframe
-	    					src="https://forecast.io/embed/#lat=35.1787&lon=126.8974&name=Gwangju, 광주(전남)&color=#A5C8E4&font=&units=si"></iframe>
-	    			</div>
-	    			<div id="lb-5" class="lb-weather">
-	    				<iframe
-	    					src="https://forecast.io/embed/#lat=35.8759&lon=128.5964&name=Daegu, 대구&color=#C0ECCC&font=&units=si"></iframe>
-	    			</div>
-	    			<div id="lb-6" class="lb-weather">
-	    				<iframe
-	    					src="https://forecast.io/embed/#lat=35.538&lon=129.324&name=울산&color=#F9F0C1&font=&units=si"></iframe>
-	    			</div>
-
-	    			<div id="lb-7" class="lb-weather">
-	    				<iframe
-	    					src="https://forecast.io/embed/#lat=35.1334&lon=129.1058&name=부산&color=#BA55D3&font=&units=si"></iframe>
-	    			</div>
-	    			<div id="lb-8" class="lb-weather">
-	    				<iframe
-	    					src="https://forecast.io/embed/#lat=33.5007&lon=126.5288&name=제주&color=#ffc261&font=&units=si"></iframe>
-	    			</div>
-	    		</div>
-	    		<!-- 두번쨰 날씨 위젯-->
-	    		<div class="lb-widget-01">
-	    			<div id="lbl-1" class="lb-left-weather">
-	    				<iframe
-	    					src="https://forecast.io/embed/#lat=37.5266&lon=127.0403&name=서울&color=&font=&units=si"></iframe>
-	    			</div>
-	    			<div id="lbl-2" class="lb-left-weather">
-	    				<iframe
-	    					src="https://forecast.io/embed/#lat=37.4496&lon=126.7074&name=인천&color=&font=&units=si"></iframe>
-	    			</div>
-	    			<div id="lbl-3" class="lb-left-weather">
-	    				<iframe
-	    					src="https://forecast.io/embed/#lat=36.3512&lon=127.3954&name=대전&color=&font=&units=si"></iframe>
-	    			</div>
-	    			<div id="lbl-4" class="lb-left-weather">
-	    				<iframe
-	    					src="https://forecast.io/embed/#lat=35.1787&lon=126.8974&name=광주&color=&font=&units=si"></iframe>
-	    			</div>
-	    			<div id="lbl-5" class="lb-left-weather">
-	    				<iframe
-	    					src="https://forecast.io/embed/#lat=35.8759&lon=128.5964&name=대구&color=&font=&units=si"></iframe>
-	    			</div>
-	    			<div id="lbl-6" class="lb-left-weather">
-	    				<iframe
-	    					src="https://forecast.io/embed/#lat=35.538&lon=129.324&name=울산&color=&font=&units=si"></iframe>
-	    			</div>
-	    			<div id="lbl-7" class="lb-left-weather">
-	    				<iframe
-	    					src="https://forecast.io/embed/#lat=35.1334&lon=129.1058&name=부산&color=&font=&units=si"></iframe>
-	    			</div>
-	    			<div id="lbl-8" class="lb-left-weather">
-	    				<iframe
-	    					src="https://forecast.io/embed/#lat=33.5007&lon=126.5288&name=제주&color=&font=&units=si"></iframe>
-	    			</div>
-	    			<div class="lb-main-01">
-	    				<select class="beom" id="select-box-01" name="">
-	    					<option value="1">서울</option>
-	    					<option value="2">인천</option>
-	    					<option value="3">대전</option>
-	    					<option value="4">광주</option>
-	    					<option value="5">대구</option>
-	    					<option value="6">울산</option>
-	    					<option value="7">부산</option>
-	    					<option value="8">제주</option>
-	    				</select>
-	    			</div>
-	    		</div>
-	    		<!-- 세번째 날씨 위젯-->
-	    		<div class="lb-widget-02">
-	    			<div class="lb-main-02">
-	    				<select class="beom" id="select-box-02" name="">
-	    					<option value="1">Seoul</option>
-	    					<option value="2">Incheon</option>
-	    					<option value="3">Daejeon</option>
-	    					<option value="4">Gwangju</option>
-	    					<option value="5">Daegu</option>
-	    					<option value="6">Ulsan</option>
-	    					<option value="7">Busan</option>
-	    					<option value="8">Jeju</option>
-	    				</select>
-	    			</div>
-	    			<div id="lbr-1" class="lb-right-weather">
-	    				<iframe
-	    					src="https://forecast.io/embed/#lat=37.5266&lon=127.0403&name=Seoul&color=&font=&units=si"></iframe>
-	    			</div>
-	    			<div id="lbr-2" class="lb-right-weather">
-	    				<iframe
-	    					src="https://forecast.io/embed/#lat=37.4496&lon=126.7074&name=Incheon&color=&font=&units=si"></iframe>
-	    			</div>
-	    			<div id="lbr-3" class="lb-right-weather">
-	    				<iframe
-	    					src="https://forecast.io/embed/#lat=36.3512&lon=127.3954&name=Dajeon&color=&font=&units=si"></iframe>
-	    			</div>
-	    			<div id="lbr-4" class="lb-right-weather">
-	    				<iframe
-	    					src="https://forecast.io/embed/#lat=35.1787&lon=126.8974&name=Gwangju&color=&font=&units=si"></iframe>
-	    			</div>
-	    			<div id="lbr-5" class="lb-right-weather">
-	    				<iframe
-	    					src="https://forecast.io/embed/#lat=35.8759&lon=128.5964&name=Daegu&color=&font=&units=si"></iframe>
-	    			</div>
-	    			<div id="lbr-6" class="lb-right-weather">
-	    				<iframe
-	    					src="https://forecast.io/embed/#lat=35.538&lon=129.324&name=Ulsan&color=&font=&units=si"></iframe>
-	    			</div>
-	    			<div id="lbr-7" class="lb-right-weather">
-	    				<iframe
-	    					src="https://forecast.io/embed/#lat=35.1334&lon=129.1058&name=Busan&color=&font=&units=si"></iframe>
-	    			</div>
-	    			<div id="lbr-8" class="lb-right-weather">
-	    				<iframe
-	    					src="https://forecast.io/embed/#lat=33.5007&lon=126.5288&name=Jeju&color=&font=&units=si"></iframe>
-	    			</div>
-	    		</div>
-	        	
-	        `;
-	        $('#widget').append('<h5>'+data+'</h5>');
-			
-			
-		
-	});
-	
-	$('#national').on('click', function(){
-		console.log('클릭되냐');
-		$('#widget').html('');
-		$('#widget').append('<div style="position:absolute; z-index:-1;"><img src="${path}/resources/img/koreaMap.png"></div>');
-		
-		var array = ['seoul', 'busan', 'jeju', 'chuncheon', 'suwon', 'daegu', 'gwangju', 'incheon', 'sokcho', 'daejeon', 'ulsan', 'wonju', 'andong', 'yeosu'];
+		var array = ['seoul', 'busan', 'jeju', 'chuncheon', 'suwon', 'daegu', 'gwangju', 'incheon', 'sokcho', 'daejeon', 'ulsan',  'yeosu'];
 		var xArray = [162, 297, 136, 227, 170, 268, 158, 122, 271, 209, 324, 230, 273, 190];
 		var yArray = [48, 270, 346, 20, 112, 199, 247, 54, 17, 156, 214, 85, 135, 284];
 		
@@ -482,10 +238,10 @@ $(document).ready(function(){
 			var pointX=xArray[i];
 			var pointY=yArray[i];
 			
-			chano(locationName,pointX, pointY);
+			chano(locationName);
 		}
 		
-		function chano(locationName,pointX, pointY){
+		function chano(locationName){
 			var nationUrl="http://api.openweathermap.org/data/2.5/weather?q="+locationName+"&appid=55d3503973ed8cc55f407d450e0c3899";
 			$.ajax({
 			    url: nationUrl,
@@ -493,18 +249,19 @@ $(document).ready(function(){
 			    type: "GET",
 			    async: "false",
 			    success: function(resp) {
+			    	console.log(resp);
 					
 					var wImage="";
 					var wName="";
 					
 					if(resp.weather[0].main=="Clouds"){ // 구름꼇을때
-						wImage="<i class='bi bi-cloud'></i>"
+						wImage="<img src='${path}/resources/img/cloud.png' >"
 					}else if(resp.weather[0].main=="Rain"){ // 비올때
-						wImage="<i class='bi bi-cloud-rain-heavy'></i>"
+						wImage="<img src='${path}/resources/img/rain.png' >"
 					}else if(resp.weather[0].main=="Snow"){ // 눈올때
-						wImage="<i class='bi bi-cloud-snow'></i>"
+						wImage="<img src='${path}/resources/img/snow.png' >"
 					}else{ // 맑을때 기모링
-						wImage="<i class='bi bi-brightness-high'></i>"
+						wImage="<img src='${path}/resources/img/brightness.png' >"
 					}
 					
 					if(resp.name=="Seoul"){
@@ -537,9 +294,9 @@ $(document).ready(function(){
 						wName="여수";
 					}
 					
-			        var data = `
-			        	<div style="
-			        	position:absolute;
+			        var data = '<div class="col-2"><div class="card">'+wImage+'<div class="card-body"><h5 class="card-title">'+wName+'</h5><p class="card-text">'+(resp.main.temp-273.15).toFixed(1)+' ℃</p></div></div></div>';
+			        	/* <div style="
+			        	 position:absolute;
 			        	z-index:2;
 			        	left:`+pointX+`;
 			        	top:`+pointY+`;
@@ -550,37 +307,21 @@ $(document).ready(function(){
 			        	width:45px;
 						height:70px;
 			        	font-size: 0.5em;
-			        	text=align:center;
+			        	text=align:center; 
                   	 	">
 			        		<a>
-			        		<font size="1.8em">
-			        		`+wName+`
-			        		</font>
-			        		</a>
-			        		<br>
-			        		<b>
+			        		<font size="1.8em">`+wName+`</font></a>	<br><b>
 				        		<font size="5em">
 				        			`+wImage+`
 				        		</font>
 			        		</b>
 			        		<br>
-			        		<c class="weather-number">`+((resp.main.temp- 273.15).toFixed(1))+`℃</c>
-			        `;
-			        $('#widget').append(data);
+			        		<c class="weather-number">`+((resp.main.temp- 273.15).toFixed(1))+`℃</c> */
 			        
-					
-					
-					
-				
-			        
-			        
-					
+			        $('#list').append(data);
 			    }
 			});
 		}
-		
-	});
-	
 });
 
 /* <p>var imgURL = "http://openweathermap.org/img/w/" + resp.weather[0].icon + ".png";

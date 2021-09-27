@@ -13,7 +13,7 @@ function lb_dropdowns() {
     }
   });
   
-  $('.lb-dropdown-select-city ul').before('<div class="lbdsc-search"><input id="txtSearchValue" autocomplete="off" onkeyup="filter()" class="lbdsc-searchbox" type="text"></div>');
+  $('.lb-dropdown-select-city ul').before('');
 }
 
 $(document).on('click', '.lb-dropdown-select-city', function (event) {
