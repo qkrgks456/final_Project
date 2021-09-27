@@ -22,7 +22,7 @@
 - 기사3 http://www.mdilbo.com/detail/DDAuq0/648707
 - 한국관광공사 고캠핑정보 조회 서비스 https://www.data.go.kr/data/15063201/openapi.do
 - 네이버 검색 API 블로그 글 가져오기 https://developers.naver.com/products/serviceapi/search/search.md
-## 기술
+## 사용기술
 ![20210927_193557](https://user-images.githubusercontent.com/76519060/134892964-49c67eef-123a-4b64-b152-f232228e03b5.png)
 # 기능
 
