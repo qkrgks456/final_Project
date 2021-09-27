@@ -8,7 +8,6 @@
 - 팀장: 박한솔
 - 팀원: 변상현,민석기,김주환,채종우,전찬호
 - 개발기간: 2021년 9월 8일 ~ 2021년 9월 28일
-- 
 # 기획의도
 ## 대세는 캠핑!
 ![그림1](https://user-images.githubusercontent.com/76519060/134891992-ccf21b6c-8056-4ce6-9895-bdd74f70259f.png)
@@ -16,7 +15,9 @@
 ![그림2](https://user-images.githubusercontent.com/76519060/134892032-17b09da3-dd3c-4178-a21a-73c23f7e953b.png)
 ## 차박은?
 ![그림3](https://user-images.githubusercontent.com/76519060/134892054-e5d2c7ec-533c-4e84-96d6-150a5ba2f8aa.png)
-
+# 참고자료 및 기술
+- 한국관광공사 고캠핑정보 조회 서비스 https://www.data.go.kr/data/15063201/openapi.do
+- 네이버 검색 API 블로그 글 가져오기 요리레시피 https://developers.naver.com/products/serviceapi/search/search.md
 # 기능
 
 ## 실시간 예약
