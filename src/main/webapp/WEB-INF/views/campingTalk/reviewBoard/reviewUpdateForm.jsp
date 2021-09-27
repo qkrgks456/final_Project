@@ -35,12 +35,12 @@
  제목
  <div class="input-group mb-3">
   <input type="hidden" name="boardNum" value="${dto.boardNum}" class="boardnum"/>
-  <input type="text" name="title" class="form-control" placeholder="${dto.title}" required="required" aria-label="Username" aria-describedby="basic-addon1">
+  <input type="text" name="title" class="form-control" value="${dto.title}" required="required" aria-label="Username" aria-describedby="basic-addon1">
 </div>
 
  내용
  <div class="input-group mb-3">
-  <textarea name="content" style="resize:none" rows="10" class="form-control"  placeholder="${dto.content}" required="required" aria-label="With textarea"></textarea>
+  <textarea name="content" style="resize:none" rows="10" class="form-control" required="required" aria-label="With textarea">${dto.content}</textarea>
 </div>
 
  업로드한 사진
