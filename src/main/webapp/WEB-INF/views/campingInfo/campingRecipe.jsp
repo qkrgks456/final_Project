@@ -137,7 +137,7 @@
 						},
 						error : function(e) {
 							console.log(e);
-						}// data.items[i].link 바꿀링크
+						}
 					});
 			}
 			function RecipeList(map){
@@ -165,21 +165,21 @@
 				    content += '<ul class="pagination justify-content-center">'
 				    if (map.startPage != 1) {
 				        content += '<li class="page-item">'
-				        content += '<a class="page-link page-info" page="' + (map.startPage - 1) + '" aria-label="Previous" style="cursor:pointer;">'
+				        content += '<a class="page-link page-info" page="' + (map.map.startPage - 1) + '" aria-label="Previous" style="cursor:pointer;">'
 				        content += '<span aria-hidden="true">&laquo;</span>'
 				        content += '</a>'
 				        content += '</li>'
 				    }
-				    for (let i = map.startPage; i <= map.endPage; i++) {
-				        if (map.currPage != i) {
+				    for (let i = map.map.startPage; i <= map.map.endPage; i++) {
+				        if (map.map.currPage != i) {
 				            content += '<li class="page-item"><a style="cursor:pointer;" class="page-link page-info" page="' + i + '" >' + i + '</a></li>'
 				        } else {
 				            content += '<li class="page-item active"><a class="page-link">' + i + '</a></li>'
 				        }
 				    }
-				    if (map.totalPage != map.endPage) {
+				    if (map.totalPage != map.map.endPage) {
 				        content += '<li class="page-item">'
-				        content += '<a class="page-link page-info" page="' + (map.endPage + 1) + '" aria-label="Next" style="cursor:pointer;">'
+				        content += '<a class="page-link page-info" page="' + (map.map.endPage + 1) + '" aria-label="Next" style="cursor:pointer;">'
 				        content += '<span aria-hidden="true">&raquo;</span>'
 				        content += '</a>'
 				        content += '</li>'

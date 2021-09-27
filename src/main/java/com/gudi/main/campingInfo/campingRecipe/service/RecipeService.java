@@ -43,8 +43,10 @@ public class RecipeService {
         int display=10;
         //start 검색 시작 수
         //display 스타트부터 검색수
+        
         if (page != 1) {
-            page = (page - 1) * display;
+            page = ((page - 1) * 10)+1;
+            
         }
         
        
@@ -58,9 +60,7 @@ public class RecipeService {
         requestHeaders.put("X-Naver-Client-Secret", clientSecret);
         String responseBody = get(apiURL,requestHeaders); //주소와 헤더
         
-        //int total = Integer.parseInt((String)map.get("total"));
-        //int total=3051;//임시
-		//map = HansolUtil.pagination(page, 10, total);
+       
         
         HashMap<String, Object> map2 = new HashMap<String, Object>();
         System.out.println(responseBody);
@@ -77,8 +77,11 @@ public class RecipeService {
 		}		
 		map2.put("blogApi", responseBody);
 		ArrayList<HashMap<String, Object>> list = (ArrayList<HashMap<String, Object>>) map2.get("data");
-		 logger.info("토탈:"+map2.get("total"));
-		
+		 
+		 int total = (int) map2.get("total");
+		 logger.info("토탈:"+total);
+        //int total=3051;//임시
+		 map2.put("map", HansolUtil.pagination(page, 10, total));
 		 
 		return map2;
     }
