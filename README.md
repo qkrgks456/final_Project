@@ -16,11 +16,14 @@
 ## 차박은?
 ![그림3](https://user-images.githubusercontent.com/76519060/134892054-e5d2c7ec-533c-4e84-96d6-150a5ba2f8aa.png)
 # 참고자료 및 기술
+## 참고자료
 - 기사1 http://biz.heraldcorp.com/view.php?ud=20210824000610
 - 기사2 https://ilyosisa.co.kr/mobile/article.html?no=230633
 - 기사3 http://www.mdilbo.com/detail/DDAuq0/648707
 - 한국관광공사 고캠핑정보 조회 서비스 https://www.data.go.kr/data/15063201/openapi.do
 - 네이버 검색 API 블로그 글 가져오기 요리레시피 https://developers.naver.com/products/serviceapi/search/search.md
+## 기술
+![20210927_193557](https://user-images.githubusercontent.com/76519060/134892964-49c67eef-123a-4b64-b152-f232228e03b5.png)
 # 기능
 
 ## 실시간 예약
