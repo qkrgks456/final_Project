@@ -37,8 +37,8 @@
 
 			<!-- 상단 -->
 			<div class="row">
-				<div class="col">${dto.title}</div>
-				<c:if test="${sessionScope.admin eq 'Y'}">
+				<div class="col"><h3>${dto.title}</div>
+				<c:if test="${sessionScope.admin eq 'Y' and sessionScope.loginId eq dto.id}">
 				<div class="col d-flex flex-row-reverse">
 				
 					<input type="button" value="수정"
@@ -92,9 +92,9 @@
 			<div class="pt-4 border-bottom border-dark">
 				<h4 class="fw-bold">답변</h4>
 			</div>
-			<%-- 댓글 입력 폼 --%>
-			<c:if test="${sessionScope.loginId ne null}">
 			
+			<c:if test="${sessionScope.admin eq 'Y' and sessionScope.loginId eq dto.id}">
+			<%-- 댓글 입력 폼 --%>	
 			<div class="d-flex align-items-center mt-2">
 				<div class="form-floating flex-grow-1 px-2">
 					<textarea class="form-control" placeholder="Leave a comment here"
@@ -102,7 +102,7 @@
 						style="height: 100px; resize: none;"></textarea>
 					<div class="invalid-feedback">1자 이상 입력해주세요</div>
 					<c:if test="${sessionScope.loginId eq null}">
-						<label for="commentContent">댓글을 작성하려면, 로그인 해주세요</label>
+						<label for="commentContent">답변을 작성하려면, 로그인 해주세요</label>
 					</c:if>
 					<c:if test="${sessionScope.loginId ne null}">
 						<label for="commentContent">${sessionScope.loginId}님 이곳에
@@ -113,8 +113,9 @@
 					<a id="cmInsertBtn" class="btn btn-warning btn-sm">등록</a>
 				</c:if>
 			</div>
-			
 			</c:if>
+			
+			
 			<%-- 댓글리스트 --%>
 			<div id="commentLists" class="container px-5 my-4">
 				<c:forEach items="${map.cmList}" var="dto">
