@@ -40,7 +40,7 @@
 <link href="${path}/resources/css/campingWeather.css?var=9"
 	rel="stylesheet">
 </head>
-<body style="background-color: aliceblue;">
+<body >
 	<%-- 상단 로그인 추가 --%>
 	<c:if test="${sessionScope.loginId eq null}">
 		<jsp:include page="../../fix/navbar.jsp" />
