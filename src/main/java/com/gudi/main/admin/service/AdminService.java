@@ -259,7 +259,8 @@ public class AdminService {
 	public String memberInfoBlackDel(String id) {
 		logger.info("멤버 블랙리스트 제거 서비스");
 		logger.info("id: "+id+ "블랙리스트 제거 서비스");
-
+	
+		
 		int success=dao.memberInfoBlackDel2(id);
 		if(success!=0) {
 			logger.info("해제 성공");
@@ -270,12 +271,19 @@ public class AdminService {
 	public String memberInfoBlackInsert(String id, String reason) {
 		logger.info("블랙리스트 추가 서비스");
 		logger.info("id: "+id+ "블랙리스트 추가 서비스");
-		
-		
-		
-		int success = dao.memberInfoBlackInsert2(id, reason);
+		//있는지 없는지
+		int success = dao.memberInfoBlackInsert(id);
 		if(success!=0) {
-			logger.info("추가2 성공");
+			logger.info("업데이트");
+			//있다면 업데이트
+			dao.memberInfoBlackInsert1(id, reason);
+		}
+		
+		
+		if(success==0) {
+			//없으면 추가
+			dao.memberInfoBlackInsert2(id, reason);
+			logger.info("추가");
 		}
 		return null;
 	}

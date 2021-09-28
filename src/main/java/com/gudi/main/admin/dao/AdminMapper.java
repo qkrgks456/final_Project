@@ -96,7 +96,8 @@ public interface AdminMapper {
 	
 	
 	//@Update("update black SET status='N' and reason='N' where id =#{id} ")
-	@Delete("delete black where id =#{id}")
+	//@Delete("delete black where id =#{id}")
+	@Update("update black SET status='N', reason='N' where id =#{id} ")
 	int memberInfoBlackDel2(String id);
 	/*
 	 * //@Update("update member SET DELCHECK='Y' where id =#{param1} ")
@@ -104,9 +105,11 @@ public interface AdminMapper {
 	 * @Update("insert into black values(BLACK_SEQ.nextval,#{param1},#{param2},sysdate,'Y')"
 	 * ) int memberInfoBlackInsert(String id, String reason);
 	 */
-	
-	@Update("update black SET status='Y' where id =#{id}")
+	@Select("select count(id) from black where id = #{param1}")
 	int memberInfoBlackInsert(String id);
+
+	@Update("update black SET status='Y', reason= #{param2} where id =#{param1}")
+	int memberInfoBlackInsert1(String id, String reason);
 
 	@Update("insert into black values(BLACK_SEQ.nextval,#{param1},#{param2},sysdate,'Y')")
 	int memberInfoBlackInsert2(String id, String reason);
@@ -204,6 +207,9 @@ public interface AdminMapper {
 	
 	@Update("UPDATE cmReport SET status='Y' WHERE cmReportNum=#{cmReportNum}")
 	int reportCommentProcess(int cmReportNum);
+
+	
+	
 
 	
 	
