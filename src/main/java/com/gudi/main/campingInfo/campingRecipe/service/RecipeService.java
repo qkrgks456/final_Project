@@ -43,11 +43,14 @@ public class RecipeService {
         int display=10;
         //start 검색 시작 수
         //display 스타트부터 검색수
-        
+        logger.info("요청 페이지: "+page);
+        int pageCheck=page;
         if (page != 1) {
             page = ((page - 1) * 10)+1;
             
         }
+        logger.info("요청 : "+page+" ~ "+display*pageCheck);
+    
         
        
         
@@ -62,7 +65,7 @@ public class RecipeService {
         
        
         
-        HashMap<String, Object> map2 = new HashMap<String, Object>();
+        HashMap<String, Object> map = new HashMap<String, Object>();
         System.out.println(responseBody);
         
        
@@ -70,20 +73,19 @@ public class RecipeService {
         if(!responseBody.contains("Fail")) {
 			ObjectMapper mapper = new ObjectMapper();
 			try {
-				 map2 = mapper.readValue(responseBody, new TypeReference<HashMap<String, Object>>(){});//문자열을,무엇으로 변환 할 것이냐?
+				 map = mapper.readValue(responseBody, new TypeReference<HashMap<String, Object>>(){});//문자열을,무엇으로 변환 할 것이냐?
 			} catch (Exception e) {
 				e.printStackTrace();
 			} 			
 		}		
-		map2.put("blogApi", responseBody);
-		ArrayList<HashMap<String, Object>> list = (ArrayList<HashMap<String, Object>>) map2.get("data");
-		 
-		 int total = (int) map2.get("total");
+		map.put("blogApi", responseBody);
+
+		//logger.info("서비스 출력 확인 "+list.get(0));
+		 int total = (int) map.get("total");
 		 logger.info("토탈:"+total);
-        //int total=3051;//임시
-		 map2.put("map", HansolUtil.pagination(page, 10, total));
-		 
-		return map2;
+		 page=pageCheck;
+		 map.put("map", HansolUtil.pagination(page, 10, total));
+		return map;
     }
 
 
