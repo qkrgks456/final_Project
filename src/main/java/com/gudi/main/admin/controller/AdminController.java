@@ -195,10 +195,10 @@ public class AdminController {
     }
     
     @RequestMapping(value = "/reportCmDetail")
-    public String reportCmDetail(@RequestParam("cmNum") String cmNum,Model model) {
+    public String reportCmDetail(@RequestParam("cmReportNum") String cmReportNum,Model model) {
     	logger.info("신고 댓글 상세보기");
-    	logger.info(cmNum+"번 상세보기");
-    	CommentReportDTO detail = adminService.reportCmDetail(cmNum);
+    	logger.info(cmReportNum+"번 상세보기");
+    	CommentReportDTO detail = adminService.reportCmDetail(cmReportNum);
     	model.addAttribute("detail", detail);
         return "admin/comment/reportCmDetail";
     }

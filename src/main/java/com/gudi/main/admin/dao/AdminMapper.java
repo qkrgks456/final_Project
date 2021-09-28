@@ -61,7 +61,7 @@ public interface AdminMapper {
 	@Select("Select * from cm OFFSET #{param1} ROWS FETCH FIRST 15 ROWS ONLY")
 	ArrayList<CommentDTO> commentList(int start);
 	
-	@Select("select c.cmNum, c.reporter,cm.id, c.status, cm.content from cmreport c left outer join cm on c.cmNum=cm.cmNum where status = 'N' OFFSET #{param1} ROWS FETCH FIRST 15 ROWS ONLY")
+	@Select("select c.cmReportNum, c.cmNum, c.reporter,cm.id, c.status, cm.content from cmreport c left outer join cm on c.cmNum=cm.cmNum where status = 'N' OFFSET #{param1} ROWS FETCH FIRST 15 ROWS ONLY")
 	ArrayList<CommentReportDTO> reportCommentList(int start);
 
 	//게시글 조회 검색
@@ -149,8 +149,8 @@ public interface AdminMapper {
 	@Select("select * from cm where cmNum=#{cmNum}")
 	CommentDTO cmDetail(String cmNum);
 	
-	@Select("select c.cmReportNum, c.cmNum, c.reporter,cm.id, cm.content, c.reason, c.status from cmreport c left outer join cm on c.cmNum=cm.cmNum where c.cmNum=#{cmNum}")
-	CommentReportDTO reportCmDetail(String cmNum);
+	@Select("select c.cmReportNum, c.cmNum, c.reporter,cm.id, cm.content, c.reason, c.status from cmreport c left outer join cm on c.cmNum=cm.cmNum where c.cmReportNum=#{cmReportNum}")
+	CommentReportDTO reportCmDetail(String cmReportNum);
 	
 	@Select("select COUNT(*) from member where admin='Y'")
 	int page();

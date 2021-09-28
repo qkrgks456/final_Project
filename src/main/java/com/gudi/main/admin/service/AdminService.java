@@ -346,10 +346,10 @@ public class AdminService {
 		return detail;
 	}
 
-	public CommentReportDTO reportCmDetail(String cmNum) {
+	public CommentReportDTO reportCmDetail(String cmReportNum) {
 		logger.info("신고 댓글 상세보기 서비스");
 		CommentReportDTO detail = new CommentReportDTO();
-		detail=dao.reportCmDetail(cmNum);
+		detail=dao.reportCmDetail(cmReportNum);
 		return detail;
 	}
 
