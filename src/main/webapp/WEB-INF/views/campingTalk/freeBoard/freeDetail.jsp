@@ -59,7 +59,9 @@
 			<div class="d-flex justify-content-center row">
 				<c:forEach var="photo" items="${phoDtos}">
 					<div class="d-flex justify-content-center row mb-3">
-						<img src="/photo/${photo.newFileName}" style="max-width: 400px; height: auto;" onerror="this.src='${path}/resources/img/noImage.png';"/>
+						
+							<img src="/photo/${photo.newFileName}" style="max-width: 400px; height: auto;" onerror="this.src='${path}/resources/img/noImage.png';"/>
+						
 					</div>
 				</c:forEach>
 			</div>

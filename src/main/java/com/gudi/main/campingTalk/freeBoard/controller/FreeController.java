@@ -78,7 +78,6 @@ public class FreeController {
     	service.freeWrite(params);
     	String boardNum = String.valueOf(params.get("boardnum"));
     	System.out.println("boardNum : " + boardNum);
-    	
     	// 파일업로드 부분
     	service.freePhoto(file, boardNum);
     	

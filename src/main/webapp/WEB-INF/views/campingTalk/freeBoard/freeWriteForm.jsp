@@ -90,7 +90,7 @@
 	}
 
 	function deleteFile(obj) {
-		obj.parent().remove();
+		obj.parent().addClass("visually-hidden");
 	}
 </script>
 </body>
