@@ -110,7 +110,12 @@
 		console.log(url)
 		$("#link").attr('src', url);
 	});
-
+	
+	$(document).on('click', ".clickCard", function() {
+		let url = $(this).attr('url');
+		console.log(url)
+		$("#link").attr('src', url);
+	});
 	
 	blog(search);
 
@@ -154,7 +159,9 @@
 		$("#total").empty();
 		$("#total").append("총 검색 수: " + map.total);
 		var content = "";
-
+		let url = $(this).attr('url');
+		console.log(url)
+		$("#link").attr('src', map.items[0].link);
 		//블로그 게시물들
 		for (var i = 0; i <10; i++) {
 			//카드
