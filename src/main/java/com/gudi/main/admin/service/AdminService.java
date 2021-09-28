@@ -26,6 +26,7 @@ public class AdminService {
 	ArrayList<BoardDTO> list3 = null;
 	ArrayList<CommentDTO> list4 = null;
 	
+	
 	public HashMap<String, Object> adminSearch(int page) {
 		logger.info("관리자 조회 서비스");
 		 int start = 0;
@@ -258,13 +259,10 @@ public class AdminService {
 	public String memberInfoBlackDel(String id) {
 		logger.info("멤버 블랙리스트 제거 서비스");
 		logger.info("id: "+id+ "블랙리스트 제거 서비스");
-		int success=dao.memberInfoBlackDel(id);
+
+		int success=dao.memberInfoBlackDel2(id);
 		if(success!=0) {
-			logger.info("해제1 성공");
-		}
-		success=dao.memberInfoBlackDel2(id);
-		if(success!=0) {
-			logger.info("해제2 성공");
+			logger.info("해제 성공");
 		}
 		return null;
 	}
@@ -272,11 +270,10 @@ public class AdminService {
 	public String memberInfoBlackInsert(String id, String reason) {
 		logger.info("블랙리스트 추가 서비스");
 		logger.info("id: "+id+ "블랙리스트 추가 서비스");
-		int success= dao.memberInfoBlackInsert(id);
-		if(success!=0) {
-			logger.info("추가1 성공");
-		}
-		success = dao.memberInfoBlackInsert2(id, reason);
+		
+		
+		
+		int success = dao.memberInfoBlackInsert2(id, reason);
 		if(success!=0) {
 			logger.info("추가2 성공");
 		}
@@ -346,10 +343,10 @@ public class AdminService {
 		return detail;
 	}
 
-	public CommentReportDTO reportCmDetail(String cmNum) {
+	public CommentReportDTO reportCmDetail(String cmReportNum) {
 		logger.info("신고 댓글 상세보기 서비스");
 		CommentReportDTO detail = new CommentReportDTO();
-		detail=dao.reportCmDetail(cmNum);
+		detail=dao.reportCmDetail(cmReportNum);
 		return detail;
 	}
 

@@ -67,7 +67,8 @@ a {
 						<tr>
 							<th scope="col" class="col-md-3">아아디</th>
 							<th scope="col" class="col-md-2">이름</th>
-							<th scope="col" class="col-md-3">블랙리스트 여부</th>
+							<th scope="col" class="col-md-2">블랙리스트 여부</th>
+							<th scope="col" class="col-md-3">사유</th>
 							<th scope="col" class="col-md-2">블랙리스트</th>
 					</thead>
 					<tbody id="list">
@@ -168,13 +169,28 @@ $('#searchBtn').on('click', function() {
 			content += "<tr>";
 			content += "<td class='align-middle'>" + map.list[i].id + "</td>";
 			content += "<td class='align-middle'>" + map.list[i].nickName + "</td>";
-			content += "<td class='align-middle'>" + map.list[i].delCheck + "</td>";
+			if(map.list[i].status!=null){
+			content += "<td class='align-middle'>" + map.list[i].status + "</td>";
+			}
+			if(map.list[i].status==null){
+				content += "<td class='align-middle'>N</td>";
+			}
+			if(map.list[i].reason!=null){
+			content += "<td class='align-middle'>" + map.list[i].reason + "</td>";
+			}
+			if(map.list[i].reason==null){
+				content += "<td class='align-middle'>N</td>";
+				}
 			content += "<td class='align-middle'>";
-			if(map.list[i].delCheck=="Y"){
+			if(map.list[i].status=="Y"){
 				content += "<a class='btn btn-sm btn-dark' href='memberInfoBlackDel?id=" + map.list[i].id
 				+ "'>블랙리스트  해제</a>";
 			}
-			if(map.list[i].delCheck=="N"){
+			if(map.list[i].status=="N"){
+				content += "<a class='btn btn-sm btn-dark' href='memberInfoBlackList?id=" + map.list[i].id
+				+ "&nickName="+map.list[i].nickName+"'>블랙리스트  추가</a>";
+			}
+			if(map.list[i].status==null){
 				content += "<a class='btn btn-sm btn-dark' href='memberInfoBlackList?id=" + map.list[i].id
 				+ "&nickName="+map.list[i].nickName+"'>블랙리스트  추가</a>";
 			}

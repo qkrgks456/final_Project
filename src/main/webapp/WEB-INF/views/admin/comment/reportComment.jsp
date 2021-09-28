@@ -100,7 +100,7 @@ $(document).on('click','.page-info',function(){
 			content += "<td class='align-middle'>" + map.list[i].id + "</td>";
 			content += "<td class='align-middle'>" + map.list[i].status + "</td>";
 			content += "<td class='align-middle'>" + map.list[i].content + "</td>";
-			content += "<td class='align-middle'>"+"<a class='btn btn-sm btn-dark' href='reportCmDetail?cmNum="+map.list[i].cmNum+"' >상세보기</a>"+ "</td>";
+			content += "<td class='align-middle'>"+"<a class='btn btn-sm btn-dark' href='reportCmDetail?cmReportNum="+map.list[i].cmReportNum+"' >상세보기</a>"+ "</td>";
 			content += "</tr>";
 		}
 		$("#list").empty();

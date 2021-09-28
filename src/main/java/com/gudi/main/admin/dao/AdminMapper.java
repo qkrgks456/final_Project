@@ -3,6 +3,7 @@ package com.gudi.main.admin.dao;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -19,13 +20,13 @@ public interface AdminMapper {
 	@Select("Select * from member where admin = 'Y' OFFSET #{param1} ROWS FETCH FIRST 15 ROWS ONLY")
 	ArrayList<MemberDTO> adminList(int start);
 	
-	@Select("Select * from member where admin='0' OFFSET #{param1} ROWS FETCH FIRST 15 ROWS ONLY")
+	@Select("Select * from member where admin='N' OFFSET #{param1} ROWS FETCH FIRST 15 ROWS ONLY")
 	ArrayList<MemberDTO> adminInsertList(int start);
 	
 	@Select("Select r.id, r.reserveName,r.manCount, r.contentId, r.reserveDate from reserve r OFFSET 0 ROWS FETCH FIRST 15 ROWS ONLY")
 	ArrayList<ReserveDTO> memberReserve(int start);
 
-	@Select("Select * from member where admin='N' OFFSET #{param1} ROWS FETCH FIRST 15 ROWS ONLY")
+	@Select("select m.id, m.nickName, b.reason, b.status from member m left outer join black b on m.id = b.id where admin='N' OFFSET #{param1} ROWS FETCH FIRST 15 ROWS ONLY")
 	ArrayList<MemberDTO> memberInfo(int start);
 	
 	@Select("Select *from member where nickName LIKE '%'||#{param1}||'%' OFFSET #{param2} ROWS FETCH FIRST 15 ROWS ONLY")
@@ -61,7 +62,7 @@ public interface AdminMapper {
 	@Select("Select * from cm OFFSET #{param1} ROWS FETCH FIRST 15 ROWS ONLY")
 	ArrayList<CommentDTO> commentList(int start);
 	
-	@Select("select c.cmNum, c.reporter,cm.id, c.status, cm.content from cmreport c left outer join cm on c.cmNum=cm.cmNum where status = 'N' OFFSET #{param1} ROWS FETCH FIRST 15 ROWS ONLY")
+	@Select("select c.cmReportNum, c.cmNum, c.reporter,cm.id, c.status, cm.content from cmreport c left outer join cm on c.cmNum=cm.cmNum where status = 'N' OFFSET #{param1} ROWS FETCH FIRST 15 ROWS ONLY")
 	ArrayList<CommentReportDTO> reportCommentList(int start);
 
 	//게시글 조회 검색
@@ -93,10 +94,9 @@ public interface AdminMapper {
 	@Select("Select *from cm where id LIKE '%'||#{param1}||'%' OFFSET #{param2} ROWS FETCH FIRST 15 ROWS ONLY")
 	ArrayList<CommentDTO> commentListSearchById(String commentListSearch, int start);
 	
-	@Update("update member SET DELCHECK='N' where id =#{id} ")
-	int memberInfoBlackDel(String id);
 	
-	@Update("update black SET status='N' where id =#{id} ")
+	//@Update("update black SET status='N' and reason='N' where id =#{id} ")
+	@Delete("delete black where id =#{id}")
 	int memberInfoBlackDel2(String id);
 	/*
 	 * //@Update("update member SET DELCHECK='Y' where id =#{param1} ")
@@ -105,7 +105,7 @@ public interface AdminMapper {
 	 * ) int memberInfoBlackInsert(String id, String reason);
 	 */
 	
-	@Update("update member SET DELCHECK='Y' where id =#{id}")
+	@Update("update black SET status='Y' where id =#{id}")
 	int memberInfoBlackInsert(String id);
 
 	@Update("insert into black values(BLACK_SEQ.nextval,#{param1},#{param2},sysdate,'Y')")
@@ -149,8 +149,8 @@ public interface AdminMapper {
 	@Select("select * from cm where cmNum=#{cmNum}")
 	CommentDTO cmDetail(String cmNum);
 	
-	@Select("select c.cmReportNum, c.cmNum, c.reporter,cm.id, cm.content, c.reason, c.status from cmreport c left outer join cm on c.cmNum=cm.cmNum where c.cmNum=#{cmNum}")
-	CommentReportDTO reportCmDetail(String cmNum);
+	@Select("select c.cmReportNum, c.cmNum, c.reporter,cm.id, cm.content, c.reason, c.status from cmreport c left outer join cm on c.cmNum=cm.cmNum where c.cmReportNum=#{cmReportNum}")
+	CommentReportDTO reportCmDetail(String cmReportNum);
 	
 	@Select("select COUNT(*) from member where admin='Y'")
 	int page();
