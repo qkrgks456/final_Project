@@ -14,4 +14,6 @@ public class MemberDTO {
     private String email;
     private String admin;
     private String delCheck;
+    private String reason;
+    private String status;
 }
