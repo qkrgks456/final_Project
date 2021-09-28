@@ -273,7 +273,7 @@
 													}
 												
 													
-													var data = '<div class="col-2"><div class="card">'
+													var data = '<div class="col-2"><div class="card  border-white">'
 															+ wImage
 															+ '<div class="card-body"><h5 class="card-title">'
 															+ wName
