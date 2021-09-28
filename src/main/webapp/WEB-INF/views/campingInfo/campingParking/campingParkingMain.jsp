@@ -385,7 +385,6 @@ cursor:pointer;
 <script src="${path}/resources/js/bootstrap.js"></script>
 <script src="${path}/resources/js/bootstrap.bundle.js"></script>
 <script src="${path}/resources/js/common.js"></script>
-
 <script>
 
 //추천순위 클릭시 상세보기

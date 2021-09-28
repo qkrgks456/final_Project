@@ -30,12 +30,18 @@ public class ReviewService {
 		String neww = "";
 		String ori = "";
 		
-		for (int i = 0; i < file.length; i++) {
-			map = UploadUtil.fileUpload(file[i]);
-			neww = map.get("newFileName");
-			ori = map.get("oriFileName");
-			
-			dao.reviewPhoto(neww,ori, boardNum);
+		System.out.println(file.length);
+		if(file.length != 0 ) {
+			if(!file[0].isEmpty()) {
+				for (int i = 0; i < file.length; i++) {
+					
+					map = UploadUtil.fileUpload(file[i]);
+					neww = map.get("newFileName");
+					ori = map.get("oriFileName");
+					
+					dao.reviewPhoto(neww,ori, boardNum);
+				}
+			}
 		};
 		
 		/*

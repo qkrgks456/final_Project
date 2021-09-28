@@ -32,7 +32,10 @@
 <div class="container mx-2">
 <h3>리뷰작성</h3>
 
+
+
 <form action="./reviewWrite" method="post" enctype="multipart/form-data">
+
  제목
  <div class="input-group mb-3">
   <input type="text" name="title" class="form-control" placeholder="제목을 입력해주세요" required="required" aria-label="Username" aria-describedby="basic-addon1">
@@ -99,7 +102,7 @@
     }
 
 	function deleteFile(obj) {
-	       obj.parent().remove();
+		obj.parent().addClass("visually-hidden");
 	}
 
 
