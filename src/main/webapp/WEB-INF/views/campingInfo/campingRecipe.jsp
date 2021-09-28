@@ -111,12 +111,6 @@
 		$("#link").attr('src', url);
 	});
 	
-	$(document).on('click', ".clickCard", function() {
-		let url = $(this).attr('url');
-		console.log(url)
-		$("#link").attr('src', url);
-	});
-	
 	blog(search);
 
 	//검색 클릭되었을때
