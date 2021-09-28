@@ -192,6 +192,7 @@
 			</div>
 		</div>
 	</div>
+	<jsp:include page="../../fix/alarm.jsp"/>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script
 		src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=de13013a67053c1d19922fa8b31042a9"></script>

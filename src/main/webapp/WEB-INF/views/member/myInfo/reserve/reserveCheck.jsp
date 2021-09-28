@@ -60,7 +60,7 @@
                                 <td class="py-3 align-middle">${lists.manCount}</td>
                                 <td class="py-3 align-middle">${lists.reserveDate}</td>
                                 <td class="py-3 align-middle">
-                                    <div reserveNum=${lists.reserveNum} path=${path}
+                                    <div reserveNum="${lists.reserveNum}" path="${path}"
                                          class="btn btn-warning btn-sm reserveCancel">예약취소
                                     </div>
                                 </td>

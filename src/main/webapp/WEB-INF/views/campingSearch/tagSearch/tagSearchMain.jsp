@@ -200,7 +200,7 @@
             </ul>
         </div>
     </div>
-
+    <jsp:include page="../../fix/alarm.jsp"/>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script

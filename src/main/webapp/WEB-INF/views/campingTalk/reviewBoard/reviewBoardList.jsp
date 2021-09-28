@@ -87,6 +87,7 @@
     </div>
 </c:if>
 </div>
+<jsp:include page="../../fix/alarm.jsp"/>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="${path}/resources/js/bootstrap.bundle.js"></script>
 <script src="${path}/resources/js/common.js"></script>

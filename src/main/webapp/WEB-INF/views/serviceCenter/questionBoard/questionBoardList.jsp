@@ -83,6 +83,7 @@
         <a href="${path}/serviceCenter/questionWriteForm"class="btn btn-primary" type="button">문의하기쓰기</a>
     </c:if>
 </div>
+<jsp:include page="../../fix/alarm.jsp"/>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="${path}/resources/js/bootstrap.js"></script>
 <script src="${path}/resources/js/bootstrap.bundle.js"></script>
