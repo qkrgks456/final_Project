@@ -25,6 +25,7 @@
                         $.each(data.list, function (i, dto) {
                             print(dto);
                         })
+
                         $('.toast').show(300);
                         $.ajax({
                             url: paths + "/alarm/update",
@@ -61,6 +62,7 @@
         content += '</div>'
         content += '<button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>';
         content += '</div>'
+        $('#loginId').empty();
         $('#loginId').prepend(content);
     }
 

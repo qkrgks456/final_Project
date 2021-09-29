@@ -15,7 +15,8 @@ import com.gudi.main.dtoAll.MemberDTO;
 import com.gudi.main.dtoAll.ReserveDTO;
 
 @Mapper
-public interface AdminMapper {
+public interface
+AdminMapper {
 	
 	@Select("Select * from member where admin = 'Y' OFFSET #{param1} ROWS FETCH FIRST 15 ROWS ONLY")
 	ArrayList<MemberDTO> adminList(int start);
